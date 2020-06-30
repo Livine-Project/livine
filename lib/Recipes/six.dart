@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ThirdRecipe extends StatefulWidget {
-
+class SixRecipe extends StatefulWidget {
   @override
-  _ThirdRecipeState createState() => _ThirdRecipeState();
+  _SixRecipeState createState() => _SixRecipeState();
 }
 
-class _ThirdRecipeState extends State<ThirdRecipe> {
+class _SixRecipeState extends State<SixRecipe> {
 
-  final String image = "images/yogurt-cake.jpeg";
+  final String image = "images/nutty-chicken-sate-strips.jpg";
   var favIcon = Icon(Icons.favorite_border);
 
-  void btnToggle(){
-    if (favIcon != Icon(Icons.favorite)) {
-      favIcon = Icon(Icons.favorite);
-    } else if(favIcon == Icon(Icons.favorite)) {
-      favIcon = Icon(Icons.favorite_border);
-    }
+void btnToggle(){
+  if (favIcon != Icon(Icons.favorite)) {
+    favIcon = Icon(Icons.favorite);
+  } else if(favIcon == Icon(Icons.favorite)) {
+    favIcon = Icon(Icons.favorite_border);
   }
+}
   _video() async {
-    const url = 'https://www.youtube.com/watch?v=NVtaOmhgAWM';
+    const url = 'https://www.youtube.com/watch?v=zWQ4AQ4diLo';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -47,7 +46,7 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:16.0),
                   child: Text(
-                    "Lemony Yogurt Pound Cake",
+                    "Chicken Satay Salad",
                     style: TextStyle(color: Colors.white, fontSize: 28.0, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -63,7 +62,7 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(20.0)),
                       child: Text(
-                        "15 reviews",
+                        "90 reviews",
                         style: TextStyle(color: Colors.white, fontSize: 13.0),
                       ),
                     ),
@@ -73,7 +72,7 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
                       icon: favIcon,
                       onPressed: () {
                         setState(() {
-                          btnToggle();
+                           btnToggle();
                         });
                       },
                     )
@@ -107,11 +106,11 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
                                       color: Colors.amber,
                                     ),
                                     Icon(
-                                      Icons.star_half,
+                                      Icons.star,
                                       color: Colors.amber,
                                     ),
                                     Icon(
-                                      Icons.star_border,
+                                      Icons.star,
                                       color: Colors.amber,
                                     ),
                                   ],
@@ -146,36 +145,15 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
                       const SizedBox(height: 10.0),
                       Text(
                         """
-
-
-1 1/2 pounds skirt steak, cut into 4-inch-long pieces, then cut against the grain into 1/4-inch-thick slices
-
-Salt and freshly ground pepper
-
-1/4 cup low-sodium soy sauce
-
-1 serrano chile pepper, seeded and finely chopped
-
-2 teaspoons sugar
-
-2 tablespoons freshly squeezed lime juice (1 to 2 limes)
-
-2 tablespoons olive oil
-
-2 cloves garlic, grated
-
-1 bunch scallions, thinly sliced
-
-6 ounces fresh mushrooms, sliced
-
-1/4 pound snow peas or green beans
-
-1 12-ounce can baby corn, drained
-
-1 red bell pepper, thinly sliced (optional)
-
- 
- """,
+2 tbsp chunky peanut butter (without palm oil or sugar)
+1 garlic clove, finely grated
+1 tsp Madras curry powder
+few shakes soy sauce
+2 tsp lime juice
+2 skinless, chicken breast fillets (about 300g) cut into thick strips
+about 10cm cucumber, cut into fingers
+sweet chilli sauce to serve 
+    """,
                         textAlign: TextAlign.justify, style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 14.0
@@ -187,10 +165,12 @@ Salt and freshly ground pepper
                       ),),
                       Text(
                         """
-1. Season the steak with salt and pepper. In a medium bowl, whisk together the soy sauce, chile pepper, sugar and lime juice until the sugar is dissolved. Add the beef, toss to coat and set aside.
-2. In a large skillet over medium-high heat, heat the oil until shimmering, about 1 minute. Add the beef and cook, stirring, until cooked through, 3 to 5 minutes.
-3. Remove the beef from the skillet and set aside. Allow the liquid in the pan to reduce until thickened, about 4 minutes. Add the garlic and scallions and cook 1 minute more. Add the mushrooms and cook for 2 to 3 minutes more. Add the snow peas, baby corn and bell pepper and continue cooking until all the vegetables are crisp-tender, about 2 minutes. Return the beef to the skillet and toss to combine.
- """
+1. Heat oven to 200C, 180C fan, gas 4 and line a baking tray with non-stick paper.
+
+2. Mix the peanut butter with the garlic, curry powder, soy sauce and lime in a bowl. Some nut butters are thicker than others, so if necessary, add a dash of boiling water to get a coating consistency. Add the chicken strips, mix well then arrange on the baking sheet, spaced apart, and bake in the oven for 8-10 mins until cooked, but still juicy.
+
+3. Eat warm with the cucumber sticks and chilli sauce, or leave to cool then keep in the fridge for up to 2 days.
+                        """
                         , textAlign: TextAlign.justify, style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 14.0

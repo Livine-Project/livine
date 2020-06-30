@@ -8,14 +8,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
 
-
-  void onTapped(int value) {
-    setState(() {
-      _selectedIndex = value;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +42,13 @@ class _HomeState extends State<Home> {
                     _secondadvice(),
                     _thirdadvice(),
                     _fourthadvice(),
+                    _fiveadvice(),
+                    _sixadvice(),
+                    _sevenadvice(),
+                    _eightadvice(),
+                    _nineadvice(),
+                    _tenadvice(),
+          
 
                     //_specialistsCardInfo(),
                   ],
@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
               CircleAvatar(
                 backgroundColor: Color(0xFFD9D9D9),
                 backgroundImage: NetworkImage(
-                    'https://st2.depositphotos.com/3259223/5495/v/450/depositphotos_54950901-stock-illustration-boy-drinking-water.jpg'),
+                    'https://i.pinimg.com/originals/79/c7/ff/79c7ff9d622c8fae535a06898f0d6700.gif'),
                 radius: 36.0,
               ),
               SizedBox(
@@ -251,7 +251,7 @@ class _HomeState extends State<Home> {
               CircleAvatar(
                 backgroundColor: Color(0xFFD9D9D9),
                 backgroundImage: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRgHbfa_v0MlHPVZ8j4oxM-M-OdOm_O1IyqC9DUQilDrJT7xGkS&usqp=CAU'),
+                  'https://cdn.dribbble.com/users/406417/screenshots/4507179/roman_sleeping_dribbble.gif'),
                 radius: 36.0,
               ),
               SizedBox(
@@ -324,7 +324,7 @@ class _HomeState extends State<Home> {
               CircleAvatar(
                 backgroundColor: Color(0xFFD9D9D9),
                 backgroundImage: NetworkImage(
-                  'https://image.freepik.com/free-vector/healthy-food-illustration_24877-52322.jpg',
+                  'https://i.pinimg.com/originals/b1/75/7c/b1757c0cc53a16b67a938f4f3d6db705.gif',
                 ),
                 radius: 36.0,
               ),
@@ -398,7 +398,7 @@ class _HomeState extends State<Home> {
               CircleAvatar(
                 backgroundColor: Color(0xFFD9D9D9),
                 backgroundImage: NetworkImage(
-                  'https://image.freepik.com/free-vector/women-success-losing-weight_46527-29.jpg',
+                  'https://cdn.dribbble.com/users/544245/screenshots/1510188/elviswalks.gif',
                 ),
                 radius: 36.0,
               ),
@@ -420,6 +420,444 @@ class _HomeState extends State<Home> {
                       children: <TextSpan>[
                         TextSpan(
                           text: 'If you need to…lose weight',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.0,
+                  ),
+
+                ],
+
+              ),
+
+            ],
+
+          ),
+        ],
+      ),
+    );
+  }
+    Widget _fiveadvice() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 6.0,
+            ),
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Color(0xFFD9D9D9),
+                backgroundImage: NetworkImage(
+                  'https://i.pinimg.com/originals/47/03/09/4703093a70ba47001bf2c86319aae091.gif',
+                ),
+                radius: 36.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Move more',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.0,
+                  ),
+
+                ],
+
+              ),
+
+            ],
+
+          ),
+        ],
+      ),
+    );
+  }
+      Widget _sixadvice() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 6.0,
+            ),
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Color(0xFFD9D9D9),
+                backgroundImage: NetworkImage(
+                  'https://www.justonenorfolk.nhs.uk/media/1825/smoke-gif.gif?width=352&height=353',
+                ),
+                radius: 36.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "Don't Smoke",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.0,
+                  ),
+
+                ],
+
+              ),
+
+            ],
+
+          ),
+        ],
+      ),
+    );
+  }
+   Widget _sevenadvice() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 6.0,
+            ),
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Color(0xFFD9D9D9),
+                backgroundImage: NetworkImage(
+                  'https://thumbs.gfycat.com/FamousDiligentHedgehog-size_restricted.gif',
+                ),
+                radius: 36.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Take Medication correctly ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.0,
+                  ),
+
+                ],
+
+              ),
+
+            ],
+
+          ),
+        ],
+      ),
+    );
+  }
+Widget _eightadvice() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 6.0,
+            ),
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Color(0xFFD9D9D9),
+                backgroundImage: NetworkImage(
+                  'https://www.rhfleet.org/sites/default/files/images/washinghands.gif',
+                ),
+                radius: 36.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "Wash your hands",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.0,
+                  ),
+
+                ],
+
+              ),
+
+            ],
+
+          ),
+        ],
+      ),
+    );
+  }
+Widget _nineadvice() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 6.0,
+            ),
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Color(0xFFD9D9D9),
+                backgroundImage: NetworkImage(
+                  'https://cdn.dribbble.com/users/1908366/screenshots/4499341/16_800_600.gif',
+                ),
+                radius: 36.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "Cover up in the sun ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.0,
+                  ),
+
+                ],
+
+              ),
+
+            ],
+
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _tenadvice() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      margin: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1.0,
+              blurRadius: 6.0,
+            ),
+          ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Color(0xFFD9D9D9),
+                backgroundImage: NetworkImage(
+                  'https://cdn.dribbble.com/users/1330947/screenshots/5113642/pool-animation-min.gif',
+                ),
+                radius: 36.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "Relax",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,

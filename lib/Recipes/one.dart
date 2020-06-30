@@ -11,7 +11,7 @@ class _RecipeState extends State<Recipe> {
   final String image = "images/chiken.jpg";
   var favIcon = Icon(Icons.favorite_border);
 
-void Toggle(){
+void btnToggle(){
   if (favIcon != Icon(Icons.favorite)) {
     favIcon = Icon(Icons.favorite);
   } else if(favIcon == Icon(Icons.favorite)) {
@@ -72,7 +72,7 @@ void Toggle(){
                       icon: favIcon,
                       onPressed: () {
                         setState(() {
-                           Toggle();
+                           btnToggle();
                         });
                       },
                     )

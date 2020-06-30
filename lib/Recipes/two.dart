@@ -11,13 +11,13 @@ class SecondRecipe extends StatefulWidget {
 class _SecondRecipeState extends State<SecondRecipe> {
 
   final String image = "images/marsala.jpeg";
-  var fav_icon = Icon(Icons.favorite_border);
+  var favIcon = Icon(Icons.favorite_border);
 
-  void Toggle(){
-    if (fav_icon != Icon(Icons.favorite)) {
-      fav_icon = Icon(Icons.favorite);
-    } else if(fav_icon == Icon(Icons.favorite)) {
-      fav_icon = Icon(Icons.favorite_border);
+  void btnToggle(){
+    if (favIcon != Icon(Icons.favorite)) {
+      favIcon = Icon(Icons.favorite);
+    } else if(favIcon == Icon(Icons.favorite)) {
+      favIcon = Icon(Icons.favorite_border);
     }
   }
   _video() async {
@@ -71,10 +71,10 @@ class _SecondRecipeState extends State<SecondRecipe> {
                     Spacer(),
                     IconButton(
                       color: Colors.white,
-                      icon: fav_icon,
+                      icon: favIcon,
                       onPressed: () {
                         setState(() {
-                          Toggle();
+                          btnToggle();
                         });
                       },
                     )

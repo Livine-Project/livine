@@ -7,14 +7,7 @@ class Patient extends StatefulWidget {
 }
 
 class _PatientState extends State<Patient> {
-  int _selectedIndex = 0;
-
-  void onTapped(int value) {
-    setState(() {
-      _selectedIndex = value;
-    });
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,60 +151,65 @@ class _PatientState extends State<Patient> {
               blurRadius: 6.0,
             ),
           ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CircleAvatar(
-                backgroundColor: Color(0xFFD9D9D9),
-                backgroundImage: NetworkImage(
-                    'https://image.freepik.com/free-vector/person-with-cold-concept_23-2148406700.jpg'
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/flu');
+        },
+          child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Color(0xFFD9D9D9),
+                  backgroundImage: NetworkImage(
+                      'https://image.freepik.com/free-vector/person-with-cold-concept_23-2148406700.jpg'
+                  ),
+                  radius: 36.0,
                 ),
-                radius: 36.0,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        height: 1.3,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Flu ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          height: 1.3,
                         ),
-                      ],
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Flu ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 6.0,
-                  ),
+                    SizedBox(
+                      height: 6.0,
+                    ),
 
-                ],
+                  ],
 
-              ),
+                ),
 
-            ],
+              ],
 
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -232,60 +230,65 @@ class _PatientState extends State<Patient> {
               blurRadius: 6.0,
             ),
           ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CircleAvatar(
-                backgroundColor: Color(0xFFD9D9D9),
-                backgroundImage: NetworkImage(
-                  'https://image.freepik.com/free-vector/healthy-food-illustration_24877-52322.jpg',
+      child: GestureDetector(
+        onTap: () {
+             Navigator.pushNamed(context, '/corona');
+        },
+              child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Color(0xFFD9D9D9),
+                  backgroundImage: NetworkImage(
+                    'https://i.pinimg.com/736x/a1/9d/c2/a19dc2a04f0de08e11c6ec5dd6b9f9b9.jpg',
+                  ),
+                  radius: 36.0,
                 ),
-                radius: 36.0,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        height: 1.3,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Eat Well',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          height: 1.3,
                         ),
-                      ],
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Corona',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 6.0,
-                  ),
+                    SizedBox(
+                      height: 6.0,
+                    ),
 
-                ],
+                  ],
 
-              ),
+                ),
 
-            ],
+              ],
 
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -306,60 +309,65 @@ class _PatientState extends State<Patient> {
               blurRadius: 6.0,
             ),
           ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CircleAvatar(
-                backgroundColor: Color(0xFFD9D9D9),
-                backgroundImage: NetworkImage(
-                  'https://image.freepik.com/free-vector/women-success-losing-weight_46527-29.jpg',
+      child: GestureDetector(
+        onTap: () {
+           Navigator.pushNamed(context, '/diabetes');
+        },
+              child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Color(0xFFD9D9D9),
+                  backgroundImage: NetworkImage(
+                    'https://i2.wp.com/www.additudemag.com/wp-content/uploads/2020/04/The-ADHD-Diabetes-Link_1920x1080.jpg?resize=1280%2C720px&ssl=1',
+                  ),
+                  radius: 36.0,
                 ),
-                radius: 36.0,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        height: 1.3,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'If you need to…lose weight',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          height: 1.3,
                         ),
-                      ],
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Diabetes',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 6.0,
-                  ),
+                    SizedBox(
+                      height: 6.0,
+                    ),
 
-                ],
+                  ],
 
-              ),
+                ),
 
-            ],
+              ],
 
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

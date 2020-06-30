@@ -14,7 +14,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   // bool _value = false;
 
-  String _version = '1.0';
+  String _version = '5.0';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,44 +1,50 @@
-import 'package:app/pages/groceries.dart';
+// import 'package:app/pages/groceries.dart';
+import 'package:app/pages/calendar.dart';
 import 'package:app/pages/paitent.dart';
-import 'package:app/pages/profile.dart';
 import 'package:app/pages/recipes.dart';
 import 'package:app/pages/settings.dart';
+import 'package:app/patients/corona.dart';
+import './pages/calories_calculator.dart';
+import 'package:app/patients/diabetes.dart';
+import 'package:app/patients/flu.dart';
 import 'package:app/patients/heart.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'Authenticate/forgot_pass.dart';
-import 'Authenticate/register.dart';
-import 'Authenticate/signin.dart';
 import 'Misc/Terms.dart';
 import 'Misc/privacy.dart';
 import 'Recipes/five.dart';
 import 'Recipes/four.dart';
 import 'Recipes/one.dart';
+import 'Recipes/six.dart';
 import 'Recipes/three.dart';
 import 'Recipes/two.dart';
 //import 'Widgets/messaging.dart';
 import 'pages/home.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'pages/diet.dart';
 
 void main() => runApp(MaterialApp(
   home: Splash(),
   routes: {
     '/onboarding': (context) => OnBoarding(),
-    '/forgot_pass': (context) => ForgotPassword(),
     '/navigate': (context) => Navigation(),
     '/settings': (context) => Settings(),
-    '/register': (context) => Register(),
-    '/signin': (context) => SignIn(),
     '/terms' : (context) => Terms(),
+    '/calories_calc' : (context) => Calculator(),
+    '/calendar' : (context) => Calendar(),
     '/privacy' : (context) => Privacy(),
     '/heart' : (context) => Heart(),
+    '/flu' : (context) => Flu(),
+    '/corona' : (context) => Corona(),
+    '/diabetes' : (context) => Diabetes(),
     '/r1': (context) => Recipe(),
     '/r2': (context) => SecondRecipe(),
     '/r3': (context) => ThirdRecipe(),
     '/r4': (context) => FourRecipe(),
     '/r5': (context) => FiveRecipe(),
+    '/r6': (context) => SixRecipe(),
 
 
   },
@@ -59,7 +65,7 @@ class _SplashState extends State<Splash> {
       image: Image.asset('images/Guava.png'),
       loaderColor: Colors.black,
       photoSize: 200.0,
-      navigateAfterSeconds: SignIn(),
+      navigateAfterSeconds: OnBoarding(),
     );
   }
 }
@@ -77,8 +83,9 @@ class _NavigationState extends State<Navigation> {
     Home(),
     Patient(),
     Recipes(),
-    Grocery(),
-    Profile(),
+    Diet(),
+    // Grocery(),
+    // Profile(),
 
   ];
 
@@ -104,8 +111,8 @@ class _NavigationState extends State<Navigation> {
           Icon(Icons.tag_faces, size: 30, color: Colors.white),
           Icon(Icons.add, size: 30, color: Colors.white),
           Icon(Icons.fastfood, size: 30, color: Colors.white),
-          Icon(Icons.add_shopping_cart, size: 30, color: Colors.white),
-          Icon(Icons.person_pin, size: 30, color: Colors.white),
+          Icon(Icons.filter_vintage, size: 30, color: Colors.white),
+          // Icon(Icons.person_pin, size: 30, color: Colors.white),
 
         ],
         onTap: ( int index) {

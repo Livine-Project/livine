@@ -10,13 +10,13 @@ class FourRecipe extends StatefulWidget {
 class _FourRecipeState extends State<FourRecipe> {
 
   final String image = "images/beef.jpeg";
-  var fav_icon = Icon(Icons.favorite_border);
+  var favIcon = Icon(Icons.favorite_border);
 
-  void Toggle(){
-    if (fav_icon != Icon(Icons.favorite)) {
-      fav_icon = Icon(Icons.favorite);
-    } else if(fav_icon == Icon(Icons.favorite)) {
-      fav_icon = Icon(Icons.favorite_border);
+  void btnToggle(){
+    if (favIcon != Icon(Icons.favorite)) {
+      favIcon = Icon(Icons.favorite);
+    } else if(favIcon == Icon(Icons.favorite)) {
+      favIcon = Icon(Icons.favorite_border);
     }
   }
   _video() async {
@@ -70,10 +70,10 @@ class _FourRecipeState extends State<FourRecipe> {
                     Spacer(),
                     IconButton(
                       color: Colors.white,
-                      icon: fav_icon,
+                      icon: favIcon,
                       onPressed: () {
                         setState(() {
-                          Toggle();
+                          btnToggle();
                         });
                       },
                     )

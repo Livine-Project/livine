@@ -232,34 +232,37 @@ class _RecipesState extends State<Recipes> {
             padding: const EdgeInsets.all(16.0),
             child: Container(
               child: new FittedBox(
-                  child: Material(
-                      color: Colors.white,
-                      elevation: 14.0,
-                      borderRadius: BorderRadius.circular(24.0),
-                      shadowColor: Color(0x802196F3),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: myDetailsContainer6(),
+                  child: GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/r6'),
+                        child: Material(
+                        color: Colors.white,
+                        elevation: 14.0,
+                        borderRadius: BorderRadius.circular(24.0),
+                        shadowColor: Color(0x802196F3),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: myDetailsContainer6(),
+                              ),
                             ),
-                          ),
 
-                          Container(
-                            width: 250,
-                            height: 180,
-                            child: ClipRRect(
-                              borderRadius: new BorderRadius.circular(24.0),
-                                child: Image(
-                                  fit: BoxFit.contain,
-                                  alignment: Alignment.topRight,
-                                  image: AssetImage(
-                                      "images/nutty-chicken-sate-strips.jpg"),
-                              ),),
-                          ),
-                        ],)
+                            Container(
+                              width: 250,
+                              height: 180,
+                              child: ClipRRect(
+                                borderRadius: new BorderRadius.circular(24.0),
+                                  child: Image(
+                                    fit: BoxFit.contain,
+                                    alignment: Alignment.topRight,
+                                    image: AssetImage(
+                                        "images/nutty-chicken-sate-strips.jpg"),
+                                ),),
+                            ),
+                          ],)
+                    ),
                   ),
                 ),
               ),

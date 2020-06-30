@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Heart extends StatefulWidget {
+class Diabetes extends StatefulWidget {
 
   @override
-  _HeartState createState() => _HeartState();
+  _DiabetesState createState() => _DiabetesState();
 }
 
-class _HeartState extends State<Heart> {
+class _DiabetesState extends State<Diabetes> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[900],
-        title: Text('Heart'),
+        backgroundColor: Colors.pink[600],
+        title: Text('Diabetes'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -25,7 +25,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://images-prod.healthline.com/hlcmsresource/images/AN_images/berry-almond-salad-1296x728.jpg',
+                    'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/articles/health_tools/fatty_fish_that_are_high_in_omega_3s_slideshow/493ss_thinkstock_rf_atlantic_mackerel.jpg',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -35,11 +35,11 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Leafy Green Vegetables",
+                        "Fatty Fish",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          fontSize: 15.0,
+                          color: Colors.pink[600],
+                          fontSize: 20.0,
                         ),
                       ),
                       ),
@@ -58,7 +58,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://static01.nyt.com/images/2020/03/17/well/askwell-wholegrains/askwell-wholegrains-mediumSquareAt3X.jpg',
+                    'https://miro.medium.com/max/7160/0*Qg-sACv60IYe7Iav.jpg',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -68,10 +68,10 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Whole Grains",
+                        "Leafy Greens",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.pink[600],
                           fontSize: 20.0,
                         ),
                       ),
@@ -86,7 +86,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://images.unsplash.com/photo-1474480109237-15a7ca8f0685?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80',
+                    'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/scoop-of-cinnamon-1296x728.jpg?w=1155&h=1528',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -96,10 +96,10 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Berries",
+                        "Cinnamon",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.pink[600],
                           fontSize: 20.0,
                         ),
                       ),
@@ -114,7 +114,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://www.verywellhealth.com/thmb/dFmKvt9jP4QzC1ddY9U4UbvP8mw=/2077x1443/filters:fill(87E3EF,1)/avocadosGettyImages-961101662-5b9eda1bc9e77c0050a7fafa.jpg',
+                    'https://www.simplyrecipes.com/wp-content/uploads/2014/07/hard-boiled-eggs-horiz-800.jpg',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -124,10 +124,10 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Avocados",
+                        "Eggs",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.pink[600],
                           fontSize: 20.0,
                         ),
                       ),
@@ -142,7 +142,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://omegaquant.com/wp-content/uploads/2019/04/omega-3s-in-fish-and-fish-oil.jpg',
+                    'https://5.imimg.com/data5/WD/HY/MY-4195389/chia-seeds-500x500.jpg',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -152,11 +152,11 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Fatty Fish and Fish Oil",
+                        "Chia Seeds",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          fontSize: 15.0,
+                          color: Colors.pink[600],
+                          fontSize: 20.0,
                         ),
                       ),
                       ),                                     
@@ -170,7 +170,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://www.healthline.com/hlcmsresource/images/AN_images/AN378-Walnuts-Hands-732x549-thumb.jpg',
+                    'https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/327/327455/turmeric-root-and-powder.jpg?w=1155&h=1675',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -180,10 +180,10 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Walnuts",
+                        "Turmeric",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.pink[600],
                           fontSize: 20.0,
                         ),
                       ),
@@ -198,7 +198,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://www.gracefullittlehoneybee.com/wp-content/uploads/2014/09/Slow-Cooker-Pinto-Beans-3.jpg',
+                    'https://www.seriouseats.com/2019/06/20190614-yogurt-vicky-wasik-8-1500x1125.jpg',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -208,10 +208,10 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Beans",
+                        "Yogurt",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.pink[600],
                           fontSize: 20.0,
                         ),
                       ),
@@ -226,7 +226,7 @@ class _HeartState extends State<Heart> {
               child: Column(
                 children:[
                   Image.network(
-                    'https://i1.wp.com/www.eatthis.com/wp-content/uploads/2017/10/dark-chocolate-bar-squares.jpg?fit=1024%2C750&ssl=1',
+                    'https://images-na.ssl-images-amazon.com/images/I/71QAe7Xq-yL._SL1117_.jpg',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -236,10 +236,10 @@ class _HeartState extends State<Heart> {
                     Padding(
                       padding: EdgeInsets.only(right: 5.0, left: 5.0),
                       child: Text(
-                        "Dark Chocolates",
+                        "Nuts",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.pink[600],
                           fontSize: 20.0,
                         ),
                       ),
