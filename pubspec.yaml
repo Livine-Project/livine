@@ -24,7 +24,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   splashscreen: ^1.2.0
   settings_ui: ^0.2.0
-  flutter_html: ^0.11.1
+  flutter_html: ^1.0.0  
+  firebase_messaging: ^6.0.16
   simple_animations: ^1.3.3
   font_awesome_flutter: ^8.8.1
   url_launcher: ^5.4.7
