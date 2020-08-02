@@ -1,4 +1,6 @@
+import 'package:app/Others/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Recipe extends StatefulWidget {
@@ -8,7 +10,7 @@ class Recipe extends StatefulWidget {
 
 class _RecipeState extends State<Recipe> {
 
-  final String image = "images/chiken.jpg";
+  final String image = "images/recipes/chiken.jpg";
   var favIcon = Icon(Icons.favorite_border);
 
 void btnToggle(){
@@ -28,6 +30,7 @@ void btnToggle(){
   }
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -80,7 +83,7 @@ void btnToggle(){
                 ),
                 Container(
                   padding: const EdgeInsets.all(32.0),
-                  color: Colors.white,
+                  color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,

@@ -1,5 +1,8 @@
+import 'package:app/Others/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:provider/provider.dart';
 
 final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
@@ -21,11 +24,12 @@ class _DietState extends State<Diet> {
  
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('Diet'),
-        backgroundColor: Colors.blue[800],
+        backgroundColor: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.blue[800],
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -37,28 +41,7 @@ class _DietState extends State<Diet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 80),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    """
-Hello!
-I'm Dr.Camilia
-                    """,
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('images/camilia.jpg'),
-                      radius: 45.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+
             Row(
               children: <Widget>[
                 Container(
@@ -95,17 +78,8 @@ I'm Dr.Camilia
               children: <Widget>[
                 Center(
                   child: IconButton(
-                    icon: Icon(Icons.add_circle), 
+                    icon: Icon(FontAwesomeIcons.calculator), 
                     onPressed: () => Navigator.pushNamed(context, '/calories_calc'),
-                    iconSize: 40.0,
-                    color: Colors.greenAccent,
-                    splashColor: Colors.transparent,
-      ),
-                ),
-                 Center(
-                  child: IconButton(
-                    icon: Icon(Icons.calendar_today), 
-                    onPressed: () => Navigator.pushNamed(context, '/calendar'),
                     iconSize: 40.0,
                     color: Colors.greenAccent,
                     splashColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Grocery extends StatefulWidget {
   @override
   _GroceryState createState() => _GroceryState();
@@ -37,7 +38,8 @@ class _GroceryState extends State<Grocery>
             fontFamily: 'Varela',
             fontSize: 42.0,
             fontWeight: FontWeight.bold,
-          ),),
+          ),
+          ),
           TabBar(
             controller: _tabController,
             indicatorColor: Colors.transparent,

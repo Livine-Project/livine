@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SixRecipe extends StatefulWidget {
+class NineRecipe extends StatefulWidget {
   @override
-  _SixRecipeState createState() => _SixRecipeState();
+  _NineRecipeState createState() => _NineRecipeState();
 }
 
-class _SixRecipeState extends State<SixRecipe> {
+class _NineRecipeState extends State<NineRecipe> {
 
-  final String image = "images/recipes/nutty-chicken-sate-strips.jpg";
+  final String image = "images/recipes/chiken.jpg";
   var favIcon = Icon(Icons.favorite_border);
 
-void btnToggle(){
-  if (favIcon != Icon(Icons.favorite)) {
-    favIcon = Icon(Icons.favorite);
-  } else if(favIcon == Icon(Icons.favorite)) {
-    favIcon = Icon(Icons.favorite_border);
+  void btnToggle(){
+    if (favIcon != Icon(Icons.favorite)) {
+      favIcon = Icon(Icons.favorite);
+    } else if(favIcon == Icon(Icons.favorite)) {
+      favIcon = Icon(Icons.favorite_border);
+    }
   }
-}
   _video() async {
-    const url = 'https://www.youtube.com/watch?v=zWQ4AQ4diLo';
+    const url = 'https://www.youtube.com/watch?v=UzUqoLe4At0';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -65,7 +65,7 @@ void btnToggle(){
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(20.0)),
                       child: Text(
-                        "90 reviews",
+                        "255 reviews",
                         style: TextStyle(color: Colors.white, fontSize: 13.0),
                       ),
                     ),
@@ -75,7 +75,7 @@ void btnToggle(){
                       icon: favIcon,
                       onPressed: () {
                         setState(() {
-                           btnToggle();
+                          btnToggle();
                         });
                       },
                     )
@@ -148,14 +148,36 @@ void btnToggle(){
                       const SizedBox(height: 10.0),
                       Text(
                         """
-2 tbsp chunky peanut butter (without palm oil or sugar)
-1 garlic clove, finely grated
-1 tsp Madras curry powder
-few shakes soy sauce
-2 tsp lime juice
-2 skinless, chicken breast fillets (about 300g) cut into thick strips
-about 10cm cucumber, cut into fingers
-sweet chilli sauce to serve 
+1 pound extra-lean ground beef
+
+1 onion, diced
+
+4 cloves garlic, minced
+
+1 jalapeno, minced
+
+1 red pepper, diced
+
+1 can small red beans or pinto beans, preferably low sodium drained and rinsed
+
+1 1/2 cups no-salt-added tomato sauce
+
+2 tablespoons tomato paste
+
+1 tablespoon red wine vinegar
+
+1 tablespoon molasses
+
+1 tablespoon Worcestershire sauce
+
+1 teaspoon mustard powder
+
+3/4 teaspoon salt
+
+Freshly ground black pepper
+
+8 whole-wheat burger buns
+
     """,
                         textAlign: TextAlign.justify, style: TextStyle(
                           fontWeight: FontWeight.w300,
@@ -168,11 +190,12 @@ sweet chilli sauce to serve
                       ),),
                       Text(
                         """
-1. Heat oven to 200C, 180C fan, gas 4 and line a baking tray with non-stick paper.
+1. Brown the meat and the onion in a large nonstick skillet over medium-high heat for 5 minutes, 
+2. breaking up the meat into crumbles as it cooks. Pour the drippings out of the pan and discard. 
+3. Add the garlic, jalapeno, and red pepper and cook 5 minutes more, stirring occasionally. 
+4. Stir in the rest of the ingredients, reduce heat to low, and simmer for 5 minutes more. 
+5. Place a half-cup scoop of the mixture onto each bun and serve.
 
-2. Mix the peanut butter with the garlic, curry powder, soy sauce and lime in a bowl. Some nut butters are thicker than others, so if necessary, add a dash of boiling water to get a coating consistency. Add the chicken strips, mix well then arrange on the baking sheet, spaced apart, and bake in the oven for 8-10 mins until cooked, but still juicy.
-
-3. Eat warm with the cucumber sticks and chilli sauce, or leave to cool then keep in the fridge for up to 2 days.
                         """
                         , textAlign: TextAlign.justify, style: TextStyle(
                           fontWeight: FontWeight.w300,

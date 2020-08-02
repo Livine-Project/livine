@@ -1,7 +1,12 @@
 
+import 'package:app/Others/theme.dart';
 import 'package:app/Others/utisl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../Others/moods.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -9,11 +14,23 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+
+  @override
+  void initState() {
+    _fcm.getToken().then((token) {
+      Firestore.instance.collection('tokens').document().setData({
+        'token' : token,
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
-      backgroundColor: mainBgColor,
+      backgroundColor: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[850] : mainBgColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +78,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Positioned _moodsHolder() {
+  Widget _moodsHolder() {
+    final theme = Provider.of<ThemeChanger>(context);
     return Positioned(
       bottom: -45,
       child: Container(
@@ -72,7 +90,7 @@ class _HomeState extends State<Home> {
             .width - 40,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: (theme.getTheme() == ThemeData.dark() ) ? Colors.black : Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(28)),
             boxShadow: [
               BoxShadow(
@@ -86,11 +104,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Container _backBgCover() {
+  Widget _backBgCover() {
+    final theme = Provider.of<ThemeChanger>(context);
     return Container(
       height: 260.0,
       decoration: BoxDecoration(
-        gradient: purpleGradient,
+        gradient: (theme.getTheme() == ThemeData.dark() ) ? whiteGradient : cyanGradient,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
           bottomRight: Radius.circular(40),
@@ -133,6 +152,7 @@ class _HomeState extends State<Home> {
 
 
   Widget _areaSpecialistsText() {
+    final theme = Provider.of<ThemeChanger>(context);
     return Container(
       margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
       child: Row(
@@ -143,7 +163,7 @@ class _HomeState extends State<Home> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              color: Colors.black,
+              color: (theme.getTheme() == ThemeData.dark() ) ? Colors.white : Colors.black,
             ),
           ),
         ],
@@ -471,7 +491,7 @@ class _HomeState extends State<Home> {
               CircleAvatar(
                 backgroundColor: Color(0xFFD9D9D9),
                 backgroundImage: NetworkImage(
-                  'https://i.pinimg.com/originals/47/03/09/4703093a70ba47001bf2c86319aae091.gif',
+                  'https://i.pinimg.com/originals/ce/78/ed/ce78ed7de1ec6e604578b61755717cf4.gif',
                 ),
                 radius: 36.0,
               ),
@@ -492,7 +512,7 @@ class _HomeState extends State<Home> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Move more',
+                          text: 'Working Out',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,

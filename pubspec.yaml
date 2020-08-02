@@ -11,7 +11,7 @@ description: A new Flutter application.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 5.0.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -26,16 +26,18 @@ dependencies:
   settings_ui: ^0.2.0
   flutter_html: ^1.0.0  
   firebase_messaging: ^6.0.16
-  simple_animations: ^1.3.3
   font_awesome_flutter: ^8.8.1
   url_launcher: ^5.4.7
   introduction_screen: ^1.0.8
   cupertino_icons: ^0.1.3
-  shared_preferences: ^0.5.7+2
-  flutter_facebook_login: ^3.0.0
   liquid_progress_indicator: ^0.3.2
   table_calendar: ^2.2.3 
-  
+  firebase_auth: ^0.16.1
+  cloud_firestore: ^0.13.7
+  shared_preferences: ^0.5.7+3
+  flutter_spinkit: "^4.1.2"
+  provider: ^4.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -56,6 +58,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - images/onboarding/
+    - images/recipes/
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

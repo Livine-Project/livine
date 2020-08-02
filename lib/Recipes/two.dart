@@ -1,4 +1,6 @@
+import 'package:app/Others/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SecondRecipe extends StatefulWidget {
@@ -10,7 +12,7 @@ class SecondRecipe extends StatefulWidget {
 
 class _SecondRecipeState extends State<SecondRecipe> {
 
-  final String image = "images/marsala.jpeg";
+  final String image = "images/recipes/marsala.jpeg";
   var favIcon = Icon(Icons.favorite_border);
 
   void btnToggle(){
@@ -30,6 +32,8 @@ class _SecondRecipeState extends State<SecondRecipe> {
   }
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -82,7 +86,7 @@ class _SecondRecipeState extends State<SecondRecipe> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(32.0),
-                  color: Colors.white,
+                  color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,

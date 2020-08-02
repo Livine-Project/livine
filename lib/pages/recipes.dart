@@ -1,5 +1,7 @@
+import 'package:app/Others/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class Recipes extends StatefulWidget {
 
@@ -11,10 +13,11 @@ class _RecipesState extends State<Recipes> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue[800],
+        backgroundColor: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.blue[800],
         title: Text('Recipes'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.settings),
@@ -57,7 +60,7 @@ class _RecipesState extends State<Recipes> {
                                 child: Image(
                                   fit: BoxFit.contain,
                                   alignment: Alignment.topRight,
-                                  image: AssetImage('images/chiken.jpg'),
+                                  image: AssetImage('images/recipes/chiken.jpg'),
                                 ),
                               ),
                             ),
@@ -139,7 +142,7 @@ class _RecipesState extends State<Recipes> {
                                   fit: BoxFit.contain,
                                   alignment: Alignment.topRight,
                                   image: AssetImage(
-                                      'images/yogurt-cake.jpeg'),
+                                      'images/recipes/yogurt-cake.jpeg'),
                                 ),
                               ),
                           ),
@@ -178,7 +181,7 @@ class _RecipesState extends State<Recipes> {
                               child: Image(
                                 fit: BoxFit.contain,
                                 alignment: Alignment.topRight,
-                                image: AssetImage("images/beef.jpeg"),
+                                image: AssetImage("images/recipes/beef.jpeg"),
                               ),),
                           ),
                         ],)
@@ -218,7 +221,7 @@ class _RecipesState extends State<Recipes> {
                                 fit: BoxFit.contain,
                                 alignment: Alignment.topRight,
                                 image: AssetImage(
-                                    "images/ree.jpeg"),
+                                    "images/recipes/ree.jpeg"),
                               ),),
                           ),
                         ],)
@@ -258,7 +261,7 @@ class _RecipesState extends State<Recipes> {
                                     fit: BoxFit.contain,
                                     alignment: Alignment.topRight,
                                     image: AssetImage(
-                                        "images/nutty-chicken-sate-strips.jpg"),
+                                        "images/recipes/nutty-chicken-sate-strips.jpg"),
                                 ),),
                             ),
                           ],)
@@ -266,6 +269,46 @@ class _RecipesState extends State<Recipes> {
                   ),
                 ),
               ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              child: new FittedBox(
+
+                child: GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/r7'),
+                  child: Material(
+                      color: Colors.white,
+                      elevation: 14.0,
+                      borderRadius: BorderRadius.circular(24.0),
+                      shadowColor: Color(0x802196F3),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: myDetailsContainer7(),
+                            ),
+                          ),
+
+                          Container(
+                              width: 250,
+                              height: 180,
+                              child: ClipRRect(
+                                borderRadius: new BorderRadius.circular(24.0),
+                                child: Image(
+                                  fit: BoxFit.contain,
+                                  alignment: Alignment.topRight,
+                                  image: NetworkImage('https://food.fnr.sndimg.com/content/dam/images/food/fullset/2011/11/4/1/CCHAP402_Sloppy-Joes_s4x3.jpg.rend.hgtvcom.966.725.suffix/1382540648899.jpeg'),
+                                ),
+                              )
+                          ),
+                        ],)
+                  ),
+                ),
+              ),
+            ),
           ),
 
 
@@ -504,6 +547,51 @@ Widget myDetailsContainer6() {
         ],)),
       ),
       Container(child: Text("Sara Buenfeld",
+        style: TextStyle(color: Colors.black54,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),)),
+    ],
+  );
+}
+Widget myDetailsContainer7() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Container(child: Text("Sloppy Joes",
+          style: TextStyle(color: Colors.blueAccent,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold),)),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(child: Text("5.0",
+                  style: TextStyle(color: Colors.black54, fontSize: 18.0,),)),
+                Container(child: Icon(
+                  FontAwesomeIcons.solidStar, color: Colors.amber,
+                  size: 15.0,),),
+                Container(child: Icon(
+                  FontAwesomeIcons.solidStar, color: Colors.amber,
+                  size: 15.0,),),
+                Container(child: Icon(
+                  FontAwesomeIcons.solidStar, color: Colors.amber,
+                  size: 15.0,),),
+                Container(child: Icon(
+                  FontAwesomeIcons.solidStar, color: Colors.amber,
+                  size: 15.0,),),
+                Container(child: Icon(
+                  FontAwesomeIcons.solidStar, color: Colors.amber,
+                  size: 15.0,),),
+                Container(child: Text(" (89)",
+                  style: TextStyle(color: Colors.black54, fontSize: 18.0,),)),
+              ],)),
+      ),
+      Container(child: Text("Ellie Krieger",
         style: TextStyle(color: Colors.black54,
             fontSize: 18.0,
             fontWeight: FontWeight.bold),)),

@@ -1,4 +1,6 @@
+import 'package:app/Others/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MoodsSelector extends StatefulWidget {
   // MoodsSelector({Key key}) : super(key: key);
@@ -14,6 +16,7 @@ class _MoodsSelectorState extends State<MoodsSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Center(
       child: ToggleButtons(
         selectedColor: Colors.blueAccent,

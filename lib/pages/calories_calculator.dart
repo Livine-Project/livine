@@ -163,6 +163,8 @@ class _CalculatorState extends State<Calculator> {
              Padding(
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
+                color: Colors.greenAccent,
+
                 child: Text("Calculate"),
                 onPressed: Calculate,
               ),
