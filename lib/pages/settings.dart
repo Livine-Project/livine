@@ -20,14 +20,7 @@ class _SettingsState extends State<Settings> {
   bool value = false;
 
   String _version = '5.0';
-    _video() async {
-    const url = 'https://mazenomar.pythonanywhere.com/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+
 bool check;
   checkNight() async{
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -63,12 +56,6 @@ bool check;
           SettingsSection(
             title: 'Section',
             tiles: [
-              SettingsTile(
-                title: 'Language',
-                subtitle: 'English',
-                leading: Icon(Icons.language),
-                onTap: () {},
-              ),
               SettingsTile(
                 title: 'Permissions',
                 leading: Icon(Icons.lock_open),
@@ -126,16 +113,7 @@ bool check;
               ),
             ],
           ),
-          SettingsSection(
-            title: 'Owner',
-            tiles: [
-              SettingsTile(
-                title: 'Mazen Omar',
-                leading: Icon(Icons.person),
-                onTap: _video,
-              ),
-            ],
-          ),
+
         ],
       ),
     ),

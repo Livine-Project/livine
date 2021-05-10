@@ -28,7 +28,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_1_img']}',
+                    '${widget.food.data()['food_1_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -38,7 +38,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_1'],
+                      widget.food.data.call()['food_1'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -61,7 +61,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_2_img']}',
+                    '${widget.food.data()['food_2_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -71,7 +71,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_2'],
+                      widget.food.data()['food_2'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -89,7 +89,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_3_img']}',
+                    '${widget.food.data()['food_3_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -99,7 +99,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_3'],
+                      widget.food.data()['food_3'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -117,7 +117,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_4_img']}',
+                    '${widget.food.data()['food_4_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -127,7 +127,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_4'],
+                      widget.food.data()['food_4'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -145,7 +145,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_5_img']}',
+                    '${widget.food.data()['food_5_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -155,7 +155,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_5'],
+                      widget.food.data()['food_5'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -173,7 +173,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_6_img']}',
+                    '${widget.food.data()['food_6_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -183,7 +183,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_6'],
+                      widget.food.data()['food_6'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -201,7 +201,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_7_img']}',
+                    '${widget.food.data()['food_7_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -211,7 +211,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_7'],
+                      widget.food.data()['food_7'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -229,7 +229,7 @@ class _FoodsState extends State<Foods> {
               child: Column(
                 children:[
                   Image.network(
-                    '${widget.food.data['food_8_img']}',
+                    '${widget.food.data()['food_8_img']}',
                     fit: BoxFit.cover,
                     height: 140.0,
                     width: 200.0,
@@ -239,7 +239,7 @@ class _FoodsState extends State<Foods> {
                   Padding(
                     padding: EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Text(
-                      widget.food.data['food_8'],
+                      widget.food.data()['food_8'],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
