@@ -2,8 +2,7 @@ import 'package:app/Others/theme.dart';
 import 'package:app/auth/login.dart';
 import 'package:app/pages/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,12 +14,12 @@ class WorkingOut extends StatefulWidget {
 class _WorkingOutState extends State<WorkingOut> {
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeChanger>(context);
+    // final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: (theme.getTheme() == ThemeData.dark()) ? Colors
-            .grey[900] : Colors.blue[800],
+        // backgroundColor: (theme.getTheme() == ThemeData.dark()) ? Colors
+        //     .grey[900] : Colors.blue[800],
         title: Text('Working Out'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.settings),

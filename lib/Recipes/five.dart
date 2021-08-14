@@ -31,7 +31,7 @@ class _FiveRecipeState extends State<FiveRecipe> {
   }
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeChanger>(context);
+    // final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -84,7 +84,7 @@ class _FiveRecipeState extends State<FiveRecipe> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(32.0),
-                  color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
+                  // color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,

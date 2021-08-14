@@ -1,6 +1,4 @@
-import 'package:app/Others/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ThirdRecipe extends StatefulWidget {
@@ -31,7 +29,7 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
   }
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeChanger>(context);
+    // final theme = Provider.of<ThemeChanger>(context);
 
     return Scaffold(
       body: Stack(
@@ -85,7 +83,7 @@ class _ThirdRecipeState extends State<ThirdRecipe> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(32.0),
-                  color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
+                  // color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,

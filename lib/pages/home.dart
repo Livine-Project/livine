@@ -1,192 +1,276 @@
-import 'package:app/Others/theme.dart';
-import 'package:app/Others/utisl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../Others/moods.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Home extends StatefulWidget {
+
+class Home extends ConsumerWidget {
+
   @override
-  _HomeState createState() => _HomeState();
+  Widget build(BuildContext context, watch) {
+
+    // final theme = Provider.of<ThemeChanger>(context);
+      
+    List icons = [
+      FontAwesomeIcons.hamburger,
+      FontAwesomeIcons.pizzaSlice,
+      FontAwesomeIcons.birthdayCake
+    ];
+    List names = [
+      AppLocalizations.of(context).salad,
+      AppLocalizations.of(context).burger,
+      AppLocalizations.of(context).pancake
+    ];
+    return Scaffold(
+      backgroundColor: context.read(themeProvider).themeMode == ThemeMode.dark
+          ? Colors.grey[900]
+          : Color(0xfff4895EF),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 120.0),
+                child: Center(
+                  child: Container(
+                    height: 100.0,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Categories(
+                            icon:icons[index], 
+                            text:names[index], 
+                            size:15.0,);
+                        }),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: GridView(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: (5 / 7), crossAxisCount: 2),
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      RecipeCard(
+                        name: AppLocalizations.of(context).salad,
+                        foodImage: AssetImage('images/recipes/salad.png'),
+                        rating: '2.8',
+                        type: 'Starter',
+                      ),
+                      RecipeCard(
+                        name: 'Spaghetti',
+                        foodImage: AssetImage('images/recipes/spaghetti.png'),
+                        rating: '4.6',
+                        type: 'Starter',
+                      ),
+                      RecipeCard(
+                        name: 'Rice',
+                        foodImage: AssetImage('images/recipes/rice.png'),
+                        rating: '5',
+                        type: 'Starter',
+                      ),
+                      RecipeCard(
+                        name: 'Beans',
+                        foodImage: AssetImage('images/recipes/beans.png'),
+                        rating: '1.5',
+                        type: 'Starter',
+                      ),
+                    ]),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Container(
+              height: 100.0,
+              child: FloatingSearchBar(
+                openAxisAlignment: 0.0,
+                scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+                borderRadius: BorderRadius.circular(15.0),
+                transitionCurve: Curves.easeInOutCubic,
+                transition: CircularFloatingSearchBarTransition(),
+                physics: const BouncingScrollPhysics(),
+                builder: (context, index) => buildBody(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildBody() {
+    final time = DateTime.now();
+    print('BuildBody at ${time.second}:${time.millisecond}');
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Material(
+        child: Column(
+          children: List.generate(5, (index) => index.toString())
+              .map((e) => ListTile(
+                    title: Text(e),
+                  ))
+              .toList(),
+        ),
+      ),
+    );
+  }
 }
 
-class _HomeState extends State<Home> {
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+class RecipeCard extends StatelessWidget {
+  const RecipeCard({
+    Key key,
+    @required this.name,
+    @required this.foodImage,
+    @required this.type,
+    @required this.rating,
+  }) : super(key: key);
+
+  final name;
+  final foodImage;
+  final type;
+  final rating;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: Container(
+            padding: EdgeInsets.only(top: 5.0),
+            height: 230.0,
+            width: 150.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: Color(0xfff4CC9F0),
+              image: DecorationImage(
+                image: foodImage,
+                scale: 5.0,
+                
+                
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 0,
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Text(
+                    type,
+                    style: TextStyle(
+                      fontSize: 13.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 5.0),
+                        height: 320.0,
+                        width: 70.0,
+                        child: Icon(
+                          FontAwesomeIcons.heart,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        rating,
+                        style: TextStyle(
+                            fontSize: 30.0, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+class Categories extends StatelessWidget {
+  const Categories({ 
+    Key key,
+    @required this.icon,
+    @required this.text,
+    @required this.size
+    }) : super(key: key);
+
+  final IconData icon;
+  final String text;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final theme = Provider.of<ThemeChanger>(context);
-    return Scaffold(
-      backgroundColor: (theme.getTheme() == ThemeData.dark())
-          ? Colors.grey[850]
-          : mainBgColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Color.fromRGBO(82, 136, 242, 1),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            headerDecoration(size, context),
-            recomendedSectionHomeView(),
-            Container(
-              margin: EdgeInsets.only(left: 20.0, top: 10.0, bottom: 20.0),
-              width: size.width * 0.4,
-              child: Column(
-                children: [
-                  Image.asset('images/recipes/chiken.jpg'),
-                  Container(
-                    padding: EdgeInsets.all(20.0),
-                    decoration: BoxDecoration(color: Colors.white, 
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0),
-                        bottomRight: Radius.circular(20.0),
-                      ),
-                    boxShadow: [
-                      
-                      BoxShadow(
-                        offset: Offset(0, 10),
-                        blurRadius: 50.0,
-                        color: Colors.blueAccent.withOpacity(0.23),
-                      )
-                    ]),
-                    child: Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(text: "Chicken \n".toUpperCase(),style: Theme.of(context).textTheme.button),
-                              TextSpan(
-                                text: "Chief".toUpperCase(), style: TextStyle(color: Colors.red.withOpacity(0.5),)
-                              ),
-                            ],
-                          ),
-                        
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+    // final theme = Provider.of<ThemeChanger>(context);
+
+    return Column(
+    children: [
+      Container(
+          child: Icon(
+        icon,
+        size: 40.0,
+        // color: theme.getTheme() == ThemeData.dark() ?
+        // Colors.white : 
+        // Color(0xfff3A0CA3),
+
+      )),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: size),
         ),
       ),
-    );
-  }
+    ],
+  );
+}
+}
 
-  Container recomendedSectionHomeView() {
-    return Container(
-      height: 24,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Text("Recomended",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Spacer(),
-                FlatButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                  onPressed: () {},
-                  child: Text("More", style: TextStyle(color: Colors.white)),
-                  color: Color.fromRGBO(85, 217, 204, 1),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+class Title extends StatelessWidget {
+  const Title({
+    Key key,
+    @required this.text,
+    @required this.size,
+  }) : super(key: key);
 
-  Container headerDecoration(Size size, BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
-      height: size.height * 0.2,
-      child: Stack(
-        children: [
-          Container(
-            height: size.height * 0.2 - 27,
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(82, 136, 242, 1),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(36.0),
-                bottomRight: Radius.circular(36.0),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0, top: 35.0),
-            child: Row(
-              children: [
-                Text(
-                  "Welcome Mazen",
-                  style: Theme.of(context).textTheme.headline5.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  final String text;
+  final double size;
 
-  Widget buildFloatingSearchBar() {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-
-    return FloatingSearchBar(
-      hint: 'Search...',
-      scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-      transitionDuration: const Duration(milliseconds: 800),
-      transitionCurve: Curves.easeInOut,
-      physics: const BouncingScrollPhysics(),
-      axisAlignment: isPortrait ? 0.0 : -1.0,
-      openAxisAlignment: 0.0,
-      width: isPortrait ? 600 : 500,
-      debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: (query) {
-        // Call your model, bloc, controller here.
-      },
-      // Specify a custom transition to be used for
-      // animating between opened and closed stated.
-      transition: CircularFloatingSearchBarTransition(),
-      actions: [
-        FloatingSearchBarAction(
-          showIfOpened: false,
-          child: CircularButton(
-            icon: const Icon(Icons.emoji_food_beverage),
-            onPressed: () {},
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Text(
+        AppLocalizations.of(context).heyIwant,
+        style: TextStyle(
+          fontSize: size,
+          fontWeight: FontWeight.bold,
         ),
-        FloatingSearchBarAction.searchToClear(
-          showIfClosed: false,
-        ),
-      ],
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: Colors.accents.map((color) {
-                return Container(height: 112, color: color);
-              }).toList(),
-            ),
-          ),
-        );
-      },
+      ),
     );
   }
 }

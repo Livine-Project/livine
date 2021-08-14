@@ -13,11 +13,11 @@ class _RecipesState extends State<Recipes> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeChanger>(context);
+    // final theme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.blue[800],
+        // backgroundColor: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.blue[800],
         title: Text('Recipes'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.settings),

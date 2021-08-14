@@ -31,7 +31,7 @@ class _FourRecipeState extends State<FourRecipe> {
   }
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeChanger>(context);
+    // final theme = Provider.of<ThemeChanger>(context);
 
     return Scaffold(
       body: Stack(
@@ -85,7 +85,7 @@ class _FourRecipeState extends State<FourRecipe> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(32.0),
-                  color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
+                  // color: (theme.getTheme() == ThemeData.dark() ) ? Colors.grey[900] : Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
