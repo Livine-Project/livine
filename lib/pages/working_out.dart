@@ -1,10 +1,6 @@
-import 'package:app/Others/theme.dart';
-import 'package:app/auth/login.dart';
-import 'package:app/pages/settings.dart';
+
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class WorkingOut extends StatefulWidget {
   @override

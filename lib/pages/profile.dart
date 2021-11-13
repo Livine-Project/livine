@@ -1,144 +1,146 @@
-import 'package:app/Others/data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Profile extends StatelessWidget {
   Profile({Key key}) : super(key: key);
-
-  List texts = ['Callories','Water'];
-  List urls = [
-'https://images.vexels.com/media/users/3/130343/isolated/preview/617e25c481c3d5c6d536ad89260c99f7-flat-colorful-pie-chart.png',
-'https://www.nicepng.com/png/detail/2-23770_art-base-water-drops-clip-art-logo-design.png',
-
-];
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-            // backgroundColor: context.read(themeProvider).themeMode = ThemeMode.dark;
-      //     ? Colors.grey[900]
-      //     : Color(0xfff4895EF),
+      backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 200.0,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(30.0),
-                        bottomLeft: Radius.circular(30.0)),
-                  ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Profile'.toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[400],
+                      fontSize: 18.0),
                 ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 105.0),
-                    child: userImage(
-                      name: 'Mazen Omar',
-                      url:
-                          'https://www.kindpng.com/picc/m/22-223941_transparent-avatar-png-male-avatar-icon-transparent-png.png',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              children: List.generate(2, (index) {
-                return Container(
-                  height: 100.0,
-                  child: Center(
-                    child: profileCard(
-                      name: texts[index],
-                      url: urls[index],
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class profileCard extends StatelessWidget {
-  const profileCard({
-    Key key,
-    @required this.name,
-    @required this.url,
-  }) : super(key: key);
-
-  final name;
-  final url;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 130.0,
-      height: 170.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.red,
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              name,
-              style: GoogleFonts.bebasNeue(
-                letterSpacing: 2,
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: Center(
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://images.unsplash.com/photo-1611451444023-7fe9d86fe1d0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXQlMjB3b21hbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"),
+                    radius: 60.0,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 18.0,
+              ),
+              Text(
+                "Mazen Omar",
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://cdn.dribbble.com/users/2454973/screenshots/15252531/media/72e9aaee287285943dd60cc3075a59e8.jpg?compress=1&resize=400x300'),
+                    radius: 32.0,
+                  ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://cdn.dribbble.com/users/2454973/screenshots/15252531/media/72e9aaee287285943dd60cc3075a59e8.jpg?compress=1&resize=400x300'),
+                    radius: 32.0,
+                  ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://cdn.dribbble.com/users/2454973/screenshots/15252531/media/72e9aaee287285943dd60cc3075a59e8.jpg?compress=1&resize=400x300'),
+                    radius: 32.0,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("Goals Met"),
+                  Text("Excerise Time"),
+                  Text("Health Points"),
+                ],
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Text(
+                'Next Goals',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                    color: Colors.grey[400]),
+              ),
+              GoalDetail(screenWidth: screenWidth),
+              GoalDetail(screenWidth: screenWidth),
+            ],
           ),
-          Image(
-            width: 100.0,
-            image: NetworkImage(url),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-// ignore: camel_case_types
-class userImage extends StatelessWidget {
-  const userImage({
+class GoalDetail extends StatelessWidget {
+  const GoalDetail({
     Key key,
-    @required this.name,
-    @required this.url,
+    @required this.screenWidth,
   }) : super(key: key);
 
-  final name;
-  final url;
+  final double screenWidth;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-            BoxShadow(blurRadius: 50.0, spreadRadius: 2),
-          ]),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(url),
-            radius: 65.0,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 100.0,
+        width: screenWidth,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 30.0,
+                width: screenWidth/3,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.dumbbell,color: Colors.white,size: 15.0,),
+                    SizedBox(width: 15.0,),
+                    Text("Activites", style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2
+                    ),),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Text(
-          name,
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        )
-      ],
+      ),
     );
   }
 }

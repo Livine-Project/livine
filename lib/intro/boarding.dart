@@ -15,25 +15,26 @@ class OnBoarding extends StatelessWidget {
       "We assure that you gonna have a Flexible Lifestyle",
       "We gonna show you your progress in your profile"
       ];
+      List<Color> textColors = [Colors.black, Colors.white,Colors.white, Colors.white];
 
     return Scaffold(
       body: ConcentricPageView(
         colors: <Color>[Colors.white, Color(0xfff4CC9F0),Color(0xfffF72585), Color(0xfff3F37C9)],
         itemCount: heading.length, // null = infinity
         physics: NeverScrollableScrollPhysics(),
-        scaleFactor: 5.0,
         curve: Curves.easeInOut,
         direction: Axis.vertical,
+        scaleFactor: 5,
         onFinish: () =>  Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (BuildContext ctx) => Navigation())),
 
         itemBuilder: (int index, double value) {
-          return introScreens(heading[index], 'images/onboarding/${images[index]}.svg');
+          return introScreens(heading[index], 'images/onboarding/${images[index]}.svg', textColors[index]);
         },
       ),
     );
   }
-  Widget introScreens (String text , String url) {
+  Widget introScreens (String text , String url, Color textColor) {
 
     return Center(
       child: Padding(
@@ -53,7 +54,8 @@ class OnBoarding extends StatelessWidget {
           style: TextStyle(
             fontSize: 24.0,
             fontFamily: 'BalooBhaina',
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
+            color: textColor,
             
             ),
         ),

@@ -1,63 +1,78 @@
-import 'package:app/main.dart';
 import 'package:app/pages/home.dart';
-import 'package:app/pages/paitent.dart';
-import 'package:app/pages/profile.dart';
-import 'package:app/pages/settings.dart';
+import 'package:app/pages/categories.dart';
+import 'package:app/Settings/settings.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class Navigation extends StatefulWidget {
   @override
   _NavigationState createState() => _NavigationState();
 }
 
 class _NavigationState extends State<Navigation> {
-  int _currentindex = 0;
-
-  final List<Widget> _children = [
-    Home(),
-    Patient(),
-    Profile(),
-    Settings(),
-    // WorkingOut(),
-    //Grocery(),
-    // Profile(),
-  ];
-
-  void onTappedBar(int index) {
-    setState(() {
-      _currentindex = index;
+  final PageController  pageController = PageController();
+  var isLoaded = false;
+  @override
+  void initState() {
+    super.initState();
+   
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        isLoaded = true;
+      });
     });
   }
 
   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+  final List<Widget> _children = [
+    Home(),
+    Patient(),
+    SettingsWidget(),
+
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    // final theme = Provider.of<ThemeChanger>(context);
+    const duration = Duration(milliseconds: 500);
+    const curve = Curves.easeInOut;
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: _children[_currentindex],
-          ),
-        ],
+      body: PageView.builder(
+        controller: pageController,
+        itemCount: _children.length,
+        itemBuilder: (context, index) => _children[index],
+        
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-      backgroundColor: dark
-          ? Colors.grey[900]
-          : Colors.white,
-        items: <Widget>[
-          Icon(Icons.home, size: 30, color: Colors.black),
-          Icon(FontAwesomeIcons.heartbeat, size: 30, color: Colors.black),
-          Icon(FontAwesomeIcons.userCircle, size: 27, color: Colors.black),
-          Icon(Icons.settings, size: 30, color: Colors.black),
-        ],
-        onTap: (int index) {
-          setState(() {
-            _currentindex = index;
-          });
-        },
-      ),
+      bottomNavigationBar: AnimatedBuilder(
+          animation: pageController,
+          builder: (context, snapshot) {
+            if (!isLoaded || !pageController.hasClients) {
+              return const SizedBox.shrink();
+            }
+            final _index = pageController.page.round();
+            return CurvedNavigationBar(
+              backgroundColor: Colors.transparent,
+              items: const [
+                Icon(Icons.home, size: 30),
+                Icon(FontAwesomeIcons.heartbeat, size: 30),
+                Icon(Icons.settings, size: 30),
+              ],
+              animationDuration: duration,
+              animationCurve: curve,
+              index: _index,
+              onTap: (index) {
+                pageController.animateToPage(
+                  index,
+                  duration: duration,
+                  curve: curve,
+                );
+              },
+            );
+          }),
     );
   }
 }
-

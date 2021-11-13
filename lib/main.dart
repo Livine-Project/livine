@@ -1,38 +1,56 @@
 // import 'package:app/auth/register.dart';
 // import 'package:app/auth/reset_password.dart';
+import 'package:app/Others/loading.dart';
+import 'package:app/Settings/Feedback/bugReport.dart';
+import 'package:app/Settings/Misc/Terms.dart';
+import 'package:app/Settings/Misc/privacy.dart';
+import 'package:app/Settings/Theme/themeSettings.dart';
+import 'package:app/auth/login.dart';
+import 'package:app/auth/register.dart';
+import 'package:app/categories/breakfast.dart';
+import 'package:app/categories/dinner.dart';
+import 'package:app/categories/lunch.dart';
+import 'package:app/categories/snacks.dart';
 import 'package:app/intro/base.dart';
 import 'package:app/intro/boarding.dart';
 import 'package:app/pages/calendar.dart';
-import 'package:app/pages/settings.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'Misc/Terms.dart';
-import 'Misc/privacy.dart';
 import 'Others/theme.dart';
-import 'Recipes/eight.dart';
-import 'Recipes/five.dart';
-import 'Recipes/four.dart';
-import 'Recipes/nine.dart';
-import 'Recipes/one.dart';
-import 'Recipes/seven.dart';
-import 'Recipes/six.dart';
-import 'Recipes/ten.dart';
-import 'Recipes/three.dart';
-import 'Recipes/two.dart';
-import 'details/patient_detail.dart';
-// import 'package:firebase_core/firebase_core.dart';
+
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app/Others/theme.dart';
+import 'package:device_preview/device_preview.dart';
 
-bool dark = false;
-var email;
+import 'recipe/recipeDetails.dart';
+
+var username;
+var connectivityResult;
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+   username = prefs.getBool('username') ?? false;
+
+
+  final AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/launcher_icon');
+  InitializationSettings initializationSettings = new InitializationSettings(
+    android: initializationSettingsAndroid
+  );
+
+  flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+ connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
   runApp(ProviderScope(
     overrides: [
       sharedPrefProvider.overrideWithValue(
@@ -41,13 +59,26 @@ Future<void> main() async {
     ],
     child: MyApp(),
   ));
+    
+  } else {
+      runApp(ProviderScope(
+    overrides: [
+      sharedPrefProvider.overrideWithValue(
+        await SharedPreferences.getInstance(),
+      ),
+    ],
+    child: NoConnection(),
+  ));}
+
+
 }
+    // child: DevicePreview(builder:(context) => MyApp()),
 
-
-class MyApp extends StatelessWidget {
+class NoConnection extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
-    return MaterialAppWithTheme();
+    return NoConnectionMaterial();
   }
 }
 
@@ -56,11 +87,31 @@ final sharedPrefProvider =
 final themeProvider = ChangeNotifierProvider((ref) => ThemeNotifer(ref));
 
 
+class NoConnectionMaterial extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, watch) {
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      home: NoConnectionWidget(),
+    
+    );
+  }
+}
+
+class MyApp extends StatelessWidget {
+  
+  @override
+  Widget build(BuildContext context) {
+    return MaterialAppWithTheme();
+  }
+}
+
 
 class MaterialAppWithTheme extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
-    // final theme = Provider.of<ThemeChanger>(context);
     final theme = watch(themeProvider);
 
     return MaterialApp(
@@ -73,35 +124,32 @@ class MaterialAppWithTheme extends ConsumerWidget {
       ],
     
       debugShowCheckedModeBanner: false,
-      // home: email == null ? Login() : Navigation(),
-      home: Navigation(),
+      locale: DevicePreview.locale(context), // Add the locale here
+      builder: DevicePreview.appBuilder, // Add the builder here
+
+      home: username ? Navigation() : Login(),
       themeMode: theme.themeMode,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
     
       routes: {
         '/onboarding': (context) => OnBoarding(),
-        '/food': (context) => Foods(),
         '/navigate': (context) => Navigation(),
-        '/settings': (context) => Settings(),
-        // '/login': (context) => Login(),
-        // '/register': (context) => Register(),
+        '/bugReport': (context) => BugReport(),
+        '/themeSettings': (context) => ThemeSettings(),
+        '/breakfast' : (context) => BreakFast(),
+        '/dinner' : (context) => Dinner(),
+        '/lunch' : (context) => Lunch(),
+        '/snacks' : (context) => Snacks(),
+        '/login': (context) => Login(),
+        '/register': (context) => Register(),
+        '/details': (context) => RecipeDetails(),
         // '/reset_password': (context) => Reset_Password(),
         '/terms': (context) => Terms(),
         // '/calories_calc': (context) => Calculator(),
         '/calendar': (context) => Calendar(),
         '/privacy': (context) => Privacy(),
         // '/verify':(context) => VerifyScreen(),
-        '/r1': (context) => Recipe(),
-        '/r2': (context) => SecondRecipe(),
-        '/r3': (context) => ThirdRecipe(),
-        '/r4': (context) => FourRecipe(),
-        '/r5': (context) => FiveRecipe(),
-        '/r6': (context) => SixRecipe(),
-        '/r7': (context) => SevenRecipe(),
-        '/r8': (context) => EightRecipe(),
-        '/r9': (context) => NineRecipe(),
-        '/r10': (context) => TenRecipe(),
       },
     );
   }
