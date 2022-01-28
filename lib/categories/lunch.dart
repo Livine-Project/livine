@@ -1,8 +1,8 @@
-import 'package:app/categories/breakfast.dart';
+import 'breakfast.dart';
 import 'package:flutter/material.dart';
 
 class Lunch extends StatelessWidget {
-  const Lunch({ Key key }) : super(key: key);
+  const Lunch({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +11,11 @@ class Lunch extends StatelessWidget {
         title: Text('Lunch'),
         centerTitle: true,
         elevation: 1.2,
-        backgroundColor: Color(0xfff4361EE),
+        // ignore: use_full_hex_values_for_flutter_colors
+        backgroundColor: Theme.of(context).brightness == Brightness.dark ?Colors.grey[800] :Colors.blueAccent[700],
       ),
         body: GridView.count(crossAxisCount: 1, 
-        children: [
+        children: const [
             Category(
               image: 'images/calories/lunch/tacos.jpg',
               name: 'Roasted Cauliflower Tacos',
@@ -35,6 +36,6 @@ class Lunch extends StatelessWidget {
             image: 'images/calories/lunch/caesar.jpg',
             name: 'Caesar Salad',
           ),
-        ],));
+        ],),);
   }
 }

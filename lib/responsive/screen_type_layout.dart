@@ -1,21 +1,21 @@
-import 'package:app/responsive/baseWidget.dart';
-import 'package:app/responsive/devices.dart';
+import 'base_widget.dart';
+import 'devices.dart';
 import 'package:flutter/material.dart';
 
 class ScreenTypeLayout extends StatelessWidget {
   // Mobile will be returned by default
   final Widget mobile;
-  final Widget tablet;
+  final Widget? tablet;
 
   const ScreenTypeLayout(
-      {Key key, @required this.mobile, this.tablet})
+      {Key? key, required this.mobile, this.tablet,})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(builder: (context, sizingInformation) {
       // If sizing indicates Tablet and we have a tablet widget then return
-      if (sizingInformation.deviceScreenType == DeviceScreenType.Tablet) {
+      if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
         if (tablet != null) {
           return tablet;
         }
@@ -23,6 +23,6 @@ class ScreenTypeLayout extends StatelessWidget {
 
       // Return mobile layout if nothing else is supplied
       return mobile;
-    });
+    },);
   }
 }

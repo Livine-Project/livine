@@ -1,4 +1,6 @@
 
+// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_typing_uninitialized_variables, type_annotate_public_apis
+
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,15 +14,13 @@ class SettingsWidget extends StatefulWidget{
 class _SettingsWidgetState extends State<SettingsWidget> {
   
 
-    sendReport() async{
+    Future<void> sendReport() async{
     final Email email = Email(
-      body: '',
       subject: 'Bug Report | Livine',
       
       recipients: ['wildlifemain1@gmail.com'],
-      isHTML: false,
     );
-    String platformResponse;
+    late String platformResponse;
 
     try {
       FlutterEmailSender.send(email).then((_){
@@ -39,22 +39,23 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       ),
     );
   }
-Future<bool> showWarning(BuildContext context) async =>showDialog(
+Future<bool?> showWarning(BuildContext context) async =>showDialog(
   context: context, 
   builder: (context) =>AlertDialog(
       title: Text("Do you want to exit ?"),
       actions: [
         ElevatedButton(
         onPressed: ()=>Navigator.pop(context, false), 
-        child: Text("No")),
+        child: Text("No"),),
         ElevatedButton(
         onPressed: ()=>Navigator.pop(context, true), 
-        child: Text("Yes")),
+        child: Text("Yes"),),
       ],
       
-    ));
+    ),);
 
 
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
@@ -69,7 +70,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                   child: Text(
                 'Settings',
                 style: GoogleFonts.bebasNeue(fontSize: 35.0),
-              )),
+              ),),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -86,7 +87,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                         subtitle: 'English',
                         icon: Icons.language,
                         iconColor: Colors.white,
-                        backgroundColor: Color(0xfff3F37C9),
+                        backgroundColor: Color(0xfff3f37c9),
                       ),
                     ),
                     SizedBox(
@@ -103,7 +104,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                         subtitle: '',
                         icon: Icons.dark_mode,
                         iconColor: Colors.white,
-                        backgroundColor: Colors.deepPurple[900],
+                        backgroundColor: (Colors.deepPurple[900])!,
                       ),
                     ),
                     SizedBox(
@@ -120,7 +121,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                         subtitle: '',
                         icon: Icons.bug_report,
                         iconColor: Colors.white,
-                        backgroundColor: Colors.deepPurple[500],
+                        backgroundColor: (Colors.deepPurple[500])!,
                       ),
                     ),
                     SizedBox(
@@ -138,7 +139,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                         subtitle: '',
                         icon: FontAwesomeIcons.fileAlt,
                         iconColor: Colors.white,
-                        backgroundColor: Colors.deepPurple[900],
+                        backgroundColor: (Colors.deepPurple[900])!,
                       ),
                     ),
                     SizedBox(
@@ -151,7 +152,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                         subtitle: '',
                         icon: Icons.privacy_tip,
                         iconColor: Colors.white,
-                        backgroundColor: Colors.deepPurple[900],
+                        backgroundColor: (Colors.deepPurple[900])!,
                       ),
                     ),
                     SizedBox(
@@ -163,7 +164,7 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
                     ),
                     SettingsTile(
                       text: 'Version',
-                      subtitle: '1.0 ( Beta Version )',
+                      subtitle: '1.0 ( Early Access )',
                       icon: Icons.info,
                       iconColor: Colors.white,
                       backgroundColor: Colors.black,
@@ -181,30 +182,30 @@ Future<bool> showWarning(BuildContext context) async =>showDialog(
 
 class SettingsTile extends StatelessWidget {
   const SettingsTile({
-    Key key,
-    @required this.text,
-    @required this.icon,
-    @required this.backgroundColor,
-    @required this.iconColor,
-    @required this.subtitle,
+    Key? key,
+    required this.text,
+    required this.icon,
+    required this.backgroundColor,
+    required this.iconColor,
+    required this.subtitle,
   }) : super(key: key);
 
-  final icon;
+  final IconData icon;
   final text;
-  final backgroundColor;
-  final iconColor;
+  final Color backgroundColor;
+  final Color iconColor;
   final subtitle;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
+          backgroundColor: backgroundColor,
+          radius: 20.0,
           child: Icon(
             icon,
             color: iconColor,
           ),
-          backgroundColor: backgroundColor,
-          radius: 20.0,
         ),
         SizedBox(
           width: 10.0,
@@ -213,11 +214,11 @@ class SettingsTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              text,
+              '$text',
               style: TextStyle(fontSize: 15.0),
             ),
             Text(
-              subtitle,
+              '$subtitle',
               style: TextStyle(fontSize: 13.0, color: Colors.grey[500]),
             ),
           ],
@@ -229,18 +230,18 @@ class SettingsTile extends StatelessWidget {
 
 class SettingsGroup extends StatelessWidget {
   const SettingsGroup({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
   }) : super(key: key);
 
   final text;
   @override
   Widget build(BuildContext context) {
-    return Text(text.toUpperCase(),
+    return Text('$text'.toUpperCase(),
         style: GoogleFonts.bebasNeue(
           fontSize: 15.0,
           color: Colors.blueAccent,
           letterSpacing: 3,
-        ));
+        ),);
   }
 }

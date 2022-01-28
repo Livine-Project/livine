@@ -1,10 +1,11 @@
 class LoginResponse {
-  String token;
+  String? token;
 
   LoginResponse(
-      {this.token});
+      {this.token,}
+      );
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
-    token = json['token'];
+    token = json['token'] as String;
   }
 }

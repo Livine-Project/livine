@@ -1,35 +1,36 @@
-import 'package:app/intro/base.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: use_full_hex_values_for_flutter_colors
+
+import 'base.dart';
 import 'package:concentric_transition/concentric_transition.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnBoarding extends StatelessWidget {
-  const OnBoarding({Key key}) : super(key: key);
+  const OnBoarding({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
 
-    List images = ['livine','healthyoptions','stability','progress'];
-    List heading = [
+    final List images = ['livine','healthyoptions','stability'];
+    final List heading = [
       'Welcome to Livine', 
       "We've plenty of healthy options",
       "We assure that you gonna have a Flexible Lifestyle",
-      "We gonna show you your progress in your profile"
       ];
-      List<Color> textColors = [Colors.black, Colors.white,Colors.white, Colors.white];
+      final List<Color> textColors = [Colors.black, Colors.white,Colors.white, Colors.white];
 
     return Scaffold(
       body: ConcentricPageView(
-        colors: <Color>[Colors.white, Color(0xfff4CC9F0),Color(0xfffF72585), Color(0xfff3F37C9)],
+        colors: const <Color>[Colors.white, Color(0xfff4cc9f0),Color(0xffff72585)],
         itemCount: heading.length, // null = infinity
         physics: NeverScrollableScrollPhysics(),
         curve: Curves.easeInOut,
         direction: Axis.vertical,
         scaleFactor: 5,
         onFinish: () =>  Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext ctx) => Navigation())),
+              MaterialPageRoute(builder: (BuildContext ctx) => Navigation()),),
 
         itemBuilder: (int index, double value) {
-          return introScreens(heading[index], 'images/onboarding/${images[index]}.svg', textColors[index]);
+          return introScreens('${heading[index]}', 'images/onboarding/${images[index]}.svg', textColors[index]);
         },
       ),
     );
@@ -66,4 +67,3 @@ class OnBoarding extends StatelessWidget {
     
   }
 }
-

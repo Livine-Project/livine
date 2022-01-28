@@ -1,8 +1,8 @@
-import 'package:app/categories/breakfast.dart';
+import 'breakfast.dart';
 import 'package:flutter/material.dart';
 
 class Dinner extends StatelessWidget {
-  const Dinner({ Key key }) : super(key: key);
+  const Dinner({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +11,11 @@ class Dinner extends StatelessWidget {
         title: Text('Dinner'),
         centerTitle: true,
         elevation: 1.2,
-        backgroundColor: Color(0xfff4361EE),
+        // ignore: use_full_hex_values_for_flutter_colors
+        backgroundColor: Theme.of(context).brightness == Brightness.dark ?Colors.grey[800] :Colors.blueAccent[700],
       ),
         body: GridView.count(crossAxisCount: 1, 
-        children: [
+        children: const [
             Category(
               image: 'images/calories/dinner/mush.jpg',
               name: 'Wild Mushroom Risotto',
@@ -39,6 +40,6 @@ class Dinner extends StatelessWidget {
             image: 'images/calories/dinner/eggplant.jpg',
             name: 'Eggplant Parmesan',
           ),
-        ],));
+        ],),);
   }
 }

@@ -1,10 +1,10 @@
-import 'package:app/responsive/devices.dart';
+import 'devices.dart';
 import 'package:flutter/material.dart';
 
 class SizingInformation {
-  final DeviceScreenType deviceScreenType;
-  final Size screenSize;
-  final Size localWidgetSize;
+  final DeviceScreenType? deviceScreenType;
+  final Size? screenSize;
+  final Size? localWidgetSize;
 
   SizingInformation({
     this.deviceScreenType,

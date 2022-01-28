@@ -1,31 +1,16 @@
-import 'dart:convert';
-
-import 'package:app/Others/loading.dart';
-import 'package:app/pages/home.dart';
-import 'package:app/recipe/recipe.dart';
+import 'loading.dart';
+import '../pages/home.dart';
+import '../recipe/recipe.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
 
-class DataSearch extends SearchDelegate {
-  List<Recipe> recipes = [];
-  Client client = http.Client();
+class DataSearch extends SearchDelegate<Recipe> {
 
-  Future<List<Recipe>> retrieveRecipes() async {
-    recipes = [];
-    final url = 'https://livine.pythonanywhere.com/api/recipe?format=json';
-    var response = await client.get(Uri.parse(url));
-    var recipeJson = json.decode(response.body);
-    for (var recipe in recipeJson) {
-      recipes.add(Recipe.fromMap(recipe));
-    }
 
-    return recipes;
-  }
+  List<Recipe>? recipesSearch;
 
-  List<Recipe> recipesSearch;
   DataSearch({this.recipesSearch});
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -52,10 +37,11 @@ class DataSearch extends SearchDelegate {
           return Padding(
       padding: const EdgeInsets.all(10.0),
       child: query.isNotEmpty ? RecipeCardNormal(
+          id: null,
           name: query, 
-          foodImage: CachedNetworkImageProvider('https://livine.pythonanywhere.com/media/recipes/$query.png'),
+          foodImage: CachedNetworkImageProvider('https://livine.pythonanywhere.com/media/recipes/${query}.png'),
           type: 'Covid', 
-          rating: '4.2'): 
+          rating: '4.2',): 
           Loading(),
     );
 
@@ -63,10 +49,10 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    var searchList = query.isEmpty
-        ? recipesSearch
-        : recipesSearch
-            .where((element) => element.name.startsWith(query))
+    final searchList = query.isEmpty
+        ? recipesSearch!
+        : recipesSearch!
+            .where((element) => element.name.toLowerCase().startsWith(query.toLowerCase()))
             .toList();
     return ListView.builder(
         itemCount: searchList.length,
@@ -75,12 +61,12 @@ class DataSearch extends SearchDelegate {
             leading: Icon(
               Icons.replay_outlined,
             ),
-            title: Text("${searchList[index].name}"),
+            title: Text(searchList[index].name),
             onTap: () {
               query = searchList[index].name;
               showResults(context);
             },
           );
-        });
+        },);
   }
 }

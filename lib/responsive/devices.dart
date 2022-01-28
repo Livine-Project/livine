@@ -1,4 +1,4 @@
 enum DeviceScreenType {
-  Mobile,
-  Tablet,
+  mobile,
+  tablet,
 }

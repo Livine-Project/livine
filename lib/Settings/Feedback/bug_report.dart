@@ -5,28 +5,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BugReport extends StatefulWidget {
-  const BugReport({Key key}) : super(key: key);
+  const BugReport({Key? key}) : super(key: key);
 
   @override
   _BugReportState createState() => _BugReportState();
 }
 
 class _BugReportState extends State<BugReport> {
-  // ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () {
-  //   print("Hello World");
-  // });
 
-  // @override
-  // void dispose() {
-  //   detector.stopListening();
-  //   super.dispose();
-  // }
-  void sendReport() async{
+  Future<void> sendReport() async{
     final Email email = Email(
       body: 'Email body',
       subject: 'Email subject',
       recipients: ['wildlifemain1@gmail.com'],
-      isHTML: false,
     );
     await FlutterEmailSender.send(email);
 
@@ -48,7 +39,7 @@ class _BugReportState extends State<BugReport> {
 
   // }
 
-  TextEditingController _textcontroller;
+  TextEditingController? _textcontroller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +89,8 @@ class _BugReportState extends State<BugReport> {
               ElevatedButton(
                 onPressed: (){},
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff3A0CA3)),
+                  // ignore: use_full_hex_values_for_flutter_colors
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff3a0ca3)),
                   elevation: MaterialStateProperty.all(10.0),
                   fixedSize:
                       MaterialStateProperty.all<Size>(Size.fromWidth(120.0)),
@@ -107,7 +99,7 @@ class _BugReportState extends State<BugReport> {
               ),
             ],
           ),
-        ]),
+        ],),
       ),
     );
   }

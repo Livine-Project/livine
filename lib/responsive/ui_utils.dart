@@ -1,12 +1,12 @@
-import 'package:app/responsive/devices.dart';
+import 'devices.dart';
 import 'package:flutter/widgets.dart';
 
 DeviceScreenType getDeviceType(MediaQueryData mediaQuery) {
-  double deviceWidth = mediaQuery.size.shortestSide;
+  final double deviceWidth = mediaQuery.size.shortestSide;
 
   if (deviceWidth > 600) {
-    return DeviceScreenType.Tablet;
+    return DeviceScreenType.tablet;
   }
 
-  return DeviceScreenType.Mobile;
+  return DeviceScreenType.mobile;
 }

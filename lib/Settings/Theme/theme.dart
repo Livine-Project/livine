@@ -1,11 +1,11 @@
-import 'package:app/main.dart';
+import '../../main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeNotifer extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
-  final ProviderReference ref;
+  final Ref ref;
   ThemeNotifer(this.ref) {
     final theme = ref.read(sharedPrefProvider).getString('theme');
     if (theme == describeEnum(ThemeMode.dark)) {
@@ -31,4 +31,3 @@ class ThemeNotifer extends ChangeNotifier {
   void setLight() => themeMode = ThemeMode.light;
   void setSystem() => themeMode = ThemeMode.system;
 }
-

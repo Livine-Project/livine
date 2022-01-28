@@ -1,55 +1,56 @@
 // import 'package:app/auth/register.dart';
 // import 'package:app/auth/reset_password.dart';
-import 'package:app/Others/loading.dart';
-import 'package:app/Settings/Feedback/bugReport.dart';
-import 'package:app/Settings/Misc/Terms.dart';
-import 'package:app/Settings/Misc/privacy.dart';
-import 'package:app/Settings/Theme/themeSettings.dart';
-import 'package:app/auth/login.dart';
-import 'package:app/auth/register.dart';
-import 'package:app/categories/breakfast.dart';
-import 'package:app/categories/dinner.dart';
-import 'package:app/categories/lunch.dart';
-import 'package:app/categories/snacks.dart';
-import 'package:app/intro/base.dart';
-import 'package:app/intro/boarding.dart';
-import 'package:app/pages/calendar.dart';
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis
+
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import 'Others/loading.dart';
+import 'Settings/Feedback/bug_report.dart';
+import 'Settings/Misc/privacy.dart';
+import 'Settings/Misc/terms.dart';
+import 'Settings/Theme/theme.dart';
+import 'Settings/Theme/theme_settings.dart';
+import 'auth/login.dart';
+import 'auth/register.dart';
+import 'categories/breakfast.dart';
+import 'categories/dinner.dart';
+import 'categories/lunch.dart';
+import 'categories/snacks.dart';
+import 'intro/base.dart';
+import 'intro/boarding.dart';
+import 'l10n/l10n.dart';
+import 'recipe/recipe_details.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'Others/theme.dart';
-
-import 'l10n/l10n.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:app/Others/theme.dart';
-import 'package:device_preview/device_preview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'recipe/recipeDetails.dart';
-
-var username;
+bool username = false;
 var connectivityResult;
+// List<CameraDescription>? cameras;
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
    username = prefs.getBool('username') ?? false;
 
 
   final AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/launcher_icon');
-  InitializationSettings initializationSettings = new InitializationSettings(
-    android: initializationSettingsAndroid
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
   );
 
   flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
- connectivityResult = await (Connectivity().checkConnectivity());
+ connectivityResult = await Connectivity().checkConnectivity();
   if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
   runApp(ProviderScope(
     overrides: [
@@ -58,7 +59,10 @@ Future<void> main() async {
       ),
     ],
     child: MyApp(),
-  ));
+    // child: DevicePreview(
+    //   builder:(context) => MyApp()
+    //   ),
+  ),);
     
   } else {
       runApp(ProviderScope(
@@ -68,7 +72,7 @@ Future<void> main() async {
       ),
     ],
     child: NoConnection(),
-  ));}
+  ),);}
 
 
 }
@@ -89,7 +93,7 @@ final themeProvider = ChangeNotifierProvider((ref) => ThemeNotifer(ref));
 
 class NoConnectionMaterial extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, watch) {
+  Widget build(BuildContext context, WidgetRef watch) {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -111,12 +115,12 @@ class MyApp extends StatelessWidget {
 
 class MaterialAppWithTheme extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, watch) {
-    final theme = watch(themeProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
 
     return MaterialApp(
       supportedLocales: L10n.all,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -144,10 +148,12 @@ class MaterialAppWithTheme extends ConsumerWidget {
         '/login': (context) => Login(),
         '/register': (context) => Register(),
         '/details': (context) => RecipeDetails(),
+
+        // '/scan': (context) => ScanObject(),
+
         // '/reset_password': (context) => Reset_Password(),
         '/terms': (context) => Terms(),
         // '/calories_calc': (context) => Calculator(),
-        '/calendar': (context) => Calendar(),
         '/privacy': (context) => Privacy(),
         // '/verify':(context) => VerifyScreen(),
       },

@@ -1,6 +1,6 @@
-import 'package:app/pages/home.dart';
-import 'package:app/pages/categories.dart';
-import 'package:app/Settings/settings.dart';
+import '../Settings/settings.dart';
+import '../pages/categories.dart';
+import '../pages/home.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,12 +12,12 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   final PageController  pageController = PageController();
-  var isLoaded = false;
+  bool isLoaded = false;
   @override
   void initState() {
     super.initState();
    
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       setState(() {
         isLoaded = true;
       });
@@ -53,9 +53,11 @@ class _NavigationState extends State<Navigation> {
             if (!isLoaded || !pageController.hasClients) {
               return const SizedBox.shrink();
             }
-            final _index = pageController.page.round();
+            final _index = pageController.page!.round();
             return CurvedNavigationBar(
-              backgroundColor: Colors.transparent,
+              color: Theme.of(context).brightness == Brightness.dark ? (Colors.grey[800])!: Colors.white,
+              // ignore: use_full_hex_values_for_flutter_colors
+              backgroundColor: Theme.of(context).brightness == Brightness.dark ? (Colors.grey[900])!: Color(0xfff4895ef),
               items: const [
                 Icon(Icons.home, size: 30),
                 Icon(FontAwesomeIcons.heartbeat, size: 30),
@@ -72,7 +74,7 @@ class _NavigationState extends State<Navigation> {
                 );
               },
             );
-          }),
+          },),
     );
   }
 }

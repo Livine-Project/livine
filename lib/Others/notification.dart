@@ -1,4 +1,6 @@
-import 'package:app/main.dart';
+// ignore_for_file: depend_on_referenced_packages
+
+import '../main.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -15,14 +17,14 @@ import 'package:timezone/timezone.dart' as tz;
     return scheduledDate;
   }
 
-showNotification() async{
+Future<void> showNotification() async{
   tz.initializeTimeZones();
-  String dtz = await FlutterNativeTimezone.getLocalTimezone();
+  final String dtz = await FlutterNativeTimezone.getLocalTimezone();
   final localTimeZone = tz.getLocation(dtz);
   tz.setLocalLocation(localTimeZone);
 
-  AndroidNotificationDetails androidDetails = AndroidNotificationDetails('channelId', 'Livine ', channelDescription: 'Description of the notification ', importance: Importance.high);
-  NotificationDetails generalNotDetails = NotificationDetails(android: androidDetails);
+  final AndroidNotificationDetails androidDetails = AndroidNotificationDetails('channelId', 'Livine ', channelDescription: 'Description of the notification ', importance: Importance.high);
+  final NotificationDetails generalNotDetails = NotificationDetails(android: androidDetails);
 
   await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
@@ -33,6 +35,6 @@ showNotification() async{
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+        matchDateTimeComponents: DateTimeComponents.time,);
 
   }

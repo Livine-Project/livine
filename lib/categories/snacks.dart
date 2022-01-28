@@ -1,8 +1,8 @@
-import 'package:app/categories/breakfast.dart';
+import 'breakfast.dart';
 import 'package:flutter/material.dart';
 
 class Snacks extends StatelessWidget {
-  const Snacks({ Key key }) : super(key: key);
+  const Snacks({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +11,11 @@ class Snacks extends StatelessWidget {
         title: Text('Snacks'),
         centerTitle: true,
         elevation: 1.2,
-        backgroundColor: Color(0xfff4361EE),
+        // ignore: use_full_hex_values_for_flutter_colors
+        backgroundColor: Theme.of(context).brightness == Brightness.dark ?Colors.grey[800] :Colors.blueAccent[700],
       ),
         body: GridView.count(crossAxisCount: 1, 
-        children: [
+        children: const [
             Category(
               image: 'images/calories/snacks/nuts.jpg',
               name: 'Mixed Nuts',
@@ -39,6 +40,6 @@ class Snacks extends StatelessWidget {
             image: 'images/calories/snacks/cheese.jfif',
             name: 'Celery sticks with Cheese',
           ),
-        ],));
+        ],),);
   }
 }

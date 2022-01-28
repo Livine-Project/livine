@@ -1,10 +1,10 @@
-import 'package:app/main.dart';
+import '../../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeSettings extends StatelessWidget {
-  const ThemeSettings({Key key}) : super(key: key);
+  const ThemeSettings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class ThemeSettings extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Consumer(builder: (context, watch, child) {
-              final theme = watch(themeProvider);
+            Consumer(builder: (context, ref, child) {
+              final theme = ref.watch(themeProvider);
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -28,19 +28,19 @@ class ThemeSettings extends StatelessWidget {
                         GoogleFonts.bebasNeue(fontSize: 18.0, letterSpacing: 3),
                   ),
                   Switch(
-                    value: theme.themeMode == ThemeMode.system ? true : false,
+                    value: theme.themeMode == ThemeMode.system || false,
                     onChanged: (value) {
-                      context.read(themeProvider).setSystem();
+                      ref.read(themeProvider).setSystem();
 
 
                     },
                   )
                 ],
               );
-            }),
+            },),
             Consumer(
-              builder: (context , watch , child) {
-              final theme = watch(themeProvider);
+              builder: (context , ref , child) {
+              final theme = ref.watch(themeProvider);
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,39 +52,41 @@ class ThemeSettings extends StatelessWidget {
                         GoogleFonts.bebasNeue(fontSize: 18.0, letterSpacing: 3),
                   ),
                   Switch(
-                    value: theme.themeMode == ThemeMode.light ? true : false,
+                    value: theme.themeMode == ThemeMode.light || false,
                     onChanged: (value) {
                       if (!value) {
-                        context.read(themeProvider).setSystem();
+                        ref.read(themeProvider).setSystem();
                       } else {
-                        context.read(themeProvider).setLight();
+                        ref.read(themeProvider).setLight();
                       }
                     },
                   )
                 ],
               );
-              }
+              },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Icon(Icons.dark_mode, color: Colors.deepPurpleAccent[400]),
-                Text(
-                  'Dark Theme',
-                  style:
-                      GoogleFonts.bebasNeue(fontSize: 18.0, letterSpacing: 3),
-                ),
-                Switch(
-                  value: Theme.of(context).brightness == Brightness.dark,
-                  onChanged: (value) {
-                    if (!value) {
-                      context.read(themeProvider).setSystem();
-                    } else {
-                      context.read(themeProvider).setDark();
-                    }
-                  },
-                )
-              ],
+            Consumer(
+              builder: (context,ref,child) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.dark_mode, color: Colors.deepPurpleAccent[400]),
+                  Text(
+                    'Dark Theme',
+                    style:
+                        GoogleFonts.bebasNeue(fontSize: 18.0, letterSpacing: 3),
+                  ),
+                  Switch(
+                    value: Theme.of(context).brightness == Brightness.dark,
+                    onChanged: (value) {
+                      if (!value) {
+                        ref.read(themeProvider).setSystem();
+                      } else {
+                        ref.read(themeProvider).setDark();
+                      }
+                    },
+                  )
+                ],
+              ),
             )
           ],
         ),
