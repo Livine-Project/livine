@@ -3,7 +3,7 @@ import 'dart:io';
 class AdHelper {
   static String get nativeadunit {
     if (Platform.isAndroid) {
-      return "ca-app-pub-6594474809526163/6049258242";
+      return "ca-app-pub-1056698201610872/1548122447";
     } else {
       throw new UnsupportedError("Unsupported platform");
     }

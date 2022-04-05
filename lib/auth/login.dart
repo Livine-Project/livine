@@ -1,7 +1,10 @@
+// ignore_for_file: type_annotate_public_apis
+
 import 'dart:convert';
 
+import 'package:go_router/go_router.dart';
+
 import 'auth_classes.dart';
-import '../intro/boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -32,24 +35,32 @@ class _LoginState extends State<Login> {
       final loginJson = LoginResponse.fromJson(Map<String,dynamic>.from(responseJson as Map<dynamic,dynamic>));
       if (loginJson.token!.isNotEmpty) {
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext ctx) => const OnBoarding()),);
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (BuildContext ctx) => const OnBoarding()),);
+        context.goNamed("OnBoarding");
       }
     }
     return null;
   }
 
   bool _obscureText = true;
-
+  bool isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Future validateForm() async {
+  validateForm() async {
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final form = _formKey.currentState!;
     if (form.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       logintoDjango();
       prefs.setBool('username', true);
     } else {
       debugPrint('form is invalid');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -60,7 +71,7 @@ class _LoginState extends State<Login> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/icon/logo.png'),
+            image: AssetImage('assets/images/icon/logo.png'),
             alignment: Alignment.topCenter,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -160,7 +171,10 @@ class _LoginState extends State<Login> {
                   height: 60,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),),
-                  child: Text(
+                  child: isLoading ? CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                  : Text(
                     'SIGN IN',
                     style: TextStyle(
                         fontSize: 15,

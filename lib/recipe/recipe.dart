@@ -12,8 +12,8 @@ final recipesProvider =
     FutureProvider<List<Recipe>>((ref) => retrieveRecipes());
 
 // Recipes Provider By ID
-final FutureProviderFamily<Recipe, String> recipesProviderID =
-    FutureProvider.family<Recipe, String>((ref, id) async {
+final FutureProviderFamily<Recipe, int> recipesProviderID =
+    FutureProvider.family<Recipe, int>((ref, id) async {
   final url = 'https://livine.pythonanywhere.com/api/recipe/$id?format=json';
   final response = await client.get(Uri.parse(url));
   final responseJson = json.decode(response.body);

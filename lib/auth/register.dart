@@ -30,11 +30,18 @@ class _RegisterState extends State<Register> {
       Navigator.pushNamed(context, '/login');
     }
   }
-
+  bool isLoading = false;
   validateForm() {
     final form = _formKey.currentState!;
     if (form.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       registertoDjango();
+    } else{
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -54,7 +61,7 @@ class _RegisterState extends State<Register> {
             Navigator.pop(context);
           },
           icon: SvgPicture.asset(
-            'images/login/back_arrow.svg',
+            'assets/images/login/back_arrow.svg',
             width: 25.0,
             color: Colors.black,
           ),
@@ -192,7 +199,9 @@ class _RegisterState extends State<Register> {
                   height: 60,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),),
-                  child: Text(
+                  child: isLoading ?  CircularProgressIndicator(
+                    color: Colors.white,
+                  ) : Text(
                     'SIGN UP',
                     style: TextStyle(
                         fontSize: 15,
@@ -223,7 +232,7 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               SizedBox(height: 10.0,),
-              Text("By creating an account , you already agree on "),
+              Center(child: Text("By creating an account , you already agree on ")),
               SizedBox(height: 10.0,),
               Center(
                 child: GestureDetector(

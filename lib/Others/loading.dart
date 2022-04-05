@@ -41,20 +41,6 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
       }
     });
   }
-  // Future<ConnectivityResult> _refresh(){
-  //       Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-  //     if (result == ConnectivityResult.mobile ||
-  //         result == ConnectivityResult.wifi) {
-  //       if (username == true) {
-  //         Navigator.pushReplacement(context,
-  //             MaterialPageRoute(builder: (BuildContext ctx) => Navigation()),);
-  //       } else {
-  //         Navigator.pushReplacement(context,
-  //             MaterialPageRoute(builder: (BuildContext ctx) => Login()),);
-  //       }
-  //     }
-  //   });
-  //   return Future.delayed(Duration(seconds: 5));
     
   // }
   @override
@@ -67,7 +53,7 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
             child: Column(
               children: [
                 SvgPicture.asset(
-                  'images/network/network_error.svg',
+                  'assets/images/network/network_error.svg',
                   width: 250.0,
                 ),
                 SizedBox(

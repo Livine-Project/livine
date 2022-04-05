@@ -1,6 +1,7 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_print
+// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_print, type_annotate_public_apis
 
-import 'ingridents.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Others/loading.dart';
@@ -11,7 +12,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DetailsBody extends StatelessWidget {
-  const DetailsBody({Key? key}) : super(key: key);
+  const DetailsBody({Key? key, required this.id}) : super(key: key);
+  final id;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class DetailsBody extends StatelessWidget {
       child: Consumer(
         builder: (context, ref, child) {
           final recipesData = ref.watch(recipesProviderID(
-              ModalRoute.of(context)!.settings.arguments.toString()));
+              id));
           return recipesData.when(
             data: (data) {
               _launchURL() async {
@@ -34,7 +36,7 @@ class DetailsBody extends StatelessWidget {
 
               return Column(
                 children: [
-                  ImageAndIcons(size: size),
+                  ImageAndIcons(size: size,id:id),
                   FoodTitle(
                     name: data.name,
                     type: data.type,
@@ -78,8 +80,7 @@ class DetailsBody extends StatelessWidget {
                                         topLeft: Radius.circular(30.0)))),
                           ),
                           onPressed: () =>
-                                  Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext ctx) => Ingridents(ingridentsRecipe: data.ingridents,))),
+                                  context.push('/ingridents',extra: data.ingridents),
                           child: Text(
                             "Ingridents",
                             style: TextStyle(color: Colors.black, fontSize: 16),
@@ -148,9 +149,11 @@ class ImageAndIcons extends StatelessWidget {
   const ImageAndIcons({
     Key? key,
     required this.size,
+    required this.id,
   }) : super(key: key);
 
   final Size size;
+  final id;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +166,7 @@ class ImageAndIcons extends StatelessWidget {
             child: Consumer(
               builder: (context, ref, child) {
                 final recipesData = ref.watch(recipesProviderID(
-                    ModalRoute.of(context)!.settings.arguments.toString()));
+                    id));
                 return recipesData.when(
                   data: (data) {
                     return Row(
@@ -178,26 +181,27 @@ class ImageAndIcons extends StatelessWidget {
                                     top: size.height * 0.1,
                                     left: 10.0,
                                   ),
+                                  
                                   icon: SvgPicture.asset(
-                                    'images/login/back_arrow.svg',
+                                    'assets/images/login/back_arrow.svg',
                                     color: Theme.of(context).brightness == Brightness.dark? Colors.white : Colors.blueAccent,
                                   ),
-                                  onPressed: () => Navigator.pop(context),
+                                  onPressed: () => context.pop(),
                                 ),
                               ),
                               Spacer(),
                               IconCard(
-                                image: 'images/recipes/calories.jpg',
+                                image: 'assets/images/recipes/calories.jpg',
                               ),
                               Text("1789"),
                               IconCard(
-                                image: 'images/recipes/ingredients.png',
+                                image: 'assets/images/recipes/ingredients.png',
                               ),
                               IconCard(
-                                image: 'images/recipes/ingredients.png',
+                                image: 'assets/images/recipes/ingredients.png',
                               ),
                               IconCard(
-                                image: 'images/recipes/ingredients.png',
+                                image: 'assets/images/recipes/ingredients.png',
                               ),
                             ],
                           ),

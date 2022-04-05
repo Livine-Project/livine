@@ -109,12 +109,11 @@ class Terms extends StatelessWidget {
                   notify you of any changes by posting the new Terms and
                   Conditions on this page.
                 </p> <p>
-                  These terms and conditions are effective as of 2022-01-27
+                  These terms and conditions are effective as of 2022-02-13
                 </p> <p><strong>Contact Us</strong></p> <p>
                   If you have any questions or suggestions about my
                   Terms and Conditions, do not hesitate to contact me
                   at mazenomar-@outlook.com.
-    
 
 
 

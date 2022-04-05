@@ -5,6 +5,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../pristine/pristine.dart';
+
 class Navigation extends StatefulWidget {
   @override
   _NavigationState createState() => _NavigationState();
@@ -32,6 +34,7 @@ class _NavigationState extends State<Navigation> {
   final List<Widget> _children = [
     Home(),
     Patient(),
+    Pristine(),
     SettingsWidget(),
 
   ];
@@ -61,6 +64,7 @@ class _NavigationState extends State<Navigation> {
               items: const [
                 Icon(Icons.home, size: 30),
                 Icon(FontAwesomeIcons.heartbeat, size: 30),
+                Icon(Icons.star_rate_rounded,size:30),
                 Icon(Icons.settings, size: 30),
               ],
               animationDuration: duration,

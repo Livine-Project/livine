@@ -14,32 +14,44 @@ class Snacks extends StatelessWidget {
         // ignore: use_full_hex_values_for_flutter_colors
         backgroundColor: Theme.of(context).brightness == Brightness.dark ?Colors.grey[800] :Colors.blueAccent[700],
       ),
-        body: GridView.count(crossAxisCount: 1, 
+        body: OrientationBuilder(
+          builder: ((context, orientation) => 
+          GridView.count(crossAxisCount: orientation == Orientation.portrait ? 1 : 2, 
+
         children: const [
             Category(
-              image: 'images/calories/snacks/nuts.jpg',
+              url: 'https://www.youtube.com/watch?v=DeeBmd7OaX0',
+              image: 'assets/images/calories/snacks/nuts.jpg',
               name: 'Mixed Nuts',
             ),
           Category(
-            image: 'images/calories/snacks/red.jpg',
+            url: 'https://www.youtube.com/results?search_query=Red+pepper+guacamole',
+            image: 'assets/images/calories/snacks/red.jpg',
             name: 'Red pepper guacamole',
           ),
           Category(
-            image: 'images/calories/snacks/yogurt.jpg',
+            url: 'https://www.youtube.com/watch?v=z0uTL_ZOOoY',
+            image: 'assets/images/calories/snacks/yogurt.jpg',
             name: 'Yogurt with mixed berries',
           ),
           Category(
-            image: 'images/calories/snacks/apple.jpg',
+            url: 'https://www.youtube.com/watch?v=iD2HVkiE_us',
+            image: 'assets/images/calories/snacks/apple.jpg',
             name: 'Apple slices with peanut',
           ),
           Category(
-            image: 'images/calories/snacks/cottage.jpg',
+            url: 'https://www.youtube.com/watch?v=SW0UkfgrQNg',
+            image: 'assets/images/calories/snacks/cottage.jpg',
             name: 'Cottage cheese',
           ),
           Category(
-            image: 'images/calories/snacks/cheese.jfif',
+            url: 'https://www.youtube.com/watch?v=PztY4NAyqoI',
+            image: 'assets/images/calories/snacks/cheese.jfif',
             name: 'Celery sticks with Cheese',
           ),
-        ],),);
+        ],)),
+        ),
+          
+        );
   }
 }

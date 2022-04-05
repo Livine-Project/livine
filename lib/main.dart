@@ -5,29 +5,17 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'Others/loading.dart';
-import 'Settings/Feedback/bug_report.dart';
-import 'Settings/Misc/privacy.dart';
-import 'Settings/Misc/terms.dart';
+import 'Others/routes.dart';
 import 'Settings/Theme/theme.dart';
-import 'Settings/Theme/theme_settings.dart';
-import 'auth/login.dart';
-import 'auth/register.dart';
-import 'categories/breakfast.dart';
-import 'categories/dinner.dart';
-import 'categories/lunch.dart';
-import 'categories/snacks.dart';
-import 'intro/base.dart';
-import 'intro/boarding.dart';
 import 'l10n/l10n.dart';
-import 'recipe/recipe_details.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 bool username = false;
 var connectivityResult;
@@ -60,6 +48,7 @@ Future<void> main() async {
     ],
     child: MyApp(),
     // child: DevicePreview(
+      
     //   builder:(context) => MyApp()
     //   ),
   ),);
@@ -96,6 +85,7 @@ class NoConnectionMaterial extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef watch) {
 
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
 
       home: NoConnectionWidget(),
@@ -118,7 +108,13 @@ class MaterialAppWithTheme extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
 
-    return MaterialApp(
+    final _router = baseRoutes;
+
+      
+    
+    return MaterialApp.router(
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
       supportedLocales: L10n.all,
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -128,35 +124,46 @@ class MaterialAppWithTheme extends ConsumerWidget {
       ],
     
       debugShowCheckedModeBanner: false,
-      locale: DevicePreview.locale(context), // Add the locale here
-      builder: DevicePreview.appBuilder, // Add the builder here
+      builder: (context,widget) => ResponsiveWrapper.builder(
+        ClampingScrollWrapper.builder(context, widget!),
+        breakpoints: const [
+            ResponsiveBreakpoint.resize(480, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
 
-      home: username ? Navigation() : Login(),
+        ]
+      ),
+
+      // home: username ? Navigation() : Login(),
       themeMode: theme.themeMode,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-    
-      routes: {
-        '/onboarding': (context) => OnBoarding(),
-        '/navigate': (context) => Navigation(),
-        '/bugReport': (context) => BugReport(),
-        '/themeSettings': (context) => ThemeSettings(),
-        '/breakfast' : (context) => BreakFast(),
-        '/dinner' : (context) => Dinner(),
-        '/lunch' : (context) => Lunch(),
-        '/snacks' : (context) => Snacks(),
-        '/login': (context) => Login(),
-        '/register': (context) => Register(),
-        '/details': (context) => RecipeDetails(),
 
-        // '/scan': (context) => ScanObject(),
+      
+      // routes: {
+      //   '/onboarding': (context) => OnBoarding(),
+      //   '/navigate': (context) => Navigation(),
+      //   '/bugReport': (context) => BugReport(),
+      //   '/themeSettings': (context) => ThemeSettings(),
+      //   '/breakfast' : (context) => BreakFast(),
+      //   '/dinner' : (context) => Dinner(),
+      //   '/lunch' : (context) => Lunch(),
+      //   '/snacks' : (context) => Snacks(),
+      //   '/login': (context) => Login(),
+      //   '/register': (context) => Register(),
+      //   '/details': (context) => RecipeDetails(),
 
-        // '/reset_password': (context) => Reset_Password(),
-        '/terms': (context) => Terms(),
-        // '/calories_calc': (context) => Calculator(),
-        '/privacy': (context) => Privacy(),
-        // '/verify':(context) => VerifyScreen(),
-      },
+      //   // '/scan': (context) => ScanObject(),
+
+      //   // '/reset_password': (context) => Reset_Password(),
+
+      //   '/terms': (context) => Terms(),
+      //   '/privacy': (context) => Privacy(),
+
+      //   '/confirm': (context) => ConfirmPayment(),
+
+      // },
+      
     );
   }
 }

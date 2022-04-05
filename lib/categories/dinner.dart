@@ -14,32 +14,41 @@ class Dinner extends StatelessWidget {
         // ignore: use_full_hex_values_for_flutter_colors
         backgroundColor: Theme.of(context).brightness == Brightness.dark ?Colors.grey[800] :Colors.blueAccent[700],
       ),
-        body: GridView.count(crossAxisCount: 1, 
-        children: const [
+        body: OrientationBuilder(
+          builder: ((context, orientation) => 
+          GridView.count(crossAxisCount: orientation == Orientation.portrait ? 1 : 2, 
+          children: const [
+              Category(
+                url: 'https://www.youtube.com/watch?v=-oxjhgVp4y4',
+                image: 'assets/images/calories/dinner/mush.jpg',
+                name: 'Wild Mushroom Risotto',
+              ),
             Category(
-              image: 'images/calories/dinner/mush.jpg',
-              name: 'Wild Mushroom Risotto',
+              url: 'https://www.youtube.com/watch?v=vUcP8tYFvio',
+              image: 'assets/images/calories/dinner/salad.jpg',
+              name: 'Grilled Steak Tortilla Salad',
             ),
-          Category(
-            image: 'images/calories/dinner/salad.jpg',
-            name: 'Grilled Steak Tortilla Salad',
-          ),
-          Category(
-            image: 'images/calories/dinner/shrimp.jpg',
-            name: 'Feta Shrimp and Polenta',
-          ),
-          Category(
-            image: 'images/calories/dinner/mike.jpg',
-            name: 'Black Bean Soup',
-          ),
-          Category(
-            image: 'images/calories/dinner/bass.jpg',
-            name: 'Bass With Radish Salsa ',
-          ),
-          Category(
-            image: 'images/calories/dinner/eggplant.jpg',
-            name: 'Eggplant Parmesan',
-          ),
-        ],),);
+            Category(
+              url: 'https://www.youtube.com/watch?v=CbzOZVC-la0',
+              image: 'assets/images/calories/dinner/shrimp.jpg',
+              name: 'Feta Shrimp and Polenta',
+            ),
+            Category(
+              url: 'https://www.youtube.com/watch?v=mTwBK39EWok',
+              image: 'assets/images/calories/dinner/mike.jpg',
+              name: 'Black Bean Soup',
+            ),
+            Category(
+              url: 'https://www.youtube.com/watch?v=_v8uQPFp2ZA',
+              image: 'assets/images/calories/dinner/bass.jpg',
+              name: 'Bass With Radish Salsa ',
+            ),
+            Category(
+              url: 'https://www.youtube.com/watch?v=6JfeZL14L48',
+              image: 'assets/images/calories/dinner/eggplant.jpg',
+              name: 'Eggplant Parmesan',
+            ),
+          ],)),
+        ),);
   }
 }

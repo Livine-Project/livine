@@ -36,7 +36,7 @@ class Privacy extends StatelessWidget {
                 </p> <p><strong>Information Collection and Use</strong></p> <p>
                   For a better experience, while using our Service, I
                   may require you to provide us with certain personally
-                  identifiable information, including but not limited to timezone,. The information that
+                  identifiable information, including but not limited to timezone email. The information that
                   I request will be retained on your device and is not collected by me in any way.
                 </p> <div><p>
                     The app does use third-party services that may collect
@@ -92,13 +92,23 @@ class Privacy extends StatelessWidget {
                   no control over and assume no responsibility for the content,
                   privacy policies, or practices of any third-party sites or
                   services.
+                </p> <p><strong>Children’s Privacy</strong></p> <div><p>
+                    These Services do not address anyone under the age of 13.
+                    I do not knowingly collect personally
+                    identifiable information from children under 13 years of age. In the case
+                    I discover that a child under 13 has provided
+                    me with personal information, I immediately
+                    delete this from our servers. If you are a parent or guardian
+                    and you are aware that your child has provided us with
+                    personal information, please contact me so that
+                    I will be able to do the necessary actions.
                   </p></div> <!----> <p><strong>Changes to This Privacy Policy</strong></p> <p>
                   I may update our Privacy Policy from
                   time to time. Thus, you are advised to review this page
                   periodically for any changes. I will
                   notify you of any changes by posting the new Privacy Policy on
                   this page.
-                </p> <p>This policy is effective as of 2022-01-27</p> <p><strong>Contact Us</strong></p> <p>
+                </p> <p>This policy is effective as of 2022-02-13</p> <p><strong>Contact Us</strong></p> <p>
                   If you have any questions or suggestions about my
                   Privacy Policy, do not hesitate to contact me at mazenomar-@outlook.com.
              

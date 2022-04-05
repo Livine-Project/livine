@@ -1,14 +1,14 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis, dead_code
+
+import 'package:go_router/go_router.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import '../ads/ads_help.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../Others/loading.dart';
 import '../Others/notification.dart';
-import '../Others/search.dart';
 import '../recipe/recipe.dart';
-import '../responsive/orientation_layout.dart';
-import '../responsive/screen_type_layout.dart';
-import '../responsive/tablet.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,68 +23,81 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void dispose() {
+    _nativeAdBanner.dispose();
+    super.dispose();
+  }
+  @override
   void initState() {
     showNotification();
     nativeBannerFunction();
     super.initState();
   }
+  
 
-  late NativeAd _nativeAdBanner;
+  late BannerAd _nativeAdBanner;
 
   bool _isnativeBannerAdLoaded = false;
 
   void nativeBannerFunction() {
-    _nativeAdBanner = NativeAd(
+    _nativeAdBanner = BannerAd(
       adUnitId: AdHelper.nativeadunit,
-      factoryId: "livineAdUnit",
-      listener: NativeAdListener(onAdLoaded: (_) {
+      size: AdSize.largeBanner,
+      request: AdRequest(),
+      listener: BannerAdListener(onAdLoaded: (_){
         setState(() {
           _isnativeBannerAdLoaded = true;
         });
-      }, onAdFailedToLoad: (ad, error) {
+      },
+      onAdFailedToLoad: (ad,error){
         ad.dispose();
-        print(error);
-      }),
-      request: AdRequest(),
+      }
+      )
     );
+    _nativeAdBanner.load();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List icons = [
-      FontAwesomeIcons.hamburger,
-      FontAwesomeIcons.pizzaSlice,
-      FontAwesomeIcons.birthdayCake
-    ];
-    final List names = [
-      'Covid',
-      'Anemia',
-      'Diabetes',
-      'Flu',
-      'Malaria',
-      'Dengue',
-      'Stroke',
+    // final List icons = [
+    //   FontAwesomeIcons.hamburger,
+    //   FontAwesomeIcons.pizzaSlice,
+    //   FontAwesomeIcons.birthdayCake
+    // ];
+    // final List names = [
+    //   'Covid',
+    //   'Anemia',
+    //   'Diabetes',
+    //   'Flu',
+    //   'Malaria',
+    //   'Dengue',
+    //   'Stroke',
 
-      // AppLocalizations.of(context).salad,
-      // AppLocalizations.of(context).burger,
-      // AppLocalizations.of(context).pancake
-    ];
+    //   // AppLocalizations.of(context).salad,
+    //   // AppLocalizations.of(context).burger,
+    //   // AppLocalizations.of(context).pancake
+    // ];
 
-    return ScreenTypeLayout(
-      mobile: OrientationLayout(
-        portrait: normalHome(icons, names, context),
-      ),
-      tablet: OrientationLayout(
-        portrait: tabletHome(icons, names, context),
-      ),
-    );
-  }
+    int screenCrossCount(){
+      if (ResponsiveWrapper.of(context).isTablet && ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+       return 4;
+  
+      }
+      else if (ResponsiveWrapper.of(context).orientation == Orientation.landscape && ResponsiveWrapper.of(context).isTablet){
+        return 6;
+      }
 
-  Scaffold normalHome(
-    List<dynamic> icons,
-    List<dynamic> names,
-    BuildContext context,
-  ) {
+      else if (ResponsiveWrapper.of(context).isMobile && ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+        return 2;
+      }
+      else if(ResponsiveWrapper.of(context).orientation == Orientation.landscape){
+        return 4;
+      }
+
+      return 2;
+
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.grey[900]
@@ -104,39 +117,17 @@ class _HomeState extends State<Home> {
                     style: TextStyle(fontSize: 24.0, color: Colors.white),
                   ),
                 ),
-                Consumer(
-                  builder: (context, ref, child) {
-                    //TODO: Fix That
-                    final recipesData = ref.watch(recipesProvider);
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          iconSize: 25.0,
-                          color: Colors.black,
-                          icon: Icon(Icons.search),
-                          onPressed: () {
-                            showSearch(
-                              context: context,
-                              delegate:
-                                  DataSearch(recipesSearch: recipesData.value),
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                ),
+
               ],
             ),
+            //TODO:UNCOMMENT THIS WHEN THE APP IS ON GOOGLEPLAY
+            
             _isnativeBannerAdLoaded
                 ? Container(
-                    child: AdWidget(ad: _nativeAdBanner),
+                  height: _nativeAdBanner.size.height.toDouble(),
+                  width:  _nativeAdBanner.size.width.toDouble(),
+                  
+                  child: AdWidget(ad: _nativeAdBanner),
                   )
                 : LoadingAdWidget(),
             Consumer(
@@ -150,25 +141,32 @@ class _HomeState extends State<Home> {
                       onRefresh: () async{
                         return await ref.refresh(recipesProvider);
                       },
-                      child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 5 / 7,
+                      child: OrientationBuilder(
+                        builder: (context, orientation) =>
+                          
+
+                        GridView.builder(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            // crossAxisCount: ResponsiveWrapper.of(context).isTablet ? 4 : 2,
+                            crossAxisCount: screenCrossCount(),
+                            // crossAxisCount: orientation == Orientation.portrait? 2 : 4,
+                            childAspectRatio: 5 / 7,
+                          ),
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return RecipeCardNormal(
+                              id: data[index].id,
+                              name: data[index].name,
+                              foodImage: CachedNetworkImageProvider(
+                                
+                                'https://livine.pythonanywhere.com/${data[index].imageURL}',
+                                maxWidth: 650,
+                              ),
+                              type: data[index].type,
+                              rating: data[index].rating,
+                            );
+                          },
                         ),
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return RecipeCardNormal(
-                            id: data[index].id,
-                            name: data[index].name,
-                            foodImage: CachedNetworkImageProvider(
-                              
-                              'https://livine.pythonanywhere.com/${data[index].imageURL}',
-                              maxWidth: 650,
-                            ),
-                            type: data[index].type,
-                            rating: data[index].rating,
-                          );
-                        },
                       ),
                     ),
                   ),
@@ -185,16 +183,18 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+
   }
+
 }
 
 class LoadingAdWidget extends StatelessWidget {
   const LoadingAdWidget({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -204,7 +204,7 @@ class LoadingAdWidget extends StatelessWidget {
               : Colors.blue[900],
           borderRadius: BorderRadius.circular(10.0),
         ),
-        width: 350,
+        width: size,
         height: 120,
         child: Center(
             child: Text(
@@ -216,75 +216,6 @@ class LoadingAdWidget extends StatelessWidget {
   }
 }
 
-Stack wideHome(List<dynamic> icons, List<dynamic> names, BuildContext context) {
-  return Stack(
-    fit: StackFit.expand,
-    children: [
-      Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 120.0),
-            child: Center(
-              child: SizedBox(
-                height: 100.0,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Categories(
-                      text: '${names[index]}',
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0),
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 3 / 4,
-                crossAxisCount: 2,
-              ),
-              shrinkWrap: true,
-              children: <Widget>[
-                RecipeCardNormal(
-                  id: 1,
-                  name: AppLocalizations.of(context)!.salad,
-                  foodImage: AssetImage('images/recipes/salad.png'),
-                  rating: '2.8',
-                  type: 'Starter',
-                ),
-                RecipeCardNormal(
-                  id: 1,
-                  name: 'Spaghetti',
-                  foodImage: AssetImage('images/recipes/spaghetti.png'),
-                  rating: '4.6',
-                  type: 'Starter',
-                ),
-                RecipeCardNormal(
-                  id: 1,
-                  name: 'Rice',
-                  foodImage: AssetImage('images/recipes/rice.png'),
-                  rating: '5',
-                  type: 'Starter',
-                ),
-                RecipeCardNormal(
-                  id: 1,
-                  name: 'Beans',
-                  foodImage: AssetImage('images/recipes/beans.png'),
-                  rating: '1.5',
-                  type: 'Starter',
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ],
-  );
-}
 
 class RecipeCardNormal extends StatefulWidget {
   const RecipeCardNormal({
@@ -321,11 +252,7 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
             borderRadius: BorderRadius.circular(15.0),
             child: InkWell(
               splashColor: Colors.orange[600],
-              onTap: () => Navigator.pushNamed(
-                context,
-                '/details',
-                arguments: widget.id,
-              ),
+              onTap: () => context.push('/details',extra: widget.id),
               borderRadius: BorderRadius.circular(15.0),
               child: Container(
                 padding: EdgeInsets.only(top: 5.0),

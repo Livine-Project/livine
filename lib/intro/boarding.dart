@@ -30,7 +30,7 @@ class OnBoarding extends StatelessWidget {
               MaterialPageRoute(builder: (BuildContext ctx) => Navigation()),),
 
         itemBuilder: (int index, double value) {
-          return introScreens('${heading[index]}', 'images/onboarding/${images[index]}.svg', textColors[index]);
+          return introScreens('${heading[index]}', 'assets/images/onboarding/${images[index]}.svg', textColors[index]);
         },
       ),
     );
