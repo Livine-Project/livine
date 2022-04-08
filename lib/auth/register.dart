@@ -1,7 +1,10 @@
 // ignore_for_file: always_declare_return_types, type_annotate_public_apis
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,18 +21,33 @@ class _RegisterState extends State<Register> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
+  var errorinEmail;
+  var errorinUser;
 
   Future<void> registertoDjango() async {
     const url = 'https://livine.pythonanywhere.com/api/register/';
-    await client.post(Uri.parse(url), body: {
-      'username': _username.text,
-      'email': _email.text,
-      'password': _confirmPassword.text,
-    },);
-    if (mounted) {
-      Navigator.pushNamed(context, '/login');
+    final response = await client.post(
+      Uri.parse(url),
+      body: {
+        'username': _username.text,
+        'email': _email.text,
+        'password': _confirmPassword.text,
+      },
+    );
+    
+    final responseJson = json.decode(response.body);
+    errorinEmail = responseJson['email'];
+    errorinUser = responseJson['username'];
+
+    if (response.statusCode == 200) {
+      GoRouter.of(context).go('/Login');
+    } else {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
+
   bool isLoading = false;
   validateForm() {
     final form = _formKey.currentState!;
@@ -38,7 +56,7 @@ class _RegisterState extends State<Register> {
         isLoading = true;
       });
       registertoDjango();
-    } else{
+    } else {
       setState(() {
         isLoading = false;
       });
@@ -52,13 +70,12 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.go('/login');
           },
           icon: SvgPicture.asset(
             'assets/images/login/back_arrow.svg',
@@ -103,12 +120,18 @@ class _RegisterState extends State<Register> {
                             color: Colors.black,
                           ),
                           decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(),),
-                              labelText: 'Username',
-                              labelStyle: TextStyle(
-                                  fontSize: 15, color: Colors.black,),),
+                            // errorText: errorinUser is List
+                            //     ? errorinUser.first
+                            //     : errorinUser,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(),
+                            ),
+                            labelText: 'Username',
+                            labelStyle: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
                       ),
                       TextFormField(
@@ -117,6 +140,7 @@ class _RegisterState extends State<Register> {
                           if (e!.isEmpty) {
                             return "Please enter your email";
                           }
+
                           return null;
                         },
                         controller: _email,
@@ -124,16 +148,23 @@ class _RegisterState extends State<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(),),
-                            labelText: 'Email',
-                            labelStyle: TextStyle(
-                                fontSize: 15, color: Colors.black,),),
+                          // errorText: errorinEmail is List
+                          //     ? errorinEmail.first
+                          //     : errorinEmail,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          labelText: 'Email',
+                          labelStyle: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                       TextFormField(
                         validator: (passwordValue) {
-                          if (passwordValue!.length < 6 && passwordValue.isNotEmpty) {
+                          if (passwordValue!.length < 6 &&
+                              passwordValue.isNotEmpty) {
                             return "Password needs to be atleast 6 characters ";
                           } else if (passwordValue.isEmpty) {
                             return "Please enter your password ";
@@ -146,15 +177,17 @@ class _RegisterState extends State<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(),),
-                            labelText: 'Password',
-                            labelStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          labelText: 'Password',
+                          labelStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                        ),
                       ),
                       TextFormField(
                         validator: (confirmPassword) {
-                          if(_confirmPassword.value != _password.value ){
+                          if (_confirmPassword.value != _password.value) {
                             return "Confirm password doesn't match with your password";
                           }
                           return null;
@@ -165,25 +198,28 @@ class _RegisterState extends State<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                                                      suffixIcon: IconButton(
-                              icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: _obscureText
-                                      ? Colors.grey
-                                      : Colors.blueAccent[400],),
-                              onPressed: () {
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
-                              },
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: _obscureText
+                                  ? Colors.grey
+                                  : Colors.blueAccent[400],
                             ),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(),),
-                            labelText: 'Confirm Password',
-                            labelStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(),
+                          ),
+                          labelText: 'Confirm Password',
+                          labelStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                        ),
                       ),
                     ],
                   ),
@@ -198,16 +234,20 @@ class _RegisterState extends State<Register> {
                   minWidth: 350,
                   height: 60,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),),
-                  child: isLoading ?  CircularProgressIndicator(
-                    color: Colors.white,
-                  ) : Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,),
+                    borderRadius: BorderRadius.circular(50),
                   ),
+                  child: isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text(
+                          'SIGN UP',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
               Padding(
@@ -218,26 +258,36 @@ class _RegisterState extends State<Register> {
                     children: [
                       Text("Already have an account?"),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/login'),
+                        onTap: () => context.go('/login'),
                         child: Text(
                           'Sign In'.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.blueAccent[400],
-                              fontWeight: FontWeight.bold,),
+                            fontSize: 15.0,
+                            color: Colors.blueAccent[400],
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 10.0,),
-              Center(child: Text("By creating an account , you already agree on ")),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
+              Center(
+                  child:
+                      Text("By creating an account , you already agree on ")),
+              SizedBox(
+                height: 10.0,
+              ),
               Center(
                 child: GestureDetector(
-                  onTap: ()=> Navigator.pushNamed(context, '/terms'),
-                  child: Text("Terms and Conditions",style: TextStyle(color: Colors.blue),)),
+                    onTap: () => Navigator.pushNamed(context, '/terms'),
+                    child: Text(
+                      "Terms and Conditions",
+                      style: TextStyle(color: Colors.blue),
+                    )),
               ),
             ],
           ),

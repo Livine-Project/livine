@@ -10,6 +10,8 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auth_service.dart';
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -18,11 +20,21 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  Client client = http.Client();
+  AuthService _auth = AuthService();
   final _username = TextEditingController();
   final _password = TextEditingController();
-  Client client = http.Client();
 
-  Future<LoginResponse?> logintoDjango() async {
+
+  bool _obscureText = true;
+  bool isLoading = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  
+    Future<LoginResponse?> logintoDjango() async {
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     const url = 'https://livine.pythonanywhere.com/api/login/';
     final response = await client.post(Uri.parse(url), body: {
       'username': _username.text,
@@ -30,32 +42,33 @@ class _LoginState extends State<Login> {
     },
     );
     final responseJson = json.decode(response.body);
+    final errorinLogin = responseJson['non_field_errors'];
 
+    
     if (response.statusCode == 200) {
       final loginJson = LoginResponse.fromJson(Map<String,dynamic>.from(responseJson as Map<dynamic,dynamic>));
       if (loginJson.token!.isNotEmpty) {
-        // ignore: use_build_context_synchronously
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (BuildContext ctx) => const OnBoarding()),);
-        context.goNamed("OnBoarding");
+        prefs.setBool('username', true);
+
+        GoRouter.of(context).goNamed('OnBoarding');
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorinLogin is List? errorinLogin.first : errorinLogin),));
+      setState(() {
+        isLoading = false;
+      });
     }
     return null;
   }
-
-  bool _obscureText = true;
-  bool isLoading = false;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   validateForm() async {
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final form = _formKey.currentState!;
     if (form.validate()) {
       setState(() {
         isLoading = true;
       });
       logintoDjango();
-      prefs.setBool('username', true);
+
     } else {
       debugPrint('form is invalid');
       setState(() {
@@ -191,7 +204,7 @@ class _LoginState extends State<Login> {
                     children: [
                       Text("Don't have an Account ?"),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/register'),
+                        onTap: () => context.go('/register'),
                         child: Text(
                           'Sign Up'.toUpperCase(),
                           style: TextStyle(

@@ -27,13 +27,13 @@ class _HomeState extends State<Home> {
     _nativeAdBanner.dispose();
     super.dispose();
   }
+
   @override
   void initState() {
     showNotification();
     nativeBannerFunction();
     super.initState();
   }
-  
 
   late BannerAd _nativeAdBanner;
 
@@ -41,19 +41,16 @@ class _HomeState extends State<Home> {
 
   void nativeBannerFunction() {
     _nativeAdBanner = BannerAd(
-      adUnitId: AdHelper.nativeadunit,
-      size: AdSize.largeBanner,
-      request: AdRequest(),
-      listener: BannerAdListener(onAdLoaded: (_){
-        setState(() {
-          _isnativeBannerAdLoaded = true;
-        });
-      },
-      onAdFailedToLoad: (ad,error){
-        ad.dispose();
-      }
-      )
-    );
+        adUnitId: AdHelper.nativeadunit,
+        size: AdSize.largeBanner,
+        request: AdRequest(),
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isnativeBannerAdLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        }));
     _nativeAdBanner.load();
   }
 
@@ -78,31 +75,30 @@ class _HomeState extends State<Home> {
     //   // AppLocalizations.of(context).pancake
     // ];
 
-    int screenCrossCount(){
-      if (ResponsiveWrapper.of(context).isTablet && ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
-       return 4;
-  
-      }
-      else if (ResponsiveWrapper.of(context).orientation == Orientation.landscape && ResponsiveWrapper.of(context).isTablet){
+    int screenCrossCount() {
+      if (ResponsiveWrapper.of(context).isTablet &&
+          ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+        return 4;
+      } else if (ResponsiveWrapper.of(context).orientation ==
+              Orientation.landscape &&
+          ResponsiveWrapper.of(context).isTablet) {
         return 6;
-      }
-
-      else if (ResponsiveWrapper.of(context).isMobile && ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+      } else if (ResponsiveWrapper.of(context).isMobile &&
+          ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
         return 2;
-      }
-      else if(ResponsiveWrapper.of(context).orientation == Orientation.landscape){
+      } else if (ResponsiveWrapper.of(context).orientation ==
+          Orientation.landscape) {
         return 4;
       }
 
       return 2;
-
     }
 
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.grey[900]
           // ignore: use_full_hex_values_for_flutter_colors
-          : Color(0xfff4895ef),
+          : Colors.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,41 +108,56 @@ class _HomeState extends State<Home> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0, left: 20.0),
-                  child: Text(
-                    "Welcome,",
-                    style: TextStyle(fontSize: 24.0, color: Colors.white),
-                  ),
+                  child: Text("Welcome,",
+                      style: TextStyle(fontSize: 45.0, fontFamily: 'Kine')),
                 ),
-
               ],
             ),
             //TODO:UNCOMMENT THIS WHEN THE APP IS ON GOOGLEPLAY
-            
+
             _isnativeBannerAdLoaded
                 ? Container(
-                  height: _nativeAdBanner.size.height.toDouble(),
-                  width:  _nativeAdBanner.size.width.toDouble(),
-                  
-                  child: AdWidget(ad: _nativeAdBanner),
+                    height: _nativeAdBanner.size.height.toDouble(),
+                    width: _nativeAdBanner.size.width.toDouble(),
+                    child: AdWidget(ad: _nativeAdBanner),
                   )
-                : LoadingAdWidget(),
+                : Container(),
+                //TODO: CONTINUE ON CATEGORY FIELDS
+//             Padding(
+//               padding: const EdgeInsets.all(20.0),
+//               child: SingleChildScrollView(
+//                 scrollDirection: Axis.horizontal,
+//                 child: Row(
+//                   children: [
+//                     CategoryFilter(name: "Covid",),
+//                     SizedBox(
+//                       width: 20.0,
+//                     ),
+//                    CategoryFilter(name: "Anemia",),
+//                    SizedBox(
+//                       width: 20.0,
+//                     ),
+                   
+//  CategoryFilter(name: "Heart",),
+//                   ],
+//                 ),
+//               ),
+//             ),
+SizedBox(height:20.0),
             Consumer(
               builder: (context, ref, child) {
                 final recipesData = ref.watch(recipesProvider);
                 return recipesData.when(
-                 
                   data: (data) => Expanded(
                     flex: 2,
                     child: RefreshIndicator(
-                      onRefresh: () async{
+                      onRefresh: () async {
                         return await ref.refresh(recipesProvider);
                       },
                       child: OrientationBuilder(
-                        builder: (context, orientation) =>
-                          
-
-                        GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        builder: (context, orientation) => GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             // crossAxisCount: ResponsiveWrapper.of(context).isTablet ? 4 : 2,
                             crossAxisCount: screenCrossCount(),
                             // crossAxisCount: orientation == Orientation.portrait? 2 : 4,
@@ -158,7 +169,6 @@ class _HomeState extends State<Home> {
                               id: data[index].id,
                               name: data[index].name,
                               foodImage: CachedNetworkImageProvider(
-                                
                                 'https://livine.pythonanywhere.com/${data[index].imageURL}',
                                 maxWidth: 650,
                               ),
@@ -183,9 +193,28 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-
   }
+}
 
+class CategoryFilter extends StatelessWidget {
+  const CategoryFilter({
+    Key? key,
+    required this.name,
+  }) : super(key: key);
+    final name;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Color(0xFFF38A3A5),
+      ),
+      width: 100,
+      height: 50,
+      child: Center(child: Text(name,style: TextStyle(fontFamily: 'Kine'
+      ,color: Colors.white,fontSize: 15.0),)),
+    );
+  }
 }
 
 class LoadingAdWidget extends StatelessWidget {
@@ -215,7 +244,6 @@ class LoadingAdWidget extends StatelessWidget {
     );
   }
 }
-
 
 class RecipeCardNormal extends StatefulWidget {
   const RecipeCardNormal({
@@ -248,11 +276,11 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.grey[800]
                 // ignore: use_full_hex_values_for_flutter_colors
-                : Color(0xfff4cc9f0),
+                : Color(0xfff80ed99),
             borderRadius: BorderRadius.circular(15.0),
             child: InkWell(
               splashColor: Colors.orange[600],
-              onTap: () => context.push('/details',extra: widget.id),
+              onTap: () => context.push('/details', extra: widget.id),
               borderRadius: BorderRadius.circular(15.0),
               child: Container(
                 padding: EdgeInsets.only(top: 5.0),
@@ -273,10 +301,12 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                         child: Text(
                           '${widget.name}',
                           style: TextStyle(
+                            fontFamily: 'Kine',
                             fontSize: 17.0,
-                            color: Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.black,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black,
                           ),
                         ),
                       ),
@@ -286,8 +316,9 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                       child: Text(
                         '${widget.type}',
                         style: TextStyle(
+                          fontFamily: 'Kine',
                           fontSize: 13.0,
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
                     ),
@@ -306,8 +337,8 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                                   return Icon(
                                     FontAwesomeIcons.solidHeart,
                                     color: isLiked
-                                        ? Colors.blueAccent[700]
-                                        : Colors.grey[350],
+                                        ? Color(0xFF22577a)
+                                        : Colors.white,
                                   );
                                 },
                               ),

@@ -1,5 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
+import 'package:go_router/go_router.dart';
+
 import 'base.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,7 @@ class OnBoarding extends StatelessWidget {
         curve: Curves.easeInOut,
         direction: Axis.vertical,
         scaleFactor: 5,
-        onFinish: () =>  Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext ctx) => Navigation()),),
+        onFinish: () =>  context.go('/navigate'),
 
         itemBuilder: (int index, double value) {
           return introScreens('${heading[index]}', 'assets/images/onboarding/${images[index]}.svg', textColors[index]);
@@ -54,7 +55,7 @@ class OnBoarding extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 24.0,
-            fontFamily: 'BalooBhaina',
+            fontFamily: 'Kine',
             fontWeight: FontWeight.bold,
             color: textColor,
             

@@ -5,13 +5,14 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SpinKitPumpingHeart(
-        color: Colors.white,
+        color: Color(0xfff80ed99),
       ),
     );
   }
@@ -32,11 +33,11 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi) {
         if (username == true) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext ctx) => Navigation()),);
+          context.go("/navigate");
+
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext ctx) => Login()),);
+          context.go("/login");
+;
         }
       }
     });

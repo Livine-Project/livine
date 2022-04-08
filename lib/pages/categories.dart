@@ -34,7 +34,7 @@ class _PatientState extends State<Patient> {
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.grey[900]
-          : Color(0xfff4895ef),
+          : Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0),
@@ -121,9 +121,10 @@ class FoodCategory extends StatelessWidget {
             child: Text(
               name,
               style: TextStyle(
-                  color: Colors.white,
+                  color: Color(0xfff80ed99),
                   fontSize: 24.0,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Kine'),
             ),
           ),
         ),

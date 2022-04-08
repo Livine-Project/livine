@@ -58,9 +58,9 @@ class _NavigationState extends State<Navigation> {
             }
             final _index = pageController.page!.round();
             return CurvedNavigationBar(
-              color: Theme.of(context).brightness == Brightness.dark ? (Colors.grey[800])!: Colors.white,
+              color: Theme.of(context).brightness == Brightness.dark ? (Colors.grey[800])!: Color.fromRGBO(255, 255, 255, 1),
               // ignore: use_full_hex_values_for_flutter_colors
-              backgroundColor: Theme.of(context).brightness == Brightness.dark ? (Colors.grey[900])!: Color(0xfff4895ef),
+              backgroundColor: Theme.of(context).brightness == Brightness.dark ? (Colors.grey[900])!: Color(0xfff80ed99),
               items: const [
                 Icon(Icons.home, size: 30),
                 Icon(FontAwesomeIcons.heartbeat, size: 30),
