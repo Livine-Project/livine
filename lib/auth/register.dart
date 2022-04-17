@@ -3,19 +3,24 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
-class Register extends StatefulWidget {
+import '../Others/colors.dart';
+
+
+
+class Register extends ConsumerStatefulWidget  {
   const Register({Key? key}) : super(key: key);
 
   @override
   _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterState extends ConsumerState<Register> {
   Client client = http.Client();
   final _username = TextEditingController();
   final _email = TextEditingController();
@@ -23,7 +28,6 @@ class _RegisterState extends State<Register> {
   final _confirmPassword = TextEditingController();
   var errorinEmail;
   var errorinUser;
-
   Future<void> registertoDjango() async {
     const url = 'https://livine.pythonanywhere.com/api/register/';
     final response = await client.post(
@@ -34,9 +38,12 @@ class _RegisterState extends State<Register> {
         'password': _confirmPassword.text,
       },
     );
-    
+
     final responseJson = json.decode(response.body);
+    
+
     errorinEmail = responseJson['email'];
+
     errorinUser = responseJson['username'];
 
     if (response.statusCode == 200) {
@@ -46,6 +53,9 @@ class _RegisterState extends State<Register> {
         isLoading = false;
       });
     }
+
+  
+
   }
 
   bool isLoading = false;
@@ -56,6 +66,7 @@ class _RegisterState extends State<Register> {
         isLoading = true;
       });
       registertoDjango();
+      
     } else {
       setState(() {
         isLoading = false;
@@ -66,9 +77,10 @@ class _RegisterState extends State<Register> {
   bool _obscureText = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -80,7 +92,7 @@ class _RegisterState extends State<Register> {
           icon: SvgPicture.asset(
             'assets/images/login/back_arrow.svg',
             width: 25.0,
-            color: Colors.black,
+            color: thirdColor,
           ),
         ),
       ),
@@ -203,9 +215,8 @@ class _RegisterState extends State<Register> {
                               _obscureText
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: _obscureText
-                                  ? Colors.grey
-                                  : Colors.blueAccent[400],
+                              color:
+                                  _obscureText ? Colors.grey : secondaryColor,
                             ),
                             onPressed: () {
                               setState(() {
@@ -229,7 +240,7 @@ class _RegisterState extends State<Register> {
                 padding: EdgeInsets.only(top: 20),
                 child: MaterialButton(
                   onPressed: validateForm,
-                  color: Colors.blueAccent[400],
+                  color: thirdColor,
                   elevation: 0,
                   minWidth: 350,
                   height: 60,
@@ -256,16 +267,19 @@ class _RegisterState extends State<Register> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account?"),
+                      Text(
+                        "Already have an account? ",
+                        style: TextStyle(fontFamily: 'Kine'),
+                      ),
                       GestureDetector(
                         onTap: () => context.go('/login'),
                         child: Text(
                           'Sign In'.toUpperCase(),
                           style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.blueAccent[400],
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize: 15.0,
+                              color: secondaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Kine'),
                         ),
                       ),
                     ],
@@ -276,17 +290,20 @@ class _RegisterState extends State<Register> {
                 height: 10.0,
               ),
               Center(
-                  child:
-                      Text("By creating an account , you already agree on ")),
+                  child: Text(
+                "By creating an account , you already agree on ",
+                style: TextStyle(fontFamily: 'Kine'),
+              )),
               SizedBox(
                 height: 10.0,
               ),
               Center(
                 child: GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/terms'),
+                    onTap: () => context.push('/terms'),
                     child: Text(
                       "Terms and Conditions",
-                      style: TextStyle(color: Colors.blue),
+                      style:
+                          TextStyle(color: secondaryColor, fontFamily: 'Kine'),
                     )),
               ),
             ],

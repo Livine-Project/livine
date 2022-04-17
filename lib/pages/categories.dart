@@ -2,12 +2,17 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-
 import 'package:flutter/material.dart';
+
+import '../ads/ads_help.dart';
+import '../main.dart';
+import '../translations/locale_keys.g.dart';
 
 class Patient extends StatefulWidget {
   @override
@@ -18,8 +23,7 @@ class _PatientState extends State<Patient> {
   int screenCrossCount() {
     if (ResponsiveWrapper.of(context).isTablet) {
       return 1;
-    } 
-    else if (ResponsiveWrapper.of(context).isMobile) {
+    } else if (ResponsiveWrapper.of(context).isMobile) {
       if (ResponsiveWrapper.of(context).orientation == Orientation.portrait)
         return 1;
       else {
@@ -27,6 +31,37 @@ class _PatientState extends State<Patient> {
       }
     }
     return 1;
+  }
+
+  late BannerAd _nativeAdBanner;
+
+  bool _isnativeBannerAdLoaded = false;
+
+  void nativeBannerFunction() {
+    _nativeAdBanner = BannerAd(
+        adUnitId: AdHelper.nativeadunit,
+        size: AdSize.largeBanner,
+        request: AdRequest(),
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isnativeBannerAdLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        }));
+    _nativeAdBanner.load();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    nativeBannerFunction();
+  }
+
+  @override
+  void dispose() {
+    _nativeAdBanner.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,32 +83,40 @@ class _PatientState extends State<Patient> {
                   children: [
                     FoodCategory(
                       navigate: '/breakfast',
-                      name: 'Breakfast',
+                      name: LocaleKeys.Breakfast.tr(),
                       image:
                           "https://top10cairo.com/wp-content/uploads/2015/12/best-breakfast-places-cairo-696x364.jpg",
                       color: Color(0xfff3f37c9),
                     ),
                     FoodCategory(
                       navigate: '/lunch',
-                      name: 'Lunch',
+                      name: LocaleKeys.Lunch.tr(),
                       image:
                           "https://media.istockphoto.com/photos/keto-diet-foods-picture-id1096945386?b=1&k=20&m=1096945386&s=170667a&w=0&h=whc_B9ltl294rfVBmpu84DB5QxQGjof8KGtAvXjDDfw=",
                       color: Color(0xfff3f37c9),
                     ),
+                                _isnativeBannerAdLoaded && testID != 10 
+                ? Container(
+                    height: _nativeAdBanner.size.height.toDouble(),
+                    width: _nativeAdBanner.size.width.toDouble(),
+                    child: AdWidget(ad: _nativeAdBanner),
+                  )
+                :Container(),
                     FoodCategory(
                       navigate: '/dinner',
-                      name: 'Dinner',
+                      name: LocaleKeys.Dinner.tr(),
                       image:
                           "https://images.unsplash.com/photo-1611765083444-a3ce30f1c885?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRpbm5lcnxlbnwwfHwwfHw%3D&w=1000&q=80",
                       color: (Colors.tealAccent[400])!,
                     ),
                     FoodCategory(
                       navigate: '/snacks',
-                      name: 'Snacks',
+                      name: LocaleKeys.Snacks.tr(),
                       image:
                           "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c25hY2t8ZW58MHx8MHx8&w=1000&q=80",
                       color: (Colors.tealAccent[400])!,
                     ),
+                    
                   ],
                 )),
           ),

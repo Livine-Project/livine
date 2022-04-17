@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../translations/locale_keys.g.dart';
 
 class Ingridents extends StatelessWidget {
   const Ingridents({Key? key, required this.ingridentsRecipe}) : super(key: key);
@@ -13,9 +15,14 @@ class Ingridents extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).brightness == Brightness.dark ?Colors.grey[800] :Colors.blueAccent[700],
-        leading: IconButton(icon: Icon(FontAwesomeIcons.arrowLeft),onPressed: () => Navigator.pop(context),),
+        leading: IconButton(icon: Icon(
+          context.locale.languageCode == "en"
+          ?FontAwesomeIcons.arrowLeft
+          : FontAwesomeIcons.arrowRight
+          ),
+          onPressed: () => Navigator.pop(context),),
         title: Text(
-          "Ingridents"
+          LocaleKeys.Ingridents.tr().toString(),
         ),
       ),
       body: SingleChildScrollView(

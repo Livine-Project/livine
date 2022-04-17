@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import '../Settings/languages.dart';
+import '../Settings/settings.dart';
 import '../main.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,6 +16,8 @@ import '../categories/lunch.dart';
 import '../categories/snacks.dart';
 import '../intro/base.dart';
 import '../intro/boarding.dart';
+import '../pages/content/content.dart';
+import '../pages/content/content_patients.dart';
 import '../pristine/confirm_payment.dart';
 import '../recipe/ingridents.dart';
 import '../recipe/recipe_details.dart';
@@ -50,15 +54,19 @@ final baseRoutes = GoRouter(routes: [
         }
 
         )
-      // builder: (context, state) {
-      //   return RecipeDetails(
-      //     id: state.extra,
-      //   );
-      // }
+      
       ),
   GoRoute(
     path: '/navigate',
     builder: (context, state) => Navigation(),
+  ),
+    GoRoute(
+    path: '/languages',
+    builder: (context, state) => Languages(),
+  ),
+  GoRoute(
+    path: '/settings',
+    builder: (context, state) => SettingsWidget(),
   ),
   GoRoute(
     path: '/breakfast',
@@ -99,5 +107,15 @@ final baseRoutes = GoRouter(routes: [
         ingridentsRecipe: state.extra,
       );
     },
+  ),
+    GoRoute(
+    name: "Content",
+    path: '/choose_content',
+    builder: (context, state) => ChooseContent(),
+  ),
+      GoRoute(
+    name: "Content_Patient",
+    path: '/content_patient',
+    builder: (context, state) => ContentPatient(),
   ),
 ]);

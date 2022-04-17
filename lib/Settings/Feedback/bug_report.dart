@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class BugReport extends StatefulWidget {
   const BugReport({Key? key}) : super(key: key);
@@ -59,7 +58,7 @@ class _BugReportState extends State<BugReport> {
         ],
         title: Text(
           "Report a bug",
-          style: GoogleFonts.bebasNeue(fontSize: 24.0, letterSpacing: 3),
+          style: TextStyle(fontSize: 19.0),
         ),
       ),
       body: SingleChildScrollView(

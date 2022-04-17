@@ -22,16 +22,30 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 class _$RecipeTearOff {
   const _$RecipeTearOff();
 
-  _Recipe call(int id, String name, String imageURL, String rating, String type,
-      String video, String ingridents) {
+  _Recipe call(
+      int id,
+      String name,
+      String name_in_arabic,
+      String type_in_arabic,
+      String imageURL,
+      String rating,
+      String type,
+      String video,
+      String video_in_arabic,
+      String ingridents,
+      String ingridents_in_arabic) {
     return _Recipe(
       id,
       name,
+      name_in_arabic,
+      type_in_arabic,
       imageURL,
       rating,
       type,
       video,
+      video_in_arabic,
       ingridents,
+      ingridents_in_arabic,
     );
   }
 
@@ -47,11 +61,15 @@ const $Recipe = _$RecipeTearOff();
 mixin _$Recipe {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get name_in_arabic => throw _privateConstructorUsedError;
+  String get type_in_arabic => throw _privateConstructorUsedError;
   String get imageURL => throw _privateConstructorUsedError;
   String get rating => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get video => throw _privateConstructorUsedError;
+  String get video_in_arabic => throw _privateConstructorUsedError;
   String get ingridents => throw _privateConstructorUsedError;
+  String get ingridents_in_arabic => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,11 +83,15 @@ abstract class $RecipeCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
+      String name_in_arabic,
+      String type_in_arabic,
       String imageURL,
       String rating,
       String type,
       String video,
-      String ingridents});
+      String video_in_arabic,
+      String ingridents,
+      String ingridents_in_arabic});
 }
 
 /// @nodoc
@@ -84,11 +106,15 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? name_in_arabic = freezed,
+    Object? type_in_arabic = freezed,
     Object? imageURL = freezed,
     Object? rating = freezed,
     Object? type = freezed,
     Object? video = freezed,
+    Object? video_in_arabic = freezed,
     Object? ingridents = freezed,
+    Object? ingridents_in_arabic = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -98,6 +124,14 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      name_in_arabic: name_in_arabic == freezed
+          ? _value.name_in_arabic
+          : name_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
+      type_in_arabic: type_in_arabic == freezed
+          ? _value.type_in_arabic
+          : type_in_arabic // ignore: cast_nullable_to_non_nullable
               as String,
       imageURL: imageURL == freezed
           ? _value.imageURL
@@ -115,9 +149,17 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as String,
+      video_in_arabic: video_in_arabic == freezed
+          ? _value.video_in_arabic
+          : video_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
       ingridents: ingridents == freezed
           ? _value.ingridents
           : ingridents // ignore: cast_nullable_to_non_nullable
+              as String,
+      ingridents_in_arabic: ingridents_in_arabic == freezed
+          ? _value.ingridents_in_arabic
+          : ingridents_in_arabic // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -131,11 +173,15 @@ abstract class _$RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
+      String name_in_arabic,
+      String type_in_arabic,
       String imageURL,
       String rating,
       String type,
       String video,
-      String ingridents});
+      String video_in_arabic,
+      String ingridents,
+      String ingridents_in_arabic});
 }
 
 /// @nodoc
@@ -151,11 +197,15 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? name_in_arabic = freezed,
+    Object? type_in_arabic = freezed,
     Object? imageURL = freezed,
     Object? rating = freezed,
     Object? type = freezed,
     Object? video = freezed,
+    Object? video_in_arabic = freezed,
     Object? ingridents = freezed,
+    Object? ingridents_in_arabic = freezed,
   }) {
     return _then(_Recipe(
       id == freezed
@@ -165,6 +215,14 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
       name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      name_in_arabic == freezed
+          ? _value.name_in_arabic
+          : name_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
+      type_in_arabic == freezed
+          ? _value.type_in_arabic
+          : type_in_arabic // ignore: cast_nullable_to_non_nullable
               as String,
       imageURL == freezed
           ? _value.imageURL
@@ -182,9 +240,17 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as String,
+      video_in_arabic == freezed
+          ? _value.video_in_arabic
+          : video_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
       ingridents == freezed
           ? _value.ingridents
           : ingridents // ignore: cast_nullable_to_non_nullable
+              as String,
+      ingridents_in_arabic == freezed
+          ? _value.ingridents_in_arabic
+          : ingridents_in_arabic // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -193,8 +259,18 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Recipe implements _Recipe {
-  const _$_Recipe(this.id, this.name, this.imageURL, this.rating, this.type,
-      this.video, this.ingridents);
+  const _$_Recipe(
+      this.id,
+      this.name,
+      this.name_in_arabic,
+      this.type_in_arabic,
+      this.imageURL,
+      this.rating,
+      this.type,
+      this.video,
+      this.video_in_arabic,
+      this.ingridents,
+      this.ingridents_in_arabic);
 
   factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
       _$$_RecipeFromJson(json);
@@ -204,6 +280,10 @@ class _$_Recipe implements _Recipe {
   @override
   final String name;
   @override
+  final String name_in_arabic;
+  @override
+  final String type_in_arabic;
+  @override
   final String imageURL;
   @override
   final String rating;
@@ -212,11 +292,15 @@ class _$_Recipe implements _Recipe {
   @override
   final String video;
   @override
+  final String video_in_arabic;
+  @override
   final String ingridents;
+  @override
+  final String ingridents_in_arabic;
 
   @override
   String toString() {
-    return 'Recipe(id: $id, name: $name, imageURL: $imageURL, rating: $rating, type: $type, video: $video, ingridents: $ingridents)';
+    return 'Recipe(id: $id, name: $name, name_in_arabic: $name_in_arabic, type_in_arabic: $type_in_arabic, imageURL: $imageURL, rating: $rating, type: $type, video: $video, video_in_arabic: $video_in_arabic, ingridents: $ingridents, ingridents_in_arabic: $ingridents_in_arabic)';
   }
 
   @override
@@ -226,12 +310,20 @@ class _$_Recipe implements _Recipe {
             other is _Recipe &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.name_in_arabic, name_in_arabic) &&
+            const DeepCollectionEquality()
+                .equals(other.type_in_arabic, type_in_arabic) &&
             const DeepCollectionEquality().equals(other.imageURL, imageURL) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.video, video) &&
             const DeepCollectionEquality()
-                .equals(other.ingridents, ingridents));
+                .equals(other.video_in_arabic, video_in_arabic) &&
+            const DeepCollectionEquality()
+                .equals(other.ingridents, ingridents) &&
+            const DeepCollectionEquality()
+                .equals(other.ingridents_in_arabic, ingridents_in_arabic));
   }
 
   @override
@@ -239,11 +331,15 @@ class _$_Recipe implements _Recipe {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(name_in_arabic),
+      const DeepCollectionEquality().hash(type_in_arabic),
       const DeepCollectionEquality().hash(imageURL),
       const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(video),
-      const DeepCollectionEquality().hash(ingridents));
+      const DeepCollectionEquality().hash(video_in_arabic),
+      const DeepCollectionEquality().hash(ingridents),
+      const DeepCollectionEquality().hash(ingridents_in_arabic));
 
   @JsonKey(ignore: true)
   @override
@@ -257,8 +353,18 @@ class _$_Recipe implements _Recipe {
 }
 
 abstract class _Recipe implements Recipe {
-  const factory _Recipe(int id, String name, String imageURL, String rating,
-      String type, String video, String ingridents) = _$_Recipe;
+  const factory _Recipe(
+      int id,
+      String name,
+      String name_in_arabic,
+      String type_in_arabic,
+      String imageURL,
+      String rating,
+      String type,
+      String video,
+      String video_in_arabic,
+      String ingridents,
+      String ingridents_in_arabic) = _$_Recipe;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
 
@@ -266,6 +372,10 @@ abstract class _Recipe implements Recipe {
   int get id;
   @override
   String get name;
+  @override
+  String get name_in_arabic;
+  @override
+  String get type_in_arabic;
   @override
   String get imageURL;
   @override
@@ -275,7 +385,11 @@ abstract class _Recipe implements Recipe {
   @override
   String get video;
   @override
+  String get video_in_arabic;
+  @override
   String get ingridents;
+  @override
+  String get ingridents_in_arabic;
   @override
   @JsonKey(ignore: true)
   _$RecipeCopyWith<_Recipe> get copyWith => throw _privateConstructorUsedError;

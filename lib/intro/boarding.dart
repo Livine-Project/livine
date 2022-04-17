@@ -2,7 +2,7 @@
 
 import 'package:go_router/go_router.dart';
 
-import 'base.dart';
+import '../Others/colors.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,17 +18,17 @@ class OnBoarding extends StatelessWidget {
       "We've plenty of healthy options",
       "We assure that you gonna have a Flexible Lifestyle",
       ];
-      final List<Color> textColors = [Colors.black, Colors.white,Colors.white, Colors.white];
+      final List<Color> textColors = [Colors.black, Colors.black,Colors.white, Colors.white];
 
     return Scaffold(
       body: ConcentricPageView(
-        colors: const <Color>[Colors.white, Color(0xfff4cc9f0),Color(0xffff72585)],
+        colors: <Color>[Colors.white, primaryColor,thirdColor],
         itemCount: heading.length, // null = infinity
         physics: NeverScrollableScrollPhysics(),
         curve: Curves.easeInOut,
         direction: Axis.vertical,
         scaleFactor: 5,
-        onFinish: () =>  context.go('/navigate'),
+        onFinish: () =>  context.goNamed('Content'),
 
         itemBuilder: (int index, double value) {
           return introScreens('${heading[index]}', 'assets/images/onboarding/${images[index]}.svg', textColors[index]);
@@ -54,9 +54,8 @@ class OnBoarding extends StatelessWidget {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 24.0,
+            fontSize: 30.0,
             fontFamily: 'Kine',
-            fontWeight: FontWeight.bold,
             color: textColor,
             
             ),

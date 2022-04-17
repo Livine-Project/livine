@@ -1,45 +1,59 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_print, type_annotate_public_apis
 
+import 'package:easy_localization/easy_localization.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../Others/colors.dart';
 import '../Others/loading.dart';
+import '../translations/locale_keys.g.dart';
 import 'recipe.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class DetailsBody extends StatelessWidget {
+class DetailsBody extends StatefulWidget {
   const DetailsBody({Key? key, required this.id}) : super(key: key);
   final id;
 
+  @override
+  State<DetailsBody> createState() => _DetailsBodyState();
+}
+
+class _DetailsBodyState extends State<DetailsBody> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Consumer(
         builder: (context, ref, child) {
-          final recipesData = ref.watch(recipesProviderID(
-              id));
+          final recipesData = ref.watch(recipesProviderID(widget.id));
           return recipesData.when(
             data: (data) {
               _launchURL() async {
-                var url = data.video;
-                if (await canLaunch(url)) {
+                var url = context.locale.languageCode == "en"
+                    ? data.video
+                    : data.video_in_arabic;
+                try {
                   await launch(url);
-                } else {
-                  throw 'Could not launch $url';
+                } catch (e) {
+                  print(e);
                 }
               }
 
               return Column(
                 children: [
-                  ImageAndIcons(size: size,id:id),
+                  ImageAndIcons(size: size, id: widget.id),
                   FoodTitle(
-                    name: data.name,
-                    type: data.type,
+                    name: context.locale.languageCode == "en"
+                        ? data.name
+                        : data.name_in_arabic,
+                    type: context.locale.languageCode == "en"
+                        ? data.type
+                        : data.type_in_arabic,
                   ),
                   Row(
                     children: [
@@ -48,21 +62,34 @@ class DetailsBody extends StatelessWidget {
                         height: 84,
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: 
-                            Theme.of(context).brightness == Brightness.dark? MaterialStateProperty.all<Color>(Colors.blueGrey):MaterialStateProperty.all<Color>(
-                              Color(0xfff3f37c9),
-                            ),
+                            backgroundColor:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? MaterialStateProperty.all<Color>(
+                                        Colors.blueGrey)
+                                    : MaterialStateProperty.all<Color>(
+                                        thirdColor,
+                                      ),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(30.0)))),
+                                        topLeft:
+                                            context
+                                                        .locale.languageCode ==
+                                                    "en"
+                                                ? Radius.zero
+                                                : Radius.circular(30.0),
+                                        topRight:
+                                            context.locale.languageCode == "en"
+                                                ? Radius.circular(30.0)
+                                                : Radius.zero))),
                           ),
                           onPressed: _launchURL,
                           child: Text(
-                            "Video",
+                            LocaleKeys.Video.tr(),
                             style: TextStyle(
-                              color: Colors.white, 
-                              fontSize: 16),
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'Kine'),
                           ),
                         ),
                       ),
@@ -71,19 +98,36 @@ class DetailsBody extends StatelessWidget {
                         height: 84,
                         child: TextButton(
                           style: ButtonStyle(
-                            backgroundColor: Theme.of(context).brightness == Brightness.dark?MaterialStateProperty.all<Color>(Colors.grey): MaterialStateProperty.all<Color>(
-                              Colors.lightGreenAccent,
-                            ),
+                            backgroundColor: Theme.of(context).brightness ==
+                                    Brightness.dark
+                                ? MaterialStateProperty.all<Color>(Colors.grey)
+                                : MaterialStateProperty.all<Color>(
+                                    secondaryColor,
+                                  ),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30.0)))),
+                                        topLeft:
+                                            context
+                                                        .locale.languageCode ==
+                                                    "en"
+                                                ? Radius.circular(30.0)
+                                                : Radius.zero,
+                                        topRight:
+                                            context.locale.languageCode == "en"
+                                                ? Radius.zero
+                                                : Radius.circular(30.0)))),
                           ),
-                          onPressed: () =>
-                                  context.push('/ingridents',extra: data.ingridents),
+                          onPressed: () => context.push('/ingridents',
+                              extra: context.locale.languageCode == "en"
+                                  ? data.ingridents
+                                  : data.ingridents_in_arabic),
                           child: Text(
-                            "Ingridents",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                            LocaleKeys.Ingridents.tr(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'Kine'),
                           ),
                         ),
                       ),
@@ -116,25 +160,35 @@ class FoodTitle extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            
             child: RichText(
               text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: name,
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
-                          color: Theme.of(context).brightness == Brightness.dark? Colors.grey[400]:Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  TextSpan(
-                    text: type,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      color: Theme.of(context).brightness == Brightness.dark? Colors.white :Colors.blueAccent[700],
-                      fontSize: 20,
+                children: <InlineSpan>[
+                  WidgetSpan(
+                      child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      name!,
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.grey[400]
+                              : secondaryColor,
+                          fontFamily: 'Kine'),
                     ),
-                  ),
+                  )),
+                  WidgetSpan(
+                      child: Container(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: Text(
+                            type!,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white
+                                    : thirdColor,
+                                fontSize: 20,
+                                fontFamily: 'kine'),
+                          ))),
                 ],
               ),
             ),
@@ -165,8 +219,7 @@ class ImageAndIcons extends StatelessWidget {
             height: size.height * 0.8,
             child: Consumer(
               builder: (context, ref, child) {
-                final recipesData = ref.watch(recipesProviderID(
-                    id));
+                final recipesData = ref.watch(recipesProviderID(id));
                 return recipesData.when(
                   data: (data) {
                     return Row(
@@ -181,10 +234,11 @@ class ImageAndIcons extends StatelessWidget {
                                     top: size.height * 0.1,
                                     left: 10.0,
                                   ),
-                                  
-                                  icon: SvgPicture.asset(
-                                    'assets/images/login/back_arrow.svg',
-                                    color: Theme.of(context).brightness == Brightness.dark? Colors.white : Colors.blueAccent,
+                                  icon: Icon(
+                                    context.locale.languageCode == "en"
+                                        ? FontAwesomeIcons.arrowLeft
+                                        : FontAwesomeIcons.arrowRight,
+                                    color: thirdColor,
                                   ),
                                   onPressed: () => context.pop(),
                                 ),
@@ -206,24 +260,29 @@ class ImageAndIcons extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          height: size.height * 0.8,
-                          width: size.width * 0.75,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(63),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(0, 10),
-                                blurRadius: 100,
-                                color:
-                                    Theme.of(context).brightness == Brightness.dark? Colors.blueGrey[600]!.withOpacity(0.29):Colors.blueAccent[700]!.withOpacity(0.29),
-                              )
-                            ],
-                            image: DecorationImage(
-                              alignment: Alignment.centerLeft,
-                              fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(
-                                'https://livine.pythonanywhere.com/${data.imageURL}',
+                        Transform.rotate(
+                          angle: context.locale.languageCode == "en" ? 0 : 59.7,
+                          child: Container(
+                            height: size.height * 0.8,
+                            width: size.width * 0.75,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(63),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(0, 10),
+                                  blurRadius: 100,
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.blueGrey[600]!.withOpacity(0.29)
+                                      : secondaryColor.withOpacity(0.6),
+                                )
+                              ],
+                              image: DecorationImage(
+                                alignment: Alignment.centerLeft,
+                                fit: BoxFit.cover,
+                                image: CachedNetworkImageProvider(
+                                  'https://livine.pythonanywhere.com/${data.imageURL}',
+                                ),
                               ),
                             ),
                           ),
@@ -264,24 +323,30 @@ class IconCard extends StatelessWidget {
       height: 52,
       width: 52,
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark?Colors.grey[600]: Colors.blueAccent,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.grey[600]
+            : primaryColor,
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 10),
             blurRadius: 22,
-            color: Theme.of(context).brightness == Brightness.dark? Colors.grey[400]!.withOpacity(0.22):Colors.blueAccent[700]!.withOpacity(0.22),
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey[400]!.withOpacity(0.22)
+                : Colors.blueAccent[700]!.withOpacity(0.22),
           ),
           BoxShadow(
             offset: Offset(-15, -15),
             blurRadius: 20,
-            color: Theme.of(context).brightness == Brightness.dark?Colors.transparent:  Colors.white,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.transparent
+                : Colors.white,
           ),
         ],
       ),
       child: Image.asset(
         image,
-        color: Colors.white,
+        color: Color.fromARGB(255, 0, 0, 0),
       ),
     );
   }

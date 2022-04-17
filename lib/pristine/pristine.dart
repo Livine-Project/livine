@@ -1,7 +1,10 @@
 // ignore_for_file: type_annotate_public_apis
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
+
+import '../translations/locale_keys.g.dart';
 
 class Pristine extends StatefulWidget {
   const Pristine({Key? key}) : super(key: key);
@@ -11,8 +14,6 @@ class Pristine extends StatefulWidget {
 }
 
 class _PristineState extends State<Pristine> {
-
-  
   List<PaymentItem> _paymentItems = [
     PaymentItem(
       label: 'Total',
@@ -26,22 +27,21 @@ class _PristineState extends State<Pristine> {
   }
 
   @override
-
-  
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: 650.0,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/icon/pristine_back.jpg'),
-                fit: BoxFit.cover),
-          ),
-          child: SafeArea(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(
+      body: Container(
+        height: size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/icon/pristine_back.jpg'),
+              fit: BoxFit.cover),
+        ),
+        child: SafeArea(
+          child:
+              SingleChildScrollView(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Center(
                 child: Column(
                   children: [
                     Padding(
@@ -55,30 +55,30 @@ class _PristineState extends State<Pristine> {
                       height: 10.0,
                     ),
                     PristineText(
-                      name: "Make your life Pristine",
+                      name: LocaleKeys.life_pristine.tr(),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
+                          ),
+                          SizedBox(
                 height: 10.0,
-              ),
-              Padding(
+                          ),
+                          Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FeaturesText(
                       name:
-                          "Pristine give u access to our full expensive features",
+                          LocaleKeys.Pristine_access.tr(),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
+                          ),
+                          SizedBox(
                 height: 50.0,
-              ),
-              Center(
+                          ),
+                          Center(
                   child: Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Column(
@@ -86,7 +86,7 @@ class _PristineState extends State<Pristine> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                          onPressed: (){
+                          onPressed: () {
                             showModalBottomSheet(
                                 elevation: 2,
                                 context: context,
@@ -98,7 +98,7 @@ class _PristineState extends State<Pristine> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
-                                            "Choose GateWay",
+                                            LocaleKeys.gateway.tr(),
                                             style: TextStyle(
                                                 fontSize: 24.0,
                                                 fontWeight: FontWeight.bold),
@@ -107,7 +107,7 @@ class _PristineState extends State<Pristine> {
                                             width: 200,
                                             height: 60,
                                             paymentConfigurationAsset:
-                                            'pay.json',
+                                                'pay.json',
                                             paymentItems: _paymentItems,
                                             margin: const EdgeInsets.only(
                                                 top: 15.0),
@@ -117,8 +117,6 @@ class _PristineState extends State<Pristine> {
                                                   CircularProgressIndicator(),
                                             ),
                                           ),
-
-
                                         ]),
                                   );
                                 });
@@ -133,7 +131,7 @@ class _PristineState extends State<Pristine> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "3 months",
+                                      LocaleKeys.three_months.tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20.0,
@@ -143,7 +141,7 @@ class _PristineState extends State<Pristine> {
                                       height: 10.0,
                                     ),
                                     Text(
-                                      "total price \$10.00",
+                                      "${LocaleKeys.total_price.tr()} \$10.00",
                                       style: TextStyle(color: Colors.white),
                                     )
                                   ],
@@ -161,7 +159,7 @@ class _PristineState extends State<Pristine> {
                                       height: 10.0,
                                     ),
                                     Text(
-                                      "monthly",
+                                      LocaleKeys.monthly.tr(),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ],
@@ -184,14 +182,14 @@ class _PristineState extends State<Pristine> {
                       height: 10.0,
                     ),
                     Text(
-                      "You can cancel your subscription at any time through google pay",
+                      LocaleKeys.cancel_sub.tr(),
                       style: TextStyle(color: Colors.white, fontSize: 10.0),
                     )
                   ],
                 ),
-              )),
-            ]),
-          ),
+                          )),
+                        ]),
+              ),
         ),
       ),
     );

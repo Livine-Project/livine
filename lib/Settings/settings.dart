@@ -1,10 +1,13 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_typing_uninitialized_variables, type_annotate_public_apis
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../main.dart';
+import '../translations/locale_keys.g.dart';
 
 class SettingsWidget extends StatefulWidget {
   @override
@@ -13,166 +16,137 @@ class SettingsWidget extends StatefulWidget {
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   Future<void> sendReport() async {
-    final Email email = Email(
-      subject: 'Bug Report | Livine',
-      recipients: ['wildlifemain1@gmail.com'],
-    );
-    late String platformResponse;
+    
 
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'wildlifemain1@gmail.com',
+    query: 'subject=Bug Report|Livine&body=write your issues here', //add subject and body here
+    );
     try {
-      FlutterEmailSender.send(email).then((_) {
-        platformResponse =
-            'Thank you for sending your feedback , we will answer you soon....';
-      });
-    } catch (error) {
-      platformResponse = error.toString();
+      await launch(emailLaunchUri.toString());
+    } catch (e) {
+      print(e);
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(platformResponse),
-      ),
-    );
   }
-
-  Future<bool?> showWarning(BuildContext context) async => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Do you want to exit ?"),
-          actions: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text("No"),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: Text("Yes"),
-            ),
-          ],
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final backPop = await showWarning(context);
-        return backPop ?? false;
-      },
-      child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Center(
-                  child: Text(
-                    'Settings',
-                    style: GoogleFonts.bebasNeue(fontSize: 35.0),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(LocaleKeys.Settings.tr()),
+        backgroundColor: Colors.black,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SettingsGroup(
+                    text: LocaleKeys.General.tr(),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SettingsGroup(text: 'General'),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: SettingsTile(
-                          text: 'Languages',
-                          subtitle: 'English',
-                          icon: Icons.language,
-                          iconColor: Colors.white,
-                          backgroundColor: Color(0xfff3f37c9),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SettingsGroup(text: 'Theme'),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      InkWell(
-                        onTap: () => context.push('/themeSettings'),
-                        child: SettingsTile(
-                          text: 'Theme',
-                          subtitle: '',
-                          icon: Icons.dark_mode,
-                          iconColor: Colors.white,
-                          backgroundColor: (Colors.deepPurple[900])!,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SettingsGroup(text: 'Feedback'),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      InkWell(
-                        onTap: sendReport,
-                        child: SettingsTile(
-                          text: 'Report a bug',
-                          subtitle: '',
-                          icon: Icons.bug_report,
-                          iconColor: Colors.white,
-                          backgroundColor: (Colors.deepPurple[500])!,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SettingsGroup(text: 'Misc'),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      InkWell(
-                        onTap: () => context.push('/terms'),
-                        child: SettingsTile(
-                          text: 'Terms and conditions',
-                          subtitle: '',
-                          icon: FontAwesomeIcons.fileAlt,
-                          iconColor: Colors.white,
-                          backgroundColor: (Colors.deepPurple[900])!,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      InkWell(
-                        onTap: () => context.push('/privacy'),
-                        child: SettingsTile(
-                          text: 'Privacy Policy ',
-                          subtitle: '',
-                          icon: Icons.privacy_tip,
-                          iconColor: Colors.white,
-                          backgroundColor: (Colors.deepPurple[900])!,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SettingsGroup(text: 'Info'),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SettingsTile(
-                        text: 'Version',
-                        subtitle: '1.0 ( Early Access )',
-                        icon: Icons.info,
-                        iconColor: Colors.white,
-                        backgroundColor: Colors.black,
-                      ),
-                    ],
+                  SizedBox(
+                    height: 10.0,
                   ),
-                ),
-              ],
+                  InkWell(
+                    onTap: () => context.push('/languages'),
+                    child: SettingsTile(
+                      text: LocaleKeys.Language.tr(),
+                      subtitle: context.locale.languageCode == "en" ? "English " : "العربية",
+                      icon: Icons.language,
+                      iconColor: Colors.white,
+                      backgroundColor: Color(0xfff3f37c9),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Divider(),
+                  SettingsGroup(text: LocaleKeys.Theme.tr()),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  InkWell(
+                    onTap: () => context.push('/themeSettings'),
+                    child: SettingsTile(
+                      text: LocaleKeys.Theme.tr(),
+                      subtitle: '',
+                      icon: Icons.dark_mode,
+                      iconColor: Colors.white,
+                      backgroundColor: (Colors.deepPurple[900])!,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Divider(),
+                  SettingsGroup(text: LocaleKeys.Feedback.tr()),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  InkWell(
+                    onTap: sendReport,
+                    child: SettingsTile(
+                      text: LocaleKeys.Report_a_bug.tr(),
+                      subtitle: '',
+                      icon: Icons.bug_report,
+                      iconColor: Colors.white,
+                      backgroundColor: (Colors.deepPurple[500])!,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Divider(),
+                  SettingsGroup(text: LocaleKeys.Misc.tr()),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  InkWell(
+                    onTap: () => context.push('/terms'),
+                    child: SettingsTile(
+                      text: LocaleKeys.Terms_and_conditions.tr(),
+                      subtitle: '',
+                      icon: FontAwesomeIcons.fileAlt,
+                      iconColor: Colors.white,
+                      backgroundColor: (Colors.deepPurple[900])!,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  InkWell(
+                    onTap: () => context.push('/privacy'),
+                    child: SettingsTile(
+                      text: LocaleKeys.Privacy_Policy.tr(),
+                      subtitle: '',
+                      icon: Icons.privacy_tip,
+                      iconColor: Colors.white,
+                      backgroundColor: (Colors.deepPurple[900])!,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Divider(),
+                  SettingsGroup(text: LocaleKeys.Info.tr()),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  SettingsTile(
+                    text: LocaleKeys.Version.tr(),
+                    subtitle: '3.5.5',
+                    icon: Icons.info,
+                    iconColor: Colors.white,
+                    backgroundColor: Colors.black,
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -238,11 +212,12 @@ class SettingsGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '$text'.toUpperCase(),
-      style: GoogleFonts.bebasNeue(
-        fontSize: 15.0,
-        color: Colors.blueAccent,
-        letterSpacing: 3,
-      ),
+      // style: GoogleFonts.bebasNeue(
+      //   fontSize: 15.0,
+      //   color: Colors.blueAccent,
+      //   letterSpacing: 3,
+      // ),
+      style: TextStyle(fontSize: 15.0),
     );
   }
 }

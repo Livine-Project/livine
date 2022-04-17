@@ -1,20 +1,24 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis, dead_code
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../Others/colors.dart';
 import '../ads/ads_help.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../Others/loading.dart';
 import '../Others/notification.dart';
+import '../main.dart';
 import '../recipe/recipe.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:like_button/like_button.dart';
+
+import '../translations/locale_keys.g.dart';
+import 'content/content.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -22,6 +26,32 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //TODO: IN APP UPDATE
+  // AppUpdateInfo? _updateInfo;
+  // GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+
+  // bool _flexibleUpdateAvailable = false;
+
+  // Future<void> checkForUpdate() async {
+  //   InAppUpdate.checkForUpdate().then((info) {
+  //     setState(() {
+  //       _updateInfo = info;
+  //     });
+
+  //   }).catchError((e) {
+  //     showSnack(e.toString());
+  //   });
+  //             print(_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable);
+
+  // }
+
+  // void showSnack(String text) {
+  //   if (_scaffoldKey.currentContext != null) {
+  //     ScaffoldMessenger.of(_scaffoldKey.currentContext!)
+  //         .showSnackBar(SnackBar(content: Text(text)));
+  //   }
+  // }
+
   @override
   void dispose() {
     _nativeAdBanner.dispose();
@@ -56,25 +86,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // final List icons = [
-    //   FontAwesomeIcons.hamburger,
-    //   FontAwesomeIcons.pizzaSlice,
-    //   FontAwesomeIcons.birthdayCake
-    // ];
-    // final List names = [
-    //   'Covid',
-    //   'Anemia',
-    //   'Diabetes',
-    //   'Flu',
-    //   'Malaria',
-    //   'Dengue',
-    //   'Stroke',
-
-    //   // AppLocalizations.of(context).salad,
-    //   // AppLocalizations.of(context).burger,
-    //   // AppLocalizations.of(context).pancake
-    // ];
-
     int screenCrossCount() {
       if (ResponsiveWrapper.of(context).isTablet &&
           ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
@@ -107,86 +118,73 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0, left: 20.0),
-                  child: Text("Welcome,",
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 15.0),
+                  child: Text("${LocaleKeys.Welcome.tr()},",
                       style: TextStyle(fontSize: 45.0, fontFamily: 'Kine')),
                 ),
               ],
             ),
-            //TODO:UNCOMMENT THIS WHEN THE APP IS ON GOOGLEPLAY
-
-            _isnativeBannerAdLoaded
+            _isnativeBannerAdLoaded && testID != 10
                 ? Container(
                     height: _nativeAdBanner.size.height.toDouble(),
                     width: _nativeAdBanner.size.width.toDouble(),
                     child: AdWidget(ad: _nativeAdBanner),
                   )
                 : Container(),
-                //TODO: CONTINUE ON CATEGORY FIELDS
-//             Padding(
-//               padding: const EdgeInsets.all(20.0),
-//               child: SingleChildScrollView(
-//                 scrollDirection: Axis.horizontal,
-//                 child: Row(
-//                   children: [
-//                     CategoryFilter(name: "Covid",),
-//                     SizedBox(
-//                       width: 20.0,
-//                     ),
-//                    CategoryFilter(name: "Anemia",),
-//                    SizedBox(
-//                       width: 20.0,
-//                     ),
-                   
-//  CategoryFilter(name: "Heart",),
-//                   ],
-//                 ),
-//               ),
-//             ),
-SizedBox(height:20.0),
+            SizedBox(height: 20.0),
             Consumer(
               builder: (context, ref, child) {
-                final recipesData = ref.watch(recipesProvider);
+                final recipesTypeData = ref.watch(userTypeProvider);
+                final recipesData = ref.watch(recieveRecipesType(
+                    recipesTypeData.isEmpty ? userType : recipesTypeData));
+
                 return recipesData.when(
-                  data: (data) => Expanded(
-                    flex: 2,
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        return await ref.refresh(recipesProvider);
-                      },
-                      child: OrientationBuilder(
-                        builder: (context, orientation) => GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            // crossAxisCount: ResponsiveWrapper.of(context).isTablet ? 4 : 2,
-                            crossAxisCount: screenCrossCount(),
-                            // crossAxisCount: orientation == Orientation.portrait? 2 : 4,
-                            childAspectRatio: 5 / 7,
-                          ),
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            return RecipeCardNormal(
-                              id: data[index].id,
-                              name: data[index].name,
-                              foodImage: CachedNetworkImageProvider(
-                                'https://livine.pythonanywhere.com/${data[index].imageURL}',
-                                maxWidth: 650,
+                    data: (data) => Expanded(
+                          flex: 2,
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              return await ref.refresh(recieveRecipesType(
+                                  recipesTypeData.isEmpty
+                                      ? userType
+                                      : recipesTypeData));
+                            },
+                            child: OrientationBuilder(
+                              builder: (context, orientation) =>
+                                  GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  // crossAxisCount: ResponsiveWrapper.of(context).isTablet ? 4 : 2,
+                                  crossAxisCount: screenCrossCount(),
+                                  // crossAxisCount: orientation == Orientation.portrait? 2 : 4,
+                                  childAspectRatio: 5 / 7,
+                                ),
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  return RecipeCardNormal(
+                                    id: data[index].id,
+                                    name: context.locale.languageCode == "en"
+                                        ? data[index].name
+                                        : data[index].name_in_arabic,
+                                    foodImage: CachedNetworkImageProvider(
+                                      'https://livine.pythonanywhere.com${data[index].imageURL}',
+                                      maxWidth: 650,
+                                    ),
+                                    type: context.locale.languageCode == "en"
+                                        ? data[index].type
+                                        : data[index].type_in_arabic,
+                                    rating: data[index].rating,
+                                  );
+                                },
                               ),
-                              type: data[index].type,
-                              rating: data[index].rating,
-                            );
-                          },
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  loading: () => Loading(),
-                  error: (e, s) {
-                    // ignore: avoid_print
-                    print('$e\n$s');
-                    return Text(e.toString());
-                  },
-                );
+                    loading: () => Loading(),
+                    error: (e, s) {
+                      print('$e\n$s');
+                      return Text(e.toString());
+                    });
               },
             ),
           ],
@@ -201,7 +199,7 @@ class CategoryFilter extends StatelessWidget {
     Key? key,
     required this.name,
   }) : super(key: key);
-    final name;
+  final name;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -211,36 +209,12 @@ class CategoryFilter extends StatelessWidget {
       ),
       width: 100,
       height: 50,
-      child: Center(child: Text(name,style: TextStyle(fontFamily: 'Kine'
-      ,color: Colors.white,fontSize: 15.0),)),
-    );
-  }
-}
-
-class LoadingAdWidget extends StatelessWidget {
-  const LoadingAdWidget({
-    Key? key,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.grey[400]
-              : Colors.blue[900],
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        width: size,
-        height: 120,
-        child: Center(
-            child: Text(
-          "Ad is Loading...",
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
-        )),
-      ),
+      child: Center(
+          child: Text(
+        name,
+        style:
+            TextStyle(fontFamily: 'Kine', color: Colors.white, fontSize: 15.0),
+      )),
     );
   }
 }
@@ -271,12 +245,12 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
     return Row(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Material(
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.grey[800]
                 // ignore: use_full_hex_values_for_flutter_colors
-                : Color(0xfff80ed99),
+                : primaryColor,
             borderRadius: BorderRadius.circular(15.0),
             child: InkWell(
               splashColor: Colors.orange[600],
@@ -317,7 +291,8 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                         '${widget.type}',
                         style: TextStyle(
                           fontFamily: 'Kine',
-                          fontSize: 13.0,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
@@ -327,23 +302,24 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 5.0),
-                            height: 320.0,
-                            width: 70.0,
-                            child: GestureDetector(
-                              child: LikeButton(
-                                likeBuilder: (isLiked) {
-                                  return Icon(
-                                    FontAwesomeIcons.solidHeart,
-                                    color: isLiked
-                                        ? Color(0xFF22577a)
-                                        : Colors.white,
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
+                          //TODO: Like Button
+                          // Container(
+                          //   padding: EdgeInsets.only(left: 5.0),
+                          //   height: 320.0,
+                          //   width: 70.0,
+                          //   child: GestureDetector(
+                          //     child: LikeButton(
+                          //       likeBuilder: (isLiked) {
+                          //         return Icon(
+                          //           FontAwesomeIcons.solidHeart,
+                          //           color: isLiked
+                          //               ? Color(0xFF22577a)
+                          //               : Colors.white,
+                          //         );
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
                           Text(
                             '${widget.rating}',
                             style: TextStyle(
@@ -397,31 +373,6 @@ class Categories extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Title extends StatelessWidget {
-  const Title({
-    Key? key,
-    required this.text,
-    required this.size,
-  }) : super(key: key);
-
-  final String text;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(25.0),
-      child: Text(
-        AppLocalizations.of(context)!.heyIwant,
-        style: TextStyle(
-          fontSize: size,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );

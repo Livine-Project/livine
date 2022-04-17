@@ -1,5 +1,3 @@
-import '../auth/login.dart';
-import '../intro/base.dart';
 import '../main.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
