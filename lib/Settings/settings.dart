@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../main.dart';
 import '../translations/locale_keys.g.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -138,7 +137,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   ),
                   SettingsTile(
                     text: LocaleKeys.Version.tr(),
-                    subtitle: '3.5.5',
+                    subtitle: '4.2.0',
                     icon: Icons.info,
                     iconColor: Colors.white,
                     backgroundColor: Colors.black,

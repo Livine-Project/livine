@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Others/colors.dart';
 import '../../Others/loading.dart';
-import '../../recipe/recipe.dart';
 import '../../recipe/recipe_types.dart';
 import '../../translations/locale_keys.g.dart';
 import 'content.dart';

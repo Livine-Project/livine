@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:new_version/new_version.dart';
 
 import '../Others/colors.dart';
 import '../main.dart';
@@ -11,87 +14,82 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../user/profile.dart';
 import '../pristine/pristine.dart';
 
-class Navigation extends StatefulWidget {
+class Navigation extends ConsumerStatefulWidget {
   @override
   _NavigationState createState() => _NavigationState();
 }
 
-class _NavigationState extends State<Navigation> {
-  final PageController pageController = PageController();
+class _NavigationState extends ConsumerState<Navigation> {
+  PageController pageController = PageController();
 
-  bool isLoaded = false;
-  
+  final newVersion = NewVersion(androidId: "com.mazen.livine");
+
+  void checkNewVersion() async {
+    final status = await newVersion.getVersionStatus();
+    if (status!.canUpdate && kReleaseMode) {
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status,
+        dialogText: 'Please update the app to the latest version',
+      );
+    }
+  }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      setState(() {
-        isLoaded = true;
-
-      });
-
-    });
+    checkNewVersion();
   }
-  
 
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
   }
-  
- final List<Widget> _children = [
-      Home(),
-      Patient(),
-      Pristine(),
-      Profile(),
-      
-    ];
+
+  final List<Widget> _children = [
+    Home(),
+    Patient(),
+    Pristine(),
+    Profile(),
+  ];
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
-   
-    const duration = Duration(milliseconds: 500);
+    final data = ref.watch(userTypeProvider);
+    const duration = Duration(milliseconds: 300);
     const curve = Curves.easeInOut;
-    return Scaffold(
-      body: PageView.builder(
+    return userType.toString().isEmpty && data.isNotEmpty? ChooseContent(): Scaffold(
+      body: PageView(
         controller: pageController,
-        itemCount: _children.length,
-        itemBuilder: (context, index) => _children[index],
+        onPageChanged: (page) {
+          setState(() {
+            index = page;
+          });
+        },
+        children: _children,
       ),
-      bottomNavigationBar: AnimatedBuilder(
-        animation: pageController,
-        builder: (context, snapshot) {
-          if (!isLoaded || !pageController.hasClients) {
-            return const SizedBox.shrink();
-          }
-          final _index = pageController.page!.round();
-          return CurvedNavigationBar(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? (Colors.grey[800])!
-                : Color.fromRGBO(255, 255, 255, 1),
-            // ignore: use_full_hex_values_for_flutter_colors
-            backgroundColor: Theme.of(context).brightness == Brightness.dark
-                ? (Colors.grey[900])!
-                : primaryColor,
-            items: const [
-              Icon(Icons.home, size: 30),
-              Icon(FontAwesomeIcons.heartbeat, size: 30),
-              Icon(Icons.star_rate_rounded, size: 30),
-              Icon(Icons.person, size: 30),
-            ],
-            animationDuration: duration,
-            animationCurve: curve,
-            index: _index,
-            onTap: (index) {
-              pageController.animateToPage(
-                index,
-                duration: duration,
-                curve: curve,
-              );
-            },
-          );
+      bottomNavigationBar: CurvedNavigationBar(
+        height: 60,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? (Colors.grey[800])!
+            : Color.fromRGBO(255, 255, 255, 1),
+        // ignore: use_full_hex_values_for_flutter_colors
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? (Colors.grey[900])!
+            : primaryColor,
+        items: const [
+          Icon(Icons.home, size: 30),
+          Icon(FontAwesomeIcons.heartbeat, size: 30),
+          Icon(Icons.star_rate_rounded, size: 30),
+          Icon(Icons.person, size: 30),
+        ],
+        animationDuration: duration,
+        animationCurve: curve,
+        index: index,
+        onTap: (index) {
+          pageController.animateToPage(index, duration: duration, curve: curve);
         },
       ),
     );

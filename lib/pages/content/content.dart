@@ -27,8 +27,7 @@ class _ChooseContentState extends State<ChooseContent> {
     return Scaffold(
       body: Row(
         children: [
-          Expanded(
-              child: Consumer(
+          Expanded(child: Consumer(
             builder: (context, ref, child) {
               return InkWell(
                 splashColor: primaryColor,
@@ -52,11 +51,21 @@ class _ChooseContentState extends State<ChooseContent> {
                       Icon(
                         Icons.tag_faces_outlined,
                         size: 150.0,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black
+                            : Colors.black,
                       ),
                       Center(
                         child: Text(
                           LocaleKeys.healthy.tr(),
-                          style: TextStyle(fontFamily: 'Kine', fontSize: 20.0),
+                          style: TextStyle(
+                            fontFamily: 'Kine',
+                            fontSize: 20.0,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.black
+                                    : Colors.black,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -91,7 +100,6 @@ class _ChooseContentState extends State<ChooseContent> {
                       Center(
                         child: Text(
                           LocaleKeys.patient.tr(),
-
                           style: TextStyle(
                               fontFamily: 'Kine',
                               fontSize: 20.0,

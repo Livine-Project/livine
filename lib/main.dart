@@ -4,7 +4,6 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'Others/loading.dart';
 import 'Others/routes.dart';

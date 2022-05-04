@@ -11,59 +11,65 @@ class OnBoarding extends StatelessWidget {
   const OnBoarding({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
-    final List images = ['livine','healthyoptions','stability'];
+    final List images = ['livine', 'healthyoptions', 'stability', 'content'];
     final List heading = [
-      'Welcome to Livine', 
+      'Welcome to Livine',
       "We've plenty of healthy options",
       "We assure that you gonna have a Flexible Lifestyle",
-      ];
-      final List<Color> textColors = [Colors.black, Colors.black,Colors.white, Colors.white];
+      "You can change your content for your health situation "
+    ];
+    final List<Color> textColors = [
+      Colors.black,
+      Colors.black,
+      Colors.white,
+      Colors.black
+    ];
 
     return Scaffold(
       body: ConcentricPageView(
-        colors: <Color>[Colors.white, primaryColor,thirdColor],
+        colors: <Color>[Colors.white, primaryColor, thirdColor, primaryColor],
         itemCount: heading.length, // null = infinity
         physics: NeverScrollableScrollPhysics(),
         curve: Curves.easeInOut,
         direction: Axis.vertical,
         scaleFactor: 5,
-        onFinish: () =>  context.goNamed('Content'),
+        onFinish: () => context.goNamed('Content'),
 
         itemBuilder: (int index, double value) {
-          return introScreens('${heading[index]}', 'assets/images/onboarding/${images[index]}.svg', textColors[index]);
+          return introScreens(
+              '${heading[index]}',
+              'assets/images/onboarding/${images[index]}.svg',
+              textColors[index]);
         },
       ),
     );
   }
-  Widget introScreens (String text , String url, Color textColor) {
 
+  Widget introScreens(String text, String url, Color textColor) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top:100.0),
+        padding: const EdgeInsets.only(top: 100.0),
         child: Column(
           children: [
             SvgPicture.asset(
               url,
-              height: 250.0,
+              height: 320.0,
             ),
-                                SizedBox(
-          height: 20.0,
-        ),
-        Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 30.0,
-            fontFamily: 'Kine',
-            color: textColor,
-            
+            SizedBox(
+              height: 20.0,
             ),
-        ),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30.0,
+                fontFamily: 'Kine',
+                color: textColor,
+              ),
+            ),
           ],
         ),
       ),
     );
-    
   }
 }
