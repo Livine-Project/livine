@@ -20,7 +20,7 @@ import '../../../modules/pristine/confirm_payment.dart';
 import '../../../modules/recipe/recipe_details.dart';
 import '../intro/base.dart';
 import '../intro/boarding.dart';
-
+import '../recipe/web_view_widget.dart';
 
 final baseRoutes = GoRouter(routes: [
   GoRoute(
@@ -42,25 +42,24 @@ final baseRoutes = GoRouter(routes: [
   ),
   GoRoute(
       path: '/details',
-      pageBuilder: (context,state) => CustomTransitionPage(
-        key: state.pageKey,
-        child: RecipeDetails(id: state.extra),
-        transitionsBuilder: (context,animation,secondaryAnimation,child){
-          var begin = Offset(0.0,1.0);
-          var end = Offset(0.0,0.0);
-          var tween = Tween(begin: begin,end:end);
-          var offsetAnimation = animation.drive(tween);
-          return SlideTransition(position: offsetAnimation,child: child,);
-        }
-
-        )
-      
-      ),
+      pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: RecipeDetails(id: state.extra),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            var begin = Offset(0.0, 1.0);
+            var end = Offset(0.0, 0.0);
+            var tween = Tween(begin: begin, end: end);
+            var offsetAnimation = animation.drive(tween);
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          })),
   GoRoute(
     path: '/navigate',
     builder: (context, state) => Navigation(),
   ),
-    GoRoute(
+  GoRoute(
     path: '/languages',
     builder: (context, state) => Languages(),
   ),
@@ -108,14 +107,24 @@ final baseRoutes = GoRouter(routes: [
       );
     },
   ),
-    GoRoute(
+  GoRoute(
     name: "Content",
     path: '/choose_content',
     builder: (context, state) => ChooseContent(),
   ),
-      GoRoute(
+  GoRoute(
     name: "Content_Patient",
     path: '/content_patient',
     builder: (context, state) => ContentPatient(),
+  ),
+  GoRoute(
+    name: "recipeVideo",
+    path: '/recipe_video',
+    builder: (context, state) {
+      return RecipeVideoWidget(
+        url: state.extra.toString()
+        
+      );
+    },
   ),
 ]);

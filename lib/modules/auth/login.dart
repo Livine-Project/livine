@@ -2,10 +2,10 @@
 
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../shared/styles/colors.dart';
 import '../../models/auth/auth_classes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/styles/lib_color_schemes.g.dart';
+import '../../translations/locale_keys.g.dart';
 
 
 final userIDProvider = StateProvider<int>((ref) => 0);
@@ -116,7 +117,8 @@ class _LoginState extends ConsumerState<Login> {
                           textInputAction: TextInputAction.next,
                           validator: (u) {
                             if (u!.isEmpty) {
-                              return "Please enter your username";
+                              return context.locale.languageCode == "en" ? 
+                              "Please enter your username" : "من فضلك ادخل اسم المستخدم";
                             }
                             return null;
                           },
@@ -128,7 +130,7 @@ class _LoginState extends ConsumerState<Login> {
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(),
                             ),
-                            labelText: 'Username',
+                            labelText: LocaleKeys.username.tr(),
                             labelStyle:
                                 TextStyle(fontSize: 15, color: Colors.black),
                           ),
@@ -137,9 +139,11 @@ class _LoginState extends ConsumerState<Login> {
                       TextFormField(
                         validator: (p) {
                           if (p!.length < 6 && p.isNotEmpty) {
-                            return "Password needs to be atleast 6 characters ";
+                            return context.locale.languageCode == "en" ? 
+                            "Password needs to be atleast 6 characters " : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
                           } else if (p.isEmpty) {
-                            return "Please enter your password ";
+                            return context.locale.languageCode == "en" ? 
+                            "Please enter your password " : "من فضلك أدخل كلمة السر";
                           }
                           return null;
                         },
@@ -154,9 +158,7 @@ class _LoginState extends ConsumerState<Login> {
                                 _obscureText
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: _obscureText
-                                    ? Colors.grey
-                                    : secondaryColor),
+                                ),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -166,7 +168,7 @@ class _LoginState extends ConsumerState<Login> {
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(),
                           ),
-                          labelText: 'Password',
+                          labelText: LocaleKeys.password.tr(),
                           labelStyle:
                               TextStyle(fontSize: 15, color: Colors.black),
                         ),
@@ -179,7 +181,7 @@ class _LoginState extends ConsumerState<Login> {
                 padding: EdgeInsets.only(top: 20, bottom: 5),
                 //TODO: FORGOT YOUR PASSWORD
                 child: Text(
-                  'Forgot your password?',
+                  LocaleKeys.Forget_your_password.tr(),
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontSize: 15,
@@ -204,7 +206,7 @@ class _LoginState extends ConsumerState<Login> {
                           color: Colors.white,
                         )
                       : Text(
-                          'SIGN IN',
+                          LocaleKeys.Sign_in.tr(),
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Kine',
@@ -219,14 +221,14 @@ class _LoginState extends ConsumerState<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an Account ?",
+                        LocaleKeys.no_account.tr(),
                         style: TextStyle(
                             fontFamily: 'Kine', fontWeight: FontWeight.w100),
                       ),
                       GestureDetector(
                         onTap: () => context.go('/register'),
                         child: Text(
-                          'Sign Up'.toUpperCase(),
+                          LocaleKeys.Sign_up.tr().toUpperCase(),
                           style: TextStyle(
                             fontSize: 15.0,
                             color: lightColorScheme.primary,

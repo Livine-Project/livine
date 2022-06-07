@@ -73,7 +73,16 @@ class CodegenLoader extends AssetLoader{
   "choose_content": "اختار المحتوي",
   "Iam_a": "انا",
   "healthy": "تريد أن تحصل على وصفات صحية بجانب المكونات ومقاطع الفيديو ، \n اضغط هنا",
-  "patient": "تريد أن يتم تحصل علي وصفات علي حسب حالتك الصحية  ، \n اضغط هنا "
+  "patient": "تريد أن يتم تحصل علي وصفات علي حسب حالتك الصحية  ، \n اضغط هنا ",
+  "username": "اسم المستخدم",
+  "password": "كلمة السر",
+  "Forget_your_password": "نسيت كلمة المرور ؟",
+  "Sign_in": "تسجيل الدخول",
+  "no_account": "ليس لديك حساب ؟",
+  "Sign_up": "سجل الآن",
+  "have_an_account": "هل لديك حساب ؟",
+  "terms1": "من خلال إنشاء حساب ، فإنك توافق بالفعل على",
+  "terms2": "الأحكام والشروط"
 };
 static const Map<String,dynamic> en = {
   "Welcome": "Welcome",
@@ -133,7 +142,16 @@ static const Map<String,dynamic> en = {
   "choose_content": "Choose your content",
   "Iam_a": "I'm a",
   "healthy": "You want to be provided by healthy recipes that you should consume to remain healthy, \n Click here",
-  "patient": "You want to be provided per your health situation \n Click here"
+  "patient": "You want to be provided per your health situation \n Click here",
+  "username": "Username",
+  "password": "Password",
+  "Forget_your_password": "Forget your password ?",
+  "Sign_in": "Sign In",
+  "no_account": "Don't Have an account ?",
+  "Sign_up": "Sign Up",
+  "have_an_account": "Already have an account ?",
+  "terms1": "By creating an account , you already agree on",
+  "terms2": "Terms and Conditions"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

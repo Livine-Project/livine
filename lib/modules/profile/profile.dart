@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:responsive_framework/responsive_value.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 import '../auth/login.dart';
 import '../../shared/components/misc/loading.dart';
@@ -21,14 +22,12 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Theme.of(context).brightness == Brightness.dark
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? darkColorScheme.background
             : lightColorScheme.secondaryContainer,
         title: Text(
           LocaleKeys.Profile.tr(),
-          style: TextStyle(
-
-              fontFamily: 'Kine'),
+          style: TextStyle(fontFamily: 'Kine'),
         ),
         //TODO: ADD EDIT PROFILE
         // actions: [
@@ -45,55 +44,58 @@ class Profile extends StatelessWidget {
         // ],
         centerTitle: true,
         elevation: 0,
-
-
       ),
-      body: Column(
-        children: [
-          Consumer(
-            builder: ((context, ref, child) {
-              final userID = ref.watch(userIDProvider);
-              final userData =
-                  ref.watch(userProviderID(testID == null ? userID : testID));
-              return userData.when(
-                data: (data) => UserInfo(
-                  name: data.username,
-                  email: data.email,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Consumer(
+              builder: ((context, ref, child) {
+                final userID = ref.watch(userIDProvider);
+                final userData =
+                    ref.watch(userProviderID(testID == null ? userID : testID));
+                return userData.when(
+                  data: (data) => UserInfo(
+                    name: data.username,
+                    email: data.email,
 
-                  image: 'assets/images/profile/default.png',
-                  // ),, )
-                ),
-                error: (e, s) {
-                  print('$e\n$s');
-                  return kDebugMode ? Text(e.toString()) : Loading();
+                    image: 'assets/images/profile/default.png',
+                    // ),, )
+                  ),
+                  error: (e, s) {
+                    print('$e\n$s');
+                    return kDebugMode ? Text(e.toString()) : Loading();
+                  },
+                  loading: () => Loading(),
+                );
+              }),
+            ),
+            ResponsiveVisibility(
+              hiddenWhen: [Condition.largerThan(name: MOBILE)],
+              child: ProfileMenu(
+                name: LocaleKeys.Settings.tr().toString(),
+                icon: Icons.settings,
+                press: () => context.push('/settings'),
+              ),
+            ),
+            ProfileMenu(
+              name: LocaleKeys.choose_content.tr().toString(),
+              icon: Icons.grass_rounded,
+              press: () => context.pushNamed('Content'),
+            ),
+            Consumer(builder: (context, ref, child) {
+              return ProfileMenu(
+                name: LocaleKeys.Logout.tr().toString(),
+                icon: Icons.logout,
+                press: () async {
+                  final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.clear();
+                  context.go('/login');
                 },
-                loading: () => Loading(),
               );
             }),
-          ),
-          ProfileMenu(
-            name: LocaleKeys.Settings.tr().toString(),
-            icon: Icons.settings,
-            press: () => context.push('/settings'),
-          ),
-          ProfileMenu(
-            name: LocaleKeys.choose_content.tr().toString(),
-            icon: Icons.grass_rounded,
-            press: () => context.pushNamed('Content'),
-          ),
-          Consumer(builder: (context, ref, child) {
-            return ProfileMenu(
-              name: LocaleKeys.Logout.tr().toString(),
-              icon: Icons.logout,
-              press: () async {
-                final SharedPreferences prefs =
-                    await SharedPreferences.getInstance();
-                await prefs.clear();
-                context.go('/login');
-              },
-            );
-          }),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -192,9 +194,8 @@ class UserInfo extends StatelessWidget {
               SizedBox(height: 5),
               Text(
                 email,
-                style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'Kine'),
+                style:
+                    TextStyle(fontWeight: FontWeight.w300, fontFamily: 'Kine'),
               )
             ],
           ),

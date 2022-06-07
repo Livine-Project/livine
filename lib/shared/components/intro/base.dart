@@ -1,16 +1,18 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:new_version/new_version.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 import '../../../main.dart';
-import '../../../modules/categories/categories.dart';
 import '../../../modules/content/content.dart';
-import '../../../modules/home.dart';
-import '../../../modules/pristine/pristine.dart';
-import '../../../modules/profile/profile.dart';
+
+import '../misc/children.dart';
+import 'tablet_navigation.dart';
 
 class Navigation extends ConsumerStatefulWidget {
   @override
@@ -19,23 +21,21 @@ class Navigation extends ConsumerStatefulWidget {
 
 class _NavigationState extends ConsumerState<Navigation> {
   PageController pageController = PageController();
-  final newVersion = NewVersion(androidId: "com.mazen.livine");
 
   void checkNewVersion() async {
+    final newVersion = NewVersion(androidId: "com.mazen.livine");
     final status = await newVersion.getVersionStatus();
-    if (status!.canUpdate && kReleaseMode) {
-      newVersion.showUpdateDialog(
-        context: context,
-        versionStatus: status,
-        dialogText: 'Please update the app to the latest version',
-      );
-    }
+    newVersion.showUpdateDialog(context: context, versionStatus: status!);
+  }
+
+  void initOnlyOnAndroid() {
+    checkNewVersion();
   }
 
   @override
   void initState() {
     super.initState();
-    checkNewVersion();
+    initOnlyOnAndroid();
   }
 
   @override
@@ -44,12 +44,6 @@ class _NavigationState extends ConsumerState<Navigation> {
     super.dispose();
   }
 
-  final List<Widget> _children = [
-    Home(),
-    Patient(),
-    // Pristine(),
-    Profile(),
-  ];
   int index = 0;
 
   @override
@@ -60,43 +54,53 @@ class _NavigationState extends ConsumerState<Navigation> {
     if (userType.toString().isEmpty && data.isNotEmpty) {
       return ChooseContent();
     } else {
-      return Scaffold(
-        body: PageView(
-          controller: pageController,
-          onPageChanged: (page) {
-            setState(() {
-              index = page;
-            });
-          },
-          children: _children,
-        ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: index,
-          onDestinationSelected: (int index) {
-            pageController.animateToPage(index,
-                duration: duration, curve: curve);
-          },
-          destinations: [
-            NavigationDestination(
-              icon: Icon(Icons.home, size: 30),
-              label: context.locale.languageCode == "en" ? "Home" : "الرئيسية",
-            ),
-            NavigationDestination(
-                icon: Icon(Icons.fastfood_rounded, size: 30),
-                label:
-                    context.locale.languageCode == "en" ? "Meals" : "الوجبات"),
-            // NavigationDestination(
-            //     icon: Icon(Icons.star_rate_rounded, size: 30),
-            //     label: "Pristine"),
-            NavigationDestination(
-                icon: Icon(Icons.person, size: 30),
-                label: context.locale.languageCode == "en"
-                    ? "Profile"
-                    : "الحساب الشخصي")
-          ],
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        ),
-      );
+      return ResponsiveWrapper.of(context).isTablet ||
+              ResponsiveWrapper.of(context).isDesktop
+          ? TabletNavigation()
+          : Scaffold(
+              body: PageView(
+                controller: pageController,
+                onPageChanged: (page) {
+                  setState(() {
+                    index = page;
+                  });
+                },
+                children: children,
+              ),
+              bottomNavigationBar: NavigationBar(
+                selectedIndex: index,
+                onDestinationSelected: (int index) {
+                  pageController.animateToPage(index,
+                      duration: duration, curve: curve);
+                },
+                destinations: [
+                  NavigationDestination(
+                    icon: Icon(Icons.home, size: 30),
+                    label: context.locale.languageCode == "en"
+                        ? "Home"
+                        : "الرئيسية",
+                  ),
+                  NavigationDestination(
+                      icon: Icon(Icons.fastfood_rounded, size: 30),
+                      label: context.locale.languageCode == "en"
+                          ? "Meals"
+                          : "الوجبات"),
+                  //TODO:PRISTINE PREMIUM LIVINE
+                  // NavigationDestination(
+                  //     icon: Icon(Icons.star_rate_rounded, size: 30),
+                  //     label: context.locale.languageCode == "en"
+                  //         ? "Pristine"
+                  //         : "الاصلي"),
+                  NavigationDestination(
+                      icon: Icon(Icons.person, size: 30),
+                      label: context.locale.languageCode == "en"
+                          ? "Profile"
+                          : "الحساب الشخصي")
+                ],
+                labelBehavior:
+                    NavigationDestinationLabelBehavior.onlyShowSelected,
+              ),
+            );
     }
   }
 }

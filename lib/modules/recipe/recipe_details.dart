@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../models/recipe/recipe.dart';
 import '../../shared/components/misc/loading.dart';
@@ -32,8 +32,6 @@ class _RecipeDetailsState extends State<RecipeDetails>
       final recipesData = ref.watch(recipesProviderID(widget.id));
       return recipesData.when(
         data: (data) {
-          String? videoId = YoutubePlayer.convertUrlToId(data.video);
-          print(videoId);
           return Stack(
             children: [
               Positioned.fill(
@@ -192,34 +190,24 @@ class _RecipeDetailsState extends State<RecipeDetails>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                context.locale.languageCode == "en"
-                                    ? "Video :"
-                                    : "الفيديو:",
-                                style: TextStyle(
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              YoutubePlayerBuilder(
-                                player: YoutubePlayer(
-                                  controller: youtubeRecipe(
-                                      videoID:
-                                          context.locale.languageCode == "en"
+                              Center(
+                                child: SizedBox(
+                                  width: 200.0,
+                                  height: 60.0,
+                                  child: OutlinedButton(
+                                    
+                                      onPressed: () => context.goNamed(
+                                          "recipeVideo",
+                                          extra: context.locale.languageCode ==
+                                                  "en"
                                               ? data.video
                                               : data.video_in_arabic),
-                                  showVideoProgressIndicator: true,
-                                  bottomActions: [
-                                    FullScreenButton(),
-                                    ProgressBar(isExpanded: true),
-                                    PlayPauseButton(),
-                                  ],
+                                      child: Text(
+                                          context.locale.languageCode == "en"
+                                              ? "Video"
+                                              : "الفيديو")),
                                 ),
-                                builder: (context, player) {
-                                  return Column(
-                                    children: [player],
-                                  );
-                                },
-                              ),
+                              )
                             ],
                           ),
                         ),

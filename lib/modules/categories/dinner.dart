@@ -1,3 +1,4 @@
+import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
 import 'breakfast.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class Dinner extends StatelessWidget {
       ),
         body: OrientationBuilder(
           builder: ((context, orientation) => 
-          GridView.count(crossAxisCount: orientation == Orientation.portrait ? 1 : 2, 
+          GridView.count(crossAxisCount: rh.responsiveMeals(context), 
           children: [
               Category(
                 url: 'https://www.youtube.com/watch?v=-oxjhgVp4y4',

@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 part 'recipe.freezed.dart';
 part 'recipe.g.dart';
 
@@ -103,10 +102,4 @@ String changeDiffImage({String difficulty = '', bool isArabic = false}) {
   }
 }
 
-YoutubePlayerController youtubeRecipe({required String videoID}) {
-  YoutubePlayerController controller = YoutubePlayerController(
-    initialVideoId: YoutubePlayer.convertUrlToId(videoID).toString(),
-    flags: YoutubePlayerFlags(autoPlay: false),
-  );
-  return controller;
-}
+

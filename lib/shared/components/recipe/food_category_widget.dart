@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -18,30 +17,45 @@ class FoodCategory extends StatelessWidget {
   final Color color;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => context.push(navigate),
+    return Center(
       child: Container(
-
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30.0),
-          child: Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CachedNetworkImage(imageUrl: image,height: 185,width: 400.0,fit: BoxFit.cover,),
-                new SizedBox(height: 10.0,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text(
-                    name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20),),
-                ),
-              ],
+        color: Colors.transparent,
+        child: Material(
+          child: InkWell(
+            
+            onTap: () => context.push(navigate),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(10.0),
+                          bottom: Radius.circular(15.0)),
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 320.0,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 10.0),
+                    child: Text(
+                      name,
+                      style: TextStyle( fontWeight: FontWeight.bold,fontSize: 20.0),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
-
       ),
     );
   }

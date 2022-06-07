@@ -6,10 +6,12 @@ import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../constants/constants.dart';
 import '../../styles/colors.dart';
 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final List images = ['livine', 'healthyoptions', 'stability', 'content'];
@@ -37,7 +39,7 @@ class OnBoarding extends StatelessWidget {
         onFinish: () => context.goNamed('Content'),
 
         itemBuilder: (index) {
-          return introScreens(
+          return IntroScreens(
               text: '${heading[index]}',
               url: 'assets/images/onboarding/${images[index]}.svg',
               textColor: textColors[index]);
@@ -45,12 +47,25 @@ class OnBoarding extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget introScreens(
-      {required String text, required String url, required Color textColor}) {
+class IntroScreens extends StatelessWidget {
+  const IntroScreens({
+    Key? key,
+    required this.text,
+    required this.url,
+    required this.textColor,
+  }) : super(key: key);
+
+  final String text;
+  final String url;
+  final Color textColor;
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 100.0),
+        padding: EdgeInsets.symmetric(vertical: rh.deviceHeight(context) / 8),
         child: Column(
           children: [
             SvgPicture.asset(

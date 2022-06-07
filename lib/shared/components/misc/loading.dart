@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,9 +10,27 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitPumpingHeart(
-        color: Color(0xfff80ed99),
-      ),
+        child: Lottie.asset("assets/images/loading/loading.json"),
+      
+    );
+  }
+}
+
+class RecipeLoading extends StatelessWidget {
+  const RecipeLoading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Container(
+          padding: EdgeInsets.only(top: 5.0),
+          height: 230.0,
+          width: 150.0,
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.04),
+            borderRadius: BorderRadius.circular(15.0),
+          )),
     );
   }
 }
@@ -33,15 +51,14 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
           result == ConnectivityResult.wifi) {
         if (username == true) {
           context.go("/navigate");
-
         } else {
           context.go("/login");
-;
+          ;
         }
       }
     });
   }
-    
+
   // }
   @override
   Widget build(BuildContext context) {
@@ -65,15 +82,17 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
                     child: Text(
                       "Oops, No Internet Connection",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20.0,),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
                     ),
                   ),
                 ),
                 Center(
                   child: Text(
-                      "Make sure wifi or cellular data is turned on \n and then try again",),
+                    "Make sure wifi or cellular data is turned on \n and then try again",
+                  ),
                 ),
-
               ],
             ),
           ),

@@ -60,5 +60,14 @@ abstract class  LocaleKeys {
   static const Iam_a = 'Iam_a';
   static const healthy = 'healthy';
   static const patient = 'patient';
+  static const username = 'username';
+  static const password = 'password';
+  static const Forget_your_password = 'Forget_your_password';
+  static const Sign_in = 'Sign_in';
+  static const no_account = 'no_account';
+  static const Sign_up = 'Sign_up';
+  static const have_an_account = 'have_an_account';
+  static const terms1 = 'terms1';
+  static const terms2 = 'terms2';
 
 }

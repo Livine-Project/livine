@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,7 @@ import 'package:http/http.dart' as http;
 
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/lib_color_schemes.g.dart';
+import '../../translations/locale_keys.g.dart';
 
 class Register extends ConsumerStatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -24,7 +26,6 @@ class _RegisterState extends ConsumerState<Register> {
   final _username = TextEditingController();
   final _email = TextEditingController();
   final _password = TextEditingController();
-  final _confirmPassword = TextEditingController();
   var errorinEmail;
   var errorinUser;
   Future<void> registertoDjango() async {
@@ -34,7 +35,7 @@ class _RegisterState extends ConsumerState<Register> {
       body: {
         'username': _username.text,
         'email': _email.text,
-        'password': _confirmPassword.text,
+        'password': _password.text,
       },
     );
 
@@ -126,7 +127,7 @@ class _RegisterState extends ConsumerState<Register> {
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(),
                             ),
-                            labelText: 'Username',
+                            labelText: LocaleKeys.username.tr(),
                             labelStyle: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
@@ -138,7 +139,8 @@ class _RegisterState extends ConsumerState<Register> {
                         textInputAction: TextInputAction.next,
                         validator: (e) {
                           if (e!.isEmpty) {
-                            return "Please enter your email";
+                            return context.locale.languageCode =="en" ? 
+                             "Please enter your email" : "من فضلك ادخل البريد الاكتروني";
                           }
 
                           return null;
@@ -148,13 +150,11 @@ class _RegisterState extends ConsumerState<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                          // errorText: errorinEmail is List
-                          //     ? errorinEmail.first
-                          //     : errorinEmail,
+                         
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(),
                           ),
-                          labelText: 'Email',
+                          labelText: context.locale.languageCode =="en" ?'Email' : "البريد الاكتروني",
                           labelStyle: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -165,47 +165,29 @@ class _RegisterState extends ConsumerState<Register> {
                         validator: (passwordValue) {
                           if (passwordValue!.length < 6 &&
                               passwordValue.isNotEmpty) {
-                            return "Password needs to be atleast 6 characters ";
+                            return context.locale.languageCode == "en" ? 
+                            "Password needs to be atleast 6 characters " : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
+
                           } else if (passwordValue.isEmpty) {
-                            return "Please enter your password ";
+                            return context.locale.languageCode == "en" ? 
+                            "Please enter your password " : "من فضلك أدخل كلمة السر";
                           }
                           return null;
                         },
                         controller: _password,
-                        obscureText: true,
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
-                          labelText: 'Password',
-                          labelStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
-                        ),
-                      ),
-                      TextFormField(
-                        validator: (confirmPassword) {
-                          if (_confirmPassword.value != _password.value) {
-                            return "Confirm password doesn't match with your password";
-                          }
-                          return null;
-                        },
-                        controller: _confirmPassword,
                         obscureText: _obscureText,
                         style: TextStyle(
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                          suffixIcon: IconButton(
+                            suffixIcon: IconButton(
                             icon: Icon(
-                              _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color:
-                                  _obscureText ? Colors.grey : secondaryColor,
-                            ),
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: _obscureText
+                                    ? Colors.grey
+                                    : secondaryColor),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -214,12 +196,14 @@ class _RegisterState extends ConsumerState<Register> {
                           ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(),
+                            
                           ),
-                          labelText: 'Confirm Password',
+                          labelText: LocaleKeys.password.tr(),
                           labelStyle:
                               TextStyle(fontSize: 15, color: Colors.black),
                         ),
                       ),
+                      
                     ],
                   ),
                 ),
@@ -240,7 +224,7 @@ class _RegisterState extends ConsumerState<Register> {
                           color: Colors.white,
                         )
                       : Text(
-                          'SIGN UP',
+                          LocaleKeys.Sign_up.tr(),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -256,13 +240,13 @@ class _RegisterState extends ConsumerState<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have an account? ",
+                        LocaleKeys.have_an_account.tr(),
                         style: TextStyle(fontFamily: 'Kine'),
                       ),
                       GestureDetector(
                         onTap: () => context.go('/login'),
                         child: Text(
-                          'Sign In'.toUpperCase(),
+                          LocaleKeys.Sign_in.tr().toUpperCase(),
                           style: TextStyle(
                               fontSize: 16.0,
                               color: lightColorScheme.primary,
@@ -281,10 +265,10 @@ class _RegisterState extends ConsumerState<Register> {
                 text: TextSpan(
                   children: <TextSpan>[
                     TextSpan(
-                        text: "By creating an account , you already agree on ",
+                        text: LocaleKeys.terms1.tr(),
                         style: TextStyle(fontSize: 15.0, color: Colors.black)),
                     TextSpan(
-                        text: "Terms and Conditions",
+                        text: LocaleKeys.terms2.tr(),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => context.push('/terms'),
                         style: TextStyle(
@@ -295,23 +279,7 @@ class _RegisterState extends ConsumerState<Register> {
                   ],
                 ),
               ),
-              // Text(
-              //   "By creating an account , you already agree on ",
-              //   style: TextStyle(fontFamily: 'Kine'),
-              //   textAlign: TextAlign.center,
-              // ),
-              // SizedBox(
-              //   height: 10.0,
-              // ),
-              // Center(
-              //   child: GestureDetector(
-              //       onTap: () => context.push('/terms'),
-              //       child: Text(
-              //         "Terms and Conditions",
-              //         style:
-              //             TextStyle(color: lightColorScheme.primary, fontFamily: 'Kine'),
-              //       )),
-              // ),
+
             ],
           ),
         ),

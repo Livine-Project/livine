@@ -4,9 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
-
-
 
 class BreakFast extends StatelessWidget {
   BreakFast({Key? key}) : super(key: key);
@@ -19,11 +18,10 @@ class BreakFast extends StatelessWidget {
         centerTitle: true,
         elevation: 1.2,
         // ignore: use_full_hex_values_for_flutter_colors
-
       ),
       body: OrientationBuilder(
         builder: (context, orientation) => GridView.count(
-          crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
+          crossAxisCount: rh.responsiveMeals(context),
           physics: BouncingScrollPhysics(),
           children: [
             Category(

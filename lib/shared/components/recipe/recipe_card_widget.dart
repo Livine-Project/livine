@@ -1,8 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../styles/lib_color_schemes.g.dart';
+import '../../constants/constants.dart';
 
 class RecipeCardNormal extends StatefulWidget {
   const RecipeCardNormal({
@@ -18,7 +18,7 @@ class RecipeCardNormal extends StatefulWidget {
 
   final int id;
   final String name;
-  final ImageProvider foodImage;
+  final String foodImage;
   final String type;
   final String time;
   final String difficulty;
@@ -35,105 +35,61 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Material(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? darkColorScheme.onSecondary
-                  // ignore: use_full_hex_values_for_flutter_colors
-                  : lightColorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: InkWell(
-                splashColor: Colors.orange[600],
-                onTap: () => context.push('/details', extra: widget.id),
-                borderRadius: BorderRadius.circular(15.0),
-                child: Container(
-                  padding: EdgeInsets.only(top: 5.0),
-                  height: 230.0,
-                  width: 150.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    image: DecorationImage(
-                      image: widget.foodImage,
-                      scale: 5.0,
-                    ),
-                  ),
+                onTap: () => context.push("/details", extra: widget.id),
+                child: Card(
                   child: Column(
-                    children: [
-                      Expanded(
-                        flex: 0,
-                        child: Container(
-                          width: 100,
-                          child: Text(
-                            '${widget.name}',
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: 'Kine',
-                              fontSize: 17.0,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10.0),
+                                bottom: Radius.circular(15.0)),
+                            child: CachedNetworkImage(
+                              imageUrl: widget.foodImage,
+                              height: 140,
+                              width: rh.deviceWidth(context)/2,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          '${widget.type}',
-                          style: TextStyle(
-                            fontFamily: 'Kine',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Container(
+                            width: 100,
+                            child: Text(
+                              
+                              widget.name,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17.0),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.clock,
-                                  size: 20,
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Text(
-                                  widget.time,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  widget.dImage,
-                                  width: 20.0,
-                                ),
-                                SizedBox(
-                                  width: 2.0,
-                                ),
-                                Text(
-                                  widget.difficulty,
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(widget.time.toUpperCase()),
+                              Text(
+                                "|",
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                              Text(widget.difficulty.toUpperCase())
+                            ],
+                          ),
+                        )
+                      ]),
                 ),
-              ),
-            ),
-          ),
+              )),
         ),
       ],
     );
