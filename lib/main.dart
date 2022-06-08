@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:responsive_framework/responsive_framework.dart';
 
 import 'modules/Settings/Theme/theme.dart';
 
+import 'shared/components/misc/notification.dart';
 import 'translations/codegen_loader.g.dart';
 
 bool username = false;
@@ -24,8 +24,7 @@ var testID;
 var connectivityResult;
 var userType;
 // List<CameraDescription>? cameras;
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

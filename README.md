@@ -15,4 +15,3 @@ You can contribute by doing one of the following :
 
 ## License
 This project is under MIT License 🚀
->>>>>>> master

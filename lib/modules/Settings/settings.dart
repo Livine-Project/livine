@@ -48,15 +48,28 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  InkWell(
-                    onTap: () => context.push('/languages'),
-                    child: SettingsTile(
-                      text: LocaleKeys.Language.tr(),
-                      subtitle: context.locale.languageCode == "en"
-                          ? "English "
-                          : "العربية",
-                      icon: Icons.language,
-                    ),
+                  Column(
+                    children: [
+                      InkWell(
+                  onTap: () => context.push('/languages'),
+                        child: SettingsTile(
+                          text: LocaleKeys.Language.tr(),
+                          subtitle: context.locale.languageCode == "en"
+                              ? "English "
+                              : "العربية",
+                          icon: Icons.language,
+                        ),
+                      ),
+                      SizedBox(height: 15.0,),
+                      InkWell(
+                        onTap: () => context.push("/notifications_settings"),
+                        child: SettingsTile(
+                          text: LocaleKeys.notfications.tr(),
+                          subtitle:'',
+                          icon: Icons.notifications,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 10.0,

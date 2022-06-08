@@ -82,7 +82,9 @@ class CodegenLoader extends AssetLoader{
   "Sign_up": "سجل الآن",
   "have_an_account": "هل لديك حساب ؟",
   "terms1": "من خلال إنشاء حساب ، فإنك توافق بالفعل على",
-  "terms2": "الأحكام والشروط"
+  "terms2": "الأحكام والشروط",
+  "notfications": "إشعارات",
+  "ask_me_how_i_feel": "اسالني كيف اشعر كل يوم"
 };
 static const Map<String,dynamic> en = {
   "Welcome": "Welcome",
@@ -121,6 +123,7 @@ static const Map<String,dynamic> en = {
   "Eggplant_Parmesan": "Eggplant Parmesan",
   "Roasted_Cauliflower_Tacos": "Roasted Cauliflower Tacos",
   "Carrot_with_Radish_Salad": "Carrot with Radish Salad",
+  "Caesar_Salad": "Caesar Salad",
   "Salmon_Salad": "Salmon Salad",
   "Panzanella": "Panzanella",
   "Mixed_Nuts": "Mixed Nuts",
@@ -151,7 +154,9 @@ static const Map<String,dynamic> en = {
   "Sign_up": "Sign Up",
   "have_an_account": "Already have an account ?",
   "terms1": "By creating an account , you already agree on",
-  "terms2": "Terms and Conditions"
+  "terms2": "Terms and Conditions",
+  "notfications": "Notfications",
+  "ask_me_how_i_feel": "Ask me how I feel everyday"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

@@ -69,10 +69,11 @@ class _HomeState extends State<Home> {
           final recipesData = ref.watch(recieveRecipesType(
               recipesTypeData.isEmpty ? userType : recipesTypeData));
           return LiquidPullToRefresh(
-            onRefresh: () async {
-              await Future.delayed(Duration(seconds: 2));
-              return await ref.refresh(recieveRecipesType(
-                  recipesTypeData.isEmpty ? userType : recipesTypeData));
+            animSpeedFactor: 2,
+            onRefresh: () {
+              return Future.delayed(Duration(seconds: 2)).then((_) => ref.refresh(recieveRecipesType(
+                  recipesTypeData.isEmpty ? userType : recipesTypeData)));
+              
             },
             height: 250,
             
