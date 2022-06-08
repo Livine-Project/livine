@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../main.dart';
 import 'package:go_router/go_router.dart';
+import '../../../modules/Settings/notifications_settings/notifications_settings_view.dart';
 import '../../../modules/auth/login.dart';
 import '../../../modules/auth/register.dart';
 import '../../../modules/recipe/ingridents.dart';
@@ -98,6 +99,11 @@ final baseRoutes = GoRouter(routes: [
   GoRoute(
     path: '/themeSettings',
     builder: (context, state) => ThemeSettings(),
+  ),
+  GoRoute(
+    path: '/notifications_settings',
+    name: "Notifications Settings",
+    builder: (context, state) => NotificationsSettings(),
   ),
   GoRoute(
     path: '/ingridents',

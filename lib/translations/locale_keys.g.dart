@@ -69,5 +69,7 @@ abstract class  LocaleKeys {
   static const have_an_account = 'have_an_account';
   static const terms1 = 'terms1';
   static const terms2 = 'terms2';
+  static const notfications = 'notfications';
+  static const ask_me_how_i_feel = 'ask_me_how_i_feel';
 
 }
