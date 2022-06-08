@@ -66,7 +66,7 @@ class _ContentPatientState extends State<ContentPatient> {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.setString("UserType", data[index].type);
-                          ref.watch(userTypeProvider.state).state =
+                          ref.read(userTypeProvider.state).state =
                               data[index].type;
                           context.go('/navigate');
                         },

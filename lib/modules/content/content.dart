@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/styles/colors.dart';
 import '../../translations/locale_keys.g.dart';
 
-final userTypeProvider = StateProvider<String>((ref) => '');
+final userTypeProvider = StateProvider.autoDispose<String>((ref) => '');
 
 class ChooseContent extends StatefulWidget {
   const ChooseContent({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _ChooseContentState extends State<ChooseContent> {
                       final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString("UserType", "General");
-                      ref.watch(userTypeProvider.state).state = "General";
+                      ref.read(userTypeProvider.state).state = "General";
 
                       setState(() {
                         bg2 = Colors.black;

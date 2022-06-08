@@ -10,8 +10,6 @@ part 'recipe.g.dart';
 
 Client client = http.Client();
 
-final recipesProvider =
-    FutureProvider<List<Recipe>>((ref) => retrieveRecipes());
 
 // Recipes Provider By ID
 final FutureProviderFamily<Recipe, int> recipesProviderID =
@@ -35,14 +33,7 @@ final FutureProviderFamily recieveRecipesType =
   return responseJson.map((job) => new Recipe.fromJson(job)).toList();
 });
 
-// RECIPES PROVIDER
-Future<List<Recipe>> retrieveRecipes() async {
-  const url = 'https://livine.pythonanywhere.com/api/recipe?format=json';
-  final response = await client.get(Uri.parse(url));
-  final responseDe = await utf8.decode(response.bodyBytes);
-  final recipeJson = await json.decode(responseDe);
-  return recipeJson.map<Recipe>((data) => Recipe.fromJson((data))).toList();
-}
+
 
 // Freezed Recipe Class
 @freezed

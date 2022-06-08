@@ -16,7 +16,7 @@ import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 
 
-final userIDProvider = StateProvider<int>((ref) => 0);
+final userIDProvider = StateProvider.autoDispose<int>((ref) => 0);
 
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
