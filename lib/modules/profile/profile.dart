@@ -54,13 +54,16 @@ class Profile extends StatelessWidget {
                 final userData =
                     ref.watch(userProviderID(testID == null ? userID : testID));
                 return userData.when(
-                  data: (data) => UserInfo(
-                    name: data.username,
-                    email: data.email,
+                  data: (data) {
+                    print(data);
+                    return UserInfo(
+                      name: data.username,
+                      email: data.email,
 
-                    image: 'assets/images/profile/default.png',
-                    // ),, )
-                  ),
+                      image: 'assets/images/profile/default.png',
+                      // ),, )
+                    );
+                  },
                   error: (e, s) {
                     print('$e\n$s');
                     return kDebugMode ? Text(e.toString()) : Loading();

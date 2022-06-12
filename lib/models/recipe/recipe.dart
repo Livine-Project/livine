@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+
 part 'recipe.freezed.dart';
 part 'recipe.g.dart';
 
 Client client = http.Client();
-
 
 // Recipes Provider By ID
 final FutureProviderFamily<Recipe, int> recipesProviderID =
@@ -24,16 +24,13 @@ final FutureProviderFamily<Recipe, int> recipesProviderID =
 
 final FutureProviderFamily recieveRecipesType =
     FutureProvider.family((ref, type) async {
-  final url =
-      'https://livine.pythonanywhere.com/api/recipeType/$type?format=json';
+  final url = 'https://livine.pythonanywhere.com/api/recipeType/$type?format=json';
   final response = await client.get(Uri.parse(url));
   final responseDe = utf8.decode(response.bodyBytes);
   final responseJson = json.decode(responseDe);
 
   return responseJson.map((job) => new Recipe.fromJson(job)).toList();
 });
-
-
 
 // Freezed Recipe Class
 @freezed
@@ -74,6 +71,7 @@ String changeDiffName(String difficulty, BuildContext context) {
   return difficulty;
 }
 
+
 String changeDiffImage({String difficulty = '', bool isArabic = false}) {
   switch (difficulty.toUpperCase()) {
     case "EASY":
@@ -92,5 +90,3 @@ String changeDiffImage({String difficulty = '', bool isArabic = false}) {
       return difficulty;
   }
 }
-
-

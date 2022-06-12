@@ -6,15 +6,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../models/auth/auth_classes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../shared/controllers/auth/auth_classes.dart';
 import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
-
 
 final userIDProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -37,7 +36,7 @@ class _LoginState extends ConsumerState<Login> {
   Future<LoginResponse?> logintoDjango() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    const url = 'https://livine.pythonanywhere.com/api/login/';
+    final url = 'https://livine.pythonanywhere.com/api/login/';
     final response = await client.post(
       Uri.parse(url),
       body: {
@@ -71,7 +70,7 @@ class _LoginState extends ConsumerState<Login> {
     return null;
   }
 
-  validateForm() async {
+  void validateForm() async {
     final form = _formKey.currentState!;
     if (form.validate()) {
       setState(() {
@@ -117,8 +116,9 @@ class _LoginState extends ConsumerState<Login> {
                           textInputAction: TextInputAction.next,
                           validator: (u) {
                             if (u!.isEmpty) {
-                              return context.locale.languageCode == "en" ? 
-                              "Please enter your username" : "من فضلك ادخل اسم المستخدم";
+                              return context.locale.languageCode == "en"
+                                  ? "Please enter your username"
+                                  : "من فضلك ادخل اسم المستخدم";
                             }
                             return null;
                           },
@@ -139,14 +139,17 @@ class _LoginState extends ConsumerState<Login> {
                       TextFormField(
                         validator: (p) {
                           if (p!.length < 6 && p.isNotEmpty) {
-                            return context.locale.languageCode == "en" ? 
-                            "Password needs to be atleast 6 characters " : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
+                            return context.locale.languageCode == "en"
+                                ? "Password needs to be atleast 6 characters "
+                                : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
                           } else if (p.isEmpty) {
-                            return context.locale.languageCode == "en" ? 
-                            "Please enter your password " : "من فضلك أدخل كلمة السر";
+                            return context.locale.languageCode == "en"
+                                ? "Please enter your password "
+                                : "من فضلك أدخل كلمة السر";
                           }
                           return null;
                         },
+                        
                         controller: _password,
                         obscureText: _obscureText,
                         style: TextStyle(
@@ -155,10 +158,10 @@ class _LoginState extends ConsumerState<Login> {
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
-                                _obscureText
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                ),
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;

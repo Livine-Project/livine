@@ -195,7 +195,6 @@ class _RecipeDetailsState extends State<RecipeDetails>
                                   width: 200.0,
                                   height: 60.0,
                                   child: OutlinedButton(
-                                    
                                       onPressed: () => context.goNamed(
                                           "recipeVideo",
                                           extra: context.locale.languageCode ==
