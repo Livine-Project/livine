@@ -30,18 +30,6 @@ class Profile extends StatelessWidget {
           style: TextStyle(fontFamily: 'Kine'),
         ),
         //TODO: ADD EDIT PROFILE
-        // actions: [
-        //   TextButton(
-        //     onPressed: () {},
-        //     child: Text(
-        //       "Edit",
-        //       style: TextStyle(
-        //           color: Colors.black,
-        //           fontFamily: 'Kine',
-        //           fontWeight: FontWeight.bold),
-        //     ),
-        //   )
-        // ],
         centerTitle: true,
         elevation: 0,
       ),
@@ -51,11 +39,12 @@ class Profile extends StatelessWidget {
             Consumer(
               builder: ((context, ref, child) {
                 final userID = ref.watch(userIDProvider);
+              
+
                 final userData =
                     ref.watch(userProviderID(testID == null ? userID : testID));
                 return userData.when(
                   data: (data) {
-                    print(data);
                     return UserInfo(
                       name: data.username,
                       email: data.email,

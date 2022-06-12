@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../models/user/user.dart';
 import '../../shared/components/misc/loading.dart';
 import '../../shared/components/misc/notification.dart';
 import '../../main.dart';
@@ -48,11 +49,12 @@ class _HomeState extends State<Home> {
           : Colors.white,
       body: SafeArea(
         child: Consumer(builder: (context, ref, child) {
-          print("1");
+          // print("UserType " + userType);
           final recipesTypeData = ref.watch(userTypeProvider);
+                    print("RecipesType" + recipesTypeData);
+
           final recipesData = ref.watch(recieveRecipesType(
               recipesTypeData.isEmpty ? userType : recipesTypeData));
-          print("2");
           return LiquidPullToRefresh(
             animSpeedFactor: 2,
             onRefresh: () {
@@ -81,7 +83,6 @@ class _HomeState extends State<Home> {
               SizedBox(height: 20.0),
               recipesData.when(
                 data: (data) {
-                  print(3);
                   return Expanded(
                     flex: 2,
                     child: GridView.builder(
@@ -114,7 +115,6 @@ class _HomeState extends State<Home> {
                   );
                 },
                 loading: () {
-                  print(5);
                   return Expanded(
                     flex: 2,
                     child: GridView.builder(
@@ -131,7 +131,6 @@ class _HomeState extends State<Home> {
                   );
                 },
                 error: (e, s) {
-                  print(4);
                   print('$e\n$s');
                   return Center(child: Text("An Error Occured"));
                 },

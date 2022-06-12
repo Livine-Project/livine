@@ -7,6 +7,7 @@ import 'package:new_version/new_version.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import '../../../main.dart';
+import '../../../models/user/user.dart';
 import '../../../modules/content/content.dart';
 
 import '../misc/children.dart';

@@ -15,7 +15,7 @@ import '../../shared/controllers/auth/auth_classes.dart';
 import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 
-final userIDProvider = StateProvider.autoDispose<int>((ref) => 0);
+final userIDProvider = StateProvider<int>((ref) => 0);
 
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -52,11 +52,14 @@ class _LoginState extends ConsumerState<Login> {
           Map<String, dynamic>.from(responseJson as Map<dynamic, dynamic>));
       if (loginJson.token!.isNotEmpty) {
         await prefs.setBool('username', true);
-        int userloginID = responseJson['data']['user_id'];
-        await prefs.setInt("userID", userloginID);
-        // final userID = prefs.getInt("userID");
-        ref.read(userIDProvider.state).state = userloginID;
 
+        int userloginID = responseJson['data']['user_id'];
+
+        await prefs.setInt("userID", userloginID);
+        
+         ref.read(userIDProvider.notifier).update((state) => state =userloginID );
+
+        
         GoRouter.of(context).goNamed('OnBoarding');
       }
     } else {
@@ -149,7 +152,6 @@ class _LoginState extends ConsumerState<Login> {
                           }
                           return null;
                         },
-                        
                         controller: _password,
                         obscureText: _obscureText,
                         style: TextStyle(

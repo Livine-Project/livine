@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+import '../../models/user/user.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/components/misc/loading.dart';
 import '../../models/recipe/recipe_types.dart';
@@ -66,7 +67,7 @@ class _ContentPatientState extends State<ContentPatient> {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.setString("UserType", data[index].type);
-                          ref.read(userTypeProvider.state).state =
+                          ref.watch(userTypeProvider.state).state =
                               data[index].type;
                           context.go('/navigate');
                         },
