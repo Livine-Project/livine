@@ -7,6 +7,7 @@ class ResponsiveHelper {
   double deviceHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
 
+
   int responsiveRecipes(BuildContext context) {
     if (ResponsiveWrapper.of(context).isTablet &&
         ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
@@ -30,8 +31,9 @@ class ResponsiveHelper {
     if (ResponsiveWrapper.of(context).isTablet &&
         ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
       return 2;
-    } else if (
-        ResponsiveWrapper.of(context).orientation == Orientation.landscape && ResponsiveWrapper.of(context).isDesktop) {
+    } else if (ResponsiveWrapper.of(context).orientation ==
+            Orientation.landscape &&
+        ResponsiveWrapper.of(context).isDesktop) {
       return 4;
     }
 
@@ -45,12 +47,13 @@ class ResponsiveHelper {
     return 1;
   }
 
-    int responsiveMeals(BuildContext context) {
+  int responsiveMeals(BuildContext context) {
     if (ResponsiveWrapper.of(context).isTablet &&
         ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
       return 2;
-    } else if (
-        ResponsiveWrapper.of(context).orientation == Orientation.landscape && ResponsiveWrapper.of(context).isDesktop) {
+    } else if (ResponsiveWrapper.of(context).orientation ==
+            Orientation.landscape &&
+        ResponsiveWrapper.of(context).isDesktop) {
       return 3;
     }
 

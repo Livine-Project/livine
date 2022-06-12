@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../main.dart';
 import 'package:go_router/go_router.dart';
+import '../../../main.dart';
 import '../../../modules/Settings/notifications_settings/notifications_settings_view.dart';
 import '../../../modules/auth/login.dart';
 import '../../../modules/auth/register.dart';
+import '../../../modules/home/scan/scan.dart';
 import '../../../modules/recipe/ingridents.dart';
 import '../../../modules/Settings/Misc/privacy.dart';
 import '../../../modules/Settings/Misc/terms.dart';
@@ -40,6 +41,10 @@ final baseRoutes = GoRouter(routes: [
   GoRoute(
     path: '/login',
     builder: (context, state) => Login(),
+  ),
+  GoRoute(
+    path: '/scan',
+    builder: (context, state) => Scan(),
   ),
   GoRoute(
       path: '/details',
@@ -127,10 +132,7 @@ final baseRoutes = GoRouter(routes: [
     name: "recipeVideo",
     path: '/recipe_video',
     builder: (context, state) {
-      return RecipeVideoWidget(
-        url: state.extra.toString()
-        
-      );
+      return RecipeVideoWidget(url: state.extra.toString());
     },
   ),
 ]);

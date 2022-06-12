@@ -54,6 +54,8 @@ android {
         multiDexEnabled true
     }
 
+
+
    signingConfigs {
        release {
            keyAlias keystoreProperties['keyAlias']

@@ -29,7 +29,7 @@ class _RegisterState extends ConsumerState<Register> {
   var errorinEmail;
   var errorinUser;
   Future<void> registertoDjango() async {
-    const url = 'https://livine.pythonanywhere.com/api/register/';
+    final url = 'https://livine.pythonanywhere.com/api/register/';
     final response = await client.post(
       Uri.parse(url),
       body: {

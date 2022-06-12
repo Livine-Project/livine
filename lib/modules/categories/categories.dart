@@ -1,7 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -9,47 +8,35 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
-import '../../models/ads/ads_help.dart';
 import '../../shared/components/recipe/food_category_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
 
 class Patient extends StatefulWidget {
+  static _PatientState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_PatientState>();
   @override
   _PatientState createState() => _PatientState();
 }
 
 class _PatientState extends State<Patient> {
-  late BannerAd _nativeAdBanner;
-
-  bool _isnativeBannerAdLoaded = false;
-
-  void nativeBannerFunction() {
-    _nativeAdBanner = BannerAd(
-        adUnitId: AdHelper.nativeadunit,
-        size: AdSize.largeBanner,
-        request: AdRequest(),
-        listener: BannerAdListener(onAdLoaded: (_) {
-          setState(() {
-            _isnativeBannerAdLoaded = true;
-          });
-        }, onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-        }));
-    _nativeAdBanner.load();
-  }
+  void outsideState() => setState(() {
+        adHelper.isnativeBannerAdLoaded = true;
+      });
 
   @override
   void initState() {
     super.initState();
-    nativeBannerFunction();
+    adHelper.nativeBannerFunction(context);
   }
 
   @override
   void dispose() {
-    _nativeAdBanner.dispose();
+    adHelper.nativeAdBanner.dispose();
     super.dispose();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +65,13 @@ class _PatientState extends State<Patient> {
                   "https://media.istockphoto.com/photos/keto-diet-foods-picture-id1096945386?b=1&k=20&m=1096945386&s=170667a&w=0&h=whc_B9ltl294rfVBmpu84DB5QxQGjof8KGtAvXjDDfw=",
               color: Color(0xfff3f37c9),
             ),
-            if (_isnativeBannerAdLoaded && testID != 10 && kReleaseMode) ...[
+            if (adHelper.isnativeBannerAdLoaded &&
+                testID != 10 &&
+                kReleaseMode) ...[
               Container(
-                height: _nativeAdBanner.size.height.toDouble(),
-                width: _nativeAdBanner.size.width.toDouble(),
-                child: AdWidget(ad: _nativeAdBanner),
+                height: adHelper.nativeAdBanner.size.height.toDouble(),
+                width: adHelper.nativeAdBanner.size.width.toDouble(),
+                child: AdWidget(ad: adHelper.nativeAdBanner),
               ),
             ],
             FoodCategory(

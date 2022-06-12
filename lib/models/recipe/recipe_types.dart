@@ -12,7 +12,7 @@ part 'recipe_types.g.dart';
     FutureProvider<List<RecipeTypes>>((ref) => patientTypes());
     
 Future<List<RecipeTypes>> patientTypes() async {
-  const url = 'https://livine.pythonanywhere.com/api/types/?format=json';
+  final url = 'https://livine.pythonanywhere.com/api/types/?format=json';
   final response = await client.get(Uri.parse(url));
   final responseDe = await utf8.decode(response.bodyBytes);
   final recipeJson = await json.decode(responseDe);
