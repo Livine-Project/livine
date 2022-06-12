@@ -8,6 +8,8 @@ import '../recipe/recipe.dart';
 part 'user.freezed.dart';
 part 'user.g.dart';
 
+final userTypeProvider = StateProvider.autoDispose<String>((ref) => '');
+
 @freezed
 class UserData with _$UserData {
   const factory UserData(int id, String username, String email) = _UserData;
