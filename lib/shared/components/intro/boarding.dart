@@ -14,33 +14,38 @@ class OnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List images = ['livine', 'healthyoptions', 'stability', 'content'];
-    final List heading = [
+    const List images = ['livine', 'healthyoptions', 'stability', 'content'];
+    const List heading = [
       'Welcome to Livine',
       "We've plenty of healthy options",
       "We assure that you gonna have a Flexible Lifestyle",
       "You can change your content for your health situation "
     ];
-    final List<Color> textColors = [
+    const List<Color> textColors = [
       Colors.black,
       Colors.black,
       Colors.white,
       Colors.black
     ];
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+
       body: ConcentricPageView(
         colors: <Color>[Colors.white, primaryColor, thirdColor, primaryColor],
-        itemCount: heading.length, // null = infinity
-        physics: NeverScrollableScrollPhysics(),
-        curve: Curves.easeInOut,
-        direction: Axis.vertical,
-        scaleFactor: 5,
+        radius: screenWidth * 0.1,
         onFinish: () => context.goNamed('Content'),
+        nextButtonBuilder: (context) => Padding(
+          padding: const EdgeInsets.only(left: 3), // visual center
+          child: Icon(
+            Icons.navigate_next,
+            size: screenWidth * 0.08,
+          ),
+        ),
 
-        itemBuilder: (index) {
+        itemBuilder: (int index) {
           return IntroScreens(
-              text: '${heading[index]}',
+              text: heading[index],
               url: 'assets/images/onboarding/${images[index]}.svg',
               textColor: textColors[index]);
         },
