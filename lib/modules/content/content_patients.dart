@@ -11,7 +11,6 @@ import '../../shared/styles/colors.dart';
 import '../../shared/components/misc/loading.dart';
 import '../../models/recipe/recipe_types.dart';
 import '../../translations/locale_keys.g.dart';
-import 'content.dart';
 
 class ContentPatient extends StatefulWidget {
   const ContentPatient({Key? key}) : super(key: key);

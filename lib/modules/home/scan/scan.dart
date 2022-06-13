@@ -35,7 +35,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
   }
 
   Future<void> runModel() async {
-    if (cameraImage != null) {
+    if (cameraImage != null && mounted) {
       var predictions = await Tflite.runModelOnFrame(
         bytesList: cameraImage!.planes.map((plane) {
           return plane.bytes;

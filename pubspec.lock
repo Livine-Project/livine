@@ -203,7 +203,7 @@ packages:
       name: concentric_transition
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   connectivity_plus:
     dependency: "direct main"
     description:
@@ -762,7 +762,7 @@ packages:
       name: pay
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.9"
+    version: "1.0.10"
   pay_android:
     dependency: transitive
     description:
@@ -776,7 +776,7 @@ packages:
       name: pay_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.7"
   pay_platform_interface:
     dependency: transitive
     description:

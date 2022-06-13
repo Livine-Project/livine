@@ -19,14 +19,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  concentric_transition: ^1.0.2 
+  concentric_transition: ^1.0.3
   font_awesome_flutter: ^10.1.0
   http: ^0.13.4
   shared_preferences: ^2.0.15
   url_launcher: ^6.0.2
   flutter_riverpod: ^2.0.0-dev.9
   flutter_svg: ^1.0.3
-  pay: ^1.0.9
+  pay: ^1.0.10
   camera: ^0.9.8
   web_scraper: ^0.1.4
 
@@ -79,6 +79,7 @@ flutter:
     - assets/images/onboarding/
     - assets/images/recipes/
     - assets/images/icon/
+    - assets/images/icons/
     - assets/images/calories/breakfast/
     - assets/images/calories/dinner/
     - assets/images/calories/snacks/

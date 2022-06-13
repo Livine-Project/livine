@@ -2,7 +2,6 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -19,7 +18,6 @@ import '../../shared/components/recipe/recipe_card_widget.dart';
 
 import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
-import '../content/content.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -43,6 +41,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.grey[900]
@@ -141,7 +140,7 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push("/scan"),
-        child: Icon(FontAwesomeIcons.camera),
+        child: Image.asset("assets/images/icons/scan.png",width: 40,color: theme.tertiary,),
       ),
     );
   }
