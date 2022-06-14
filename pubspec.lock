@@ -622,7 +622,7 @@ packages:
       name: new_version
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   nm:
     dependency: transitive
     description:
@@ -1146,13 +1146,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  web_scraper:
-    dependency: "direct main"
-    description:
-      name: web_scraper
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   web_socket_channel:
     dependency: transitive
     description:

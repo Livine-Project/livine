@@ -1,4 +1,2 @@
-0 Egg
-1 Fruits - Vegetables
-2 Noodles - Pasta
-3 Fried Food
+0 Healthy
+1 UnHealthy

@@ -80,9 +80,9 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
   }
 
   String checkHealth() {
-    if (output.contains("Fruits") || output.contains("Eggs")) {
+    if (output.contains("Healthy")) {
       _controller.forward();
-      return "Healthy";
+      return "Heathy";
     } else {
       _controller.reverse();
       return "Unhealthy";
@@ -101,7 +101,8 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
             child: Container(
               height: 350,
               width: 300,
-              decoration: BoxDecoration(border: Border.all(color: theme.primary,width: 5)),
+              decoration: BoxDecoration(
+                  border: Border.all(color: theme.primary, width: 5)),
               child: !cameraController!.value.isInitialized
                   ? Container()
                   : AspectRatio(
@@ -111,23 +112,11 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
             ),
           ),
           Text(
-            output,
+            checkHealth(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.asset("assets/images/loading/emoji_anim.json",
-                    controller: _controller, width: 150),
-                Text(
-                  checkHealth(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ],
-            ),
-          ),
+          Lottie.asset("assets/images/loading/emoji_anim.json",
+              controller: _controller, width: 250),
         ]),
       ),
     );

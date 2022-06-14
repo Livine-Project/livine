@@ -14,14 +14,14 @@ class OnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List images = ['livine', 'healthyoptions', 'stability', 'content'];
-    const List heading = [
+    final List images = ['livine', 'healthyoptions', 'stability', 'content'];
+    final List heading = [
       'Welcome to Livine',
       "We've plenty of healthy options",
       "We assure that you gonna have a Flexible Lifestyle",
       "You can change your content for your health situation "
     ];
-    const List<Color> textColors = [
+    final List<Color> textColors = [
       Colors.black,
       Colors.black,
       Colors.white,

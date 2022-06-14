@@ -6,6 +6,7 @@ import '../../../modules/Settings/notifications_settings/notifications_settings_
 import '../../../modules/auth/login.dart';
 import '../../../modules/auth/register.dart';
 import '../../../modules/home/scan/scan.dart';
+import '../../../modules/profile/update_profile.dart';
 import '../../../modules/recipe/ingridents.dart';
 import '../../../modules/Settings/Misc/privacy.dart';
 import '../../../modules/Settings/Misc/terms.dart';
@@ -127,6 +128,13 @@ final baseRoutes = GoRouter(routes: [
     name: "Content_Patient",
     path: '/content_patient',
     builder: (context, state) => ContentPatient(),
+  ),
+  GoRoute(
+    name: "Update Profile",
+    path: '/update_profile',
+    builder: (context, state) {
+      return UpdateProfile();
+    },
   ),
   GoRoute(
     name: "recipeVideo",
