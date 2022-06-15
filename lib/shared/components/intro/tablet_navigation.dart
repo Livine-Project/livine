@@ -51,12 +51,12 @@ class _TabletNavigationState extends State<TabletNavigation> {
                       ? Text("Meals")
                       : Text("الوجبات"),
                 ),
-                NavigationRailDestination(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(Icons.star_rate_rounded, size: 30),
-                    label: context.locale.languageCode == "en"
-                        ? Text("Pristine")
-                        : Text("الاصلي")),
+                // NavigationRailDestination(
+                //     padding: EdgeInsets.symmetric(vertical: 20.0),
+                //     icon: Icon(Icons.star_rate_rounded, size: 30),
+                //     label: context.locale.languageCode == "en"
+                //         ? Text("Pristine")
+                //         : Text("الاصلي")),
                 NavigationRailDestination(
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     icon: Icon(Icons.person, size: 30),

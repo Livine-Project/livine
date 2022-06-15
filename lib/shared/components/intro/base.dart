@@ -85,11 +85,11 @@ class _NavigationState extends ConsumerState<Navigation> {
                           ? "Meals"
                           : "الوجبات"),
                   //TODO:PRISTINE PREMIUM LIVINE
-                  NavigationDestination(
-                      icon: Icon(Icons.star_rate_rounded, size: 30),
-                      label: context.locale.languageCode == "en"
-                          ? "Pristine"
-                          : "الاصلي"),
+                  // NavigationDestination(
+                  //     icon: Icon(Icons.star_rate_rounded, size: 30),
+                  //     label: context.locale.languageCode == "en"
+                  //         ? "Pristine"
+                  //         : "الاصلي"),
                   NavigationDestination(
                       icon: Icon(Icons.person, size: 30),
                       label: context.locale.languageCode == "en"

@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
         child: Consumer(builder: (context, ref, child) {
           // print("UserType " + userType);
           final recipesTypeData = ref.watch(userTypeProvider);
-                    print("RecipesType" + recipesTypeData);
+          print("RecipesType" + recipesTypeData);
 
           final recipesData = ref.watch(recieveRecipesType(
               recipesTypeData.isEmpty ? userType : recipesTypeData));
@@ -97,7 +97,8 @@ class _HomeState extends State<Home> {
                           name: context.locale.languageCode == "en"
                               ? data[index].name
                               : data[index].name_in_arabic,
-                          foodImage: 'https://livine.pythonanywhere.com/${data[index].coverURL}',
+                          foodImage:
+                              'https://livine.pythonanywhere.com/${data[index].coverURL}',
                           type: context.locale.languageCode == "en"
                               ? data[index].type
                               : data[index].type_in_arabic,
@@ -139,8 +140,13 @@ class _HomeState extends State<Home> {
         }),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         onPressed: () => context.push("/scan"),
-        child: Image.asset("assets/images/icons/scan.png",width: 40,color: theme.tertiary,),
+        child: Image.asset(
+          "assets/images/icons/scan.png",
+          width: 40,
+          color: theme.tertiary,
+        ),
       ),
     );
   }
