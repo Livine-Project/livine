@@ -140,7 +140,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   ),
                   SettingsTile(
                     text: LocaleKeys.Version.tr(),
-                    subtitle: '6.0.0',
+                    subtitle: '6.0.1',
                     icon: Icons.info,
                   ),
                 ],

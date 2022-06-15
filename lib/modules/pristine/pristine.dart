@@ -2,18 +2,18 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:pay/pay.dart';
+// import 'package:pay/pay.dart';
 
 import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 
-const _paymentItems = [
-  PaymentItem(
-    label: 'Total',
-    amount: '0.00',
-    status: PaymentItemStatus.final_price,
-  )
-];
+// const _paymentItems = [
+//   PaymentItem(
+//     label: 'Total',
+//     amount: '0.00',
+//     status: PaymentItemStatus.final_price,
+//   )
+// ];
 
 class Pristine extends StatefulWidget {
   const Pristine({Key? key}) : super(key: key);
@@ -95,18 +95,18 @@ class _PristineState extends State<Pristine> {
                                               fontSize: 24.0,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        GooglePayButton(
-                                          width: 200,
-                                          height: 60,
-                                          paymentConfigurationAsset: 'pay.json',
-                                          paymentItems: _paymentItems,
-                                          type: GooglePayButtonType.subscribe,
-                                          margin: EdgeInsets.only(top: 15.0),
-                                          onPaymentResult: onGooglePayResult,
-                                          loadingIndicator: const Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        ),
+                                        // GooglePayButton(
+                                        //   width: 200,
+                                        //   height: 60,
+                                        //   paymentConfigurationAsset: 'pay.json',
+                                        //   paymentItems: _paymentItems,
+                                        //   type: GooglePayButtonType.subscribe,
+                                        //   margin: EdgeInsets.only(top: 15.0),
+                                        //   onPaymentResult: onGooglePayResult,
+                                        //   loadingIndicator: const Center(
+                                        //     child: CircularProgressIndicator(),
+                                        //   ),
+                                        // ),
                                       ]),
                                 );
                               });
