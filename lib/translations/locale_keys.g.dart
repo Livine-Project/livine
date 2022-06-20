@@ -71,5 +71,11 @@ abstract class  LocaleKeys {
   static const terms2 = 'terms2';
   static const notfications = 'notfications';
   static const ask_me_how_i_feel = 'ask_me_how_i_feel';
+  static const continue_as_guest = 'continue_as_guest';
+  static const change_password = 'change_password';
+  static const enter_token = 'enter_token';
+  static const validate_token = 'validate_token';
+  static const Reset_pass = 'Reset_pass';
+  static const pass_confirm = 'pass_confirm';
 
 }

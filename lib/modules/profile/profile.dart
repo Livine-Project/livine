@@ -15,11 +15,17 @@ import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 import '../../models/user/user.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends ConsumerWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final guest = ref.watch(guestProvider);
+    final userID = ref.watch(userIDProvider);
+
+    final userData =
+        ref.watch(userProviderID(testID == null ? userID : testID));
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
@@ -36,30 +42,26 @@ class Profile extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Consumer(
-              builder: ((context, ref, child) {
-                final userID = ref.watch(userIDProvider);
-
-                final userData =
-                    ref.watch(userProviderID(testID == null ? userID : testID));
-                return userData.when(
-                  data: (data) {
-                    return UserInfo(
-                      name: data.username,
-                      email: data.email,
-
-                      image: 'assets/images/profile/default.png',
-                      // ),, )
-                    );
-                  },
-                  error: (e, s) {
-                    print('$e\n$s');
-                    return kDebugMode ? Text(e.toString()) : Loading();
-                  },
-                  loading: () => Loading(),
-                );
-              }),
-            ),
+            guest || isGuest
+                ? UserInfo(
+                    name: context.locale.languageCode == "en" ? "GUEST" : "ضيف",
+                    email: '',
+                    image: 'assets/images/profile/default.png',
+                  )
+                : userData.when(
+                    data: (data) {
+                      return UserInfo(
+                        name: data.username,
+                        email: data.email,
+                        image: 'assets/images/profile/default.png',
+                      );
+                    },
+                    error: (e, s) {
+                      print('$e\n$s');
+                      return kDebugMode ? Text(e.toString()) : Loading();
+                    },
+                    loading: () => Loading(),
+                  ),
             ResponsiveVisibility(
               hiddenWhen: [Condition.largerThan(name: MOBILE)],
               child: ProfileMenu(
@@ -88,7 +90,6 @@ class Profile extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 }

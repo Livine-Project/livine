@@ -11,6 +11,9 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/user/user.dart';
+import '../../shared/components/widgets/auth/auth_widget.dart';
+import '../../shared/constants/constants.dart';
 import '../../shared/controllers/auth/auth_classes.dart';
 import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
@@ -36,7 +39,7 @@ class _LoginState extends ConsumerState<Login> {
   Future<LoginResponse?> logintoDjango() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final url = 'https://livine.pythonanywhere.com/api/login/';
+    final url = '$restAPIURL/login/';
     final response = await client.post(
       Uri.parse(url),
       body: {
@@ -56,10 +59,14 @@ class _LoginState extends ConsumerState<Login> {
         int userloginID = responseJson['data']['user_id'];
 
         await prefs.setInt("userID", userloginID);
-        
-         ref.read(userIDProvider.notifier).update((state) => state =userloginID );
 
-        
+        ref
+            .read(userIDProvider.notifier)
+            .update((state) => state = userloginID);
+
+        ref.read(guestProvider.notifier).update((state) => false);
+
+
         GoRouter.of(context).goNamed('OnBoarding');
       }
     } else {
@@ -73,7 +80,7 @@ class _LoginState extends ConsumerState<Login> {
     return null;
   }
 
-  void validateForm() async {
+  void validateLoginForm() async {
     final form = _formKey.currentState!;
     if (form.validate()) {
       setState(() {
@@ -88,8 +95,20 @@ class _LoginState extends ConsumerState<Login> {
     }
   }
 
+  Future<void> validateGuest() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isGuest', true);
+
+    await prefs.setBool('username', true);
+    ref.read(guestProvider.notifier).update((state) => true);
+
+    GoRouter.of(context).goNamed('OnBoarding');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -122,6 +141,11 @@ class _LoginState extends ConsumerState<Login> {
                               return context.locale.languageCode == "en"
                                   ? "Please enter your username"
                                   : "من فضلك ادخل اسم المستخدم";
+                            }
+                            if (u.contains(" ")) {
+                              return context.locale.languageCode == "en"
+                                  ? "No space allowed in username"
+                                  : "يجب ان لا يكون هناك مسافة في اسم المستخدم";
                             }
                             return null;
                           },
@@ -184,41 +208,24 @@ class _LoginState extends ConsumerState<Login> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 5),
-                //TODO: FORGOT YOUR PASSWORD
-                child: Text(
-                  LocaleKeys.Forget_your_password.tr(),
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Kine',
-                    color: lightColorScheme.primary,
+                child: GestureDetector(
+                  onTap: ()=>context.push('/reset_password'),
+                  child: Text(
+                    LocaleKeys.Forget_your_password.tr(),
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Kine',
+                      color: lightColorScheme.primary,
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: MaterialButton(
-                  onPressed: validateForm,
-                  color: lightColorScheme.onTertiaryContainer,
-                  elevation: 0,
-                  minWidth: 350,
-                  height: 60,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: isLoading
-                      ? CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : Text(
-                          LocaleKeys.Sign_in.tr(),
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Kine',
-                              color: Colors.white),
-                        ),
-                ),
-              ),
+              AuthButton(
+                  isLoading: isLoading,
+                  text: LocaleKeys.Sign_in.tr(),
+                  validateForm: validateLoginForm,
+                  context: context),
               Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Center(
@@ -245,7 +252,14 @@ class _LoginState extends ConsumerState<Login> {
                     ],
                   ),
                 ),
-              )
+              ),
+              AuthButton(
+                  isLoading: false,
+                  text: LocaleKeys.continue_as_guest.tr(),
+                  color: theme.secondaryContainer,
+                  validateForm: validateGuest,
+                  context: context,
+                  textColor: Colors.black),
             ],
           ),
         ),

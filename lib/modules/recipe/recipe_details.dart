@@ -8,7 +8,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../models/recipe/recipe.dart';
 import '../../shared/components/misc/loading.dart';
-import '../../shared/components/recipe/recipe_details_widgets.dart';
+import '../../shared/components/widgets/recipe/recipe_details_widgets.dart';
+import '../../shared/constants/constants.dart';
 
 class RecipeDetails extends StatefulWidget {
   RecipeDetails({Key? key, required this.id}) : super(key: key);
@@ -42,8 +43,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                   child: SizedBox(
                       height: 250,
                       child: CachedNetworkImage(
-                        imageUrl:
-                            "https://livine.pythonanywhere.com/${data.coverURL}",
+                        imageUrl: "$restAPIMedia/${data.coverURL}",
                         fit: BoxFit.cover,
                       )),
                 ),

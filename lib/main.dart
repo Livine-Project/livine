@@ -2,7 +2,6 @@
 // import 'package:app/auth/reset_password.dart';
 // ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis
 
-
 import 'package:camera/camera.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -24,23 +23,26 @@ bool username = false;
 var testID;
 var connectivityResult;
 var userType;
+bool isGuest = false;
 
 List<CameraDescription>? cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
 
   MobileAds.instance.initialize();
 
   await EasyLocalization.ensureInitialized();
-  
+
   cameras = await availableCameras();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+
   username = prefs.getBool('username') ?? false;
   testID = prefs.getInt('userID');
   userType = prefs.getString("UserType");
+  isGuest = prefs.getBool('isGuest') ?? false;
+
   final AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   final InitializationSettings initializationSettings = InitializationSettings(
@@ -73,7 +75,6 @@ Future<void> main() async {
         //   ),
       ),
     );
-    
   } else {
     runApp(
       ProviderScope(
