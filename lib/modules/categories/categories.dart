@@ -8,7 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
-import '../../shared/components/recipe/food_category_widget.dart';
+import '../../shared/components/widgets/recipe/food_category_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
 

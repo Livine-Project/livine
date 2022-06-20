@@ -30,8 +30,8 @@ class OnBoarding extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-
       body: ConcentricPageView(
+        duration: Duration(milliseconds:1000 ),
         colors: <Color>[Colors.white, primaryColor, thirdColor, primaryColor],
         radius: screenWidth * 0.1,
         onFinish: () => context.goNamed('Content'),
@@ -42,7 +42,6 @@ class OnBoarding extends StatelessWidget {
             size: screenWidth * 0.08,
           ),
         ),
-
         itemBuilder: (int index) {
           return IntroScreens(
               text: heading[index],

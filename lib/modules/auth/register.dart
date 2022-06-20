@@ -10,6 +10,8 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
+import '../../shared/components/widgets/auth/auth_widget.dart';
+import '../../shared/constants/constants.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
@@ -29,7 +31,7 @@ class _RegisterState extends ConsumerState<Register> {
   var errorinEmail;
   var errorinUser;
   Future<void> registertoDjango() async {
-    final url = 'https://livine.pythonanywhere.com/api/register/';
+    final url = '$restAPIURL/register/';
     final response = await client.post(
       Uri.parse(url),
       body: {
@@ -44,6 +46,8 @@ class _RegisterState extends ConsumerState<Register> {
     errorinEmail = responseJson['email'];
 
     errorinUser = responseJson['username'];
+
+    print(errorinEmail);
 
     if (response.statusCode == 200) {
       GoRouter.of(context).go('/Login');
@@ -81,8 +85,7 @@ class _RegisterState extends ConsumerState<Register> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: ()=>context.go("/login"),
-          
+          onPressed: () => context.go("/login"),
         ),
       ),
       body: Container(
@@ -121,9 +124,10 @@ class _RegisterState extends ConsumerState<Register> {
                             color: Colors.black,
                           ),
                           decoration: InputDecoration(
-                            // errorText: errorinUser is List
-                            //     ? errorinUser.first
-                            //     : errorinUser,
+                            errorText: errorinUser is List
+                                ? errorinUser.first
+                                : errorinUser,
+                            errorMaxLines: 2,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(),
                             ),
@@ -139,8 +143,9 @@ class _RegisterState extends ConsumerState<Register> {
                         textInputAction: TextInputAction.next,
                         validator: (e) {
                           if (e!.isEmpty) {
-                            return context.locale.languageCode =="en" ? 
-                             "Please enter your email" : "من فضلك ادخل البريد الاكتروني";
+                            return context.locale.languageCode == "en"
+                                ? "Please enter your email"
+                                : "من فضلك ادخل البريد الاكتروني";
                           }
 
                           return null;
@@ -150,11 +155,13 @@ class _RegisterState extends ConsumerState<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                         
+                          errorText: errorinEmail,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(),
                           ),
-                          labelText: context.locale.languageCode =="en" ?'Email' : "البريد الاكتروني",
+                          labelText: context.locale.languageCode == "en"
+                              ? 'Email'
+                              : "البريد الاكتروني",
                           labelStyle: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -165,12 +172,13 @@ class _RegisterState extends ConsumerState<Register> {
                         validator: (passwordValue) {
                           if (passwordValue!.length < 6 &&
                               passwordValue.isNotEmpty) {
-                            return context.locale.languageCode == "en" ? 
-                            "Password needs to be atleast 6 characters " : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
-
+                            return context.locale.languageCode == "en"
+                                ? "Password needs to be atleast 6 characters "
+                                : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
                           } else if (passwordValue.isEmpty) {
-                            return context.locale.languageCode == "en" ? 
-                            "Please enter your password " : "من فضلك أدخل كلمة السر";
+                            return context.locale.languageCode == "en"
+                                ? "Please enter your password "
+                                : "من فضلك أدخل كلمة السر";
                           }
                           return null;
                         },
@@ -180,7 +188,7 @@ class _RegisterState extends ConsumerState<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
+                          suffixIcon: IconButton(
                             icon: Icon(
                                 _obscureText
                                     ? Icons.visibility_off
@@ -196,43 +204,21 @@ class _RegisterState extends ConsumerState<Register> {
                           ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(),
-                            
                           ),
                           labelText: LocaleKeys.password.tr(),
                           labelStyle:
                               TextStyle(fontSize: 15, color: Colors.black),
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: MaterialButton(
-                  onPressed: validateForm,
-                  color: lightColorScheme.onPrimaryContainer,
-                  elevation: 0,
-                  minWidth: 350,
-                  height: 60,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: isLoading
-                      ? CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : Text(
-                          LocaleKeys.Sign_up.tr(),
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                ),
-              ),
+              AuthButton(
+                  validateForm: validateForm,
+                  isLoading: isLoading,
+                  text: LocaleKeys.Sign_up.tr(),
+                  context: context),
               Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Center(
@@ -279,7 +265,6 @@ class _RegisterState extends ConsumerState<Register> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),

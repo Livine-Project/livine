@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/recipe/recipe.dart';
-import '../../shared/components/recipe/recipe_card_widget.dart';
 
+import '../../shared/components/widgets/recipe/recipe_card_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
 
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   @override
   void dispose() async {
     adHelper.nativeAdBanner.dispose();
-
+   
     super.dispose();
   }
 
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 15.0, horizontal: 15.0),
                 child: Text("${LocaleKeys.Welcome.tr()},",
-                    style: TextStyle(fontSize: 45.0, fontFamily: 'Kine')),
+                    style: TextStyle(fontSize: 40.0, fontFamily: 'Kine')),
               ),
               if (adHelper.isnativeBannerAdLoaded &&
                   testID != 10 &&
@@ -91,14 +91,13 @@ class _HomeState extends State<Home> {
                       ),
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        print(4);
                         return RecipeCardNormal(
                           id: data[index].id,
                           name: context.locale.languageCode == "en"
                               ? data[index].name
                               : data[index].name_in_arabic,
                           foodImage:
-                              'https://livine.pythonanywhere.com/${data[index].coverURL}',
+                              '$restAPIMedia/${data[index].coverURL}',
                           type: context.locale.languageCode == "en"
                               ? data[index].type
                               : data[index].type_in_arabic,

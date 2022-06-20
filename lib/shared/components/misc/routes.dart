@@ -5,6 +5,9 @@ import '../../../main.dart';
 import '../../../modules/Settings/notifications_settings/notifications_settings_view.dart';
 import '../../../modules/auth/login.dart';
 import '../../../modules/auth/register.dart';
+import '../../../modules/auth/reset_password.dart';
+import '../../../modules/auth/reset_password_confirm.dart';
+import '../../../modules/auth/token_validate.dart';
 import '../../../modules/home/scan/scan.dart';
 import '../../../modules/profile/update_profile.dart';
 import '../../../modules/recipe/ingridents.dart';
@@ -23,7 +26,7 @@ import '../../../modules/pristine/confirm_payment.dart';
 import '../../../modules/recipe/recipe_details.dart';
 import '../intro/base.dart';
 import '../intro/boarding.dart';
-import '../recipe/web_view_widget.dart';
+import '../widgets/recipe/web_view_widget.dart';
 
 final baseRoutes = GoRouter(routes: [
   GoRoute(
@@ -141,6 +144,25 @@ final baseRoutes = GoRouter(routes: [
     path: '/recipe_video',
     builder: (context, state) {
       return RecipeVideoWidget(url: state.extra.toString());
+    },
+  ),
+  GoRoute(
+    name: "Reset Pass",
+    path: '/reset_password',
+    builder: (context, state) {
+      return ResetPassword();
+    },
+  ),
+    GoRoute(
+    path: '/token_validate',
+    builder: (context, state) {
+      return TokenValidate();
+    },
+  ),
+      GoRoute(
+    path: '/confirm_pass',
+    builder: (context, state) {
+      return PasswordConfirmation(token: state.extra,);
     },
   ),
 ]);

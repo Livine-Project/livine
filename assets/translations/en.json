@@ -68,5 +68,11 @@
   "terms1": "By creating an account , you already agree on",
   "terms2": "Terms and Conditions",
   "notfications": "Notfications",
-  "ask_me_how_i_feel": "Ask me how I feel everyday"
+  "ask_me_how_i_feel": "Ask me how I feel everyday",
+  "continue_as_guest": "Continue as GUEST",
+  "change_password": "Change your password",
+  "enter_token": "Enter Your Token",
+  "validate_token": "Validate Token",
+  "Reset_pass": "Reset password",
+  "pass_confirm": "Password Confirmation"
 }
