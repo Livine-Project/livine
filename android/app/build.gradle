@@ -54,10 +54,6 @@ android {
         multiDexEnabled true
     }
 
-    aaptOptions {
-            noCompress 'tflite'
-            noCompress 'lite'
-        }
     lintOptions {
             disable 'InvalidPackage'
             disable "Instantiatable"
