@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,21 +19,25 @@ class Navigation extends ConsumerStatefulWidget {
 
 class _NavigationState extends ConsumerState<Navigation> {
   PageController pageController = PageController();
+  final newVersion = NewVersion();
 
-  void checkNewVersion() async {
-    final newVersion = NewVersion(androidId: "com.mazen.livine");
+  Future<void> checkNewVersion() async {
     final status = await newVersion.getVersionStatus();
-    newVersion.showUpdateDialog(context: context, versionStatus: status!);
-  }
-
-  void initOnlyOnAndroid() {
-    checkNewVersion();
+    if (status == status?.canUpdate) {
+      newVersion.showUpdateDialog(
+          context: context,
+          versionStatus: status!,
+          allowDismissal: false,
+          dialogTitle: "Update",
+          dialogText:
+              "Please update the app from ${status.localVersion} to ${status.storeVersion}");
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    initOnlyOnAndroid();
+    // checkNewVersion();
   }
 
   @override

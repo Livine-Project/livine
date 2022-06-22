@@ -71,8 +71,8 @@
   "ask_me_how_i_feel": "Ask me how I feel everyday",
   "continue_as_guest": "Continue as GUEST",
   "change_password": "Change your password",
-  "enter_token": "Enter Your Token",
-  "validate_token": "Validate Token",
+  "enter_token": "Enter Your Code",
+  "validate_token": "Validate Code",
   "Reset_pass": "Reset password",
   "pass_confirm": "Password Confirmation"
 }

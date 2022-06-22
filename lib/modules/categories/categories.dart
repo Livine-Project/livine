@@ -20,14 +20,10 @@ class Patient extends StatefulWidget {
 }
 
 class _PatientState extends State<Patient> {
-  void outsideState() => setState(() {
-        adHelper.isnativeBannerAdLoaded = true;
-      });
-
   @override
   void initState() {
     super.initState();
-    adHelper.nativeBannerFunction(context);
+    adHelper.nativeBannerFunction(setState);
   }
 
   @override
@@ -35,8 +31,6 @@ class _PatientState extends State<Patient> {
     adHelper.nativeAdBanner.dispose();
     super.dispose();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +59,7 @@ class _PatientState extends State<Patient> {
                   "https://media.istockphoto.com/photos/keto-diet-foods-picture-id1096945386?b=1&k=20&m=1096945386&s=170667a&w=0&h=whc_B9ltl294rfVBmpu84DB5QxQGjof8KGtAvXjDDfw=",
               color: Color(0xfff3f37c9),
             ),
-            if (adHelper.isnativeBannerAdLoaded &&
-                testID != 10 &&
-                kReleaseMode) ...[
+            if (adHelper.isnativeBannerAdLoaded && testID != 10 && kReleaseMode) ...[
               Container(
                 height: adHelper.nativeAdBanner.size.height.toDouble(),
                 width: adHelper.nativeAdBanner.size.width.toDouble(),

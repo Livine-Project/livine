@@ -66,7 +66,6 @@ class _LoginState extends ConsumerState<Login> {
 
         ref.read(guestProvider.notifier).update((state) => false);
 
-
         GoRouter.of(context).goNamed('OnBoarding');
       }
     } else {
@@ -209,7 +208,7 @@ class _LoginState extends ConsumerState<Login> {
               Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 5),
                 child: GestureDetector(
-                  onTap: ()=>context.push('/reset_password'),
+                  onTap: () => context.push('/reset_password'),
                   child: Text(
                     LocaleKeys.Forget_your_password.tr(),
                     textAlign: TextAlign.right,
