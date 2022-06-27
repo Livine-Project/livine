@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../main.dart';
 import '../../../models/recipe/recipe.dart';
 import '../../../models/user/user.dart';
 import '../../../modules/auth/login.dart';
@@ -60,7 +62,6 @@ class AuthHelper {
         isLoading = false;
       });
     }
-    
   }
 
   void validateAuthForm(
@@ -89,5 +90,48 @@ class AuthHelper {
     ref.read(guestProvider.notifier).update((state) => true);
 
     GoRouter.of(context).goNamed('OnBoarding');
+  }
+
+  Future<void> logOut(BuildContext context, WidgetRef ref, bool guest) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final url = '$restAPIURL/logout/';
+    final response = await client.post(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Token ${await getToken(ref)}',
+      },
+    );
+
+    final emptyError = response.body.contains("No credentials provided");
+
+    if (response.statusCode == 204) {
+      await prefs.remove('username');
+      context.go('/login');
+    } else if (isGuest || guest || emptyError) {
+      print(true);
+
+      await prefs.remove('isGuest');
+      context.go('/login');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(context.locale.languageCode == "en"
+            ? 'Something went wrong'
+            : "هناك خطأ ما"),
+      ));
+    }
+  }
+
+  Object getToken(WidgetRef ref) {
+    final tokenLocale = ref.read(userTokenProvider.notifier).state;
+    if (tokenLocale.isNotEmpty) {
+      print("Token is " + tokenLocale);
+      return tokenLocale;
+    } else {
+      return SharedPreferences.getInstance().then((prefs) {
+        print(prefs.getString('token'));
+        return prefs.getString('token');
+      });
+    }
   }
 }

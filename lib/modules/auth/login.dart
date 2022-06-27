@@ -48,13 +48,16 @@ class _LoginState extends ConsumerState<Login> {
       },
     );
     final responseJson = await json.decode(response.body);
-    print(responseJson);
     final errorinLogin = responseJson['non_field_errors'];
     if (response.statusCode == 200) {
       final loginJson = LoginResponse.fromJson(
           Map<String, dynamic>.from(responseJson as Map<dynamic, dynamic>));
       if (loginJson.token!.isNotEmpty) {
         await prefs.setBool('username', true);
+
+        String userToken = responseJson['data']['token'];
+        await prefs.setString("token", userToken);
+        ref.read(userTokenProvider.notifier).update((state) => userToken);
 
         int userloginID = responseJson['data']['user_id'];
 

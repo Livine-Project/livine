@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdHelper {
@@ -13,12 +12,9 @@ class AdHelper {
   }
 
   bool isnativeBannerAdLoaded = false;
-  bool isInlineBannerAdLoaded = false;
 
-  final int inlineAdIndex = 2;
 
   late BannerAd nativeAdBanner;
-  late BannerAd inlineBannerAd;
 
   void nativeBannerFunction(void Function(void Function()) setState) {
     nativeAdBanner = BannerAd(
@@ -36,26 +32,5 @@ class AdHelper {
     nativeAdBanner.load();
   }
 
-  void inlineAdBanner(void Function(void Function()) setState) {
-    inlineBannerAd = BannerAd(
-        size: AdSize.mediumRectangle,
-        adUnitId: AdHelper.nativeadunit,
-        listener: BannerAdListener(onAdLoaded: (_) {
-          setState(() {
-            isInlineBannerAdLoaded = true;
-          });
-        }, onAdFailedToLoad: (ad, error) {
-          print(error);
-          ad.dispose();
-        }),
-        request: AdRequest());
-    inlineBannerAd.load();
-  }
 
-  int getListViewItemIndex(int index) {
-    if (index >= inlineAdIndex && isInlineBannerAdLoaded && kReleaseMode) {
-      return index -1 ;
-    }
-    return index;
-  }
 }

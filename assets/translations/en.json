@@ -56,8 +56,8 @@
   "cancel_sub": "You can cancel your subscription at any time through google pay",
   "choose_content": "Choose your content",
   "Iam_a": "I'm a",
-  "healthy": "You want to be provided by healthy recipes that you should consume to remain healthy, \n Click here",
-  "patient": "You want to be provided per your health situation \n Click here",
+  "healthy": "You want to be provided by healthy recipes that you should consume to remain healthy",
+  "patient": "You want to be provided per your health situation",
   "username": "Username",
   "password": "Password",
   "Forget_your_password": "Forget your password ?",
@@ -74,5 +74,6 @@
   "enter_token": "Enter Your Code",
   "validate_token": "Validate Code",
   "Reset_pass": "Reset password",
-  "pass_confirm": "Password Confirmation"
+  "pass_confirm": "Password Confirmation",
+  "per_situation": "Per Situation"
 }

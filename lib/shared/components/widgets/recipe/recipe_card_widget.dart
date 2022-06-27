@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../constants/constants.dart';
 
-
 class RecipeCardNormal extends StatefulWidget {
   const RecipeCardNormal({
     Key? key,
@@ -51,7 +50,7 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                             child: CachedNetworkImage(
                               imageUrl: widget.foodImage,
                               height: 140,
-                              width: rh.deviceWidth(context)/2,
+                              width: rh.deviceWidth(context) / 2,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -62,9 +61,8 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Container(
-                            width: 100,
+                            width: 150,
                             child: Text(
-                              
                               widget.name,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

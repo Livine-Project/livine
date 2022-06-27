@@ -29,9 +29,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
   void dispose() async {
     imageController.cameraController?.dispose();
     controller.dispose();
-    setState(() {
-      imageController.image == null;
-    });
+    
     super.dispose();
   }
 

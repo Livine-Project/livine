@@ -27,6 +27,7 @@ class RecipeTypes with _$RecipeTypes {
   const factory RecipeTypes(
     int id,
     String type,
+    String image,
     String type_in_arabic,
   ) = _RecipeTypes;
   factory RecipeTypes.fromJson(Map<String, dynamic> json) =>

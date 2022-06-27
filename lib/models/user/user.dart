@@ -13,6 +13,9 @@ final userTypeProvider = StateProvider.autoDispose<String>((ref) => '');
 
 final guestProvider = StateProvider<bool>((ref) => false);
 
+final userTokenProvider = StateProvider<String>((ref) => '');
+
+
 @freezed
 class UserData with _$UserData {
   const factory UserData(int id, String username, String email) = _UserData;

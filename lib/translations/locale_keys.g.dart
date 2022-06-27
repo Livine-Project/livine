@@ -77,5 +77,6 @@ abstract class  LocaleKeys {
   static const validate_token = 'validate_token';
   static const Reset_pass = 'Reset_pass';
   static const pass_confirm = 'pass_confirm';
+  static const per_situation = 'per_situation';
 
 }
