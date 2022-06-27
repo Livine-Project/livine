@@ -28,7 +28,6 @@ class _HomeState extends State<Home> {
   @override
   void dispose() async {
     adHelper.nativeAdBanner.dispose();
-    adHelper.inlineBannerAd.dispose();
     super.dispose();
   }
 
@@ -36,7 +35,6 @@ class _HomeState extends State<Home> {
   void initState() {
     showNotification();
     adHelper.nativeBannerFunction(setState);
-    adHelper.inlineAdBanner(setState);
     super.initState();
   }
 
@@ -51,7 +49,6 @@ class _HomeState extends State<Home> {
         child: Consumer(builder: (context, ref, child) {
           // print("UserType " + userType);
           final recipesTypeData = ref.watch(userTypeProvider);
-          print("RecipesType" + recipesTypeData);
 
           final recipesData = ref.watch(recieveRecipesType(
               recipesTypeData.isEmpty ? userType : recipesTypeData));
@@ -92,45 +89,26 @@ class _HomeState extends State<Home> {
                         crossAxisCount: rh.responsiveRecipes(context),
                         childAspectRatio: 5 / 7,
                       ),
-                      itemCount: data.length +
-                          (adHelper.isInlineBannerAdLoaded &&
-                                  testID != 10 &&
-                                  kReleaseMode
-                              ? 1
-                              : 0),
+                      itemCount: data.length,
                       itemBuilder: (context, index) {
-                        if (adHelper.isInlineBannerAdLoaded &&
-                            index == adHelper.inlineAdIndex &&
-                            testID != 10 &&
-                            kReleaseMode) {
-                          return Container(
-                            width:
-                                adHelper.inlineBannerAd.size.width.toDouble(),
-                            height:
-                                adHelper.inlineBannerAd.size.height.toDouble(),
-                            child: AdWidget(ad: adHelper.inlineBannerAd),
-                          );
-                        } else {
-                          final recipe =
-                              data[adHelper.getListViewItemIndex(index)];
-                          return RecipeCardNormal(
-                            id: recipe.id,
-                            name: context.locale.languageCode == "en"
-                                ? recipe.name
-                                : recipe.name_in_arabic,
-                            foodImage: '$restAPIMedia/${recipe.coverURL}',
-                            type: context.locale.languageCode == "en"
-                                ? recipe.type
-                                : recipe.type_in_arabic,
-                            difficulty:
-                                changeDiffName(recipe.difficulty, context),
-                            time: context.locale.languageCode == "en"
-                                ? recipe.time_taken.toString() + " min"
-                                : recipe.time_taken.toString() + " دقيقة",
-                            dImage:
-                                changeDiffImage(difficulty: recipe.difficulty),
-                          );
-                        }
+                        final recipe = data[index];
+                        return RecipeCardNormal(
+                          id: recipe.id,
+                          name: context.locale.languageCode == "en"
+                              ? recipe.name
+                              : recipe.name_in_arabic,
+                          foodImage: '$restAPIMedia/${recipe.coverURL}',
+                          type: context.locale.languageCode == "en"
+                              ? recipe.type
+                              : recipe.type_in_arabic,
+                          difficulty:
+                              changeDiffName(recipe.difficulty, context),
+                          time: context.locale.languageCode == "en"
+                              ? recipe.time_taken.toString() + " min"
+                              : recipe.time_taken.toString() + " دقيقة",
+                          dImage:
+                              changeDiffImage(difficulty: recipe.difficulty),
+                        );
                       },
                     ),
                   );

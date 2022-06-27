@@ -51,7 +51,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   Column(
                     children: [
                       InkWell(
-                  onTap: () => context.push('/languages'),
+                        onTap: () => context.push('/languages'),
                         child: SettingsTile(
                           text: LocaleKeys.Language.tr(),
                           subtitle: context.locale.languageCode == "en"
@@ -60,12 +60,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           icon: Icons.language,
                         ),
                       ),
-                      SizedBox(height: 15.0,),
+                      SizedBox(
+                        height: 15.0,
+                      ),
                       InkWell(
                         onTap: () => context.push("/notifications_settings"),
                         child: SettingsTile(
                           text: LocaleKeys.notfications.tr(),
-                          subtitle:'',
+                          subtitle: '',
                           icon: Icons.notifications,
                         ),
                       ),
@@ -140,7 +142,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   ),
                   SettingsTile(
                     text: LocaleKeys.Version.tr(),
-                    subtitle: '6.3.0',
+                    subtitle: '6.5.0',
                     icon: Icons.info,
                   ),
                 ],

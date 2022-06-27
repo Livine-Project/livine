@@ -8,18 +8,15 @@ class FoodCategory extends StatelessWidget {
     required this.navigate,
     required this.image,
     required this.name,
-    required this.color,
   }) : super(key: key);
 
   final String navigate;
   final String image;
   final String name;
-  final Color color;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        color: Colors.transparent,
         child: Material(
           child: InkWell(
             

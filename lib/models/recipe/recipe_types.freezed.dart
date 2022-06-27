@@ -22,10 +22,11 @@ RecipeTypes _$RecipeTypesFromJson(Map<String, dynamic> json) {
 class _$RecipeTypesTearOff {
   const _$RecipeTypesTearOff();
 
-  _RecipeTypes call(int id, String type, String type_in_arabic) {
+  _RecipeTypes call(int id, String type, String image, String type_in_arabic) {
     return _RecipeTypes(
       id,
       type,
+      image,
       type_in_arabic,
     );
   }
@@ -42,6 +43,7 @@ const $RecipeTypes = _$RecipeTypesTearOff();
 mixin _$RecipeTypes {
   int get id => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
   String get type_in_arabic => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +57,7 @@ abstract class $RecipeTypesCopyWith<$Res> {
   factory $RecipeTypesCopyWith(
           RecipeTypes value, $Res Function(RecipeTypes) then) =
       _$RecipeTypesCopyWithImpl<$Res>;
-  $Res call({int id, String type, String type_in_arabic});
+  $Res call({int id, String type, String image, String type_in_arabic});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$RecipeTypesCopyWithImpl<$Res> implements $RecipeTypesCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? type = freezed,
+    Object? image = freezed,
     Object? type_in_arabic = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +83,10 @@ class _$RecipeTypesCopyWithImpl<$Res> implements $RecipeTypesCopyWith<$Res> {
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
       type_in_arabic: type_in_arabic == freezed
           ? _value.type_in_arabic
@@ -96,7 +103,7 @@ abstract class _$RecipeTypesCopyWith<$Res>
           _RecipeTypes value, $Res Function(_RecipeTypes) then) =
       __$RecipeTypesCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String type, String type_in_arabic});
+  $Res call({int id, String type, String image, String type_in_arabic});
 }
 
 /// @nodoc
@@ -113,6 +120,7 @@ class __$RecipeTypesCopyWithImpl<$Res> extends _$RecipeTypesCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? type = freezed,
+    Object? image = freezed,
     Object? type_in_arabic = freezed,
   }) {
     return _then(_RecipeTypes(
@@ -123,6 +131,10 @@ class __$RecipeTypesCopyWithImpl<$Res> extends _$RecipeTypesCopyWithImpl<$Res>
       type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
       type_in_arabic == freezed
           ? _value.type_in_arabic
@@ -135,7 +147,7 @@ class __$RecipeTypesCopyWithImpl<$Res> extends _$RecipeTypesCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_RecipeTypes implements _RecipeTypes {
-  const _$_RecipeTypes(this.id, this.type, this.type_in_arabic);
+  const _$_RecipeTypes(this.id, this.type, this.image, this.type_in_arabic);
 
   factory _$_RecipeTypes.fromJson(Map<String, dynamic> json) =>
       _$$_RecipeTypesFromJson(json);
@@ -145,11 +157,13 @@ class _$_RecipeTypes implements _RecipeTypes {
   @override
   final String type;
   @override
+  final String image;
+  @override
   final String type_in_arabic;
 
   @override
   String toString() {
-    return 'RecipeTypes(id: $id, type: $type, type_in_arabic: $type_in_arabic)';
+    return 'RecipeTypes(id: $id, type: $type, image: $image, type_in_arabic: $type_in_arabic)';
   }
 
   @override
@@ -159,6 +173,7 @@ class _$_RecipeTypes implements _RecipeTypes {
             other is _RecipeTypes &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality()
                 .equals(other.type_in_arabic, type_in_arabic));
   }
@@ -168,6 +183,7 @@ class _$_RecipeTypes implements _RecipeTypes {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(type_in_arabic));
 
   @JsonKey(ignore: true)
@@ -182,7 +198,8 @@ class _$_RecipeTypes implements _RecipeTypes {
 }
 
 abstract class _RecipeTypes implements RecipeTypes {
-  const factory _RecipeTypes(int id, String type, String type_in_arabic) =
+  const factory _RecipeTypes(
+          int id, String type, String image, String type_in_arabic) =
       _$_RecipeTypes;
 
   factory _RecipeTypes.fromJson(Map<String, dynamic> json) =
@@ -192,6 +209,8 @@ abstract class _RecipeTypes implements RecipeTypes {
   int get id;
   @override
   String get type;
+  @override
+  String get image;
   @override
   String get type_in_arabic;
   @override

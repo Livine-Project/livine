@@ -44,6 +44,7 @@ final baseRoutes = GoRouter(routes: [
   ),
   GoRoute(
     path: '/login',
+    name: "Login",
     builder: (context, state) => Login(),
   ),
   GoRoute(
@@ -153,16 +154,18 @@ final baseRoutes = GoRouter(routes: [
       return ResetPassword();
     },
   ),
-    GoRoute(
+  GoRoute(
     path: '/token_validate',
     builder: (context, state) {
       return TokenValidate();
     },
   ),
-      GoRoute(
+  GoRoute(
     path: '/confirm_pass',
     builder: (context, state) {
-      return PasswordConfirmation(token: state.extra,);
+      return PasswordConfirmation(
+        token: state.extra,
+      );
     },
   ),
 ]);

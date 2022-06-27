@@ -50,16 +50,16 @@ class _PatientState extends State<Patient> {
               name: LocaleKeys.Breakfast.tr(),
               image:
                   "https://top10cairo.com/wp-content/uploads/2015/12/best-breakfast-places-cairo-696x364.jpg",
-              color: Color(0xfff3f37c9),
             ),
             FoodCategory(
               navigate: '/lunch',
               name: LocaleKeys.Lunch.tr(),
               image:
                   "https://media.istockphoto.com/photos/keto-diet-foods-picture-id1096945386?b=1&k=20&m=1096945386&s=170667a&w=0&h=whc_B9ltl294rfVBmpu84DB5QxQGjof8KGtAvXjDDfw=",
-              color: Color(0xfff3f37c9),
             ),
-            if (adHelper.isnativeBannerAdLoaded && testID != 10 && kReleaseMode) ...[
+            if (adHelper.isnativeBannerAdLoaded &&
+                testID != 10 &&
+                kReleaseMode) ...[
               Container(
                 height: adHelper.nativeAdBanner.size.height.toDouble(),
                 width: adHelper.nativeAdBanner.size.width.toDouble(),
@@ -71,14 +71,12 @@ class _PatientState extends State<Patient> {
               name: LocaleKeys.Dinner.tr(),
               image:
                   "https://images.unsplash.com/photo-1611765083444-a3ce30f1c885?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGRpbm5lcnxlbnwwfHwwfHw%3D&w=1000&q=80",
-              color: (Colors.tealAccent[400])!,
             ),
             FoodCategory(
               navigate: '/snacks',
               name: LocaleKeys.Snacks.tr(),
               image:
-                  "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c25hY2t8ZW58MHx8MHx8&w=1000&q=80",
-              color: (Colors.tealAccent[400])!,
+                  "https://media.istockphoto.com/photos/brunette-model-hand-holding-glass-hermetic-pot-with-mix-of-nuts-picture-id1136727937?b=1&k=20&m=1136727937&s=170667a&w=0&h=1Wjh6YpEx7zU0C-_5MhR_fUP1Aw1t_aHGNYVZ6sSRDg=",
             ),
           ],
         ),

@@ -6,8 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_value.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../shared/constants/constants.dart';
 import '../auth/login.dart';
 import '../../shared/components/misc/loading.dart';
 import '../../main.dart';
@@ -79,12 +79,7 @@ class Profile extends ConsumerWidget {
               return ProfileMenu(
                 name: LocaleKeys.Logout.tr().toString(),
                 icon: Icons.logout,
-                press: () async {
-                  final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.clear();
-                  context.go('/login');
-                },
+                press: () => authHelper.logOut(context, ref,guest),
               );
             }),
           ],

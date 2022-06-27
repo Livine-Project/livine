@@ -45,7 +45,8 @@ class ModelTFLite {
     }
   }
 
-  String checkHealth(void Function(void Function()) setState,AnimationController controller) {
+  String checkHealth(
+      void Function(void Function()) setState, AnimationController controller) {
     print("index" + index.toString());
     if (index == 0 && output.isNotEmpty) {
       setState(() {
@@ -69,45 +70,42 @@ class ModelTFLite {
 
   Future<void> runModelFrame(CameraImage? cameraImage, bool mounted,
       void Function(void Function()) setState) async {
-    if (cameraImage != null && mounted && imageController.image== null) {
+    if (cameraImage != null && mounted && imageController.image == null) {
       setState(() {
         isModelFromGallery = false;
       });
       if (mounted) {
-         var predictions = await Tflite.runModelOnFrame(
-        bytesList: cameraImage.planes.map((plane) {
-          return plane.bytes;
-        }).toList(),
-        imageHeight: cameraImage.height,
-        imageWidth: cameraImage.width,
-        numResults: 2,
-        
-      );
-      var firstPredictions = predictions?.first;
-      var lastPredictions = predictions?.last;
+        var predictions = await Tflite.runModelOnFrame(
+          bytesList: cameraImage.planes.map((plane) {
+            return plane.bytes;
+          }).toList(),
+          imageHeight: cameraImage.height,
+          imageWidth: cameraImage.width,
+          numResults: 2,
+        );
+        var firstPredictions = predictions?.first;
+        var lastPredictions = predictions?.last;
 
-      if (firstPredictions.values.first > lastPredictions.values.first) {
-        if (mounted) {
+        if (firstPredictions.values.first > lastPredictions.values.first) {
+          if (mounted) {
+            setState(() {
+              confidence = firstPredictions.values.first;
+              output = firstPredictions!['label'];
+              index = firstPredictions!['index'];
+            });
+          }
+        } else {
           setState(() {
-            confidence = firstPredictions.values.first;
-            output = firstPredictions!['label'];
-            index = firstPredictions!['index'];
+            if (mounted) {
+              confidence = lastPredictions.values.first;
+              output = lastPredictions!['label'];
+              index = lastPredictions!['index'];
+            }
           });
         }
-      } else {
-        setState(() {
-          if (mounted) {
-            confidence = lastPredictions.values.first;
-            output = lastPredictions!['label'];
-            index = lastPredictions!['index'];
-          }
-        });
       }
-      }
-     
-      
     }
   }
-    Future<dynamic> release() => Tflite.close();
 
+  Future<dynamic> release() => Tflite.close();
 }

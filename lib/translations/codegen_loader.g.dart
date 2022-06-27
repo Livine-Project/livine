@@ -29,7 +29,7 @@ class CodegenLoader extends AssetLoader{
   "Info": "عن البرنامج",
   "Version": "النسخة",
   "Language": "اللغة",
-  "General": "العام",
+  "General": "عام",
   "Breakfast": "الفطار",
   "Dinner": "العشاء",
   "Lunch": "الغذاء",
@@ -72,8 +72,8 @@ class CodegenLoader extends AssetLoader{
   "cancel_sub": "يمكنك إلغاء اشتراكك في أي وقت من خلال google pay",
   "choose_content": "اختار المحتوي",
   "Iam_a": "انا",
-  "healthy": "تريد أن تحصل على وصفات صحية بجانب المكونات ومقاطع الفيديو ، \n اضغط هنا",
-  "patient": "تريد أن يتم تحصل علي وصفات علي حسب حالتك الصحية  ، \n اضغط هنا ",
+  "healthy": "تريد أن تحصل على وصفات صحية بجانب المكونات ومقاطع الفيديو",
+  "patient": "تريد أن تحصل علي وصفات علي حسب حالتك الصحية مع مكونات و مقاطع الفيديو",
   "username": "اسم المستخدم",
   "password": "كلمة السر",
   "Forget_your_password": "نسيت كلمة المرور ؟",
@@ -90,7 +90,8 @@ class CodegenLoader extends AssetLoader{
   "enter_token": "أدخل الرمز الخاص بك",
   "validate_token": "التحقق من صحة الرمز",
   "Reset_pass": "إعادة تعيين كلمة المرور",
-  "pass_confirm": "تأكيد كلمة المرور"
+  "pass_confirm": "تأكيد كلمة المرور",
+  "per_situation": "حالة معينة"
 };
 static const Map<String,dynamic> en = {
   "Welcome": "Welcome",
@@ -150,8 +151,8 @@ static const Map<String,dynamic> en = {
   "cancel_sub": "You can cancel your subscription at any time through google pay",
   "choose_content": "Choose your content",
   "Iam_a": "I'm a",
-  "healthy": "You want to be provided by healthy recipes that you should consume to remain healthy, \n Click here",
-  "patient": "You want to be provided per your health situation \n Click here",
+  "healthy": "You want to be provided by healthy recipes that you should consume to remain healthy",
+  "patient": "You want to be provided per your health situation",
   "username": "Username",
   "password": "Password",
   "Forget_your_password": "Forget your password ?",
@@ -168,7 +169,8 @@ static const Map<String,dynamic> en = {
   "enter_token": "Enter Your Code",
   "validate_token": "Validate Code",
   "Reset_pass": "Reset password",
-  "pass_confirm": "Password Confirmation"
+  "pass_confirm": "Password Confirmation",
+  "per_situation": "Per Situation"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

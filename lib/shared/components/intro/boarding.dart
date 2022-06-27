@@ -31,7 +31,7 @@ class OnBoarding extends StatelessWidget {
 
     return Scaffold(
       body: ConcentricPageView(
-        duration: Duration(milliseconds:1000 ),
+        duration: Duration(milliseconds:1200 ),
         colors: <Color>[Colors.white, primaryColor, thirdColor, primaryColor],
         radius: screenWidth * 0.1,
         onFinish: () => context.goNamed('Content'),
