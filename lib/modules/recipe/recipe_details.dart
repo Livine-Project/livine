@@ -26,6 +26,12 @@ class _RecipeDetailsState extends State<RecipeDetails>
   final f = new DateFormat('hh:mm');
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Consumer(

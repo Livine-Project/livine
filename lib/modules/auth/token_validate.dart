@@ -79,22 +79,19 @@ class _TokenValidateState extends State<TokenValidate> {
                         return null;
                       },
                       controller: _token,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                      
                       decoration: InputDecoration(
                         helperText: context.locale.languageCode == " en "
                             ? "Enter the token that has been sent to your email"
                             : " أدخل الرمز المميز الذي تم إرساله إلى بريدك الإلكتروني الخاص بك",
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(),
-                        ),
+                       border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
                         labelText: context.locale.languageCode == "en"
                             ? 'Token'
                             : "الرمز",
                         labelStyle: TextStyle(
                           fontSize: 15,
-                          color: Colors.black,
                         ),
                       ),
                     ),

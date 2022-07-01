@@ -23,6 +23,7 @@ class _PatientState extends State<Patient> {
   @override
   void initState() {
     super.initState();
+
     adHelper.nativeBannerFunction(setState);
   }
 

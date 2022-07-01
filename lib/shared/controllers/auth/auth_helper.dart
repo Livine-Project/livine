@@ -134,4 +134,12 @@ class AuthHelper {
       });
     }
   }
+
+  Future<void> getUser(WidgetRef ref) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userID = prefs.getInt('userID');
+    if (userID != null) {
+      ref.read(userIDProvider.notifier).update((state) => userID);
+    }
+  }
 }

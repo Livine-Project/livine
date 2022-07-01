@@ -17,7 +17,6 @@ class ChooseContent extends StatefulWidget {
 }
 
 class _ChooseContentState extends State<ChooseContent> {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -26,7 +25,6 @@ class _ChooseContentState extends State<ChooseContent> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            
             child: Consumer(
               builder: (context, ref, child) {
                 return Column(
@@ -59,8 +57,10 @@ class _ChooseContentState extends State<ChooseContent> {
               },
             ),
           ),
-          IconButton(padding: EdgeInsets.only(top: 30),
-              onPressed: () => context.pop(), icon: Icon(Icons.arrow_back))
+          IconButton(
+              padding: EdgeInsets.only(top: 30),
+              onPressed: () => context.pop(),
+              icon: Icon(Icons.arrow_back))
         ],
       ),
     );
@@ -92,6 +92,7 @@ class Options extends StatelessWidget {
             fit: BoxFit.cover,
             width: double.infinity,
             height: 250,
+            errorWidget: (context, url, error) => Icon(Icons.error),
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 CircularProgressIndicator(
                   value: downloadProgress.progress,

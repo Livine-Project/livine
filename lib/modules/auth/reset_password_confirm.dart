@@ -93,9 +93,6 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                         return null;
                       },
                       controller: _token,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
                       decoration: InputDecoration(
                         helperText: context.locale.languageCode == " en "
                             ? "Enter the token that has been sent to your email"
@@ -125,9 +122,6 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                       },
                       controller: _password,
                       obscureText: _obscureText,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -142,15 +136,14 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                             });
                           },
                         ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(),
-                        ),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
                         labelText: context.locale.languageCode == "en"
                             ? 'New Password'
                             : "كلمة المرور الجديدة",
                         labelStyle: TextStyle(
                           fontSize: 15,
-                          color: Colors.black,
                         ),
                       ),
                     ),

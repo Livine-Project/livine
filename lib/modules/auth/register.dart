@@ -13,7 +13,6 @@ import 'package:http/http.dart' as http;
 import '../../shared/components/widgets/auth/auth_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/styles/colors.dart';
-import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 
 class Register extends ConsumerStatefulWidget {
@@ -79,6 +78,8 @@ class _RegisterState extends ConsumerState<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -120,51 +121,46 @@ class _RegisterState extends ConsumerState<Register> {
                             return null;
                           },
                           controller: _username,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
                           decoration: InputDecoration(
                             errorText: errorinUser is List
                                 ? errorinUser.first
                                 : errorinUser,
                             errorMaxLines: 2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(),
-                            ),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
                             labelText: LocaleKeys.username.tr(),
                             labelStyle: TextStyle(
                               fontSize: 15,
-                              color: Colors.black,
                             ),
                           ),
                         ),
                       ),
-                      TextFormField(
-                        textInputAction: TextInputAction.next,
-                        validator: (e) {
-                          if (e!.isEmpty) {
-                            return context.locale.languageCode == "en"
-                                ? "Please enter your email"
-                                : "من فضلك ادخل البريد الاكتروني";
-                          }
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          validator: (e) {
+                            if (e!.isEmpty) {
+                              return context.locale.languageCode == "en"
+                                  ? "Please enter your email"
+                                  : "من فضلك ادخل البريد الاكتروني";
+                            }
 
-                          return null;
-                        },
-                        controller: _email,
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          errorText: errorinEmail,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
-                          labelText: context.locale.languageCode == "en"
-                              ? 'Email'
-                              : "البريد الاكتروني",
-                          labelStyle: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
+                            return null;
+                          },
+                          controller: _email,
+                          decoration: InputDecoration(
+                            errorText: errorinEmail,
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            labelText: context.locale.languageCode == "en"
+                                ? 'Email'
+                                : "البريد الاكتروني",
+                            labelStyle: TextStyle(
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ),
@@ -184,9 +180,6 @@ class _RegisterState extends ConsumerState<Register> {
                         },
                         controller: _password,
                         obscureText: _obscureText,
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -202,12 +195,11 @@ class _RegisterState extends ConsumerState<Register> {
                               });
                             },
                           ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
                           labelText: LocaleKeys.password.tr(),
-                          labelStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
+                          labelStyle: TextStyle(fontSize: 15),
                         ),
                       ),
                     ],
@@ -229,13 +221,16 @@ class _RegisterState extends ConsumerState<Register> {
                         LocaleKeys.have_an_account.tr(),
                         style: TextStyle(fontFamily: 'Kine'),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       GestureDetector(
                         onTap: () => context.go('/login'),
                         child: Text(
-                          LocaleKeys.Sign_in.tr().toUpperCase(),
+                          LocaleKeys.Sign_in.tr(),
                           style: TextStyle(
                               fontSize: 16.0,
-                              color: lightColorScheme.primary,
+                              color: theme.tertiary,
                               fontFamily: 'Kine'),
                         ),
                       ),
@@ -249,10 +244,16 @@ class _RegisterState extends ConsumerState<Register> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  children: <TextSpan>[
+                  children: <InlineSpan>[
                     TextSpan(
                         text: LocaleKeys.terms1.tr(),
-                        style: TextStyle(fontSize: 15.0, color: Colors.black)),
+                        style: TextStyle(
+                            fontSize: 15.0, color: theme.inverseSurface)),
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                      ),
+                    ),
                     TextSpan(
                         text: LocaleKeys.terms2.tr(),
                         recognizer: TapGestureRecognizer()
@@ -261,7 +262,7 @@ class _RegisterState extends ConsumerState<Register> {
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Kine',
-                            color: lightColorScheme.primary)),
+                            color: theme.tertiary)),
                   ],
                 ),
               ),

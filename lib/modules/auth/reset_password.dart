@@ -82,19 +82,15 @@ class _ResetPasswordState extends State<ResetPassword> {
                         return null;
                       },
                       controller: _email,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
                       decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(),
-                        ),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
                         labelText: context.locale.languageCode == "en"
                             ? 'Email'
                             : "البريد الاكتروني",
                         labelStyle: TextStyle(
                           fontSize: 15,
-                          color: Colors.black,
                         ),
                       ),
                     ),

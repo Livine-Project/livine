@@ -1,5 +1,6 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:concentric_transition/concentric_transition.dart';
@@ -21,6 +22,13 @@ class OnBoarding extends StatelessWidget {
       "We assure that you gonna have a Flexible Lifestyle",
       "You can change your content for your health situation "
     ];
+    final List heading_in_arabic = [
+      'مرحبا بكم في ليفين',
+      "لدينا الكثير من الخيارات الصحية",
+      "نؤكد أنه سيكون لديك أسلوب حياة مرن",
+      "يمكنك تغيير المحتوى الخاص بك لوضعك الصحي "
+    ];
+
     final List<Color> textColors = [
       Colors.black,
       Colors.black,
@@ -28,10 +36,10 @@ class OnBoarding extends StatelessWidget {
       Colors.black
     ];
     final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: ConcentricPageView(
-        duration: Duration(milliseconds:1200 ),
+        curve: Curves.easeInOut,
+        duration: Duration(milliseconds: 1200),
         colors: <Color>[Colors.white, primaryColor, thirdColor, primaryColor],
         radius: screenWidth * 0.1,
         onFinish: () => context.goNamed('Content'),
@@ -44,7 +52,9 @@ class OnBoarding extends StatelessWidget {
         ),
         itemBuilder: (int index) {
           return IntroScreens(
-              text: heading[index],
+              text: context.locale.languageCode == "en"
+                  ? heading[index]
+                  : heading_in_arabic[index],
               url: 'assets/images/onboarding/${images[index]}.svg',
               textColor: textColors[index]);
         },

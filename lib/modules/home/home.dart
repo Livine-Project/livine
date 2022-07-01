@@ -18,6 +18,7 @@ import '../../models/recipe/recipe.dart';
 import '../../shared/components/widgets/recipe/recipe_card_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
+import '../auth/login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -33,25 +34,42 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+
     showNotification();
     adHelper.nativeBannerFunction(setState);
     super.initState();
   }
 
+  List name = [];
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.dark
-          ? Colors.grey[900]
-          : Colors.white,
       body: SafeArea(
         child: Consumer(builder: (context, ref, child) {
-          // print("UserType " + userType);
           final recipesTypeData = ref.watch(userTypeProvider);
+          final userID = ref.watch(userIDProvider);
 
+          final userData =
+              ref.watch(userProviderID(testID == null ? userID : testID));
           final recipesData = ref.watch(recieveRecipesType(
               recipesTypeData.isEmpty ? userType : recipesTypeData));
+          final guest = ref.watch(guestProvider);
+
+          if (guest) {
+            name = [
+              {
+                "username":
+                    context.locale.languageCode == "en" ? "GUEST" : "ضيف"
+              },
+            ];
+          } else {
+            name = [
+              {"username": userData.value?.username ?? ""}
+            ];
+          }
+
           return LiquidPullToRefresh(
             animSpeedFactor: 2,
             onRefresh: () {
@@ -65,8 +83,8 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 15.0, horizontal: 15.0),
-                child: Text("${LocaleKeys.Welcome.tr()},",
-                    style: TextStyle(fontSize: 40.0, fontFamily: 'Kine')),
+                child: Text(LocaleKeys.Welcome.tr() + " " + ",",
+                    style: TextStyle(fontSize: 35.0, fontFamily: 'Kine')),
               ),
               if (adHelper.isnativeBannerAdLoaded &&
                   testID != 10 &&
@@ -87,6 +105,7 @@ class _HomeState extends State<Home> {
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: rh.responsiveRecipes(context),
+                        mainAxisSpacing: 20,
                         childAspectRatio: 5 / 7,
                       ),
                       itemCount: data.length,

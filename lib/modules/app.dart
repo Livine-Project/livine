@@ -40,6 +40,7 @@ class MaterialAppWithTheme extends ConsumerWidget {
     final _router = baseRoutes;
 
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routeInformationParser: _router.routeInformationParser,
       routerDelegate: _router.routerDelegate,
       localizationsDelegates: context.localizationDelegates,
