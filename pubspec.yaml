@@ -1,5 +1,5 @@
-name: app
-description: A new Flutter application.
+name: Livine
+description: A Healthcare and Food planner App
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -26,6 +26,8 @@ dependencies:
   url_launcher: ^6.0.2
   flutter_riverpod: ^2.0.0-dev.9
   flutter_svg: ^1.0.3
+  window_manager: ^0.2.5
+  auto_updater: ^0.1.5
 
   # permission_handler: ^8.1.4+2
   flutter_local_notifications: ^9.6.0

@@ -5,10 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import '../../models/user/user.dart';
 import '../../shared/components/misc/loading.dart';
 import '../../shared/components/misc/notification.dart';
 import '../../main.dart';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,15 +30,26 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void dispose() async {
-    adHelper.nativeAdBanner.dispose();
+    disposeAndroid();
     super.dispose();
+  }
+
+  void disposeAndroid() {
+    if (Platform.isAndroid) {
+      adHelper.nativeAdBanner.dispose();
+    }
+  }
+
+  void runOnlyOnAndriod() {
+    if (Platform.isAndroid) {
+      showNotification();
+      adHelper.nativeBannerFunction(setState);
+    }
   }
 
   @override
   void initState() {
-
-    showNotification();
-    adHelper.nativeBannerFunction(setState);
+    runOnlyOnAndriod();
     super.initState();
   }
 
@@ -54,7 +67,7 @@ class _HomeState extends State<Home> {
           final userData =
               ref.watch(userProviderID(testID == null ? userID : testID));
           final recipesData = ref.watch(recieveRecipesType(
-              recipesTypeData.isEmpty ? userType : recipesTypeData));
+              userType == null ? recipesTypeData : userType));
           final guest = ref.watch(guestProvider);
 
           if (guest) {
@@ -155,13 +168,20 @@ class _HomeState extends State<Home> {
           );
         }),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: () => context.push("/scan"),
-        child: Image.asset(
-          "assets/images/icons/scan.png",
-          width: 40,
-          color: theme.tertiary,
+      floatingActionButton: ResponsiveVisibility(
+        visible: false,
+        visibleWhen: [
+          Condition.equals(name: MOBILE),
+          Condition.equals(name: TABLET),
+        ],
+        child: FloatingActionButton(
+          heroTag: "btn1",
+          onPressed: () => context.push("/scan"),
+          child: Image.asset(
+            "assets/images/icons/scan.png",
+            width: 40,
+            color: theme.tertiary,
+          ),
         ),
       ),
     );

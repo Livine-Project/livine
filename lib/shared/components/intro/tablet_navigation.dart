@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../misc/children.dart';
+import '../title_bar.dart';
 
 class TabletNavigation extends StatefulWidget {
   const TabletNavigation({Key? key}) : super(key: key);
@@ -28,6 +31,7 @@ class _TabletNavigationState extends State<TabletNavigation> {
               },
               extended: isExtended,
               leading: IconButton(
+                iconSize: MediaQuery.of(context).size.width / 75,
                 onPressed: () {
                   setState(() {
                     isExtended = !isExtended;
@@ -39,14 +43,16 @@ class _TabletNavigationState extends State<TabletNavigation> {
               destinations: <NavigationRailDestination>[
                 NavigationRailDestination(
                   padding: EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.home, size: 30),
+                  icon: Icon(Icons.home,
+                      size: MediaQuery.of(context).size.width / 70),
                   label: context.locale.languageCode == "en"
                       ? Text("Home")
                       : Text("الرئيسية"),
                 ),
                 NavigationRailDestination(
                   padding: EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.fastfood_rounded, size: 30),
+                  icon: Icon(Icons.fastfood_rounded,
+                      size: MediaQuery.of(context).size.width / 70),
                   label: context.locale.languageCode == "en"
                       ? Text("Meals")
                       : Text("الوجبات"),
@@ -59,25 +65,50 @@ class _TabletNavigationState extends State<TabletNavigation> {
                 //         : Text("الاصلي")),
                 NavigationRailDestination(
                     padding: EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(Icons.person, size: 30),
+                    icon: Icon(Icons.person,
+                        size: MediaQuery.of(context).size.width / 70),
                     label: context.locale.languageCode == "en"
                         ? Text("Profile")
                         : Text("الحساب الشخصي")),
                 NavigationRailDestination(
                     padding: EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(Icons.settings, size: 30),
+                    icon: Icon(Icons.settings,
+                        size: MediaQuery.of(context).size.width / 70),
                     label: context.locale.languageCode == "en"
                         ? Text("Settings")
                         : Text("الاعدادات")),
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-              child: tabletChildren[_selectedIndex],
-            )
+            LargeScreenView(selectedIndex: _selectedIndex)
           ],
         ),
       ),
     );
+  }
+}
+
+class LargeScreenView extends StatelessWidget {
+  const LargeScreenView({
+    Key? key,
+    required int selectedIndex,
+  })  : _selectedIndex = selectedIndex,
+        super(key: key);
+
+  final int _selectedIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    if (Platform.isWindows)
+      return Expanded(
+        child: Stack(
+          children: [tabletChildren[_selectedIndex], TitleBar()],
+        ),
+      );
+    else {
+      return Expanded(
+        child: tabletChildren[_selectedIndex],
+      );
+    }
   }
 }

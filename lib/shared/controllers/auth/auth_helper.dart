@@ -104,7 +104,6 @@ class AuthHelper {
     );
 
     final emptyError = response.body.contains("No credentials provided");
-
     if (response.statusCode == 204) {
       await prefs.remove('username');
       context.go('/login');
