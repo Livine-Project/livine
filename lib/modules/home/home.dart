@@ -5,10 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import '../../models/user/user.dart';
 import '../../shared/components/misc/loading.dart';
 import '../../shared/components/misc/notification.dart';
 import '../../main.dart';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +20,7 @@ import '../../models/recipe/recipe.dart';
 import '../../shared/components/widgets/recipe/recipe_card_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
+import '../auth/login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -27,31 +30,59 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void dispose() async {
-    adHelper.nativeAdBanner.dispose();
+    disposeAndroid();
     super.dispose();
+  }
+
+  void disposeAndroid() {
+    if (Platform.isAndroid) {
+      adHelper.nativeAdBanner.dispose();
+    }
+  }
+
+  void runOnlyOnAndriod() {
+    if (Platform.isAndroid) {
+      showNotification();
+      adHelper.nativeBannerFunction(setState);
+    }
   }
 
   @override
   void initState() {
-    showNotification();
-    adHelper.nativeBannerFunction(setState);
+    runOnlyOnAndriod();
     super.initState();
   }
+
+  List name = [];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.dark
-          ? Colors.grey[900]
-          : Colors.white,
       body: SafeArea(
         child: Consumer(builder: (context, ref, child) {
-          // print("UserType " + userType);
           final recipesTypeData = ref.watch(userTypeProvider);
+          final userID = ref.watch(userIDProvider);
 
+          final userData =
+              ref.watch(userProviderID(testID == null ? userID : testID));
           final recipesData = ref.watch(recieveRecipesType(
-              recipesTypeData.isEmpty ? userType : recipesTypeData));
+              userType == null ? recipesTypeData : userType));
+          final guest = ref.watch(guestProvider);
+
+          if (guest) {
+            name = [
+              {
+                "username":
+                    context.locale.languageCode == "en" ? "GUEST" : "ضيف"
+              },
+            ];
+          } else {
+            name = [
+              {"username": userData.value?.username ?? ""}
+            ];
+          }
+
           return LiquidPullToRefresh(
             animSpeedFactor: 2,
             onRefresh: () {
@@ -65,8 +96,8 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 15.0, horizontal: 15.0),
-                child: Text("${LocaleKeys.Welcome.tr()},",
-                    style: TextStyle(fontSize: 40.0, fontFamily: 'Kine')),
+                child: Text(LocaleKeys.Welcome.tr() + " " + ",",
+                    style: TextStyle(fontSize: 35.0, fontFamily: 'Kine')),
               ),
               if (adHelper.isnativeBannerAdLoaded &&
                   testID != 10 &&
@@ -87,6 +118,7 @@ class _HomeState extends State<Home> {
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: rh.responsiveRecipes(context),
+                        mainAxisSpacing: 20,
                         childAspectRatio: 5 / 7,
                       ),
                       itemCount: data.length,
@@ -136,13 +168,20 @@ class _HomeState extends State<Home> {
           );
         }),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: () => context.push("/scan"),
-        child: Image.asset(
-          "assets/images/icons/scan.png",
-          width: 40,
-          color: theme.tertiary,
+      floatingActionButton: ResponsiveVisibility(
+        visible: false,
+        visibleWhen: [
+          Condition.equals(name: MOBILE),
+          Condition.equals(name: TABLET),
+        ],
+        child: FloatingActionButton(
+          heroTag: "btn1",
+          onPressed: () => context.push("/scan"),
+          child: Image.asset(
+            "assets/images/icons/scan.png",
+            width: 40,
+            color: theme.tertiary,
+          ),
         ),
       ),
     );

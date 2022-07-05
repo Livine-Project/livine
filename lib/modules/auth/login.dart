@@ -15,7 +15,6 @@ import '../../models/user/user.dart';
 import '../../shared/components/widgets/auth/auth_widget.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/controllers/auth/auth_classes.dart';
-import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 
 final userIDProvider = StateProvider<int>((ref) => 0);
@@ -112,100 +111,93 @@ class _LoginState extends ConsumerState<Login> {
     final theme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/icon/logo.png'),
-            alignment: Alignment.topCenter,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.transparent,
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(23),
-          child: ListView(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              
+              
               SizedBox(
-                height: 200,
+                height: MediaQuery.of(context).size.height * 0.1,
               ),
-              SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                        child: TextFormField(
-                          textInputAction: TextInputAction.next,
-                          validator: (u) {
-                            if (u!.isEmpty) {
-                              return context.locale.languageCode == "en"
-                                  ? "Please enter your username"
-                                  : "من فضلك ادخل اسم المستخدم";
-                            }
-                            if (u.contains(" ")) {
-                              return context.locale.languageCode == "en"
-                                  ? "No space allowed in username"
-                                  : "يجب ان لا يكون هناك مسافة في اسم المستخدم";
-                            }
-                            return null;
-                          },
-                          controller: _username,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(),
-                            ),
-                            labelText: LocaleKeys.username.tr(),
-                            labelStyle:
-                                TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      TextFormField(
-                        validator: (p) {
-                          if (p!.length < 6 && p.isNotEmpty) {
+              Center(
+                child: Image.asset(
+                  'assets/images/icon/pristine.png',
+                  width: 60,
+                ),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (u) {
+                          if (u!.isEmpty) {
                             return context.locale.languageCode == "en"
-                                ? "Password needs to be atleast 6 characters "
-                                : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
-                          } else if (p.isEmpty) {
+                                ? "Please enter your username"
+                                : "من فضلك ادخل اسم المستخدم";
+                          }
+                          if (u.contains(" ")) {
                             return context.locale.languageCode == "en"
-                                ? "Please enter your password "
-                                : "من فضلك أدخل كلمة السر";
+                                ? "No space allowed in username"
+                                : "يجب ان لا يكون هناك مسافة في اسم المستخدم";
                           }
                           return null;
                         },
-                        controller: _password,
-                        obscureText: _obscureText,
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                        controller: _username,
                         decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
-                          labelText: LocaleKeys.password.tr(),
-                          labelStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          labelText: LocaleKeys.username.tr(),
+                          labelStyle: TextStyle(fontSize: 15),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    TextFormField(
+                      validator: (p) {
+                        if (p!.length < 6 && p.isNotEmpty) {
+                          return context.locale.languageCode == "en"
+                              ? "Password needs to be atleast 6 characters "
+                              : "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل";
+                        } else if (p.isEmpty) {
+                          return context.locale.languageCode == "en"
+                              ? "Please enter your password "
+                              : "من فضلك أدخل كلمة السر";
+                        }
+                        return null;
+                      },
+                      controller: _password,
+                      obscureText: _obscureText,
+                      onFieldSubmitted:(_)=> validateLoginForm(),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        ),
+                        labelText: LocaleKeys.password.tr(),
+                        labelStyle: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -218,7 +210,7 @@ class _LoginState extends ConsumerState<Login> {
                     style: TextStyle(
                       fontSize: 15,
                       fontFamily: 'Kine',
-                      color: lightColorScheme.primary,
+                      color: theme.tertiary,
                     ),
                   ),
                 ),
@@ -239,13 +231,16 @@ class _LoginState extends ConsumerState<Login> {
                         style: TextStyle(
                             fontFamily: 'Kine', fontWeight: FontWeight.w100),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       GestureDetector(
                         onTap: () => context.go('/register'),
                         child: Text(
-                          LocaleKeys.Sign_up.tr().toUpperCase(),
+                          LocaleKeys.Sign_up.tr(),
                           style: TextStyle(
                             fontSize: 15.0,
-                            color: lightColorScheme.primary,
+                            color: theme.tertiary,
                             fontFamily: 'Kine',
                             fontWeight: FontWeight.bold,
                           ),
@@ -258,10 +253,10 @@ class _LoginState extends ConsumerState<Login> {
               AuthButton(
                   isLoading: false,
                   text: LocaleKeys.continue_as_guest.tr(),
-                  color: theme.secondaryContainer,
+                  textColor: theme.onSecondaryContainer,
                   validateForm: validateGuest,
                   context: context,
-                  textColor: Colors.black),
+                  color: theme.secondaryContainer),
             ],
           ),
         ),

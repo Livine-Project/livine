@@ -14,7 +14,7 @@ Widget AuthButton({
     padding: EdgeInsets.only(top: 20),
     child: MaterialButton(
       onPressed: validateForm,
-      color: color ?? theme.onTertiaryContainer,
+      color: color ?? theme.primaryContainer,
       elevation: 0,
       minWidth: 350,
       height: 60,
@@ -30,7 +30,7 @@ Widget AuthButton({
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Kine',
-                  color: textColor ?? Colors.white),
+                  color: textColor ?? theme.onPrimaryContainer),
             ),
     ),
   );

@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,6 @@ class NoConnectionMaterial extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef watch) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: NoConnectionWidget(),
     );
   }
@@ -40,6 +40,7 @@ class MaterialAppWithTheme extends ConsumerWidget {
     final _router = baseRoutes;
 
     return MaterialApp.router(
+      useInheritedMediaQuery: true,
       routeInformationParser: _router.routeInformationParser,
       routerDelegate: _router.routerDelegate,
       localizationsDelegates: context.localizationDelegates,
@@ -61,3 +62,4 @@ class MaterialAppWithTheme extends ConsumerWidget {
     );
   }
 }
+

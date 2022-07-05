@@ -1,0 +1,8 @@
+app_id: 0b51f230-fbcd-11ec-9fdd-7bc6adee56d2
+publisher: Mazen Omar
+publisher_url: https://github.com/leanflutter/flutter_distributor
+display_name: Livine
+create_desktop_icon: true
+locales:
+  - en
+  - ar

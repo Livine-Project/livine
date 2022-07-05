@@ -79,7 +79,7 @@ class Profile extends ConsumerWidget {
               return ProfileMenu(
                 name: LocaleKeys.Logout.tr().toString(),
                 icon: Icons.logout,
-                press: () => authHelper.logOut(context, ref,guest),
+                press: () => authHelper.logOut(context, ref, guest),
               );
             }),
           ],

@@ -38,9 +38,11 @@ class IconCard extends StatelessWidget {
             width: 60,
           ),
           if (calAmount != null) Text(calAmount.toString()),
-          Text(
-            name,
-            style: TextStyle(fontSize: 13.0),
+          FittedBox(
+            child: Text(
+              name,
+              style: TextStyle(fontSize: 13.0),
+            ),
           )
         ],
       ),

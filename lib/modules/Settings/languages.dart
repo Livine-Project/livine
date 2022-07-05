@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../translations/locale_keys.g.dart';
 
-
 class Languages extends StatelessWidget {
   const Languages({Key? key}) : super(key: key);
 
@@ -14,9 +13,16 @@ class Languages extends StatelessWidget {
         title: Text(LocaleKeys.Language.tr()),
       ),
       body: Column(children: [
-        LanguageCode(name: "English", langCode: "en"),
-        LanguageCode(name: "العربية", langCode: "ar"),
-
+        LanguageCode(
+          name: "English",
+          langCode: "en",
+          textAlign: TextAlign.start,
+        ),
+        LanguageCode(
+          name: "العربية",
+          langCode: "ar",
+          textAlign: TextAlign.end,
+        ),
       ]),
     );
   }
@@ -27,9 +33,10 @@ class LanguageCode extends StatelessWidget {
     Key? key,
     required this.name,
     required this.langCode,
+    required this.textAlign,
   }) : super(key: key);
   final String name, langCode;
-
+  final TextAlign textAlign;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -40,6 +47,7 @@ class LanguageCode extends StatelessWidget {
           padding: EdgeInsets.all(25.0),
           child: Text(
             name,
+            textAlign: textAlign,
             style: TextStyle(fontSize: 18.0),
           )),
     );

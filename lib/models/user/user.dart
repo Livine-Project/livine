@@ -9,12 +9,11 @@ import '../recipe/recipe.dart';
 part 'user.freezed.dart';
 part 'user.g.dart';
 
-final userTypeProvider = StateProvider.autoDispose<String>((ref) => '');
+final userTypeProvider = StateProvider<String>((ref) => 'Heart');
 
 final guestProvider = StateProvider<bool>((ref) => false);
 
 final userTokenProvider = StateProvider<String>((ref) => '');
-
 
 @freezed
 class UserData with _$UserData {

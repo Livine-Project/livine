@@ -2,11 +2,14 @@
 // import 'package:app/auth/reset_password.dart';
 // ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis
 
-import 'package:camera/camera.dart';
+import 'dart:io';
+
+import 'package:auto_updater/auto_updater.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'modules/app.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'modules/Settings/Theme/theme.dart';
 
 import 'shared/components/misc/notification.dart';
+import 'shared/constants/constants.dart';
 import 'translations/codegen_loader.g.dart';
 
 bool username = false;
@@ -25,16 +29,13 @@ var connectivityResult;
 var userType;
 bool isGuest = false;
 
-List<CameraDescription>? cameras;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  MobileAds.instance.initialize();
+  if (!Platform.isWindows) {
+    MobileAds.instance.initialize();
+  }
 
   await EasyLocalization.ensureInitialized();
-
-  cameras = await availableCameras();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -49,6 +50,29 @@ Future<void> main() async {
     android: initializationSettingsAndroid,
   );
 
+  if (Platform.isWindows) {
+    await windowManager.ensureInitialized();
+
+    WindowOptions windowOptions = WindowOptions(
+      size: Size(1300, 750),
+      minimumSize: Size(1100, 750),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      title: "Livine",
+      titleBarStyle: TitleBarStyle.hidden,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+
+      await windowManager.focus();
+    });
+
+    String feedURL = '$restAPIMedia/media/appcast.xml';
+
+    await autoUpdater.setFeedURL(feedURL);
+    await autoUpdater.checkForUpdates();
+  }
   flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   connectivityResult = await Connectivity().checkConnectivity();
