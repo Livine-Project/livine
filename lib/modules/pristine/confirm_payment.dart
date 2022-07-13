@@ -19,14 +19,14 @@ class ConfirmPayment extends StatelessWidget {
               padding: const EdgeInsets.only(top: 80.0),
               child: Column(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check,
                     size: 100.0,
                     color: Colors.white,
                   ),
                   Text(
                     "Payment Successful".toUpperCase(),
-                    style: TextStyle(color: Colors.white, fontSize: 24.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 24.0),
                   ),
                 ],
               ),
@@ -36,15 +36,15 @@ class ConfirmPayment extends StatelessWidget {
               style: TextStyle(
                   color: Colors.white.withOpacity(0.5), fontSize: 16.0),
             ),
-            Divider(),
-            SizedBox(
+            const Divider(),
+            const SizedBox(
               height: 20.0,
             ),
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       "Transaction Number: ",
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -54,12 +54,12 @@ class ConfirmPayment extends StatelessWidget {
                             color: Colors.white, fontWeight: FontWeight.bold))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+                  children: const [
                     Text(
                       "Paid: ",
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -71,7 +71,7 @@ class ConfirmPayment extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+                  children: const [
                     Text(
                       "Gateway: ",
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -83,23 +83,23 @@ class ConfirmPayment extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 80.0),
+            const SizedBox(height: 80.0),
             SizedBox(
               height: 80.0,
               width: 200.0,
               child: ElevatedButton(
                   onPressed: () => context.pop(),
-                  child: Text(
-                    "Done",
-                    style: TextStyle(color: Colors.white,fontSize: 24.0),
-                  ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       )),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 99, 135, 255)))),
+                          const Color.fromARGB(255, 99, 135, 255))),
+                  child: const Text(
+                    "Done",
+                    style: TextStyle(color: Colors.white,fontSize: 24.0),
+                  )),
             )
           ],
         ),

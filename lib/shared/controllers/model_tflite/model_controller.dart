@@ -45,7 +45,6 @@ class ModelTFLite {
 
   String checkHealth(
       void Function(void Function()) setState, AnimationController controller) {
-    print("index" + index.toString());
     if (index == 0 && output.isNotEmpty) {
       setState(() {
         isVisible = true;

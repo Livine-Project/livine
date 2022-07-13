@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class ImageController {
               initAspectRatio: CropAspectRatioPreset.original,
               lockAspectRatio: false),
         ],
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
       );
 
       final imageTemp = File(cropped!.path);
@@ -42,7 +43,7 @@ class ImageController {
         isModelFromGallery = true;
       });
     } on PlatformException catch (e) {
-      print("Failed to pick image: $e");
+      log("Failed to pick image: $e");
     } finally {
       modelTF.runModelonGallery(image, mounted, setState);
     }
@@ -67,7 +68,7 @@ class ImageController {
         isModelFromGallery = true;
       });
     } on PlatformException catch (e) {
-      print("Failed to pick image: $e");
+      log("Failed to pick image: $e");
     } finally {
       modelTF.runModelonGallery(image, mounted, setState);
     }

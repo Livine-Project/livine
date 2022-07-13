@@ -9,11 +9,12 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:livine/shared/controllers/cache/cache_helper.dart';
 
 import '../../models/user/user.dart';
 import '../../shared/components/widgets/auth/auth_widget.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/constants/shared_constants.dart';
 import '../../shared/controllers/auth/auth_classes.dart';
 import '../../translations/locale_keys.g.dart';
 
@@ -23,7 +24,7 @@ class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  ConsumerState<Login> createState() => _LoginState();
 }
 
 class _LoginState extends ConsumerState<Login> {
@@ -36,9 +37,7 @@ class _LoginState extends ConsumerState<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<LoginResponse?> logintoDjango() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final url = '$restAPIURL/login/';
+    const url = '$restAPIURL/login/';
     final response = await client.post(
       Uri.parse(url),
       body: {
@@ -52,25 +51,32 @@ class _LoginState extends ConsumerState<Login> {
       final loginJson = LoginResponse.fromJson(
           Map<String, dynamic>.from(responseJson as Map<dynamic, dynamic>));
       if (loginJson.token!.isNotEmpty) {
-        await prefs.setBool('username', true);
+        CacheHelper.setBool("username", true);
 
         String userToken = responseJson['data']['token'];
-        await prefs.setString("token", userToken);
+        CacheHelper.setString("token", userToken);
+
         ref.read(userTokenProvider.notifier).update((state) => userToken);
 
         int userloginID = responseJson['data']['user_id'];
 
-        await prefs.setInt("userID", userloginID);
+        await CacheHelper.setInt("userID", userloginID);
 
-        ref
-            .read(userIDProvider.notifier)
-            .update((state) => state = userloginID);
+        ref.read(userIDProvider.notifier).update((state) => userloginID);
 
         ref.read(guestProvider.notifier).update((state) => false);
 
-        GoRouter.of(context).goNamed('OnBoarding');
+        if (!mounted) return null;
+
+        if (isBoarded == false) {
+          GoRouter.of(context).go('/onboarding');
+        } else {
+          GoRouter.of(context).go('/navigate');
+        }
       }
     } else {
+      if (!mounted) return null;
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(errorinLogin is List ? errorinLogin.first : errorinLogin),
       ));
@@ -81,7 +87,7 @@ class _LoginState extends ConsumerState<Login> {
     return null;
   }
 
-  void validateLoginForm() async {
+  void validateLoginForm() {
     final form = _formKey.currentState!;
     if (form.validate()) {
       setState(() {
@@ -97,11 +103,11 @@ class _LoginState extends ConsumerState<Login> {
   }
 
   Future<void> validateGuest() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isGuest', true);
+    CacheHelper.setBool('isGuest', true);
+    CacheHelper.setBool('username', true);
 
-    await prefs.setBool('username', true);
     ref.read(guestProvider.notifier).update((state) => true);
+    if (!mounted) return;
 
     GoRouter.of(context).goNamed('OnBoarding');
   }
@@ -117,8 +123,6 @@ class _LoginState extends ConsumerState<Login> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              
-              
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
               ),
@@ -133,7 +137,7 @@ class _LoginState extends ConsumerState<Login> {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
                         validator: (u) {
@@ -151,12 +155,12 @@ class _LoginState extends ConsumerState<Login> {
                         },
                         controller: _username,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(
+                          prefixIcon: const Icon(Icons.person),
+                          border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0))),
                           labelText: LocaleKeys.username.tr(),
-                          labelStyle: TextStyle(fontSize: 15),
+                          labelStyle: const TextStyle(fontSize: 15),
                         ),
                       ),
                     ),
@@ -175,10 +179,10 @@ class _LoginState extends ConsumerState<Login> {
                       },
                       controller: _password,
                       obscureText: _obscureText,
-                      onFieldSubmitted:(_)=> validateLoginForm(),
+                      onFieldSubmitted: (_) => validateLoginForm(),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(
+                        prefixIcon: const Icon(Icons.lock),
+                        border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
                         suffixIcon: IconButton(
@@ -194,14 +198,14 @@ class _LoginState extends ConsumerState<Login> {
                           },
                         ),
                         labelText: LocaleKeys.password.tr(),
-                        labelStyle: TextStyle(fontSize: 15),
+                        labelStyle: const TextStyle(fontSize: 15),
                       ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 5),
+                padding: const EdgeInsets.only(top: 20, bottom: 5),
                 child: GestureDetector(
                   onTap: () => context.push('/reset_password'),
                   child: Text(
@@ -215,23 +219,23 @@ class _LoginState extends ConsumerState<Login> {
                   ),
                 ),
               ),
-              AuthButton(
+              authButton(
                   isLoading: isLoading,
                   text: LocaleKeys.Sign_in.tr(),
                   validateForm: validateLoginForm,
                   context: context),
               Padding(
-                padding: EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 30),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         LocaleKeys.no_account.tr(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'Kine', fontWeight: FontWeight.w100),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
@@ -250,7 +254,7 @@ class _LoginState extends ConsumerState<Login> {
                   ),
                 ),
               ),
-              AuthButton(
+              authButton(
                   isLoading: false,
                   text: LocaleKeys.continue_as_guest.tr(),
                   textColor: theme.onSecondaryContainer,

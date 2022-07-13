@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/components/misc/notification.dart';
+import '../../../shared/notifications/health_notification.dart';
+import '../../../shared/constants/constants.dart';
 import '../../../translations/locale_keys.g.dart';
 
 class NotificationsSettings extends StatefulWidget {
@@ -26,10 +27,10 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Container(
+              SizedBox(
                   width: 200,
                   child: Text(LocaleKeys.ask_me_how_i_feel.tr(),
-                      style: TextStyle(fontSize: 18.0))),
+                      style: const TextStyle(fontSize: 18.0))),
               Switch(
                   value: isNotified,
                   onChanged: (value) {
@@ -38,7 +39,7 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
                     });
 
                     if (!value) {
-                      flutterLocalNotificationsPlugin.cancel(0);
+                      notificationControl.flutterLocalNotificationsPlugin.cancel(0);
                     } else {
                       showNotification();
                     }

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, type_annotate_public_apis
 
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,7 +10,7 @@ import '../../shared/constants/constants.dart';
 import '../../translations/locale_keys.g.dart';
 
 class BreakFast extends StatelessWidget {
-  BreakFast({Key? key}) : super(key: key);
+  const BreakFast({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class BreakFast extends StatelessWidget {
       body: OrientationBuilder(
         builder: (context, orientation) => GridView.count(
           crossAxisCount: rh.responsiveMeals(context),
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           children: [
             Category(
               url: 'https://www.youtube.com/watch?v=618QsMaVXp8',
@@ -82,14 +84,14 @@ class Category extends StatelessWidget {
     try {
       await launchUrl(url);
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(25.0),
+      padding: const EdgeInsets.all(25.0),
       child: GestureDetector(
         onTap: _launchCategoryURL,
         child: Card(
@@ -103,10 +105,10 @@ class Category extends StatelessWidget {
                 width: 400.0,
                 fit: BoxFit.cover,
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Text(
                 name,
-                style: TextStyle(fontSize: 17.0),
+                style: const TextStyle(fontSize: 17.0),
               )
             ],
           ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,12 +24,12 @@ class _ResetPasswordState extends State<ResetPassword> {
   bool isLoading = false;
 
   void resetPassword() async {
-    final url = '$restAPIURL/password_reset/';
+    const url = '$restAPIURL/password_reset/';
     final response =
         await http.post(Uri.parse(url), body: {'email': _email.text});
 
     if (response.statusCode == 200) {
-      print(response);
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(context.locale.languageCode == "en"
             ? "Please check your email"
@@ -38,7 +40,7 @@ class _ResetPasswordState extends State<ResetPassword> {
       });
       context.go("/token_validate");
     } else {
-      print("Error");
+      log("Error");
     }
   }
 
@@ -83,18 +85,18 @@ class _ResetPasswordState extends State<ResetPassword> {
                       },
                       controller: _email,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
                         labelText: context.locale.languageCode == "en"
                             ? 'Email'
                             : "البريد الاكتروني",
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    AuthButton(
+                    authButton(
                         validateForm: validateRPForm,
                         isLoading: isLoading,
                         text: LocaleKeys.Reset_pass.tr(),

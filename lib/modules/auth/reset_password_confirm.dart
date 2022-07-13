@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -32,12 +34,13 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   }
 
   void resetPassword() async {
-    final url = '$restAPIURL/password_reset/confirm/';
+    const url = '$restAPIURL/password_reset/confirm/';
     final response = await http.post(Uri.parse(url),
         body: {'token': widget.token, 'password': _password.text});
 
     if (response.statusCode == 200) {
-      print(response);
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(context.locale.languageCode == "en"
             ? "Your password have succesfully changed"
@@ -48,7 +51,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       });
       context.go("/login");
     } else {
-      print("Error");
+      log("Error");
     }
   }
 
@@ -97,13 +100,13 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                         helperText: context.locale.languageCode == " en "
                             ? "Enter the token that has been sent to your email"
                             : " أدخل الرمز المميز الذي تم إرساله إلى بريدك الإلكتروني الخاص بك",
-                        enabledBorder: UnderlineInputBorder(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(),
                         ),
                         labelText: context.locale.languageCode == "en"
                             ? 'Token'
                             : "الرمز",
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 15,
                           color: Colors.black,
                         ),
@@ -136,18 +139,18 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                             });
                           },
                         ),
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
                         labelText: context.locale.languageCode == "en"
                             ? 'New Password'
                             : "كلمة المرور الجديدة",
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    AuthButton(
+                    authButton(
                         validateForm: validatePasswordForm,
                         isLoading: isLoading,
                         text: LocaleKeys.change_password.tr(),

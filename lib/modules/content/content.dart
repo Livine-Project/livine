@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:livine/shared/controllers/cache/cache_helper.dart';
 
 import '../../models/user/user.dart';
 
@@ -35,12 +35,10 @@ class _ChooseContentState extends State<ChooseContent> {
                       description: LocaleKeys.healthy.tr(),
                       networkImage:
                           'https://media.istockphoto.com/photos/healthy-lifestyle-concept-clean-food-good-health-dietary-in-heart-picture-id953674568?k=20&m=953674568&s=612x612&w=0&h=x_gq29MRpRyhdDIgwF5PVhdXAbINmaBUKMgs27w7i6s=',
-                      onpressed: () async {
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setString("UserType", "General");
+                      onpressed: () async{
+                        await CacheHelper.setString("userType", "General");
                         ref.watch(userTypeProvider.notifier).state = "General";
-
+                        if (!mounted) return;
                         context.go('/navigate');
                       },
                     ),
@@ -58,9 +56,9 @@ class _ChooseContentState extends State<ChooseContent> {
             ),
           ),
           IconButton(
-              padding: EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 30),
               onPressed: () => context.pop(),
-              icon: Icon(Icons.arrow_back))
+              icon: const Icon(Icons.arrow_back))
         ],
       ),
     );
@@ -92,24 +90,24 @@ class Options extends StatelessWidget {
             fit: BoxFit.cover,
             width: double.infinity,
             height: 250,
-            errorWidget: (context, url, error) => Icon(Icons.error),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 CircularProgressIndicator(
                   value: downloadProgress.progress,
                 )),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(
           title,
-          style: TextStyle(fontFamily: 'Kine', fontSize: 20.0),
+          style: const TextStyle(fontFamily: 'Kine', fontSize: 20.0),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Text(description,
               textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: 'Kine', fontSize: 15.0)),
+              style: const TextStyle(fontFamily: 'Kine', fontSize: 15.0)),
         ),
         GestureDetector(
           onTap: onpressed,
@@ -118,13 +116,13 @@ class Options extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
                 color: theme.primaryContainer,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Icon(
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
+            child: const Icon(
               Icons.navigate_next_sharp,
             ),
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

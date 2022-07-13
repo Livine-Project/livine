@@ -10,39 +10,48 @@ import '../shared/components/misc/routes.dart';
 import '../shared/styles/lib_color_schemes.g.dart';
 
 class NoConnection extends StatelessWidget {
+  const NoConnection({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return NoConnectionMaterial();
+    return const NoConnectionMaterial();
   }
 }
 
 class NoConnectionMaterial extends ConsumerWidget {
+  const NoConnectionMaterial({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context, WidgetRef watch) {
-    return MaterialApp(
+  Widget build(BuildContext context,ref) {
+    return const MaterialApp(
       home: NoConnectionWidget(),
     );
   }
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialAppWithTheme();
+    return const MaterialAppWithTheme();
   }
 }
 
 class MaterialAppWithTheme extends ConsumerWidget {
+  const MaterialAppWithTheme({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
 
-    final _router = baseRoutes;
+    final router = baseRoutes;
 
     return MaterialApp.router(
+      routeInformationProvider: router.routeInformationProvider,
       useInheritedMediaQuery: true,
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

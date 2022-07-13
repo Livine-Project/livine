@@ -8,7 +8,7 @@ class Ingridents extends StatelessWidget {
   const Ingridents({Key? key, required this.ingridentsRecipe}) : super(key: key);
 
   // ignore: type_annotate_public_apis
-  final ingridentsRecipe;
+  final dynamic ingridentsRecipe;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class Ingridents extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             ingridentsRecipe,
-            style: TextStyle(fontSize: 20.0),
+            style: const TextStyle(fontSize: 20.0),
           ),
         ),
       ),

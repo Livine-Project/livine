@@ -44,7 +44,7 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                       children: [
                         Expanded(
                           child: ClipRRect(
-                            borderRadius: BorderRadius.vertical(
+                            borderRadius: const BorderRadius.vertical(
                                 top: Radius.circular(10.0),
                                 bottom: Radius.circular(15.0)),
                             child: CachedNetworkImage(
@@ -55,17 +55,17 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10.0,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
-                          child: Container(
+                          child: SizedBox(
                             width: 150,
                             child: Text(
                               widget.name,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 17.0),
                             ),
                           ),

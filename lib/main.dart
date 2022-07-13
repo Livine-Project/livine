@@ -13,21 +13,16 @@ import 'package:window_manager/window_manager.dart';
 
 import 'modules/app.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'modules/Settings/Theme/theme.dart';
 
-import 'shared/components/misc/notification.dart';
 import 'shared/constants/constants.dart';
+import 'shared/controllers/cache/cache_helper.dart';
 import 'translations/codegen_loader.g.dart';
 
-bool username = false;
-var testID;
 var connectivityResult;
-var userType;
-bool isGuest = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,23 +32,14 @@ Future<void> main() async {
 
   await EasyLocalization.ensureInitialized();
 
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await CacheHelper.init();
 
-  username = prefs.getBool('username') ?? false;
-  testID = prefs.getInt('userID');
-  userType = prefs.getString("UserType");
-  isGuest = prefs.getBool('isGuest') ?? false;
-
-  final AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
-  final InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-  );
+  notificationControl.init();
 
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
 
-    WindowOptions windowOptions = WindowOptions(
+    WindowOptions windowOptions = const WindowOptions(
       size: Size(1300, 750),
       minimumSize: Size(1100, 750),
       center: true,
@@ -73,7 +59,6 @@ Future<void> main() async {
     await autoUpdater.setFeedURL(feedURL);
     await autoUpdater.checkForUpdates();
   }
-  flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   connectivityResult = await Connectivity().checkConnectivity();
 
@@ -88,15 +73,11 @@ Future<void> main() async {
           ),
         ],
         child: EasyLocalization(
-            supportedLocales: [Locale('en'), Locale('ar')],
+            supportedLocales: const [Locale('en'), Locale('ar')],
             path: 'assets/translations',
-            fallbackLocale: Locale('en'),
-            assetLoader: CodegenLoader(),
-            child: MyApp()),
-        // child: DevicePreview(
-
-        //   builder:(context) => MyApp()
-        //   ),
+            fallbackLocale: const Locale('en'),
+            assetLoader: const CodegenLoader(),
+            child: const MyApp()),
       ),
     );
   } else {
@@ -107,7 +88,7 @@ Future<void> main() async {
             await SharedPreferences.getInstance(),
           ),
         ],
-        child: NoConnection(),
+        child: const NoConnection(),
       ),
     );
   }

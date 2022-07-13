@@ -7,12 +7,11 @@ class AdHelper {
     if (Platform.isAndroid) {
       return "ca-app-pub-1056698201610872/1548122447";
     } else {
-      throw new UnsupportedError("Unsupported platform");
+      throw UnsupportedError("Unsupported platform");
     }
   }
 
   bool isnativeBannerAdLoaded = false;
-
 
   late BannerAd nativeAdBanner;
 
@@ -20,17 +19,14 @@ class AdHelper {
     nativeAdBanner = BannerAd(
         adUnitId: AdHelper.nativeadunit,
         size: AdSize.largeBanner,
-        request: AdRequest(),
+        request: const AdRequest(),
         listener: BannerAdListener(onAdLoaded: (_) {
           setState(() {
             isnativeBannerAdLoaded = true;
           });
         }, onAdFailedToLoad: (ad, error) {
-          print(error);
           ad.dispose();
         }));
     nativeAdBanner.load();
   }
-
-
 }

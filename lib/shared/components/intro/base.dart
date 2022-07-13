@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -5,40 +6,36 @@ import 'package:flutter/material.dart';
 import 'package:new_version/new_version.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
-import '../../../main.dart';
 import '../../../models/user/user.dart';
 import '../../../modules/content/content.dart';
 
+import '../../constants/shared_constants.dart';
 import '../misc/children.dart';
 import 'tablet_navigation.dart';
 
 class Navigation extends ConsumerStatefulWidget {
+  const Navigation({Key? key}) : super(key: key);
+
   @override
-  _NavigationState createState() => _NavigationState();
+  ConsumerState<Navigation> createState() => _NavigationState();
 }
 
 class _NavigationState extends ConsumerState<Navigation> {
   PageController pageController = PageController();
   final newVersion = NewVersion();
 
-  Future<void> checkNewVersion() async {
-    final status = await newVersion.getVersionStatus();
-    if (status == status?.canUpdate) {
-      newVersion.showUpdateDialog(
-          context: context,
-          versionStatus: status!,
-          allowDismissal: false,
-          dialogTitle: "Update",
-          dialogText:
-              "Please update the app from ${status.localVersion} to ${status.storeVersion}");
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // checkNewVersion();
-  }
+  // Future<void> checkNewVersion() async {
+  //   final status = await newVersion.getVersionStatus();
+  //   if (status == status?.canUpdate) {
+  //     newVersion.showUpdateDialog(
+  //         context: context,
+  //         versionStatus: status!,
+  //         allowDismissal: false,
+  //         dialogTitle: "Update",
+  //         dialogText:
+  //             "Please update the app from ${status.localVersion} to ${status.storeVersion}");
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -54,11 +51,11 @@ class _NavigationState extends ConsumerState<Navigation> {
     const duration = Duration(milliseconds: 300);
     const curve = Curves.easeInOut;
     if (userType.toString().isEmpty && data.isNotEmpty) {
-      return ChooseContent();
+      return const ChooseContent();
     } else {
       return ResponsiveWrapper.of(context).isTablet ||
               ResponsiveWrapper.of(context).isDesktop
-          ? TabletNavigation()
+          ? const TabletNavigation()
           : Scaffold(
               body: PageView(
                 controller: pageController,
@@ -77,16 +74,21 @@ class _NavigationState extends ConsumerState<Navigation> {
                 },
                 destinations: [
                   NavigationDestination(
-                    icon: Icon(Icons.home, size: 30),
+                    icon: const Icon(Icons.home, size: 30),
                     label: context.locale.languageCode == "en"
                         ? "Home"
                         : "الرئيسية",
                   ),
                   NavigationDestination(
-                      icon: Icon(Icons.fastfood_rounded, size: 30),
+                      icon: const Icon(Icons.fastfood_rounded, size: 30),
                       label: context.locale.languageCode == "en"
                           ? "Meals"
                           : "الوجبات"),
+                  NavigationDestination(
+                      icon: const Icon(Icons.water_drop, size: 30),
+                      label: context.locale.languageCode == "en"
+                          ? "Hydration"
+                          : "ترطيب"),
                   //TODO:PRISTINE PREMIUM LIVINE
                   // NavigationDestination(
                   //     icon: Icon(Icons.star_rate_rounded, size: 30),
@@ -94,7 +96,7 @@ class _NavigationState extends ConsumerState<Navigation> {
                   //         ? "Pristine"
                   //         : "الاصلي"),
                   NavigationDestination(
-                      icon: Icon(Icons.person, size: 30),
+                      icon: const Icon(Icons.person, size: 30),
                       label: context.locale.languageCode == "en"
                           ? "Profile"
                           : "الحساب الشخصي")

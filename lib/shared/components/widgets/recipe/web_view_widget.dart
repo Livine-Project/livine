@@ -30,7 +30,7 @@ class _RecipeVideoWidgetState extends State<RecipeVideoWidget> {
         title: Text(context.locale.languageCode == "en" ? "Video" : "فيديو"),
         leading: IconButton(
             onPressed: () => context.go('/navigate'),
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Column(
         children: [

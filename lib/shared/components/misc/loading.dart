@@ -1,12 +1,15 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../constants/shared_constants.dart';
+
 class Loading extends StatelessWidget {
+  const Loading({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,7 +27,7 @@ class RecipeLoading extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Container(
-          padding: EdgeInsets.only(top: 5.0),
+          padding: const EdgeInsets.only(top: 5.0),
           height: 230.0,
           width: 150.0,
           decoration: BoxDecoration(
@@ -49,11 +52,10 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi) {
-        if (username == true) {
+        if (username.toString().isNotEmpty) {
           context.go("/navigate");
         } else {
           context.go("/login");
-          ;
         }
       }
     });
@@ -73,11 +75,11 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
                   'assets/images/network/network_error.svg',
                   width: 250.0,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
                   child: FittedBox(
                     child: Text(
                       "Oops, No Internet Connection",
@@ -88,7 +90,7 @@ class _NoConnectionWidgetState extends State<NoConnectionWidget> {
                     ),
                   ),
                 ),
-                Center(
+                const Center(
                   child: Text(
                     "Make sure wifi or cellular data is turned on \n and then try again",
                   ),

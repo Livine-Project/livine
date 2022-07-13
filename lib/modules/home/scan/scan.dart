@@ -20,7 +20,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
 
     modelTF.loadmodel();
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
   }
 
   @override
@@ -34,7 +34,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: Text('Scan Food'), centerTitle: true),
+      appBar: AppBar(title: const Text('Scan Food'), centerTitle: true),
       body: Column(children: [
         Expanded(
           child: imageController.image != null
@@ -52,7 +52,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
                 )
               : Container(),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Column(
@@ -66,7 +66,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
                         setState, mounted, context);
                   },
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.camera_alt),
                       SizedBox(
                         width: 10,
@@ -75,7 +75,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 ElevatedButton(
@@ -92,7 +92,7 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
                         Icons.photo_library,
                         color: theme.onTertiaryContainer,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
@@ -104,12 +104,12 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
               modelTF.checkHealth(setState, controller),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Lottie.asset("assets/images/loading/emoji_anim.json",
                 controller: controller, width: 200),

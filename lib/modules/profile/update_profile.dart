@@ -47,7 +47,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Update Profile")),
+      appBar: AppBar(title: const Text("Update Profile")),
       body: Column(children: [
         Form(
           key: _formKey,
@@ -56,7 +56,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: TextFormField(
                     textInputAction: TextInputAction.next,
                     maxLength: 20,
@@ -69,15 +69,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       return null;
                     },
                     controller: _username,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
+                      enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(),
                       ),
                       labelText: LocaleKeys.username.tr(),
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 15,
                         color: Colors.black,
                       ),
@@ -96,17 +96,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     return null;
                   },
                   controller: _email,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                   ),
                   decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(),
                     ),
                     labelText: context.locale.languageCode == "en"
                         ? 'Email'
                         : "البريد الاكتروني",
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 15,
                       color: Colors.black,
                     ),
@@ -120,7 +120,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       floatingActionButton: FloatingActionButton(
         heroTag: 'btn3',
         onPressed: () {},
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       ),
     );
   }

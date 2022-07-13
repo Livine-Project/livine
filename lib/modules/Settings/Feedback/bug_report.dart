@@ -7,7 +7,7 @@ class BugReport extends StatefulWidget {
   const BugReport({Key? key}) : super(key: key);
 
   @override
-  _BugReportState createState() => _BugReportState();
+  State<BugReport> createState() => _BugReportState();
 }
 
 class _BugReportState extends State<BugReport> {
@@ -49,14 +49,14 @@ class _BugReportState extends State<BugReport> {
             padding: const EdgeInsets.only(right:20.0,top:15.0),
             child: GestureDetector(
               onTap: sendReport,
-              child: Text("Submit", style: TextStyle(
+              child: const Text("Submit", style: TextStyle(
                 fontSize: 19.0,
 
               ),),
             ),
           ),
         ],
-        title: Text(
+        title: const Text(
           "Report a bug",
           style: TextStyle(fontSize: 19.0),
         ),
@@ -89,12 +89,12 @@ class _BugReportState extends State<BugReport> {
                 onPressed: (){},
                 style: ButtonStyle(
                   // ignore: use_full_hex_values_for_flutter_colors
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xfff3a0ca3)),
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xfff3a0ca3)),
                   elevation: MaterialStateProperty.all(10.0),
                   fixedSize:
-                      MaterialStateProperty.all<Size>(Size.fromWidth(120.0)),
+                      MaterialStateProperty.all<Size>(const Size.fromWidth(120.0)),
                 ),
-                child: Text("Gallery"),
+                child: const Text("Gallery"),
               ),
             ],
           ),

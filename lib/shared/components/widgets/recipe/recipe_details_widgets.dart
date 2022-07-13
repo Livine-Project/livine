@@ -23,7 +23,7 @@ class IconCard extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: size.height * 0.03),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       height: 120,
       width: 90,
       decoration: BoxDecoration(
@@ -41,7 +41,7 @@ class IconCard extends StatelessWidget {
           FittedBox(
             child: Text(
               name,
-              style: TextStyle(fontSize: 13.0),
+              style: const TextStyle(fontSize: 13.0),
             ),
           )
         ],
@@ -67,13 +67,13 @@ class IngridentsW extends StatelessWidget {
           decoration:
               BoxDecoration(color: theme.primary, shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 15.0,
         ),
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 17.0),
+            style: const TextStyle(fontSize: 17.0),
           ),
         ),
       ],
