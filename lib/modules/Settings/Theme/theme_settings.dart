@@ -28,7 +28,7 @@ class ThemeSettings extends StatelessWidget {
                   children: [
                     Text(
                       LocaleKeys.System_Prefrence.tr(),
-                      style: TextStyle(fontSize: 18.0),
+                      style: const TextStyle(fontSize: 18.0),
                     ),
                     Switch(
                       value: theme.themeMode == ThemeMode.system || false,
@@ -47,10 +47,10 @@ class ThemeSettings extends StatelessWidget {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(Icons.light_mode, color: Colors.yellow),
+                    const Icon(Icons.light_mode, color: Colors.yellow),
                     Text(
                       LocaleKeys.Light_Mode.tr(),
-                      style: TextStyle(fontSize: 18.0),
+                      style: const TextStyle(fontSize: 18.0),
                     ),
                     Switch(
                       value: theme.themeMode == ThemeMode.light || false,
@@ -71,7 +71,7 @@ class ThemeSettings extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Icon(Icons.dark_mode, color: Colors.deepPurpleAccent[400]),
-                  Text(LocaleKeys.Dark_Mode.tr(), style: TextStyle(fontSize: 18.0)),
+                  Text(LocaleKeys.Dark_Mode.tr(), style: const TextStyle(fontSize: 18.0)),
                   Switch(
                     value: Theme.of(context).brightness == Brightness.dark,
                     onChanged: (value) {

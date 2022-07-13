@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +10,9 @@ import 'package:responsive_framework/responsive_value.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import '../../shared/constants/constants.dart';
+import '../../shared/constants/shared_constants.dart';
 import '../auth/login.dart';
 import '../../shared/components/misc/loading.dart';
-import '../../main.dart';
 import '../../shared/styles/lib_color_schemes.g.dart';
 import '../../translations/locale_keys.g.dart';
 import '../../models/user/user.dart';
@@ -24,7 +26,10 @@ class Profile extends ConsumerWidget {
     final userID = ref.watch(userIDProvider);
 
     final userData =
-        ref.watch(userProviderID(testID == null ? userID : testID));
+        ref.watch(userProviderID(testID == 0 ? userID : testID ));
+        log("UserID", error:userID);
+        log("TestID", error:testID);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +38,7 @@ class Profile extends ConsumerWidget {
             : lightColorScheme.secondaryContainer,
         title: Text(
           LocaleKeys.Profile.tr(),
-          style: TextStyle(fontFamily: 'Kine'),
+          style: const TextStyle(fontFamily: 'Kine'),
         ),
         //TODO: ADD EDIT PROFILE
         centerTitle: true,
@@ -57,13 +62,13 @@ class Profile extends ConsumerWidget {
                       );
                     },
                     error: (e, s) {
-                      print('$e\n$s');
-                      return kDebugMode ? Text(e.toString()) : Loading();
+                      log('$e\n$s');
+                      return kDebugMode ? Text(e.toString()) : const Loading();
                     },
-                    loading: () => Loading(),
+                    loading: () => const Loading(),
                   ),
             ResponsiveVisibility(
-              hiddenWhen: [Condition.largerThan(name: MOBILE)],
+              hiddenWhen: const [Condition.largerThan(name: MOBILE)],
               child: ProfileMenu(
                 name: LocaleKeys.Settings.tr().toString(),
                 icon: Icons.settings,
@@ -75,13 +80,11 @@ class Profile extends ConsumerWidget {
               icon: Icons.grass_rounded,
               press: () => context.pushNamed('Content'),
             ),
-            Consumer(builder: (context, ref, child) {
-              return ProfileMenu(
-                name: LocaleKeys.Logout.tr().toString(),
-                icon: Icons.logout,
-                press: () => authHelper.logOut(context, ref, guest),
-              );
-            }),
+            ProfileMenu(
+              name: LocaleKeys.Logout.tr().toString(),
+              icon: Icons.logout,
+              press: () => authHelper.logOut(context, ref, guest),
+            ),
           ],
         ),
       ),
@@ -111,14 +114,14 @@ class ProfileMenu extends StatelessWidget {
               icon,
               size: 20,
             ),
-            SizedBox(
+            const SizedBox(
               width: 20.0,
             ),
             Text(
               name,
-              style: TextStyle(fontFamily: 'Kine', fontSize: 17.0),
+              style: const TextStyle(fontFamily: 'Kine', fontSize: 17.0),
             ),
-            Spacer(),
+            const Spacer(),
             Icon(
               context.locale.languageCode == "en"
                   ? FontAwesomeIcons.chevronRight
@@ -160,7 +163,7 @@ class UserInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10),
                 height: 140,
                 width: 140,
                 decoration: BoxDecoration(
@@ -177,13 +180,13 @@ class UserInfo extends StatelessWidget {
               ),
               Text(
                 name,
-                style: TextStyle(fontSize: 22, fontFamily: 'Kine'),
+                style: const TextStyle(fontSize: 22, fontFamily: 'Kine'),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 email,
-                style:
-                    TextStyle(fontWeight: FontWeight.w300, fontFamily: 'Kine'),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w300, fontFamily: 'Kine'),
               )
             ],
           ),

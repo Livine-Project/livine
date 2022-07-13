@@ -44,7 +44,7 @@ class _PristineState extends State<Pristine> {
                       width: 80.0,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   PristineText(
@@ -53,7 +53,7 @@ class _PristineState extends State<Pristine> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10.0,
             ),
             Padding(
@@ -67,7 +67,7 @@ class _PristineState extends State<Pristine> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50.0,
             ),
             Center(
@@ -83,7 +83,7 @@ class _PristineState extends State<Pristine> {
                               elevation: 2,
                               context: context,
                               builder: (context) {
-                                return Container(
+                                return SizedBox(
                                   height: 150,
                                   child: Column(
                                       mainAxisAlignment:
@@ -91,7 +91,7 @@ class _PristineState extends State<Pristine> {
                                       children: [
                                         Text(
                                           LocaleKeys.gateway.tr(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 24.0,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -111,6 +111,17 @@ class _PristineState extends State<Pristine> {
                                 );
                               });
                         },
+                        style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all<Color>(Colors.black),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            )),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? darkColorScheme.secondaryContainer
+                                    : lightColorScheme.onSecondaryContainer)),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
@@ -122,59 +133,48 @@ class _PristineState extends State<Pristine> {
                                 children: [
                                   Text(
                                     LocaleKeys.three_months.tr(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
                                   Text(
                                     "${LocaleKeys.total_price.tr()} \$10.00",
-                                    style: TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.white),
                                   )
                                 ],
                               ),
                               Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "\$10.00",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
                                   Text(
                                     LocaleKeys.monthly.tr(),
-                                    style: TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 ],
                               )
                             ],
                           ),
-                        ),
-                        style: ButtonStyle(
-                            shadowColor:
-                                MaterialStateProperty.all<Color>(Colors.black),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            )),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? darkColorScheme.secondaryContainer
-                                    : lightColorScheme.onSecondaryContainer))),
+                        )),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Text(
                     LocaleKeys.cancel_sub.tr(),
-                    style: TextStyle(fontSize: 10.0),
+                    style: const TextStyle(fontSize: 10.0),
                   )
                 ],
               ),
@@ -189,15 +189,15 @@ class _PristineState extends State<Pristine> {
 class FeaturesText extends StatelessWidget {
   const FeaturesText({
     Key? key,
-    @required this.name,
+    required this.name,
   }) : super(key: key);
-  final name;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        "$name",
-        style: TextStyle(fontSize: 16.0),
+        name,
+        style: const TextStyle(fontSize: 16.0),
         textAlign: TextAlign.center,
       ),
     );
@@ -207,14 +207,14 @@ class FeaturesText extends StatelessWidget {
 class PristineText extends StatelessWidget {
   const PristineText({
     Key? key,
-    @required this.name,
+    required this.name,
   }) : super(key: key);
-  final name;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Text(
       name,
-      style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
     );
   }
 }

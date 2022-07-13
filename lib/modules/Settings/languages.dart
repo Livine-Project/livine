@@ -12,7 +12,7 @@ class Languages extends StatelessWidget {
       appBar: AppBar(
         title: Text(LocaleKeys.Language.tr()),
       ),
-      body: Column(children: [
+      body: Column(children: const [
         LanguageCode(
           name: "English",
           langCode: "en",
@@ -44,11 +44,11 @@ class LanguageCode extends StatelessWidget {
         await context.setLocale(Locale(langCode));
       },
       child: Padding(
-          padding: EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(25.0),
           child: Text(
             name,
             textAlign: textAlign,
-            style: TextStyle(fontSize: 18.0),
+            style: const TextStyle(fontSize: 18.0),
           )),
     );
   }

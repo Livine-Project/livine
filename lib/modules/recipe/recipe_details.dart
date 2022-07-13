@@ -1,5 +1,7 @@
 // ignore_for_file: type_annotate_public_apis
 
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,9 @@ import '../../shared/components/widgets/recipe/recipe_details_widgets.dart';
 import '../../shared/constants/constants.dart';
 
 class RecipeDetails extends StatefulWidget {
-  RecipeDetails({Key? key, required this.id}) : super(key: key);
+  const RecipeDetails({Key? key, required this.id}) : super(key: key);
 
-  final id;
+  final dynamic id;
 
   @override
   State<RecipeDetails> createState() => _RecipeDetailsState();
@@ -23,7 +25,7 @@ class RecipeDetails extends StatefulWidget {
 class _RecipeDetailsState extends State<RecipeDetails>
     with SliverHelpers<RecipeDetails> {
   int index = 0;
-  final f = new DateFormat('hh:mm');
+  final f = DateFormat('hh:mm');
 
   @override
   void initState() {
@@ -102,10 +104,10 @@ class _RecipeDetailsState extends State<RecipeDetails>
                               color: theme.colorScheme.primaryContainer,
                               image: 'assets/images/recipes/time.png',
                               name: context.locale.languageCode == "en"
-                                  ? data.time_taken.toString() + " min"
-                                  : data.time_taken.toString() + " دقيقة",
+                                  ? "${data.time_taken} min"
+                                  : "${data.time_taken} دقيقة",
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 30.0,
                             ),
                             IconCard(
@@ -115,7 +117,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                               name: changeDiffName(
                                   data.difficulty.toUpperCase(), context),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 30.0,
                             ),
                             IconCard(
@@ -135,7 +137,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                             context.locale.languageCode == "en"
                                 ? "Ingridents :"
                                 : "المكونات",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 21.0, fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -143,7 +145,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                           padding:
                               const EdgeInsets.only(left: 22.0, right: 22.0),
                           child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: data.ingridents.length,
                             itemBuilder: ((context, index) {
@@ -155,7 +157,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                             }),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20.0,
                         ),
                         Padding(
@@ -165,7 +167,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                             context.locale.languageCode == "en"
                                 ? "Directions :"
                                 : "الاتجاهات",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 21.0, fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -173,10 +175,10 @@ class _RecipeDetailsState extends State<RecipeDetails>
                           padding:
                               const EdgeInsets.only(left: 22.0, right: 22.0),
                           child: ListView.separated(
-                              separatorBuilder: (context, index) => SizedBox(
+                              separatorBuilder: (context, index) => const SizedBox(
                                     height: 20.0,
                                   ),
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: data.directions.length,
                               itemBuilder: ((context, index) {
@@ -188,7 +190,7 @@ class _RecipeDetailsState extends State<RecipeDetails>
                                 );
                               })),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20.0,
                         ),
                         Padding(
@@ -225,10 +227,10 @@ class _RecipeDetailsState extends State<RecipeDetails>
           );
         },
         error: (Object error, StackTrace? stackTrace) {
-          print("$error \t $stackTrace");
-          return Text("An Error Occured");
+          log("$error \t $stackTrace");
+          return const Text("An Error Occured");
         },
-        loading: () => Loading(),
+        loading: () => const Loading(),
       );
     });
   }
@@ -251,9 +253,9 @@ class Directions extends StatelessWidget {
       children: [
         Text(
           num.toString(),
-          style: TextStyle(fontSize: 20.0),
+          style: const TextStyle(fontSize: 20.0),
         ),
-        SizedBox(
+        const SizedBox(
           width: 5.0,
         ),
         Container(
@@ -263,13 +265,13 @@ class Directions extends StatelessWidget {
               color: theme.colorScheme.tertiary,
               borderRadius: BorderRadius.circular(20.0)),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10.0,
         ),
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w100),
+            style: const TextStyle(fontSize: 19.0, fontWeight: FontWeight.w100),
           ),
         ),
       ],

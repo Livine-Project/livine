@@ -1,16 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/shared/controllers/cache/cache_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../main.dart';
 import '../../../models/recipe/recipe.dart';
 import '../../../models/user/user.dart';
 import '../../../modules/auth/login.dart';
 import '../../constants/constants.dart';
+import '../../constants/shared_constants.dart';
 import 'auth_classes.dart';
 
 class AuthHelper {
@@ -22,10 +26,11 @@ class AuthHelper {
     required WidgetRef ref,
     required BuildContext context,
     required void Function(void Function()) setState,
+    required bool mounted,
   }) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final url = '$restAPIURL/login/';
+    const url = '$restAPIURL/login/';
     final response = await client.post(
       Uri.parse(url),
       body: {
@@ -34,7 +39,6 @@ class AuthHelper {
       },
     );
     final responseJson = await json.decode(response.body);
-    print(responseJson);
     final errorinLogin = responseJson['non_field_errors'];
     if (response.statusCode == 200) {
       final loginJson = LoginResponse.fromJson(
@@ -51,10 +55,12 @@ class AuthHelper {
             .update((state) => state = userloginID);
 
         ref.read(guestProvider.notifier).update((state) => false);
-
-        GoRouter.of(context).goNamed('OnBoarding');
+        if (!mounted) return;
+        context.goNamed('OnBoarding');
       }
     } else {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(errorinLogin is List ? errorinLogin.first : errorinLogin),
       ));
@@ -82,35 +88,35 @@ class AuthHelper {
     }
   }
 
-  Future<void> validateGuest(WidgetRef ref, BuildContext context) async {
+  Future<void> validateGuest(
+      WidgetRef ref, BuildContext context, bool mounted) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isGuest', true);
 
     await prefs.setBool('username', true);
     ref.read(guestProvider.notifier).update((state) => true);
+    if (!mounted) return;
 
     GoRouter.of(context).goNamed('OnBoarding');
   }
 
   Future<void> logOut(BuildContext context, WidgetRef ref, bool guest) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final url = '$restAPIURL/logout/';
+    const url = '$restAPIURL/logout/';
     final response = await client.post(
       Uri.parse(url),
       headers: {
-        'Authorization': 'Token ${await getToken(ref)}',
+        'Authorization': 'Token ${getToken(ref)}',
       },
     );
 
     final emptyError = response.body.contains("No credentials provided");
     if (response.statusCode == 204) {
-      await prefs.remove('username');
+      CacheHelper.remove('username');
+
       context.go('/login');
     } else if (isGuest || guest || emptyError) {
-      print(true);
+      CacheHelper.remove('isGuest');
 
-      await prefs.remove('isGuest');
       context.go('/login');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -121,24 +127,19 @@ class AuthHelper {
     }
   }
 
-  Object getToken(WidgetRef ref) {
+  String? getToken(WidgetRef ref) {
     final tokenLocale = ref.read(userTokenProvider.notifier).state;
     if (tokenLocale.isNotEmpty) {
-      print("Token is " + tokenLocale);
+      log("Token", name: tokenLocale);
       return tokenLocale;
     } else {
-      return SharedPreferences.getInstance().then((prefs) {
-        print(prefs.getString('token'));
-        return prefs.getString('token');
-      });
+      return CacheHelper.getString("token");
     }
   }
 
   Future<void> getUser(WidgetRef ref) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userID = prefs.getInt('userID');
-    if (userID != null) {
-      ref.read(userIDProvider.notifier).update((state) => userID);
+    if (testID != 0) {
+      ref.read(userIDProvider.notifier).update((state) => testID);
     }
   }
 }

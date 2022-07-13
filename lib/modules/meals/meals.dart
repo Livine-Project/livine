@@ -9,16 +9,16 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
 import '../../shared/components/widgets/recipe/food_category_widget.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/constants/shared_constants.dart';
 import '../../translations/locale_keys.g.dart';
 
 class Patient extends StatefulWidget {
-  static _PatientState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_PatientState>();
+  const Patient({Key? key}) : super(key: key);
+
   @override
-  _PatientState createState() => _PatientState();
+  State<Patient> createState() => _PatientState();
 }
 
 class _PatientState extends State<Patient> {
@@ -52,7 +52,7 @@ class _PatientState extends State<Patient> {
           child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GridView.count(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           crossAxisCount: rh.responsiveCatogeries(context),
           childAspectRatio: 3 / 2,
           mainAxisSpacing: 20,
@@ -73,7 +73,7 @@ class _PatientState extends State<Patient> {
             if (adHelper.isnativeBannerAdLoaded &&
                 testID != 10 &&
                 kReleaseMode) ...[
-              Container(
+              SizedBox(
                 height: adHelper.nativeAdBanner.size.height.toDouble(),
                 width: adHelper.nativeAdBanner.size.width.toDouble(),
                 child: AdWidget(ad: adHelper.nativeAdBanner),

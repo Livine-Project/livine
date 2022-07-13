@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Widget AuthButton({
+Widget authButton({
   required void Function() validateForm,
   required bool isLoading,
   required String text,
@@ -11,7 +11,7 @@ Widget AuthButton({
 }) {
   final theme = Theme.of(context).colorScheme;
   return Padding(
-    padding: EdgeInsets.only(top: 20),
+    padding: const EdgeInsets.only(top: 20),
     child: MaterialButton(
       onPressed: validateForm,
       color: color ?? theme.primaryContainer,
@@ -22,7 +22,7 @@ Widget AuthButton({
         borderRadius: BorderRadius.circular(15),
       ),
       child: isLoading
-          ? CircularProgressIndicator(
+          ? const CircularProgressIndicator(
               color: Colors.white,
             )
           : Text(
@@ -36,7 +36,7 @@ Widget AuthButton({
   );
 }
 
-Widget AuthFormField({
+Widget authFormField({
   required BuildContext context,
   required TextEditingController controller,
   required String text,
@@ -49,7 +49,7 @@ Widget AuthFormField({
       validator: validator,
       controller: controller,
       obscureText: obscureText,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       decoration: InputDecoration(
@@ -65,11 +65,11 @@ Widget AuthFormField({
                 },
               )
             : null,
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(),
         ),
         labelText: text,
-        labelStyle: TextStyle(fontSize: 15),
+        labelStyle: const TextStyle(fontSize: 15),
       ),
     );
 
@@ -116,14 +116,15 @@ class TextwithTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 30),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               firstText,
-              style: TextStyle(fontFamily: 'Kine', fontWeight: FontWeight.w100),
+              style: const TextStyle(
+                  fontFamily: 'Kine', fontWeight: FontWeight.w100),
             ),
             AuthSecondaryButton(
               goTo: goTo,
@@ -136,7 +137,7 @@ class TextwithTextButton extends StatelessWidget {
   }
 }
 
-Widget AuthForm({
+Widget authForm({
   required Key? formKey,
   required BuildContext context,
   required TextEditingController username,
@@ -154,8 +155,8 @@ Widget AuthForm({
       child: Column(
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-              child: AuthFormField(
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+              child: authFormField(
                 context: context,
                 controller: username,
                 text: usernameText,
@@ -163,7 +164,7 @@ Widget AuthForm({
                 validator: userValidator,
                 obscureText: false,
               )),
-          AuthFormField(
+          authFormField(
               context: context,
               obscureText: obscureText,
               isPassword: true,

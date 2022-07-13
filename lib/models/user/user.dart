@@ -9,7 +9,7 @@ import '../recipe/recipe.dart';
 part 'user.freezed.dart';
 part 'user.g.dart';
 
-final userTypeProvider = StateProvider<String>((ref) => 'Heart');
+final userTypeProvider = StateProvider<String>((ref) => '');
 
 final guestProvider = StateProvider<bool>((ref) => false);
 
@@ -26,6 +26,5 @@ final FutureProviderFamily<UserData, int> userProviderID =
     FutureProvider.family<UserData, int>((ref, id) async {
   final url = '$restAPIURL/user/$id?format=json';
   final response = await client.get(Uri.parse(url));
-  print(response.body);
   return UserData.fromJson(json.decode(response.body));
 });

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,14 +28,12 @@ final FutureProviderFamily<Recipe, int> recipesProviderID =
 
 final FutureProviderFamily recieveRecipesType =
     FutureProvider.family((ref, type) async {
-  final url =
-      '$restAPIURL/recipeType/$type?format=json';
+  final url = '$restAPIURL/recipeType/$type?format=json';
   final response = await client.get(Uri.parse(url));
   final responseDe = utf8.decode(response.bodyBytes);
   final responseJson = json.decode(responseDe);
 
-
-  return responseJson.map((job) => new Recipe.fromJson(job)).toList();
+  return responseJson.map((job) => Recipe.fromJson(job)).toList();
 });
 
 // Freezed Recipe Class

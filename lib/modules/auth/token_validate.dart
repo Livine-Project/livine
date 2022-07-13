@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,19 +24,18 @@ class _TokenValidateState extends State<TokenValidate> {
   bool isLoading = false;
 
   void validateToken() async {
-    final url = '$restAPIURL/password_reset/validate_token/';
+    const url = '$restAPIURL/password_reset/validate_token/';
     final response =
         await http.post(Uri.parse(url), body: {'token': _token.text});
 
     if (response.statusCode == 200) {
-      print(response);
-
       setState(() {
         isLoading = false;
       });
+      if (!mounted) return;
       context.go("/confirm_pass", extra: _token.text);
     } else {
-      print("Error");
+      log("Error");
     }
   }
 
@@ -79,23 +80,22 @@ class _TokenValidateState extends State<TokenValidate> {
                         return null;
                       },
                       controller: _token,
-                      
                       decoration: InputDecoration(
                         helperText: context.locale.languageCode == " en "
                             ? "Enter the token that has been sent to your email"
                             : " أدخل الرمز المميز الذي تم إرساله إلى بريدك الإلكتروني الخاص بك",
-                       border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
                         labelText: context.locale.languageCode == "en"
                             ? 'Token'
                             : "الرمز",
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    AuthButton(
+                    authButton(
                         validateForm: validateTokenForm,
                         isLoading: isLoading,
                         text: LocaleKeys.validate_token.tr(),

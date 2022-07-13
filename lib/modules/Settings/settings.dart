@@ -1,5 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_typing_uninitialized_variables, type_annotate_public_apis
 
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,8 +11,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../translations/locale_keys.g.dart';
 
 class SettingsWidget extends StatefulWidget {
+  const SettingsWidget({Key? key}) : super(key: key);
+
   @override
-  _SettingsWidgetState createState() => _SettingsWidgetState();
+  State<SettingsWidget> createState() => _SettingsWidgetState();
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -24,7 +28,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     try {
       await launchUrl(Uri.parse(emailLaunchUri.toString()));
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 
@@ -45,7 +49,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   SettingsGroup(
                     text: LocaleKeys.General.tr(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Column(
@@ -60,7 +64,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           icon: Icons.language,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15.0,
                       ),
                       InkWell(
@@ -73,12 +77,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
-                  Divider(),
+                  const Divider(),
                   SettingsGroup(text: LocaleKeys.Theme.tr()),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   InkWell(
@@ -89,12 +93,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       icon: Icons.dark_mode,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
-                  Divider(),
+                  const Divider(),
                   SettingsGroup(text: LocaleKeys.Feedback.tr()),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   InkWell(
@@ -105,12 +109,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       icon: Icons.bug_report,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
-                  Divider(),
+                  const Divider(),
                   SettingsGroup(text: LocaleKeys.Misc.tr()),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   InkWell(
@@ -121,7 +125,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       icon: FontAwesomeIcons.fileLines,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   InkWell(
@@ -132,17 +136,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       icon: Icons.privacy_tip,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
-                  Divider(),
+                  const Divider(),
                   SettingsGroup(text: LocaleKeys.Info.tr()),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   SettingsTile(
                     text: LocaleKeys.Version.tr(),
-                    subtitle: '6.8.0',
+                    subtitle: '7.0.0',
                     icon: Icons.info,
                   ),
                 ],
@@ -180,7 +184,7 @@ class SettingsTile extends StatelessWidget {
           size: 25,
           color: iconColor,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10.0,
         ),
         Column(
@@ -188,7 +192,7 @@ class SettingsTile extends StatelessWidget {
           children: [
             Text(
               '$text',
-              style: TextStyle(fontSize: 15.0),
+              style: const TextStyle(fontSize: 15.0),
             ),
             Text(
               '$subtitle',
@@ -217,7 +221,7 @@ class SettingsGroup extends StatelessWidget {
       //   color: Colors.blueAccent,
       //   letterSpacing: 3,
       // ),
-      style: TextStyle(fontSize: 17.0),
+      style: const TextStyle(fontSize: 17.0),
     );
   }
 }

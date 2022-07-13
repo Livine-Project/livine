@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:livine/shared/controllers/cache/cache_helper.dart';
 
 import '../../constants/constants.dart';
 import '../../styles/colors.dart';
@@ -22,7 +23,7 @@ class OnBoarding extends StatelessWidget {
       "We assure that you gonna have a Flexible Lifestyle",
       "You can change your content for your health situation "
     ];
-    final List heading_in_arabic = [
+    final List headingInArabic = [
       'مرحبا بكم في ليفين',
       "لدينا الكثير من الخيارات الصحية",
       "نؤكد أنه سيكون لديك أسلوب حياة مرن",
@@ -39,10 +40,18 @@ class OnBoarding extends StatelessWidget {
     return Scaffold(
       body: ConcentricPageView(
         curve: Curves.easeInOut,
-        duration: Duration(milliseconds: 1200),
-        colors: <Color>[Colors.white, primaryColor, thirdColor, primaryColor],
+        duration: const Duration(milliseconds: 1200),
+        colors: const <Color>[
+          Colors.white,
+          primaryColor,
+          thirdColor,
+          primaryColor
+        ],
         radius: screenWidth * 0.1,
-        onFinish: () => context.goNamed('Content'),
+        onFinish: () {
+          context.go('/choose_content');
+          CacheHelper.setBool("isBoarded", true);
+        },
         nextButtonBuilder: (context) => Padding(
           padding: const EdgeInsets.only(left: 3), // visual center
           child: Icon(
@@ -54,7 +63,7 @@ class OnBoarding extends StatelessWidget {
           return IntroScreens(
               text: context.locale.languageCode == "en"
                   ? heading[index]
-                  : heading_in_arabic[index],
+                  : headingInArabic[index],
               url: 'assets/images/onboarding/${images[index]}.svg',
               textColor: textColors[index]);
         },
@@ -86,7 +95,7 @@ class IntroScreens extends StatelessWidget {
               url,
               height: 250.0,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             Text(

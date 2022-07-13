@@ -38,9 +38,9 @@ class ResponsiveHelper {
     }
 
     if (ResponsiveWrapper.of(context).isMobile) {
-      if (ResponsiveWrapper.of(context).orientation == Orientation.portrait)
+      if (ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
         return 1;
-      else {
+      } else {
         return 2;
       }
     }
@@ -58,9 +58,9 @@ class ResponsiveHelper {
     }
 
     if (ResponsiveWrapper.of(context).isMobile) {
-      if (ResponsiveWrapper.of(context).orientation == Orientation.portrait)
+      if (ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
         return 1;
-      else {
+      } else {
         return 2;
       }
     }

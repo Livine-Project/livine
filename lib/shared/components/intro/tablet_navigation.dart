@@ -37,25 +37,25 @@ class _TabletNavigationState extends State<TabletNavigation> {
                     isExtended = !isExtended;
                   });
                 },
-                icon: Icon(FontAwesomeIcons.bars),
+                icon: const Icon(FontAwesomeIcons.bars),
               ),
               minExtendedWidth: 200,
               destinations: <NavigationRailDestination>[
                 NavigationRailDestination(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   icon: Icon(Icons.home,
                       size: MediaQuery.of(context).size.width / 70),
                   label: context.locale.languageCode == "en"
-                      ? Text("Home")
-                      : Text("الرئيسية"),
+                      ? const Text("Home")
+                      : const Text("الرئيسية"),
                 ),
                 NavigationRailDestination(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   icon: Icon(Icons.fastfood_rounded,
                       size: MediaQuery.of(context).size.width / 70),
                   label: context.locale.languageCode == "en"
-                      ? Text("Meals")
-                      : Text("الوجبات"),
+                      ? const Text("Meals")
+                      : const Text("الوجبات"),
                 ),
                 // NavigationRailDestination(
                 //     padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -64,19 +64,19 @@ class _TabletNavigationState extends State<TabletNavigation> {
                 //         ? Text("Pristine")
                 //         : Text("الاصلي")),
                 NavigationRailDestination(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
                     icon: Icon(Icons.person,
                         size: MediaQuery.of(context).size.width / 70),
                     label: context.locale.languageCode == "en"
-                        ? Text("Profile")
-                        : Text("الحساب الشخصي")),
+                        ? const Text("Profile")
+                        : const Text("الحساب الشخصي")),
                 NavigationRailDestination(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
                     icon: Icon(Icons.settings,
                         size: MediaQuery.of(context).size.width / 70),
                     label: context.locale.languageCode == "en"
-                        ? Text("Settings")
-                        : Text("الاعدادات")),
+                        ? const Text("Settings")
+                        : const Text("الاعدادات")),
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
@@ -99,13 +99,13 @@ class LargeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isWindows)
+    if (Platform.isWindows) {
       return Expanded(
         child: Stack(
-          children: [tabletChildren[_selectedIndex], TitleBar()],
+          children: [tabletChildren[_selectedIndex], const TitleBar()],
         ),
       );
-    else {
+    } else {
       return Expanded(
         child: tabletChildren[_selectedIndex],
       );

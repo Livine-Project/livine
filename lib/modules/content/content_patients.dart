@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/shared/controllers/cache/cache_helper.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user/user.dart';
 import '../../shared/constants/constants.dart';
@@ -28,7 +30,7 @@ class _ContentPatientState extends State<ContentPatient> {
         appBar: AppBar(
           title: Text(
             LocaleKeys.Iam_a.tr(),
-            style: TextStyle(fontFamily: 'Kine'),
+            style: const TextStyle(fontFamily: 'Kine'),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -42,7 +44,7 @@ class _ContentPatientState extends State<ContentPatient> {
                     data: (data) {
                       return Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: MediaQuery.of(context).size.height * 0.6,
                             child: Center(
                               child: GridView.builder(
@@ -71,9 +73,8 @@ class _ContentPatientState extends State<ContentPatient> {
                                               width: 150),
                                           Text(
                                             context.locale.languageCode == 'en'
-                                                ? data[index].type + " Patient"
-                                                : "مريض " +
-                                                    data[index].type_in_arabic,
+                                                ? "${data[index].type} Patient"
+                                                : "مريض ${data[index].type_in_arabic}",
                                             style: TextStyle(
                                                 color: checkedIndex == index
                                                     ? theme.onTertiary
@@ -88,14 +89,13 @@ class _ContentPatientState extends State<ContentPatient> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () async {
-                              final SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setString(
-                                  "UserType", data[checkedIndex].type);
+                            onTap: () {
+                              CacheHelper.setString(
+                                  'userType', data[checkedIndex].type);
                               ref
                                   .watch(userTypeProvider.notifier)
                                   .update((state) => data[checkedIndex].type);
+                              if (!mounted) return;
                               context.go('/navigate');
                             },
                             child: Container(
@@ -103,9 +103,9 @@ class _ContentPatientState extends State<ContentPatient> {
                               height: 50,
                               decoration: BoxDecoration(
                                   color: theme.primaryContainer,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: Icon(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10))),
+                              child: const Icon(
                                 Icons.navigate_next_sharp,
                               ),
                             ),
@@ -114,10 +114,10 @@ class _ContentPatientState extends State<ContentPatient> {
                       );
                     },
                     error: (e, s) {
-                      print('$e\n$s');
-                      return kDebugMode ? Text(e.toString()) : Loading();
+                      log('$e\n$s');
+                      return kDebugMode ? Text(e.toString()) : const Loading();
                     },
-                    loading: () => Loading());
+                    loading: () => const Loading());
               }),
             ),
           ],

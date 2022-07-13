@@ -1,6 +1,7 @@
-// ignore_for_file: always_declare_return_types, type_annotate_public_apis
+// ignore_for_file: always_declare_return_types, type_annotate_public_apis, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
@@ -19,7 +20,7 @@ class Register extends ConsumerStatefulWidget {
   const Register({Key? key}) : super(key: key);
 
   @override
-  _RegisterState createState() => _RegisterState();
+  ConsumerState<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends ConsumerState<Register> {
@@ -30,7 +31,7 @@ class _RegisterState extends ConsumerState<Register> {
   var errorinEmail;
   var errorinUser;
   Future<void> registertoDjango() async {
-    final url = '$restAPIURL/register/';
+    const url = '$restAPIURL/register/';
     final response = await client.post(
       Uri.parse(url),
       body: {
@@ -46,9 +47,10 @@ class _RegisterState extends ConsumerState<Register> {
 
     errorinUser = responseJson['username'];
 
-    print(errorinEmail);
+    log(errorinEmail);
 
     if (response.statusCode == 200) {
+      if (!mounted) return;
       GoRouter.of(context).go('/Login');
     } else {
       setState(() {
@@ -85,7 +87,7 @@ class _RegisterState extends ConsumerState<Register> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => context.go("/login"),
         ),
       ),
@@ -96,10 +98,10 @@ class _RegisterState extends ConsumerState<Register> {
           color: Colors.transparent,
         ),
         child: Padding(
-          padding: EdgeInsets.all(23),
+          padding: const EdgeInsets.all(23),
           child: ListView(
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               SingleChildScrollView(
@@ -108,7 +110,7 @@ class _RegisterState extends ConsumerState<Register> {
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                         child: TextFormField(
                           textInputAction: TextInputAction.next,
                           maxLength: 20,
@@ -126,18 +128,18 @@ class _RegisterState extends ConsumerState<Register> {
                                 ? errorinUser.first
                                 : errorinUser,
                             errorMaxLines: 2,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))),
                             labelText: LocaleKeys.username.tr(),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               fontSize: 15,
                             ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                         child: TextFormField(
                           textInputAction: TextInputAction.next,
                           validator: (e) {
@@ -152,13 +154,13 @@ class _RegisterState extends ConsumerState<Register> {
                           controller: _email,
                           decoration: InputDecoration(
                             errorText: errorinEmail,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))),
                             labelText: context.locale.languageCode == "en"
                                 ? 'Email'
                                 : "البريد الاكتروني",
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               fontSize: 15,
                             ),
                           ),
@@ -195,33 +197,33 @@ class _RegisterState extends ConsumerState<Register> {
                               });
                             },
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0))),
                           labelText: LocaleKeys.password.tr(),
-                          labelStyle: TextStyle(fontSize: 15),
+                          labelStyle: const TextStyle(fontSize: 15),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              AuthButton(
+              authButton(
                   validateForm: validateForm,
                   isLoading: isLoading,
                   text: LocaleKeys.Sign_up.tr(),
                   context: context),
               Padding(
-                padding: EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 30),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         LocaleKeys.have_an_account.tr(),
-                        style: TextStyle(fontFamily: 'Kine'),
+                        style: const TextStyle(fontFamily: 'Kine'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
@@ -238,7 +240,7 @@ class _RegisterState extends ConsumerState<Register> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               RichText(
@@ -249,9 +251,9 @@ class _RegisterState extends ConsumerState<Register> {
                         text: LocaleKeys.terms1.tr(),
                         style: TextStyle(
                             fontSize: 15.0, color: theme.inverseSurface)),
-                    WidgetSpan(
+                    const WidgetSpan(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
+                        padding: EdgeInsets.only(left: 10.0),
                       ),
                     ),
                     TextSpan(

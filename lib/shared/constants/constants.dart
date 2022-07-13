@@ -1,10 +1,13 @@
+import 'package:livine/shared/controllers/notification_control/notifications_control.dart';
+
 import '../../models/ads/ads_help.dart';
 import '../controllers/auth/auth_helper.dart';
+import '../controllers/hydration_control/hydration_control.dart';
 import '../controllers/model_tflite/image_controller.dart';
 import '../controllers/model_tflite/model_controller.dart';
 import '../controllers/responsive/responsive_controller.dart';
 
-ResponsiveHelper rh = new ResponsiveHelper();
+ResponsiveHelper rh = ResponsiveHelper();
 
 final adHelper = AdHelper();
 
@@ -14,6 +17,14 @@ final imageController = ImageController();
 
 final authHelper = AuthHelper();
 
-final restAPIURL = "https://livine.pythonanywhere.com/api";
+final notificationControl = NotificationControl();
 
-final restAPIMedia = "https://livine.pythonanywhere.com";
+final hydrationControl = HydrationControl();
+
+const restAPIURL = "https://livine.pythonanywhere.com/api";
+
+const restAPIMedia = "https://livine.pythonanywhere.com";
+
+
+
+
