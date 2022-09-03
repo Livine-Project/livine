@@ -1,5 +1,5 @@
 {
-  "Welcome": "اهلا بك",
+  "Welcome": "اهلا بك،",
   "Settings": "الاعدادات",
   "Logout": "تسجيل الخروج",
   "Profile": "الحساب الشخصي",
@@ -75,5 +75,9 @@
   "validate_token": "التحقق من صحة الرمز",
   "Reset_pass": "إعادة تعيين كلمة المرور",
   "pass_confirm": "تأكيد كلمة المرور",
-  "per_situation": "حالة معينة"
+  "per_situation": "حالة معينة",
+  "Favorites": "المفضلة",
+  "delete_account": "حذف الحساب",
+  "account": "الحساب",
+  "update": "تحديث"
 }
