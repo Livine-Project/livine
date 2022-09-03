@@ -1,5 +1,5 @@
 {
-  "Welcome": "Welcome",
+  "Welcome": "Welcome,",
   "Settings": "Settings",
   "Logout": "Logout",
   "Profile": "Profile",
@@ -44,7 +44,7 @@
   "Apple_slices_with_peanut": "Apple slices with peanut",
   "Cottage_cheese": "Cottage cheese",
   "Celery_sticks_with_Cheese": "Celery sticks with Cheese",
-  "System_Prefrence": "System Prefrence",
+  "System_Prefrence": "System preference",
   "Light_Mode": "Light Mode",
   "Dark_Mode": "Dark Mode",
   "life_pristine": "Make your life Pristine",
@@ -75,5 +75,10 @@
   "validate_token": "Validate Code",
   "Reset_pass": "Reset password",
   "pass_confirm": "Password Confirmation",
-  "per_situation": "Per Situation"
+  "per_situation": "Per Situation",
+  "Favorites": "Favorites",
+  "delete_account": "Delete account",
+  "account": "Account",
+  "update": "Update"
+
 }

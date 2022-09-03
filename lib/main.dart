@@ -4,37 +4,34 @@
 
 import 'dart:io';
 
-import 'package:auto_updater/auto_updater.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'modules/app.dart';
+import 'src/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'modules/Settings/Theme/theme.dart';
-
-import 'shared/constants/constants.dart';
-import 'shared/controllers/cache/cache_helper.dart';
-import 'translations/codegen_loader.g.dart';
-
-var connectivityResult;
+import 'src/constants/constants.dart';
+import 'src/shared/cache/cache_helper.dart';
+import 'src/features/get_recipes/application/vegan_service.dart';
+import 'src/translations/codegen_loader.g.dart';
+import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (!Platform.isWindows) {
+  if (Platform.isAndroid) {
     MobileAds.instance.initialize();
+    notificationControl.init();
+
   }
 
   await EasyLocalization.ensureInitialized();
 
   await CacheHelper.init();
 
-  notificationControl.init();
 
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
@@ -54,46 +51,37 @@ Future<void> main() async {
       await windowManager.focus();
     });
 
-    String feedURL = '$restAPIMedia/media/appcast.xml';
 
-    await autoUpdater.setFeedURL(feedURL);
-    await autoUpdater.checkForUpdates();
+   
   }
+  final container = ProviderContainer(
+    overrides: [
+      sharedPrefProvider.overrideWithValue(
+        await SharedPreferences.getInstance(),
+      ),
+    ],
+  );
+  final isVegan = await container.read(veganServiceProvider).getIsVegan();
+  container.read(isVeganProvider.state).state = isVegan;
 
-  connectivityResult = await Connectivity().checkConnectivity();
-
-  if (connectivityResult == ConnectivityResult.mobile ||
-      connectivityResult == ConnectivityResult.wifi ||
-      connectivityResult == ConnectivityResult.ethernet) {
-    runApp(
-      ProviderScope(
-        overrides: [
-          sharedPrefProvider.overrideWithValue(
-            await SharedPreferences.getInstance(),
-          ),
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: DevicePreview(
+        enabled: false,
+        tools: [
+          ...DevicePreview.defaultTools,
         ],
-        child: EasyLocalization(
+        builder: (context) => EasyLocalization(
             supportedLocales: const [Locale('en'), Locale('ar')],
             path: 'assets/translations',
             fallbackLocale: const Locale('en'),
             assetLoader: const CodegenLoader(),
             child: const MyApp()),
       ),
-    );
-  } else {
-    runApp(
-      ProviderScope(
-        overrides: [
-          sharedPrefProvider.overrideWithValue(
-            await SharedPreferences.getInstance(),
-          ),
-        ],
-        child: const NoConnection(),
-      ),
-    );
-  }
+    ),
+  );
 }
 
 final sharedPrefProvider =
     Provider<SharedPreferences>((ref) => throw UnimplementedError());
-final themeProvider = ChangeNotifierProvider((ref) => ThemeNotifer(ref));
