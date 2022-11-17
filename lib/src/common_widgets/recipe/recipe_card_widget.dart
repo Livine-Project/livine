@@ -40,7 +40,7 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Stack(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.bottomCenter,
                 children: [
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,7 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                         ),
                       ]),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
+                    padding: const EdgeInsets.only(bottom: 10.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: BackdropFilter(

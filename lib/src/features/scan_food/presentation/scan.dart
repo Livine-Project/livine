@@ -57,6 +57,10 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
         ),
         Column(
           children: [
+            Text(
+              modelTF.checkHealth(setState, controller),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -106,10 +110,6 @@ class _ScanState extends State<Scan> with TickerProviderStateMixin {
             ),
             const SizedBox(
               height: 20,
-            ),
-            Text(
-              modelTF.checkHealth(setState, controller),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Lottie.asset("assets/images/loading/emoji_anim.json",
                 controller: controller, width: 200),

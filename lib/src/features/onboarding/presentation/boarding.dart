@@ -40,7 +40,6 @@ class OnBoarding extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: ConcentricPageView(
-        curve: Curves.easeInOut,
         duration: const Duration(milliseconds: 1200),
         colors: const <Color>[
           Colors.white,

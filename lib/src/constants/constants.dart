@@ -23,3 +23,4 @@ const restAPIMedia = "https://livine2.pythonanywhere.com";
 ColorScheme getColorScheme(BuildContext context) {
   return Theme.of(context).colorScheme;
 }
+

@@ -61,7 +61,7 @@ class ModelTFLite {
       setState(() {
         isVisible = false;
       });
-      return 'Click to scan';
+      return 'Choose';
     }
   }
 

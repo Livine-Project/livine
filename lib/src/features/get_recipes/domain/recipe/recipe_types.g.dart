@@ -11,6 +11,7 @@ _$_RecipeTypes _$$_RecipeTypesFromJson(Map<String, dynamic> json) =>
       json['id'] as int,
       json['name'] as String,
       json['name_in_arabic'] as String,
+      json['imageURL'] as String,
     );
 
 Map<String, dynamic> _$$_RecipeTypesToJson(_$_RecipeTypes instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_RecipeTypesToJson(_$_RecipeTypes instance) =>
       'id': instance.id,
       'name': instance.name,
       'name_in_arabic': instance.name_in_arabic,
+      'imageURL': instance.imageURL,
     };

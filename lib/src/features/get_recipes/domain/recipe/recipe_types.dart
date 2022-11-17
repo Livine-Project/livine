@@ -11,6 +11,7 @@ class RecipeTypes with _$RecipeTypes {
     int id,
     String name,
     String name_in_arabic,
+    String imageURL,
   ) = _RecipeTypes;
   factory RecipeTypes.fromJson(Map<String, dynamic> json) =>
       _$RecipeTypesFromJson(json);

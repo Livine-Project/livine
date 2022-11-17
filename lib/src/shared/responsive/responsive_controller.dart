@@ -6,16 +6,17 @@ class ResponsiveHelper {
 
   double deviceHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
-  
+
   bool largerThanMobile(BuildContext context) =>
       ResponsiveWrapper.of(context).isLargerThan(MOBILE);
-  
+
   bool isMobile(BuildContext context) => ResponsiveWrapper.of(context).isMobile;
 
-  bool deviceLandScape(BuildContext context) => ResponsiveWrapper.of(context).orientation == Orientation.landscape;
+  bool deviceLandScape(BuildContext context) =>
+      ResponsiveWrapper.of(context).orientation == Orientation.landscape;
 
-  bool devicePortrait(BuildContext context) => ResponsiveWrapper.of(context).orientation == Orientation.portrait;
-
+  bool devicePortrait(BuildContext context) =>
+      ResponsiveWrapper.of(context).orientation == Orientation.portrait;
 
   int responsiveRecipes(BuildContext context) {
     if (ResponsiveWrapper.of(context).isTablet &&
@@ -28,6 +29,8 @@ class ResponsiveHelper {
     } else if (ResponsiveWrapper.of(context).isMobile &&
         ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
       return 2;
+    } else if (ResponsiveWrapper.of(context).isDesktop) {
+      return 5;
     } else if (ResponsiveWrapper.of(context).orientation ==
         Orientation.landscape) {
       return 4;
@@ -63,7 +66,7 @@ class ResponsiveHelper {
     } else if (ResponsiveWrapper.of(context).orientation ==
             Orientation.landscape &&
         ResponsiveWrapper.of(context).isDesktop) {
-      return 3;
+      return 6;
     }
 
     if (ResponsiveWrapper.of(context).isMobile) {
@@ -73,6 +76,6 @@ class ResponsiveHelper {
         return 2;
       }
     }
-    return 1;
+    return 2;
   }
 }
