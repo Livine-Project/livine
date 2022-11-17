@@ -1,6 +1,7 @@
 // ignore_for_file: type_annotate_public_apis
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:livine/src/shared/cache/cache_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../auth/favorites/data/favorites.dart';
 import '../../loading/loading.dart';
@@ -225,12 +227,25 @@ class _RecipeDetailsState extends State<RecipeDetails>
                                   width: 200.0,
                                   height: 60.0,
                                   child: OutlinedButton(
-                                      onPressed: () => context.go(
-                                          "/recipe_video",
-                                          extra: context.locale.languageCode ==
-                                                  "en"
-                                              ? data.video
-                                              : data.video_in_arabic),
+                                      onPressed: () async {
+                                        if (Platform.isAndroid ||
+                                            Platform.isIOS) {
+                                          context.go("/recipe_video",
+                                              extra:
+                                                  context.locale.languageCode ==
+                                                          "en"
+                                                      ? data.video
+                                                      : data.video_in_arabic);
+                                        } else {
+                                          if (!await launchUrl(Uri.parse(
+                                              context.locale.languageCode ==
+                                                      "en"
+                                                  ? data.video
+                                                  : data.video_in_arabic))) {
+                                            throw 'Could not launch at recipe page';
+                                          }
+                                        }
+                                      },
                                       child: Text(
                                           context.locale.languageCode == "en"
                                               ? "Video"

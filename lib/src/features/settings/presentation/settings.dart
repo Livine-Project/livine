@@ -138,20 +138,41 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     height: 10.0,
                   ),
                   const Divider(),
-                  SettingsGroup(text: LocaleKeys.Info.tr()),
                   const SizedBox(
                     height: 10.0,
                   ),
-                  SettingsTile(
-                    text: LocaleKeys.Version.tr(),
-                    subtitle: '8.0.5',
-                    icon: Iconsax.info_circle,
-                  ),
+                  AboutApp(),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AboutApp extends StatelessWidget {
+  const AboutApp({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => showAboutDialog(
+          context: context,
+          applicationName: context.locale.languageCode =="en" ? "Livine" : "ليفين",
+          applicationVersion: "8.5.0",
+          applicationLegalese: "© 2021 Livine",
+          applicationIcon: Image.asset(
+            "assets/images/icon/app_icon.png",
+            width: 50,
+          )),
+      child: SettingsTile(
+        text: context.locale.languageCode =="en" ? "About Livine" : "عن ليفين",
+        subtitle: '',
+        icon: Iconsax.info_circle,
       ),
     );
   }
@@ -190,7 +211,9 @@ class SettingsTile extends StatelessWidget {
           children: [
             Text(
               '$text',
-              style: const TextStyle(fontSize: 15.0,),
+              style: const TextStyle(
+                fontSize: 15.0,
+              ),
             ),
             Text(
               '$subtitle',

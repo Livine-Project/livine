@@ -14,7 +14,6 @@ class VeganService {
   const VeganService(this.ref);
 
   Future<bool> getIsVegan() async {
-    await Future.delayed(const Duration(seconds: 1));
 
     final userData = await ref.watch(userDataProvider.future);
 
@@ -22,7 +21,6 @@ class VeganService {
   }
 
   Future updateIsVegan(bool value) async {
-    await Future.delayed(const Duration(seconds: 1));
     const url = '$restAPIURL/user/update/';
     final token = ref.read(authHelperProvider).getToken();
     return await client.post(

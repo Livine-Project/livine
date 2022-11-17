@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:go_router/go_router.dart';
 
 class NotificationControl {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -16,11 +14,7 @@ class NotificationControl {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
- 
-
   void cancel(int id) {
     flutterLocalNotificationsPlugin.cancel(id);
   }
-
-
 }

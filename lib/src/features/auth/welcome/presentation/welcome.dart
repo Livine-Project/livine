@@ -29,7 +29,7 @@ class Welcome extends StatelessWidget {
                   child: SvgPicture.asset(
                     'assets/images/welcome/welcome_light.svg',
                     height: rh.deviceLandScape(context)
-                        ? rh.deviceWidth(context) * 0.35
+                        ? rh.deviceWidth(context) * 0.4
                         : rh.deviceHeight(context) * 0.45,
                   ),
                 ),
@@ -38,7 +38,7 @@ class Welcome extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: rh.largerThanMobile(context)
-                          ? 30
+                          ? rh.deviceHeight(context) * 0.25
                           : rh.deviceHeight(context) * 0.03,
                       horizontal: 10),
                   child: Column(

@@ -15,21 +15,22 @@ Client client = http.Client();
 class Recipe with _$Recipe {
   const factory Recipe(
     int id,
+    List ingridents,
+    List ingridents_in_arabic,
+    List directions,
+    String patient,
+    String patient_in_arabic,
+    List directions_in_arabic,
     String name,
     String name_in_arabic,
     String imageURL,
-    String patient,
-    String patient_in_arabic,
-    String video,
-    String video_in_arabic,
-    List ingridents,
-    List ingridents_in_arabic,
     String diff,
     bool isVegetarian,
     int time_taken,
     int calories,
-    List directions,
-    List directions_in_arabic,
+    String video,
+    String video_in_arabic,
+    String created_at
   ) = _Recipe;
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 }

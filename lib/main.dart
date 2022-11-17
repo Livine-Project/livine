@@ -1,12 +1,10 @@
-// import 'package:app/auth/register.dart';
-// import 'package:app/auth/reset_password.dart';
-// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, type_annotate_public_apis
-
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:livine/src/shared/error_django/error_django.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'src/app.dart';
@@ -21,17 +19,15 @@ import 'src/translations/codegen_loader.g.dart';
 import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async {
+  FlutterError.onError = (details) {
+    if (kReleaseMode) {
+      errorToDjango(details);
+    } else {
+      FlutterError.dumpErrorToConsole(details);
+    }
+  };
+
   WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isAndroid) {
-    MobileAds.instance.initialize();
-    notificationControl.init();
-
-  }
-
-  await EasyLocalization.ensureInitialized();
-
-  await CacheHelper.init();
-
 
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
@@ -50,9 +46,6 @@ Future<void> main() async {
 
       await windowManager.focus();
     });
-
-
-   
   }
   final container = ProviderContainer(
     overrides: [
@@ -61,8 +54,6 @@ Future<void> main() async {
       ),
     ],
   );
-  final isVegan = await container.read(veganServiceProvider).getIsVegan();
-  container.read(isVeganProvider.state).state = isVegan;
 
   runApp(
     UncontrolledProviderScope(
@@ -81,6 +72,15 @@ Future<void> main() async {
       ),
     ),
   );
+  await EasyLocalization.ensureInitialized();
+  await CacheHelper.init();
+
+  final isVegan = await container.read(veganServiceProvider).getIsVegan();
+  container.read(isVeganProvider.state).state = isVegan;
+  if (Platform.isAndroid) {
+    MobileAds.instance.initialize();
+    notificationControl.init();
+  }
 }
 
 final sharedPrefProvider =

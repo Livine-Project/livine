@@ -9,7 +9,7 @@ import '../../../../constants/constants.dart';
 import '../../../get_recipes/domain/recipe/recipe.dart';
 import '../domain/favorites.dart';
 
-final FutureProvider getFavoritesProvider =
+final FutureProvider<FavoritesData> getFavoritesProvider =
     FutureProvider<FavoritesData>((ref) async {
   final url = '$restAPIURL/user/favorite/';
   final response = await client.get(

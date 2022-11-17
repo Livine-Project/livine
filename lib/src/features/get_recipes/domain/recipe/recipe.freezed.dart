@@ -21,21 +21,22 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Recipe {
   int get id => throw _privateConstructorUsedError;
+  List<dynamic> get ingridents => throw _privateConstructorUsedError;
+  List<dynamic> get ingridents_in_arabic => throw _privateConstructorUsedError;
+  List<dynamic> get directions => throw _privateConstructorUsedError;
+  String get patient => throw _privateConstructorUsedError;
+  String get patient_in_arabic => throw _privateConstructorUsedError;
+  List<dynamic> get directions_in_arabic => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get name_in_arabic => throw _privateConstructorUsedError;
   String get imageURL => throw _privateConstructorUsedError;
-  String get patient => throw _privateConstructorUsedError;
-  String get patient_in_arabic => throw _privateConstructorUsedError;
-  String get video => throw _privateConstructorUsedError;
-  String get video_in_arabic => throw _privateConstructorUsedError;
-  List<dynamic> get ingridents => throw _privateConstructorUsedError;
-  List<dynamic> get ingridents_in_arabic => throw _privateConstructorUsedError;
   String get diff => throw _privateConstructorUsedError;
   bool get isVegetarian => throw _privateConstructorUsedError;
   int get time_taken => throw _privateConstructorUsedError;
   int get calories => throw _privateConstructorUsedError;
-  List<dynamic> get directions => throw _privateConstructorUsedError;
-  List<dynamic> get directions_in_arabic => throw _privateConstructorUsedError;
+  String get video => throw _privateConstructorUsedError;
+  String get video_in_arabic => throw _privateConstructorUsedError;
+  String get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,21 +49,22 @@ abstract class $RecipeCopyWith<$Res> {
       _$RecipeCopyWithImpl<$Res>;
   $Res call(
       {int id,
+      List<dynamic> ingridents,
+      List<dynamic> ingridents_in_arabic,
+      List<dynamic> directions,
+      String patient,
+      String patient_in_arabic,
+      List<dynamic> directions_in_arabic,
       String name,
       String name_in_arabic,
       String imageURL,
-      String patient,
-      String patient_in_arabic,
-      String video,
-      String video_in_arabic,
-      List<dynamic> ingridents,
-      List<dynamic> ingridents_in_arabic,
       String diff,
       bool isVegetarian,
       int time_taken,
       int calories,
-      List<dynamic> directions,
-      List<dynamic> directions_in_arabic});
+      String video,
+      String video_in_arabic,
+      String created_at});
 }
 
 /// @nodoc
@@ -76,27 +78,52 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? ingridents = freezed,
+    Object? ingridents_in_arabic = freezed,
+    Object? directions = freezed,
+    Object? patient = freezed,
+    Object? patient_in_arabic = freezed,
+    Object? directions_in_arabic = freezed,
     Object? name = freezed,
     Object? name_in_arabic = freezed,
     Object? imageURL = freezed,
-    Object? patient = freezed,
-    Object? patient_in_arabic = freezed,
-    Object? video = freezed,
-    Object? video_in_arabic = freezed,
-    Object? ingridents = freezed,
-    Object? ingridents_in_arabic = freezed,
     Object? diff = freezed,
     Object? isVegetarian = freezed,
     Object? time_taken = freezed,
     Object? calories = freezed,
-    Object? directions = freezed,
-    Object? directions_in_arabic = freezed,
+    Object? video = freezed,
+    Object? video_in_arabic = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      ingridents: ingridents == freezed
+          ? _value.ingridents
+          : ingridents // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      ingridents_in_arabic: ingridents_in_arabic == freezed
+          ? _value.ingridents_in_arabic
+          : ingridents_in_arabic // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      directions: directions == freezed
+          ? _value.directions
+          : directions // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      patient: patient == freezed
+          ? _value.patient
+          : patient // ignore: cast_nullable_to_non_nullable
+              as String,
+      patient_in_arabic: patient_in_arabic == freezed
+          ? _value.patient_in_arabic
+          : patient_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
+      directions_in_arabic: directions_in_arabic == freezed
+          ? _value.directions_in_arabic
+          : directions_in_arabic // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -109,30 +136,6 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String,
-      patient: patient == freezed
-          ? _value.patient
-          : patient // ignore: cast_nullable_to_non_nullable
-              as String,
-      patient_in_arabic: patient_in_arabic == freezed
-          ? _value.patient_in_arabic
-          : patient_in_arabic // ignore: cast_nullable_to_non_nullable
-              as String,
-      video: video == freezed
-          ? _value.video
-          : video // ignore: cast_nullable_to_non_nullable
-              as String,
-      video_in_arabic: video_in_arabic == freezed
-          ? _value.video_in_arabic
-          : video_in_arabic // ignore: cast_nullable_to_non_nullable
-              as String,
-      ingridents: ingridents == freezed
-          ? _value.ingridents
-          : ingridents // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      ingridents_in_arabic: ingridents_in_arabic == freezed
-          ? _value.ingridents_in_arabic
-          : ingridents_in_arabic // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
       diff: diff == freezed
           ? _value.diff
           : diff // ignore: cast_nullable_to_non_nullable
@@ -149,14 +152,18 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
           ? _value.calories
           : calories // ignore: cast_nullable_to_non_nullable
               as int,
-      directions: directions == freezed
-          ? _value.directions
-          : directions // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      directions_in_arabic: directions_in_arabic == freezed
-          ? _value.directions_in_arabic
-          : directions_in_arabic // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+      video: video == freezed
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as String,
+      video_in_arabic: video_in_arabic == freezed
+          ? _value.video_in_arabic
+          : video_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
+      created_at: created_at == freezed
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -168,21 +175,22 @@ abstract class _$$_RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
   @override
   $Res call(
       {int id,
+      List<dynamic> ingridents,
+      List<dynamic> ingridents_in_arabic,
+      List<dynamic> directions,
+      String patient,
+      String patient_in_arabic,
+      List<dynamic> directions_in_arabic,
       String name,
       String name_in_arabic,
       String imageURL,
-      String patient,
-      String patient_in_arabic,
-      String video,
-      String video_in_arabic,
-      List<dynamic> ingridents,
-      List<dynamic> ingridents_in_arabic,
       String diff,
       bool isVegetarian,
       int time_taken,
       int calories,
-      List<dynamic> directions,
-      List<dynamic> directions_in_arabic});
+      String video,
+      String video_in_arabic,
+      String created_at});
 }
 
 /// @nodoc
@@ -197,27 +205,52 @@ class __$$_RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? ingridents = freezed,
+    Object? ingridents_in_arabic = freezed,
+    Object? directions = freezed,
+    Object? patient = freezed,
+    Object? patient_in_arabic = freezed,
+    Object? directions_in_arabic = freezed,
     Object? name = freezed,
     Object? name_in_arabic = freezed,
     Object? imageURL = freezed,
-    Object? patient = freezed,
-    Object? patient_in_arabic = freezed,
-    Object? video = freezed,
-    Object? video_in_arabic = freezed,
-    Object? ingridents = freezed,
-    Object? ingridents_in_arabic = freezed,
     Object? diff = freezed,
     Object? isVegetarian = freezed,
     Object? time_taken = freezed,
     Object? calories = freezed,
-    Object? directions = freezed,
-    Object? directions_in_arabic = freezed,
+    Object? video = freezed,
+    Object? video_in_arabic = freezed,
+    Object? created_at = freezed,
   }) {
     return _then(_$_Recipe(
       id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      ingridents == freezed
+          ? _value._ingridents
+          : ingridents // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      ingridents_in_arabic == freezed
+          ? _value._ingridents_in_arabic
+          : ingridents_in_arabic // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      directions == freezed
+          ? _value._directions
+          : directions // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      patient == freezed
+          ? _value.patient
+          : patient // ignore: cast_nullable_to_non_nullable
+              as String,
+      patient_in_arabic == freezed
+          ? _value.patient_in_arabic
+          : patient_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
+      directions_in_arabic == freezed
+          ? _value._directions_in_arabic
+          : directions_in_arabic // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
       name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -230,30 +263,6 @@ class __$$_RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String,
-      patient == freezed
-          ? _value.patient
-          : patient // ignore: cast_nullable_to_non_nullable
-              as String,
-      patient_in_arabic == freezed
-          ? _value.patient_in_arabic
-          : patient_in_arabic // ignore: cast_nullable_to_non_nullable
-              as String,
-      video == freezed
-          ? _value.video
-          : video // ignore: cast_nullable_to_non_nullable
-              as String,
-      video_in_arabic == freezed
-          ? _value.video_in_arabic
-          : video_in_arabic // ignore: cast_nullable_to_non_nullable
-              as String,
-      ingridents == freezed
-          ? _value._ingridents
-          : ingridents // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      ingridents_in_arabic == freezed
-          ? _value._ingridents_in_arabic
-          : ingridents_in_arabic // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
       diff == freezed
           ? _value.diff
           : diff // ignore: cast_nullable_to_non_nullable
@@ -270,14 +279,18 @@ class __$$_RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
           ? _value.calories
           : calories // ignore: cast_nullable_to_non_nullable
               as int,
-      directions == freezed
-          ? _value._directions
-          : directions // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      directions_in_arabic == freezed
-          ? _value._directions_in_arabic
-          : directions_in_arabic // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+      video == freezed
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as String,
+      video_in_arabic == freezed
+          ? _value.video_in_arabic
+          : video_in_arabic // ignore: cast_nullable_to_non_nullable
+              as String,
+      created_at == freezed
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -287,21 +300,22 @@ class __$$_RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
 class _$_Recipe implements _Recipe {
   const _$_Recipe(
       this.id,
+      final List<dynamic> ingridents,
+      final List<dynamic> ingridents_in_arabic,
+      final List<dynamic> directions,
+      this.patient,
+      this.patient_in_arabic,
+      final List<dynamic> directions_in_arabic,
       this.name,
       this.name_in_arabic,
       this.imageURL,
-      this.patient,
-      this.patient_in_arabic,
-      this.video,
-      this.video_in_arabic,
-      final List<dynamic> ingridents,
-      final List<dynamic> ingridents_in_arabic,
       this.diff,
       this.isVegetarian,
       this.time_taken,
       this.calories,
-      final List<dynamic> directions,
-      final List<dynamic> directions_in_arabic)
+      this.video,
+      this.video_in_arabic,
+      this.created_at)
       : _ingridents = ingridents,
         _ingridents_in_arabic = ingridents_in_arabic,
         _directions = directions,
@@ -312,20 +326,6 @@ class _$_Recipe implements _Recipe {
 
   @override
   final int id;
-  @override
-  final String name;
-  @override
-  final String name_in_arabic;
-  @override
-  final String imageURL;
-  @override
-  final String patient;
-  @override
-  final String patient_in_arabic;
-  @override
-  final String video;
-  @override
-  final String video_in_arabic;
   final List<dynamic> _ingridents;
   @override
   List<dynamic> get ingridents {
@@ -340,14 +340,6 @@ class _$_Recipe implements _Recipe {
     return EqualUnmodifiableListView(_ingridents_in_arabic);
   }
 
-  @override
-  final String diff;
-  @override
-  final bool isVegetarian;
-  @override
-  final int time_taken;
-  @override
-  final int calories;
   final List<dynamic> _directions;
   @override
   List<dynamic> get directions {
@@ -355,6 +347,10 @@ class _$_Recipe implements _Recipe {
     return EqualUnmodifiableListView(_directions);
   }
 
+  @override
+  final String patient;
+  @override
+  final String patient_in_arabic;
   final List<dynamic> _directions_in_arabic;
   @override
   List<dynamic> get directions_in_arabic {
@@ -363,8 +359,29 @@ class _$_Recipe implements _Recipe {
   }
 
   @override
+  final String name;
+  @override
+  final String name_in_arabic;
+  @override
+  final String imageURL;
+  @override
+  final String diff;
+  @override
+  final bool isVegetarian;
+  @override
+  final int time_taken;
+  @override
+  final int calories;
+  @override
+  final String video;
+  @override
+  final String video_in_arabic;
+  @override
+  final String created_at;
+
+  @override
   String toString() {
-    return 'Recipe(id: $id, name: $name, name_in_arabic: $name_in_arabic, imageURL: $imageURL, patient: $patient, patient_in_arabic: $patient_in_arabic, video: $video, video_in_arabic: $video_in_arabic, ingridents: $ingridents, ingridents_in_arabic: $ingridents_in_arabic, diff: $diff, isVegetarian: $isVegetarian, time_taken: $time_taken, calories: $calories, directions: $directions, directions_in_arabic: $directions_in_arabic)';
+    return 'Recipe(id: $id, ingridents: $ingridents, ingridents_in_arabic: $ingridents_in_arabic, directions: $directions, patient: $patient, patient_in_arabic: $patient_in_arabic, directions_in_arabic: $directions_in_arabic, name: $name, name_in_arabic: $name_in_arabic, imageURL: $imageURL, diff: $diff, isVegetarian: $isVegetarian, time_taken: $time_taken, calories: $calories, video: $video, video_in_arabic: $video_in_arabic, created_at: $created_at)';
   }
 
   @override
@@ -373,30 +390,32 @@ class _$_Recipe implements _Recipe {
         (other.runtimeType == runtimeType &&
             other is _$_Recipe &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.name_in_arabic, name_in_arabic) &&
-            const DeepCollectionEquality().equals(other.imageURL, imageURL) &&
-            const DeepCollectionEquality().equals(other.patient, patient) &&
-            const DeepCollectionEquality()
-                .equals(other.patient_in_arabic, patient_in_arabic) &&
-            const DeepCollectionEquality().equals(other.video, video) &&
-            const DeepCollectionEquality()
-                .equals(other.video_in_arabic, video_in_arabic) &&
             const DeepCollectionEquality()
                 .equals(other._ingridents, _ingridents) &&
             const DeepCollectionEquality()
                 .equals(other._ingridents_in_arabic, _ingridents_in_arabic) &&
+            const DeepCollectionEquality()
+                .equals(other._directions, _directions) &&
+            const DeepCollectionEquality().equals(other.patient, patient) &&
+            const DeepCollectionEquality()
+                .equals(other.patient_in_arabic, patient_in_arabic) &&
+            const DeepCollectionEquality()
+                .equals(other._directions_in_arabic, _directions_in_arabic) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.name_in_arabic, name_in_arabic) &&
+            const DeepCollectionEquality().equals(other.imageURL, imageURL) &&
             const DeepCollectionEquality().equals(other.diff, diff) &&
             const DeepCollectionEquality()
                 .equals(other.isVegetarian, isVegetarian) &&
             const DeepCollectionEquality()
                 .equals(other.time_taken, time_taken) &&
             const DeepCollectionEquality().equals(other.calories, calories) &&
+            const DeepCollectionEquality().equals(other.video, video) &&
             const DeepCollectionEquality()
-                .equals(other._directions, _directions) &&
+                .equals(other.video_in_arabic, video_in_arabic) &&
             const DeepCollectionEquality()
-                .equals(other._directions_in_arabic, _directions_in_arabic));
+                .equals(other.created_at, created_at));
   }
 
   @JsonKey(ignore: true)
@@ -404,21 +423,22 @@ class _$_Recipe implements _Recipe {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(_ingridents),
+      const DeepCollectionEquality().hash(_ingridents_in_arabic),
+      const DeepCollectionEquality().hash(_directions),
+      const DeepCollectionEquality().hash(patient),
+      const DeepCollectionEquality().hash(patient_in_arabic),
+      const DeepCollectionEquality().hash(_directions_in_arabic),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(name_in_arabic),
       const DeepCollectionEquality().hash(imageURL),
-      const DeepCollectionEquality().hash(patient),
-      const DeepCollectionEquality().hash(patient_in_arabic),
-      const DeepCollectionEquality().hash(video),
-      const DeepCollectionEquality().hash(video_in_arabic),
-      const DeepCollectionEquality().hash(_ingridents),
-      const DeepCollectionEquality().hash(_ingridents_in_arabic),
       const DeepCollectionEquality().hash(diff),
       const DeepCollectionEquality().hash(isVegetarian),
       const DeepCollectionEquality().hash(time_taken),
       const DeepCollectionEquality().hash(calories),
-      const DeepCollectionEquality().hash(_directions),
-      const DeepCollectionEquality().hash(_directions_in_arabic));
+      const DeepCollectionEquality().hash(video),
+      const DeepCollectionEquality().hash(video_in_arabic),
+      const DeepCollectionEquality().hash(created_at));
 
   @JsonKey(ignore: true)
   @override
@@ -436,44 +456,45 @@ class _$_Recipe implements _Recipe {
 abstract class _Recipe implements Recipe {
   const factory _Recipe(
       final int id,
+      final List<dynamic> ingridents,
+      final List<dynamic> ingridents_in_arabic,
+      final List<dynamic> directions,
+      final String patient,
+      final String patient_in_arabic,
+      final List<dynamic> directions_in_arabic,
       final String name,
       final String name_in_arabic,
       final String imageURL,
-      final String patient,
-      final String patient_in_arabic,
-      final String video,
-      final String video_in_arabic,
-      final List<dynamic> ingridents,
-      final List<dynamic> ingridents_in_arabic,
       final String diff,
       final bool isVegetarian,
       final int time_taken,
       final int calories,
-      final List<dynamic> directions,
-      final List<dynamic> directions_in_arabic) = _$_Recipe;
+      final String video,
+      final String video_in_arabic,
+      final String created_at) = _$_Recipe;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
 
   @override
   int get id;
   @override
-  String get name;
+  List<dynamic> get ingridents;
   @override
-  String get name_in_arabic;
+  List<dynamic> get ingridents_in_arabic;
   @override
-  String get imageURL;
+  List<dynamic> get directions;
   @override
   String get patient;
   @override
   String get patient_in_arabic;
   @override
-  String get video;
+  List<dynamic> get directions_in_arabic;
   @override
-  String get video_in_arabic;
+  String get name;
   @override
-  List<dynamic> get ingridents;
+  String get name_in_arabic;
   @override
-  List<dynamic> get ingridents_in_arabic;
+  String get imageURL;
   @override
   String get diff;
   @override
@@ -483,9 +504,11 @@ abstract class _Recipe implements Recipe {
   @override
   int get calories;
   @override
-  List<dynamic> get directions;
+  String get video;
   @override
-  List<dynamic> get directions_in_arabic;
+  String get video_in_arabic;
+  @override
+  String get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_RecipeCopyWith<_$_Recipe> get copyWith =>

@@ -18,7 +18,7 @@ class AdHelper {
   void nativeBannerFunction(void Function(void Function()) setState) {
     nativeAdBanner = BannerAd(
         adUnitId: AdHelper.nativeadunit,
-        size: AdSize.largeBanner,
+        size: AdSize.mediumRectangle,
         request: const AdRequest(),
         listener: BannerAdListener(onAdLoaded: (_) {
           setState(() {

@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,15 +45,17 @@ class AuthService {
 
       String userToken = responseJson['data']['token'];
       await CacheHelper.setString("token", userToken);
-      print(1);
       ref.read(userTokenProvider.notifier).update((state) => userToken);
-      print(2);
       if (!mounted) return null;
 
-      if (isBoarded == false) {
-        GoRouter.of(context).go('/onboarding');
+      if (Platform.isAndroid || Platform.isIOS) {
+        if (isBoarded == false) {
+          GoRouter.of(context).go('/onboarding');
+        } else {
+          GoRouter.of(context).go('/navigate');
+        }
       } else {
-        GoRouter.of(context).go('/navigate');
+          GoRouter.of(context).go('/navigate');
       }
     } else {
       if (!mounted) return null;
@@ -97,7 +100,7 @@ class AuthService {
     return response.body.toString();
   }
 
-  Future<void> logOut(BuildContext context) async {
+  Future<void> logOutfromDjango(BuildContext context) async {
     const url = '$restAPIURL/logout/';
 
     final response = await client.post(Uri.parse(url), headers: {

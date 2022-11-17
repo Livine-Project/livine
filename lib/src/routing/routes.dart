@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/features/auth/welcome/presentation/welcome.dart';
 
-
-import '../constants/shared_constants.dart';
 import '../common_widgets/recipe/web_view_widget.dart';
+import '../constants/shared_constants.dart';
 import '../features/auth/favorites/presentation/favorites.dart';
 import '../features/auth/login/presentation/login.dart';
 import '../features/auth/profiles/presentation/update_profile.dart';
@@ -10,7 +10,6 @@ import '../features/auth/register/presentation/register.dart';
 import '../features/auth/reset_password/presentation/reset_password.dart';
 import '../features/auth/reset_password/presentation/reset_password_confirm.dart';
 import '../features/auth/reset_password/presentation/token_validate.dart';
-import '../features/auth/welcome/presentation/welcome.dart';
 import '../features/content/presentation/content.dart';
 import '../features/content/presentation/content_patients.dart';
 import '../features/get_recipes/presentation/ingridents.dart';

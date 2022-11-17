@@ -32,8 +32,8 @@ Widget authButton({
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: context.locale.languageCode == "en"
-                    ? 'Kine'
-                    : GoogleFonts.notoKufiArabic().fontFamily,
+                      ? 'Kine'
+                      : GoogleFonts.notoKufiArabic().fontFamily,
                   color: textColor ?? theme.onPrimaryContainer),
             ),
     ),

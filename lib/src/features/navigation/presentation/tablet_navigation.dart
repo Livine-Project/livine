@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../shared/children/children.dart';
-import '../../../shared/windows/title_bar.dart';
 
 class TabletNavigation extends StatefulWidget {
   const TabletNavigation({Key? key}) : super(key: key);
@@ -37,13 +34,13 @@ class _TabletNavigationState extends State<TabletNavigation> {
                     isExtended = !isExtended;
                   });
                 },
-                icon: const Icon(FontAwesomeIcons.bars),
+                icon: const Icon(FluentSystemIcons.ic_fluent_library_filled),
               ),
               minExtendedWidth: 200,
               destinations: <NavigationRailDestination>[
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.home,
+                  icon: Icon(FluentSystemIcons.ic_fluent_home_filled,
                       size: MediaQuery.of(context).size.width / 70),
                   label: context.locale.languageCode == "en"
                       ? const Text("Home")
@@ -51,7 +48,7 @@ class _TabletNavigationState extends State<TabletNavigation> {
                 ),
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(FontAwesomeIcons.bowlFood,
+                  icon: Icon(FluentSystemIcons.ic_fluent_food_filled,
                       size: MediaQuery.of(context).size.width / 70),
                   label: context.locale.languageCode == "en"
                       ? const Text("Meals")
@@ -65,14 +62,14 @@ class _TabletNavigationState extends State<TabletNavigation> {
                 //         : Text("الاصلي")),
                 NavigationRailDestination(
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(Icons.person,
+                    icon: Icon(FluentSystemIcons.ic_fluent_person_regular,
                         size: MediaQuery.of(context).size.width / 70),
                     label: context.locale.languageCode == "en"
                         ? const Text("Profile")
                         : const Text("الحساب الشخصي")),
                 NavigationRailDestination(
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(Icons.settings,
+                    icon: Icon(FluentSystemIcons.ic_fluent_settings_filled,
                         size: MediaQuery.of(context).size.width / 70),
                     label: context.locale.languageCode == "en"
                         ? const Text("Settings")
@@ -99,16 +96,8 @@ class LargeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isWindows) {
-      return Expanded(
-        child: Stack(
-          children: [tabletChildren[_selectedIndex], const TitleBar()],
-        ),
-      );
-    } else {
-      return Expanded(
-        child: tabletChildren[_selectedIndex],
-      );
-    }
+    return Expanded(
+      child: tabletChildren[_selectedIndex],
+    );
   }
 }
