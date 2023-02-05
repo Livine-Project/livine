@@ -101,12 +101,12 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
           final recipe = item as Recipe;
 
           return OpenContainer(
+            openElevation: 0,
+            closedElevation: 0,
+            closedColor: Colors.transparent,
             openBuilder: (context, _) => RecipeDetails(
               id: recipe.id,
             ),
-            middleColor: Colors.transparent,
-            openColor: Colors.transparent,
-            closedColor: Colors.transparent,
             transitionDuration: const Duration(milliseconds: 500),
             closedBuilder: (context, action) => RecipeCardNormal(
               id: recipe.id,

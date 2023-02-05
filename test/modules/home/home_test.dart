@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:livine/src/features/auth/data/user.dart';
 import 'package:livine/src/features/get_recipes/presentation/home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,7 +9,7 @@ void main() {
     await tester.pumpWidget(ProviderScope(
       child: const Home(),
       overrides: [
-        userTypeProvider.overrideWithProvider(userTypeTest),
+        // userTypeProvider.overrideWithProvider(userTypeTest),
       ],
     ));
     await tester.pumpAndSettle();

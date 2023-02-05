@@ -31,19 +31,21 @@
               android:resource="@drawable/launch_background"
               />
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" android:exported="true"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" android:exported="true"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         
         </activity>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

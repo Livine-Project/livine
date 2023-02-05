@@ -99,8 +99,8 @@ class _PristineState extends State<Pristine> {
                                         GooglePayButton(
                                           width: 200,
                                           height: 60,
-                                          paymentConfigurationAsset:
-                                              'pay.json',
+                                          paymentConfiguration:
+                                              PaymentConfiguration.fromJsonString('pay.json'),
                                           paymentItems: _paymentItems,
                                           type: GooglePayButtonType.subscribe,
                                           margin: EdgeInsets.only(top: 15.0),

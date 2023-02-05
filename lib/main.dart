@@ -76,7 +76,7 @@ Future<void> main() async {
   await CacheHelper.init();
 
   final isVegan = await container.read(veganServiceProvider).getIsVegan();
-  container.read(isVeganProvider.state).state = isVegan;
+  container.read(isVeganProvider.notifier).state = isVegan;
   if (Platform.isAndroid) {
     MobileAds.instance.initialize();
     notificationControl.init();

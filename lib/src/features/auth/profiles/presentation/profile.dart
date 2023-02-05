@@ -119,7 +119,7 @@ class Profile extends ConsumerWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: rh.deviceWidth(context) * 0.4 > 300 ? 4 : 3,
-                  childAspectRatio: 2,
+                  childAspectRatio: 1,
                   children: [
                     if (isGuest == false && guest == false)
                       ProfileMenu(
