@@ -1,15 +1,12 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../constants/constants.dart';
-import '../../../../shared/styles/colors.dart';
-import '../../../../common_widgets/auth/auth_widget.dart';
-import '../../../../translations/locale_keys.g.dart';
 
 class PasswordConfirmation extends StatefulWidget {
   const PasswordConfirmation({Key? key, required this.token}) : super(key: key);
@@ -41,11 +38,8 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
     if (response.statusCode == 200) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(context.locale.languageCode == "en"
-            ? "Your password have succesfully changed"
-            : "تم تغيير كلمة السر بنجاح"),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Your password have succesfully changed")));
       setState(() {
         isLoading = false;
       });
@@ -71,9 +65,10 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
 
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(LocaleKeys.pass_confirm.tr()),
+        title: Text(word?.pass_confirm ?? ""),
         centerTitle: true,
       ),
       body: Column(
@@ -88,24 +83,19 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                       textInputAction: TextInputAction.next,
                       validator: (e) {
                         if (e!.isEmpty) {
-                          return context.locale.languageCode == "en"
-                              ? "Please enter your token"
-                              : "من فضلك ادخل الرمز الخاص بك";
+                          return "Please enter your token";
                         }
 
                         return null;
                       },
                       controller: _token,
                       decoration: InputDecoration(
-                        helperText: context.locale.languageCode == " en "
-                            ? "Enter the token that has been sent to your email"
-                            : " أدخل الرمز المميز الذي تم إرساله إلى بريدك الإلكتروني الخاص بك",
+                        helperText:
+                            "Enter the token that has been sent to your email",
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(),
                         ),
-                        labelText: context.locale.languageCode == "en"
-                            ? 'Token'
-                            : "الرمز",
+                        labelText: 'Token',
                         labelStyle: const TextStyle(
                           fontSize: 15,
                           color: Colors.black,
@@ -116,9 +106,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                       textInputAction: TextInputAction.next,
                       validator: (e) {
                         if (e!.isEmpty) {
-                          return context.locale.languageCode == "en"
-                              ? "Please enter your new password"
-                              : "من فضلك ادخل كلمة السر الجديدة";
+                          return "Please enter your new password";
                         }
 
                         return null;
@@ -131,8 +119,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                               _obscureText
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color:
-                                  _obscureText ? Colors.grey : secondaryColor),
+                              color: _obscureText ? Colors.grey : Colors.green),
                           onPressed: () {
                             setState(() {
                               _obscureText = !_obscureText;
@@ -142,18 +129,50 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                         border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
-                        labelText: context.locale.languageCode == "en"
-                            ? 'New Password'
-                            : "كلمة المرور الجديدة",
+                        labelText: 'New Password',
                         labelStyle: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    authButton(
+                    ({
+                      required void Function() onPressed,
+                      required bool isLoading,
+                      required String text,
+                      Color? color,
+                      Color? textColor,
+                      double width = 350,
+                      required BuildContext context,
+                    }) {
+                      final theme = Theme.of(context).colorScheme;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: MaterialButton(
+                          onPressed: onPressed,
+                          color: color ?? theme.primaryContainer,
+                          elevation: 0,
+                          minWidth: width,
+                          height: 60,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  text,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textColor ??
+                                          theme.onPrimaryContainer),
+                                ),
+                        ),
+                      );
+                    }(
                         onPressed: validatePasswordForm,
                         isLoading: isLoading,
-                        text: LocaleKeys.change_password.tr(),
+                        text: word?.change_password ?? "",
                         context: context)
                   ],
                 ),

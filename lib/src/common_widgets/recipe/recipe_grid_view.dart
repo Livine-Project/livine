@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:animations/animations.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -29,7 +28,7 @@ class RecipesGridView extends ConsumerStatefulWidget {
 }
 
 class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
-  static const _pageSize = 6;
+  static const _pageSize = 10;
   final PagingController _pagingController = PagingController(firstPageKey: 1);
 
   @override
@@ -47,6 +46,7 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       bool guest = ref.watch(guestProvider);
 
       final guestRecipes = await ref.watch(getRecipesProvider(
+              context: context,
               id: recipesTypeData == 0 ? patientID : recipesTypeData,
               pageKey: pageKey)
           .future);
@@ -54,10 +54,12 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       final newItems = isGuest == false && guest == false
           ? await ref.watch(isUserVegan == true
               ? getVegRecipesProvider(
+                      context: context,
                       id: recipesTypeData == 0 ? patientID : recipesTypeData,
                       pageKey: pageKey)
                   .future
               : getRecipesProvider(
+                      context: context,
                       id: recipesTypeData == 0 ? patientID : recipesTypeData,
                       pageKey: pageKey)
                   .future)
@@ -99,7 +101,6 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
         firstPageProgressIndicatorBuilder: (context) => LoadingGridView(),
         itemBuilder: (context, item, index) {
           final recipe = item as Recipe;
-
           return OpenContainer(
             openElevation: 0,
             closedElevation: 0,
@@ -110,18 +111,12 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
             transitionDuration: const Duration(milliseconds: 500),
             closedBuilder: (context, action) => RecipeCardNormal(
               id: recipe.id,
-              name: context.locale.languageCode == "en"
-                  ? recipe.name
-                  : recipe.name_in_arabic,
+              name: recipe.name,
               foodImage: '${item.imageURL}',
-              type: context.locale.languageCode == "en"
-                  ? recipe.patient
-                  : recipe.patient_in_arabic,
-              difficulty: changeDiffName(item.diff, context),
-              time: context.locale.languageCode == "en"
-                  ? "${recipe.time_taken} min"
-                  : "${recipe.time_taken} دقيقة",
-              dImage: changeDiffImage(difficulty: recipe.diff),
+              type: recipe.patient,
+              difficulty: recipe.difficulty,
+              time: "${recipe.time_taken} min",
+              dImage: "$restAPIMedia/${recipe.difficulty_image}",
             ),
           );
         },

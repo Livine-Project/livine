@@ -3,25 +3,32 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../translations/domain/translation_provider.dart';
 import '../../application/auth_service.dart';
 import '../../../../constants/constants.dart';
 import '../../../get_recipes/domain/recipe/recipe.dart';
 import '../domain/favorites.dart';
 
-final FutureProvider<FavoritesData> getFavoritesProvider =
-    FutureProvider<FavoritesData>((ref) async {
-  final url = '$restAPIURL/user/favorite/';
+part 'favorites.g.dart';
+
+@riverpod
+Future<FavoritesData> getFavorites(Ref ref,{required BuildContext context}) async{
+    final url = '$restAPIURL/user/favorite/';
   final response = await client.get(
     Uri.parse(url),
     headers: {
+      'Accept-Language': ref.watch(localeNotifierProvider).languageCode,
       'Authorization': 'Token ${ref.read(authHelperProvider).getToken()}',
     },
   );
   final responseDe = utf8.decode(response.bodyBytes);
   final responseJson = json.decode(responseDe);
   return FavoritesData.fromJson(responseJson["favorites"]);
-});
+
+}
+
 
 Future<void> addFavorite({
   required WidgetRef ref,

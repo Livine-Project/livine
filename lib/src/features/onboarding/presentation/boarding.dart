@@ -1,16 +1,15 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:livine/src/shared/cache/cache_helper.dart';
+import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../constants/constants.dart';
-import '../../../shared/styles/colors.dart';
 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({Key? key}) : super(key: key);
@@ -32,7 +31,7 @@ class OnBoarding extends StatelessWidget {
     ];
 
     final List<Color> textColors = [
-      Colors.black,
+      Theme.of(context).colorScheme.onSurface,
       Colors.black,
       Colors.white,
       Colors.black
@@ -41,11 +40,11 @@ class OnBoarding extends StatelessWidget {
     return Scaffold(
       body: ConcentricPageView(
         duration: const Duration(milliseconds: 1200),
-        colors: const <Color>[
-          Colors.white,
-          primaryColor,
-          thirdColor,
-          primaryColor
+        colors: <Color>[
+          Theme.of(context).colorScheme.surface,
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.tertiary,
+          Theme.of(context).colorScheme.primary,
         ],
         radius: screenWidth * 0.1,
         onFinish: () {
@@ -60,12 +59,14 @@ class OnBoarding extends StatelessWidget {
           ),
         ),
         itemBuilder: (int index) {
-          return IntroScreens(
-              text: context.locale.languageCode == "en"
-                  ? heading[index]
-                  : headingInArabic[index],
-              url: 'assets/images/onboarding/${images[index]}.svg',
-              textColor: textColors[index]);
+          return Consumer(
+            builder: (context, ref, child) => IntroScreens(
+                text: ref.watch(localeNotifierProvider).languageCode == "en"
+                    ? heading[index]
+                    : headingInArabic[index],
+                url: 'assets/images/onboarding/${images[index]}.svg',
+                textColor: textColors[index]),
+          );
         },
       ),
     );
@@ -91,9 +92,12 @@ class IntroScreens extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: rh.deviceHeight(context) / 8),
         child: Column(
           children: [
-            SvgPicture.asset(
-              url,
-              height: 250.0,
+            Flexible(
+              flex: 2,
+              child: SvgPicture.asset(
+                url,
+                height: 250.0,
+              ),
             ),
             const SizedBox(
               height: 20.0,
@@ -103,12 +107,10 @@ class IntroScreens extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.0,
-                fontFamily: context.locale.languageCode == "en"
-                    ? 'Kine'
-                    : GoogleFonts.notoKufiArabic().fontFamily,
                 color: textColor,
               ),
             ),
+            Spacer(flex: 1)
           ],
         ),
       ),

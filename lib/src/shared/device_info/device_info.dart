@@ -37,12 +37,20 @@ class GetDeviceInfo {
     return null;
   }
 
-   static String? deviceBrand() {
+  static String? deviceBrand() {
     if (Platform.isAndroid) {
       return androidInfo?.brand;
     } else if (Platform.isWindows) {
       return winodwsInfo?.productType.toString();
     }
     return null;
+  }
+
+  static bool isAndroid12Above() {
+    if (Platform.isAndroid) {
+      print("SDK ${deviceSDK()}");
+      return deviceSDK() != null && int.parse(deviceSDK()!) >= 31;
+    }
+    return false;
   }
 }

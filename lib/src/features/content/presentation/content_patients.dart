@@ -2,22 +2,19 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:livine/src/constants/constants.dart';
+import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../auth/data/user.dart';
 import '../../loading/loading.dart';
 import '../../auth/application/auth_service.dart';
 import '../../../shared/cache/cache_helper.dart';
-import '../../../common_widgets/auth/auth_widget.dart';
 import '../../auth/profiles/data/get_user_data.dart';
-import '../../get_recipes/data/patient_types.dart';
-import '../../../translations/locale_keys.g.dart';
+import '../../get_recipes/data/patients.dart';
 
 class ContentPatient extends StatefulWidget {
   const ContentPatient({Key? key}) : super(key: key);
@@ -30,10 +27,11 @@ class _ContentPatientState extends State<ContentPatient> {
   int? checkedIndex;
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.Iam_a.tr(),
+          word?.choose_content ?? "",
           style: const TextStyle(fontFamily: 'Kine'),
         ),
         backgroundColor: Colors.transparent,
@@ -41,7 +39,7 @@ class _ContentPatientState extends State<ContentPatient> {
       ),
       body: HookConsumer(
         builder: ((context, ref, child) {
-          final recipesData = ref.watch(patientTypesProvider);
+          final recipesData = ref.watch(getPatientsProvider(context: context));
           final guest = ref.watch(guestProvider);
 
           final userData = ref.watch(userDataProvider).asData?.value;
@@ -51,17 +49,19 @@ class _ContentPatientState extends State<ContentPatient> {
                   children: [
                     Expanded(
                       child: RawScrollbar(
-                        thumbColor: getColorScheme(context).tertiary,
+                        thumbColor: colorScheme(context).tertiary,
                         thickness: 5,
                         radius: const Radius.circular(10),
                         child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: rh.deviceWidth(context) > 600 ? 4 : 2,
+                            crossAxisCount:
+                                rh.deviceWidth(context) > 600 ? 4 : 2,
                             childAspectRatio: 0.7,
                           ),
                           itemCount: data.length,
                           itemBuilder: (context, index) {
+                            print(data[index].image);
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -72,14 +72,14 @@ class _ContentPatientState extends State<ContentPatient> {
                               child: Card(
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 color: checkedIndex == index
-                                    ? getColorScheme(context).tertiary
-                                    : getColorScheme(context).surface,
+                                    ? colorScheme(context).tertiary
+                                    : colorScheme(context).surface,
                                 child: Stack(
                                   fit: StackFit.expand,
                                   children: [
                                     CachedNetworkImage(
                                       imageUrl:
-                                          "$restAPIMedia/${data[index].imageURL}",
+                                          "$restAPIMedia/${data[index].image}",
                                       fit: BoxFit.cover,
                                     ),
                                     ClipRRect(
@@ -93,7 +93,7 @@ class _ContentPatientState extends State<ContentPatient> {
                                         ),
                                         child: Container(
                                           color: checkedIndex == index
-                                              ? getColorScheme(context)
+                                              ? colorScheme(context)
                                                   .primaryContainer
                                                   .withOpacity(0.5)
                                               : Colors.transparent,
@@ -118,25 +118,13 @@ class _ContentPatientState extends State<ContentPatient> {
                                                           : Colors.transparent),
                                                   child: Center(
                                                     child: Text(
-                                                      context.locale
-                                                                  .languageCode ==
-                                                              'en'
-                                                          ? "${data[index].name} Patient"
-                                                          : "مريض ${data[index].name_in_arabic}",
+                                                      data[index].name,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
-                                                        color: getColorScheme(
-                                                                context)
-                                                            .onSurface,
-                                                        fontFamily: context
-                                                                    .locale
-                                                                    .languageCode ==
-                                                                "en"
-                                                            ? 'Kine'
-                                                            : GoogleFonts
-                                                                    .notoKufiArabic()
-                                                                .fontFamily,
+                                                        color:
+                                                            colorScheme(context)
+                                                                .onSurface,
                                                       ),
                                                     ),
                                                   ),
@@ -155,7 +143,41 @@ class _ContentPatientState extends State<ContentPatient> {
                         ),
                       ),
                     ),
-                    authButton(
+                    ({
+                      required void Function() onPressed,
+                      required bool isLoading,
+                      required String text,
+                      Color? color,
+                      Color? textColor,
+                      double width = 350,
+                      required BuildContext context,
+                    }) {
+                      final theme = Theme.of(context).colorScheme;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: MaterialButton(
+                          onPressed: onPressed,
+                          color: color ?? theme.primaryContainer,
+                          elevation: 0,
+                          minWidth: width,
+                          height: 60,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  text,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textColor ??
+                                          theme.onPrimaryContainer),
+                                ),
+                        ),
+                      );
+                    }(
                         onPressed: () {
                           if (checkedIndex != null) {
                             CacheHelper.setInt(
@@ -183,9 +205,7 @@ class _ContentPatientState extends State<ContentPatient> {
                           }
                         },
                         isLoading: false,
-                        text: context.locale.languageCode == "en"
-                            ? "Continue"
-                            : "التالي",
+                        text: word?.choose ?? "Choose",
                         context: context)
                   ],
                 );

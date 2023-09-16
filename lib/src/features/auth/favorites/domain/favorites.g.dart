@@ -10,7 +10,6 @@ _$_FavoritesData _$$_FavoritesDataFromJson(Map<String, dynamic> json) =>
     _$_FavoritesData(
       json['id'] as List<dynamic>,
       json['name'] as List<dynamic>,
-      json['name_in_arabic'] as List<dynamic>,
       json['imageURL'] as List<dynamic>,
     );
 
@@ -18,6 +17,5 @@ Map<String, dynamic> _$$_FavoritesDataToJson(_$_FavoritesData instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'name_in_arabic': instance.name_in_arabic,
       'imageURL': instance.imageURL,
     };

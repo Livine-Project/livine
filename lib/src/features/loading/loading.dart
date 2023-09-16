@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,9 +11,13 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Lottie.asset("assets/images/loading/loading.json"),
+    return Scaffold(
       
+      body: Center(
+        
+          child: CircularProgressIndicator.adaptive(),
+        
+      ),
     );
   }
 }

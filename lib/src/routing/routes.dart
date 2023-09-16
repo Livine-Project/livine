@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:livine/src/features/auth/welcome/presentation/welcome.dart';
+import 'package:livine/src/features/cooking/presentation/cooking.dart';
+import 'package:livine/src/features/settings/presentation/accessibility/accessibility.dart';
 
 import '../common_widgets/recipe/web_view_widget.dart';
 import '../constants/shared_constants.dart';
@@ -17,7 +20,6 @@ import '../features/meals/presentation/categories.dart';
 import '../features/navigation/presentation/base.dart';
 import '../features/onboarding/presentation/boarding.dart';
 import '../features/premium_pristine/presentation/confirm_payment.dart';
-import '../features/scan_food/presentation/scan.dart';
 import '../features/settings/presentation/Misc/privacy.dart';
 import '../features/settings/presentation/Misc/terms.dart';
 import '../features/settings/presentation/languages/languages.dart';
@@ -45,10 +47,10 @@ final baseRoutes = GoRouter(routes: [
     name: "Login",
     builder: (context, state) => const Login(),
   ),
-  GoRoute(
-    path: '/scan',
-    builder: (context, state) => const Scan(),
-  ),
+  // GoRoute(
+  //   path: '/scan',
+  //   builder: (context, state) => const Scan(),
+  // ),
   GoRoute(
     path: '/navigate',
     builder: (context, state) => const Navigation(),
@@ -91,7 +93,7 @@ final baseRoutes = GoRouter(routes: [
   ),
   GoRoute(
     path: '/themeSettings',
-    builder: (context, state) => const ThemeSettings(),
+    builder: (context, state) => ThemeSettings(),
   ),
   GoRoute(
     path: '/notifications_settings',
@@ -119,8 +121,16 @@ final baseRoutes = GoRouter(routes: [
   GoRoute(
     name: "Update Profile",
     path: '/update_profile',
-    builder: (context, state) {
-      return const UpdateProfile();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+          child: UpdateProfile(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          });
     },
   ),
   GoRoute(
@@ -155,6 +165,20 @@ final baseRoutes = GoRouter(routes: [
     path: '/favorites',
     builder: (context, state) {
       return const Favorites();
+    },
+  ),
+  GoRoute(
+    path: '/cooking',
+    builder: (context, state) {
+      return Cooking(
+        data: state.extra,
+      );
+    },
+  ),
+  GoRoute(
+    path: '/accessibility',
+    builder: (context, state) {
+      return const Accessibility();
     },
   ),
 ]);

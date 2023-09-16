@@ -6,7 +6,7 @@ part of 'search.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$searchResultsHash() => r'c625bf8dee346d487121ff61ee24ab73447b288f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +29,129 @@ class _SystemHash {
   }
 }
 
-String $searchResultsHash() => r'344ced406dbb190ca2f98f5f65c8d40e2b4c756e';
+/// See also [searchResults].
+@ProviderFor(searchResults)
+const searchResultsProvider = SearchResultsFamily();
+
+/// See also [searchResults].
+class SearchResultsFamily extends Family<AsyncValue<dynamic>> {
+  /// See also [searchResults].
+  const SearchResultsFamily();
+
+  /// See also [searchResults].
+  SearchResultsProvider call({
+    required int pk,
+    required String query,
+    required BuildContext context,
+  }) {
+    return SearchResultsProvider(
+      pk: pk,
+      query: query,
+      context: context,
+    );
+  }
+
+  @override
+  SearchResultsProvider getProviderOverride(
+    covariant SearchResultsProvider provider,
+  ) {
+    return call(
+      pk: provider.pk,
+      query: provider.query,
+      context: provider.context,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'searchResultsProvider';
+}
 
 /// See also [searchResults].
 class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
+  /// See also [searchResults].
   SearchResultsProvider({
-    required this.pk,
-    required this.query,
-  }) : super(
+    required int pk,
+    required String query,
+    required BuildContext context,
+  }) : this._internal(
           (ref) => searchResults(
-            ref,
+            ref as SearchResultsRef,
             pk: pk,
             query: query,
+            context: context,
           ),
           from: searchResultsProvider,
           name: r'searchResultsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $searchResultsHash,
+                  : _$searchResultsHash,
+          dependencies: SearchResultsFamily._dependencies,
+          allTransitiveDependencies:
+              SearchResultsFamily._allTransitiveDependencies,
+          pk: pk,
+          query: query,
+          context: context,
         );
+
+  SearchResultsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.pk,
+    required this.query,
+    required this.context,
+  }) : super.internal();
 
   final int pk;
   final String query;
+  final BuildContext context;
+
+  @override
+  Override overrideWith(
+    FutureOr<dynamic> Function(SearchResultsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SearchResultsProvider._internal(
+        (ref) => create(ref as SearchResultsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        pk: pk,
+        query: query,
+        context: context,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<dynamic> createElement() {
+    return _SearchResultsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
     return other is SearchResultsProvider &&
         other.pk == pk &&
-        other.query == query;
+        other.query == query &&
+        other.context == context;
   }
 
   @override
@@ -65,45 +159,33 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, pk.hashCode);
     hash = _SystemHash.combine(hash, query.hashCode);
+    hash = _SystemHash.combine(hash, context.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-typedef SearchResultsRef = AutoDisposeFutureProviderRef<dynamic>;
+mixin SearchResultsRef on AutoDisposeFutureProviderRef<dynamic> {
+  /// The parameter `pk` of this provider.
+  int get pk;
 
-/// See also [searchResults].
-final searchResultsProvider = SearchResultsFamily();
+  /// The parameter `query` of this provider.
+  String get query;
 
-class SearchResultsFamily extends Family<AsyncValue<dynamic>> {
-  SearchResultsFamily();
-
-  SearchResultsProvider call({
-    required int pk,
-    required String query,
-  }) {
-    return SearchResultsProvider(
-      pk: pk,
-      query: query,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<dynamic> getProviderOverride(
-    covariant SearchResultsProvider provider,
-  ) {
-    return call(
-      pk: provider.pk,
-      query: provider.query,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'searchResultsProvider';
+  /// The parameter `context` of this provider.
+  BuildContext get context;
 }
+
+class _SearchResultsProviderElement
+    extends AutoDisposeFutureProviderElement<dynamic> with SearchResultsRef {
+  _SearchResultsProviderElement(super.provider);
+
+  @override
+  int get pk => (origin as SearchResultsProvider).pk;
+  @override
+  String get query => (origin as SearchResultsProvider).query;
+  @override
+  BuildContext get context => (origin as SearchResultsProvider).context;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

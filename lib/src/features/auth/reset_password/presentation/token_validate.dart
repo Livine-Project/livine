@@ -1,14 +1,12 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../constants/constants.dart';
-import '../../../../common_widgets/auth/auth_widget.dart';
-import '../../../../translations/locale_keys.g.dart';
 
 class TokenValidate extends StatefulWidget {
   const TokenValidate({Key? key}) : super(key: key);
@@ -55,9 +53,10 @@ class _TokenValidateState extends State<TokenValidate> {
 
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(LocaleKeys.enter_token.tr()),
+        title: Text(word?.validate_token ?? "Validate Token"),
         centerTitle: true,
       ),
       body: Column(
@@ -72,33 +71,61 @@ class _TokenValidateState extends State<TokenValidate> {
                       textInputAction: TextInputAction.next,
                       validator: (e) {
                         if (e!.isEmpty) {
-                          return context.locale.languageCode == "en"
-                              ? "Please enter your token"
-                              : "من فضلك ادخل الرمز الخاص بك";
+                          return "Please enter your token";
                         }
 
                         return null;
                       },
                       controller: _token,
                       decoration: InputDecoration(
-                        helperText: context.locale.languageCode == "en"
-                            ? "Enter the token that has been sent to your email"
-                            : " أدخل الرمز المميز الذي تم إرساله إلى بريدك الإلكتروني الخاص بك",
+                        helperText: word?.enter_token_has_sent,
                         border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
-                        labelText: context.locale.languageCode == "en"
-                            ? 'Code'
-                            : "الرمز",
+                        labelText: word?.code,
                         labelStyle: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    authButton(
+                    ({
+                      required void Function() onPressed,
+                      required bool isLoading,
+                      required String text,
+                      Color? color,
+                      Color? textColor,
+                      double width = 350,
+                      required BuildContext context,
+                    }) {
+                      final theme = Theme.of(context).colorScheme;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: MaterialButton(
+                          onPressed: onPressed,
+                          color: color ?? theme.primaryContainer,
+                          elevation: 0,
+                          minWidth: width,
+                          height: 60,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  text,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textColor ??
+                                          theme.onPrimaryContainer),
+                                ),
+                        ),
+                      );
+                    }(
                         onPressed: validateTokenForm,
                         isLoading: isLoading,
-                        text: LocaleKeys.validate_token.tr(),
+                        text: word?.validate_token ?? "Validate Token",
                         context: context)
                   ],
                 ),

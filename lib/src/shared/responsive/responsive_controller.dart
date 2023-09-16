@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:livine/src/constants/constants.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 class ResponsiveHelper {
   double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
@@ -8,30 +9,35 @@ class ResponsiveHelper {
       MediaQuery.of(context).size.height;
 
   bool largerThanMobile(BuildContext context) =>
-      ResponsiveWrapper.of(context).isLargerThan(MOBILE);
+      ResponsiveBreakpoints.of(context).largerThan(MOBILE);
 
-  bool isMobile(BuildContext context) => ResponsiveWrapper.of(context).isMobile;
+  bool isMobile(BuildContext context) =>
+      ResponsiveBreakpoints.of(context).isMobile;
+
+  // is not mobile
+  bool isTablet(BuildContext context) =>
+      ResponsiveBreakpoints.of(context).isTablet;
 
   bool deviceLandScape(BuildContext context) =>
-      ResponsiveWrapper.of(context).orientation == Orientation.landscape;
+      ResponsiveBreakpoints.of(context).orientation == Orientation.landscape;
 
   bool devicePortrait(BuildContext context) =>
-      ResponsiveWrapper.of(context).orientation == Orientation.portrait;
+      ResponsiveBreakpoints.of(context).orientation == Orientation.portrait;
 
   int responsiveRecipes(BuildContext context) {
-    if (ResponsiveWrapper.of(context).isTablet &&
-        ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+    if (ResponsiveBreakpoints.of(context).isTablet &&
+        ResponsiveBreakpoints.of(context).orientation == Orientation.portrait) {
       return 4;
-    } else if (ResponsiveWrapper.of(context).orientation ==
+    } else if (ResponsiveBreakpoints.of(context).orientation ==
             Orientation.landscape &&
-        ResponsiveWrapper.of(context).isTablet) {
+        ResponsiveBreakpoints.of(context).isTablet) {
       return 6;
-    } else if (ResponsiveWrapper.of(context).isMobile &&
-        ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+    } else if (ResponsiveBreakpoints.of(context).isMobile &&
+        ResponsiveBreakpoints.of(context).orientation == Orientation.portrait) {
       return 2;
-    } else if (ResponsiveWrapper.of(context).isDesktop) {
+    } else if (ResponsiveBreakpoints.of(context).isDesktop) {
       return 5;
-    } else if (ResponsiveWrapper.of(context).orientation ==
+    } else if (ResponsiveBreakpoints.of(context).orientation ==
         Orientation.landscape) {
       return 4;
     }
@@ -40,42 +46,34 @@ class ResponsiveHelper {
   }
 
   int responsiveCatogeries(BuildContext context) {
-    if (ResponsiveWrapper.of(context).isTablet &&
-        ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
-      return 2;
-    } else if (ResponsiveWrapper.of(context).orientation ==
-            Orientation.landscape &&
-        ResponsiveWrapper.of(context).isDesktop) {
-      return 4;
+    if (rh.deviceLandScape(context)) {
+      return 3;
     }
-
-    if (ResponsiveWrapper.of(context).isMobile) {
-      if (ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
-        return 1;
-      } else {
-        return 2;
-      }
+    if (ResponsiveBreakpoints.of(context).equals(TABLET) ||
+        rh.deviceWidth(context) > 500) {
+      return 3;
     }
     return 1;
   }
 
   int responsiveMeals(BuildContext context) {
-    if (ResponsiveWrapper.of(context).isTablet &&
-        ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
+    if (ResponsiveBreakpoints.of(context).isTablet &&
+        ResponsiveBreakpoints.of(context).orientation == Orientation.portrait) {
       return 2;
-    } else if (ResponsiveWrapper.of(context).orientation ==
+    } else if (ResponsiveBreakpoints.of(context).orientation ==
             Orientation.landscape &&
-        ResponsiveWrapper.of(context).isDesktop) {
+        ResponsiveBreakpoints.of(context).isDesktop) {
       return 6;
     }
 
-    if (ResponsiveWrapper.of(context).isMobile) {
-      if (ResponsiveWrapper.of(context).orientation == Orientation.portrait) {
-        return 1;
-      } else {
+    if (ResponsiveBreakpoints.of(context).isMobile) {
+      if (ResponsiveBreakpoints.of(context).orientation ==
+          Orientation.portrait) {
         return 2;
+      } else {
+        return 1;
       }
     }
-    return 2;
+    return 4;
   }
 }

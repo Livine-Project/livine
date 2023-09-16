@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'favorites.dart';
 
@@ -22,7 +22,6 @@ FavoritesData _$FavoritesDataFromJson(Map<String, dynamic> json) {
 mixin _$FavoritesData {
   List<dynamic> get id => throw _privateConstructorUsedError;
   List<dynamic> get name => throw _privateConstructorUsedError;
-  List<dynamic> get name_in_arabic => throw _privateConstructorUsedError;
   List<dynamic> get imageURL => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,48 +34,42 @@ mixin _$FavoritesData {
 abstract class $FavoritesDataCopyWith<$Res> {
   factory $FavoritesDataCopyWith(
           FavoritesData value, $Res Function(FavoritesData) then) =
-      _$FavoritesDataCopyWithImpl<$Res>;
-  $Res call(
-      {List<dynamic> id,
-      List<dynamic> name,
-      List<dynamic> name_in_arabic,
-      List<dynamic> imageURL});
+      _$FavoritesDataCopyWithImpl<$Res, FavoritesData>;
+  @useResult
+  $Res call({List<dynamic> id, List<dynamic> name, List<dynamic> imageURL});
 }
 
 /// @nodoc
-class _$FavoritesDataCopyWithImpl<$Res>
+class _$FavoritesDataCopyWithImpl<$Res, $Val extends FavoritesData>
     implements $FavoritesDataCopyWith<$Res> {
   _$FavoritesDataCopyWithImpl(this._value, this._then);
 
-  final FavoritesData _value;
   // ignore: unused_field
-  final $Res Function(FavoritesData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? name_in_arabic = freezed,
-    Object? imageURL = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? imageURL = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      name_in_arabic: name_in_arabic == freezed
-          ? _value.name_in_arabic
-          : name_in_arabic // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      imageURL: imageURL == freezed
+      imageURL: null == imageURL
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -87,45 +80,35 @@ abstract class _$$_FavoritesDataCopyWith<$Res>
           _$_FavoritesData value, $Res Function(_$_FavoritesData) then) =
       __$$_FavoritesDataCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {List<dynamic> id,
-      List<dynamic> name,
-      List<dynamic> name_in_arabic,
-      List<dynamic> imageURL});
+  @useResult
+  $Res call({List<dynamic> id, List<dynamic> name, List<dynamic> imageURL});
 }
 
 /// @nodoc
 class __$$_FavoritesDataCopyWithImpl<$Res>
-    extends _$FavoritesDataCopyWithImpl<$Res>
+    extends _$FavoritesDataCopyWithImpl<$Res, _$_FavoritesData>
     implements _$$_FavoritesDataCopyWith<$Res> {
   __$$_FavoritesDataCopyWithImpl(
       _$_FavoritesData _value, $Res Function(_$_FavoritesData) _then)
-      : super(_value, (v) => _then(v as _$_FavoritesData));
+      : super(_value, _then);
 
-  @override
-  _$_FavoritesData get _value => super._value as _$_FavoritesData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? name_in_arabic = freezed,
-    Object? imageURL = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? imageURL = null,
   }) {
     return _then(_$_FavoritesData(
-      id == freezed
+      null == id
           ? _value._id
           : id // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      name == freezed
+      null == name
           ? _value._name
           : name // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      name_in_arabic == freezed
-          ? _value._name_in_arabic
-          : name_in_arabic // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      imageURL == freezed
+      null == imageURL
           ? _value._imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
@@ -137,10 +120,9 @@ class __$$_FavoritesDataCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_FavoritesData implements _FavoritesData {
   const _$_FavoritesData(final List<dynamic> id, final List<dynamic> name,
-      final List<dynamic> name_in_arabic, final List<dynamic> imageURL)
+      final List<dynamic> imageURL)
       : _id = id,
         _name = name,
-        _name_in_arabic = name_in_arabic,
         _imageURL = imageURL;
 
   factory _$_FavoritesData.fromJson(Map<String, dynamic> json) =>
@@ -149,6 +131,7 @@ class _$_FavoritesData implements _FavoritesData {
   final List<dynamic> _id;
   @override
   List<dynamic> get id {
+    if (_id is EqualUnmodifiableListView) return _id;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_id);
   }
@@ -156,27 +139,22 @@ class _$_FavoritesData implements _FavoritesData {
   final List<dynamic> _name;
   @override
   List<dynamic> get name {
+    if (_name is EqualUnmodifiableListView) return _name;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_name);
-  }
-
-  final List<dynamic> _name_in_arabic;
-  @override
-  List<dynamic> get name_in_arabic {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_name_in_arabic);
   }
 
   final List<dynamic> _imageURL;
   @override
   List<dynamic> get imageURL {
+    if (_imageURL is EqualUnmodifiableListView) return _imageURL;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_imageURL);
   }
 
   @override
   String toString() {
-    return 'FavoritesData(id: $id, name: $name, name_in_arabic: $name_in_arabic, imageURL: $imageURL)';
+    return 'FavoritesData(id: $id, name: $name, imageURL: $imageURL)';
   }
 
   @override
@@ -186,8 +164,6 @@ class _$_FavoritesData implements _FavoritesData {
             other is _$_FavoritesData &&
             const DeepCollectionEquality().equals(other._id, _id) &&
             const DeepCollectionEquality().equals(other._name, _name) &&
-            const DeepCollectionEquality()
-                .equals(other._name_in_arabic, _name_in_arabic) &&
             const DeepCollectionEquality().equals(other._imageURL, _imageURL));
   }
 
@@ -197,11 +173,11 @@ class _$_FavoritesData implements _FavoritesData {
       runtimeType,
       const DeepCollectionEquality().hash(_id),
       const DeepCollectionEquality().hash(_name),
-      const DeepCollectionEquality().hash(_name_in_arabic),
       const DeepCollectionEquality().hash(_imageURL));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FavoritesDataCopyWith<_$_FavoritesData> get copyWith =>
       __$$_FavoritesDataCopyWithImpl<_$_FavoritesData>(this, _$identity);
 
@@ -214,10 +190,7 @@ class _$_FavoritesData implements _FavoritesData {
 }
 
 abstract class _FavoritesData implements FavoritesData {
-  const factory _FavoritesData(
-      final List<dynamic> id,
-      final List<dynamic> name,
-      final List<dynamic> name_in_arabic,
+  const factory _FavoritesData(final List<dynamic> id, final List<dynamic> name,
       final List<dynamic> imageURL) = _$_FavoritesData;
 
   factory _FavoritesData.fromJson(Map<String, dynamic> json) =
@@ -227,8 +200,6 @@ abstract class _FavoritesData implements FavoritesData {
   List<dynamic> get id;
   @override
   List<dynamic> get name;
-  @override
-  List<dynamic> get name_in_arabic;
   @override
   List<dynamic> get imageURL;
   @override

@@ -1,2 +1,0 @@
-0 Healthy
-1 UnHealthy
