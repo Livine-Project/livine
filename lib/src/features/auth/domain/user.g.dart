@@ -12,6 +12,7 @@ _$_UserData _$$_UserDataFromJson(Map<String, dynamic> json) => _$_UserData(
       json['email'] as String?,
       json['patient'] as int?,
       json['isVegan'] as bool?,
+      json['points'] as int?,
     );
 
 Map<String, dynamic> _$$_UserDataToJson(_$_UserData instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$_UserDataToJson(_$_UserData instance) =>
       'email': instance.email,
       'patient': instance.patient,
       'isVegan': instance.isVegan,
+      'points': instance.points,
     };

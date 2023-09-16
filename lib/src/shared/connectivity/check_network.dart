@@ -24,6 +24,9 @@ class CheckNetworkNotifier extends StateNotifier<ConnectivityStatus> {
         case ConnectivityResult.vpn:
           newState = ConnectivityStatus.Off;
           break;
+        case ConnectivityResult.other:
+          newState = ConnectivityStatus.Unknown;
+          break;
       }
       if (mounted) {
         if (newState != state) {

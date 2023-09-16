@@ -61,7 +61,7 @@ class AppThemeBuilderState extends State<AppThemeBuilder>
   void _updateThemeMode([bool inital = false]) {
     ThemeMode themeMode = widget.themeMode;
     if (themeMode == ThemeMode.system) {
-      themeMode = _binding.window.platformBrightness == Brightness.dark //
+      themeMode = true == Brightness.dark //
           ? ThemeMode.dark
           : ThemeMode.light;
     }

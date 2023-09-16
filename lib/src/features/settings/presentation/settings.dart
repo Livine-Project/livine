@@ -2,22 +2,23 @@
 
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:livine/src/translations/domain/translation_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../translations/locale_keys.g.dart';
+import 'settings_model.dart';
 
-class SettingsWidget extends StatefulWidget {
+class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);
 
   @override
-  State<SettingsWidget> createState() => _SettingsWidgetState();
+  ConsumerState<SettingsWidget> createState() => _SettingsWidgetState();
 }
 
-class _SettingsWidgetState extends State<SettingsWidget> {
+class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
+  late BuildContext context;
   Future<void> sendReport() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
@@ -34,147 +35,86 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
+    List<Settings> menus = [
+      Settings(
+        title: word?.languages ?? '',
+        icon: Icons.language_outlined,
+        route: "/languages",
+        subtitle: word?.change_language ?? '',
+      ),
+      Settings(
+        title: word!.accessibility,
+        icon: Icons.accessibility_outlined,
+        route: "/accessibility",
+        subtitle: word.change_use,
+      ),
+      Settings(
+        title: word.notfications,
+        icon: Icons.notifications_outlined,
+        route: "/notifications_settings",
+        subtitle: word.change_notification,
+      ),
+      Settings(
+        title: word.theme,
+        icon: Icons.palette_outlined,
+        route: "/themeSettings",
+        subtitle: word.change_theme,
+      ),
+      Settings(
+        title: word.report_a_bug,
+        icon: Icons.bug_report_outlined,
+        route: "/bug_report",
+        subtitle: word.help_us,
+      ),
+      Settings(
+        title: word.terms_and_conditions,
+        icon: Icons.sticky_note_2_outlined,
+        route: "/terms",
+        subtitle: "",
+      ),
+      Settings(
+        title: word.privacy_Policy,
+        icon: Icons.policy_outlined,
+        route: "/privacy",
+        subtitle: "",
+      ),
+      Settings(
+          title: word.version,
+          icon: Icons.info_outline,
+          route: "",
+          subtitle: "9.0.0"),
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(LocaleKeys.Settings.tr()),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SettingsGroup(
-                    text: LocaleKeys.General.tr(),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () => context.push('/languages'),
-                        child: SettingsTile(
-                          text: LocaleKeys.Language.tr(),
-                          subtitle: context.locale.languageCode == "en"
-                              ? "English "
-                              : "العربية",
-                          icon: Iconsax.language_square,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      InkWell(
-                        onTap: () => context.push("/notifications_settings"),
-                        child: SettingsTile(
-                          text: LocaleKeys.notfications.tr(),
-                          subtitle: '',
-                          icon: Iconsax.notification,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(),
-                  SettingsGroup(text: LocaleKeys.Theme.tr()),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  InkWell(
-                    onTap: () => context.push('/themeSettings'),
-                    child: SettingsTile(
-                        text: LocaleKeys.Theme.tr(),
-                        subtitle: '',
-                        icon: Iconsax.moon),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(),
-                  SettingsGroup(text: LocaleKeys.Feedback.tr()),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  InkWell(
-                    onTap: sendReport,
-                    child: SettingsTile(
-                      text: LocaleKeys.Report_a_bug.tr(),
-                      subtitle: '',
-                      icon: Iconsax.ghost,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(),
-                  SettingsGroup(text: LocaleKeys.Misc.tr()),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  InkWell(
-                    onTap: () => context.push('/terms'),
-                    child: SettingsTile(
-                      text: LocaleKeys.Terms_and_conditions.tr(),
-                      subtitle: '',
-                      icon: Iconsax.message_text_1,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  InkWell(
-                    onTap: () => context.push('/privacy'),
-                    child: SettingsTile(
-                        text: LocaleKeys.Privacy_Policy.tr(),
-                        subtitle: '',
-                        icon: Iconsax.shield_tick),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  AboutApp(),
-                ],
-              ),
-            ),
-          ],
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar.large(
+          title: Text(word.settings),
+          pinned: true,
         ),
-      ),
-    );
-  }
-}
-
-class AboutApp extends StatelessWidget {
-  const AboutApp({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => showAboutDialog(
-          context: context,
-          applicationName: context.locale.languageCode =="en" ? "Livine" : "ليفين",
-          applicationVersion: "8.5.0",
-          applicationLegalese: "© 2021 Livine",
-          applicationIcon: Image.asset(
-            "assets/images/icon/app_icon.png",
-            width: 50,
-          )),
-      child: SettingsTile(
-        text: context.locale.languageCode =="en" ? "About Livine" : "عن ليفين",
-        subtitle: '',
-        icon: Iconsax.info_circle,
-      ),
-    );
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return InkWell(
+              onTap: () {
+                if (menus[index].route != '/bug_report') {
+                  context.push(menus[index].route);
+                } else {
+                  sendReport();
+                }
+              },
+              child: ListTile(
+                leading: Icon(menus[index].icon),
+                title: Text(menus[index].title),
+                subtitle: Text(menus[index].subtitle),
+              ),
+            );
+          },
+          childCount: menus.length,
+        ))
+      ],
+    ));
   }
 }
 
@@ -226,23 +166,4 @@ class SettingsTile extends StatelessWidget {
   }
 }
 
-class SettingsGroup extends StatelessWidget {
-  const SettingsGroup({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
 
-  final text;
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '$text',
-      // style: GoogleFonts.bebasNeue(
-      //   fontSize: 15.0,
-      //   color: Colors.blueAccent,
-      //   letterSpacing: 3,
-      // ),
-      style: const TextStyle(fontSize: 17.0),
-    );
-  }
-}

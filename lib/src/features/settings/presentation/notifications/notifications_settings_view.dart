@@ -1,9 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../shared/notifications/health_notification.dart';
 import '../../../../constants/constants.dart';
-import '../../../../translations/locale_keys.g.dart';
+import '../../../../shared/notifications/health_notification.dart';
+import '../../../../translations/domain/translation_provider.dart';
 
 class NotificationsSettings extends StatefulWidget {
   const NotificationsSettings({Key? key}) : super(key: key);
@@ -17,19 +16,21 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(LocaleKeys.notfications.tr()),
-      ),
-      body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar.large(
+          title: Text(word?.notfications ?? "Notifications"),
+        ),
+        SliverToBoxAdapter(
+          child: //   Padding(
+              Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
                   width: 200,
-                  child: Text(LocaleKeys.ask_me_how_i_feel.tr(),
+                  child: Text(word?.ask_me_how_i_feel ?? "Ask me how I feel",
                       style: const TextStyle(fontSize: 18.0))),
               Switch(
                   value: isNotified,
@@ -39,7 +40,8 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
                     });
 
                     if (!value) {
-                      notificationControl.flutterLocalNotificationsPlugin.cancel(0);
+                      notificationControl.flutterLocalNotificationsPlugin
+                          .cancel(0);
                     } else {
                       showNotification();
                     }
@@ -47,7 +49,7 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
             ],
           ),
         )
-      ]),
-    );
+      ],
+    ));
   }
 }

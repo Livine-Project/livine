@@ -1,10 +1,9 @@
 import 'dart:developer';
 
 import 'package:animations/animations.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../common_widgets/recipe/recipe_card_widget.dart';
 import '../../../../constants/constants.dart';
@@ -20,7 +19,7 @@ class CustomSearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: const Icon(Iconsax.close_square),
+        icon: const Icon(Icons.close),
         onPressed: () {
           query = '';
           showSuggestions(context);
@@ -32,7 +31,7 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(Iconsax.arrow_left),
+      icon: const Icon(Icons.west),
       onPressed: () {
         close(context, null);
       },
@@ -46,6 +45,7 @@ class CustomSearchDelegate extends SearchDelegate {
         int recipesTypeData = ref.watch(userTypeProvider);
         final results = ref.watch(searchResultsProvider(
             query: query,
+            context: context,
             pk: recipesTypeData == 0 ? patientID : recipesTypeData));
         return results.when(
           data: (data) {
@@ -58,30 +58,26 @@ class CustomSearchDelegate extends SearchDelegate {
               ),
               itemCount: data.length,
               itemBuilder: (context, index) {
-                final recipe = data[index];
+                final recipe = data[index] as Recipe;
                 return OpenContainer(
+                  openElevation: 0,
+                  closedElevation: 0,
+                  closedColor: Colors.transparent,
                   openBuilder: (context, _) => RecipeDetails(
                     id: recipe.id,
                   ),
-                  middleColor: Colors.transparent,
-                  openColor: Colors.transparent,
-                  closedColor: Colors.transparent,
                   transitionDuration: const Duration(milliseconds: 500),
                   closedBuilder: (context, action) => RecipeCardNormal(
                     key: Key("K"),
                     id: recipe.id,
-                    name: context.locale.languageCode == "en"
-                        ? recipe.name
-                        : recipe.name_in_arabic,
+                    name: recipe.name,
                     foodImage: '${recipe.imageURL}',
-                    type: context.locale.languageCode == "en"
-                        ? recipe.patient
-                        : recipe.patient_in_arabic,
-                    difficulty: changeDiffName(recipe.diff, context),
-                    time: context.locale.languageCode == "en"
+                    type: recipe.patient,
+                    difficulty: recipe.difficulty,
+                    time: ref.watch(localeNotifierProvider).languageCode == "en"
                         ? "${recipe.time_taken} min"
                         : "${recipe.time_taken} دقيقة",
-                    dImage: changeDiffImage(difficulty: recipe.diff),
+                    dImage: recipe.difficulty_image,
                   ),
                 );
               },
@@ -117,24 +113,26 @@ class CustomSearchDelegate extends SearchDelegate {
     List<String> suggestions = ["Pasta", "Onion", "Tomato", "Chicken"];
     List<String> suggestionsAR = ["خبز", "بصل", "طماطم", "دجاج"];
 
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: Icon(
-            Icons.food_bank_rounded,
-          ),
-          onTap: () {
-            query = context.locale.languageCode == "en"
+    return Consumer(
+      builder: (context, ref, child) => ListView.builder(
+        itemCount: suggestions.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(
+              Icons.food_bank_rounded,
+            ),
+            onTap: () {
+              query = ref.watch(localeNotifierProvider).languageCode == "en"
+                  ? suggestions[index]
+                  : suggestionsAR[index];
+              showResults(context);
+            },
+            title: Text(ref.watch(localeNotifierProvider).languageCode == "en"
                 ? suggestions[index]
-                : suggestionsAR[index];
-            showResults(context);
-          },
-          title: Text(context.locale.languageCode == "en"
-              ? suggestions[index]
-              : suggestionsAR[index]),
-        );
-      },
+                : suggestionsAR[index]),
+          );
+        },
+      ),
     );
   }
 }

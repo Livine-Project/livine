@@ -1,18 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:iconsax/iconsax.dart';
 import 'package:livine/src/features/auth/profiles/presentation/profile.dart';
 import 'package:livine/src/common_widgets/auth/auth_widget.dart';
-import 'package:livine/src/translations/locale_keys.g.dart';
 
+import '../../../../translations/domain/translation_provider.dart';
 import '../../application/auth_service.dart';
 import '../../../get_recipes/application/vegan_service.dart';
-import '../../../../shared/styles/lib_color_schemes.g.dart';
 import '../data/get_user_data.dart';
 
 class UpdateProfile extends ConsumerStatefulWidget {
@@ -39,19 +35,11 @@ class _UpdateProfileState extends ConsumerState<UpdateProfile> {
 
     username.text = data?.username ?? "";
     email.text = data?.email ?? "";
-
+    final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(LocaleKeys.update.tr(),
-            style: TextStyle(
-              fontFamily: context.locale.languageCode == "en"
-                  ? 'Kine'
-                  : GoogleFonts.notoKufiArabic().fontFamily,
-            )),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? darkColorScheme.background
-            : lightColorScheme.secondaryContainer,
+        title: Text(word!.edit_profile),
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       ),
       body: Column(children: [
         UserInfo(
@@ -67,7 +55,7 @@ class _UpdateProfileState extends ConsumerState<UpdateProfile> {
                 authFormField(
                     context: context,
                     controller: username,
-                    text: LocaleKeys.username.tr(),
+                    text: word.username,
                     setState: setState,
                     validator: (u) {
                       if (u!.isEmpty) {
@@ -84,15 +72,11 @@ class _UpdateProfileState extends ConsumerState<UpdateProfile> {
                 authFormField(
                     context: context,
                     controller: email,
-                    text: context.locale.languageCode == "en"
-                        ? "Email"
-                        : "البريد الإلكتروني",
+                    text: "Email",
                     setState: setState,
                     validator: (e) {
                       if (e!.isEmpty) {
-                        return context.locale.languageCode == "en"
-                            ? "Please enter your email"
-                            : "من فضلك ادخل البريد الاكتروني";
+                        return "Please enter your email";
                       }
 
                       return null;
@@ -112,7 +96,7 @@ class _UpdateProfileState extends ConsumerState<UpdateProfile> {
                   context, username.text, email.text, data?.patient ?? 5, isVeg)
               .then((value) => context.pop());
         },
-        child: const Icon(Iconsax.arrow_up),
+        child: const Icon(Icons.save),
       ),
     );
   }

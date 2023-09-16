@@ -1,7 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/children/children.dart';
+import '../../../translations/domain/translation_provider.dart';
 
 class TabletNavigation extends StatefulWidget {
   const TabletNavigation({Key? key}) : super(key: key);
@@ -15,6 +14,7 @@ class _TabletNavigationState extends State<TabletNavigation> {
   bool isExtended = false;
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -34,46 +34,34 @@ class _TabletNavigationState extends State<TabletNavigation> {
                     isExtended = !isExtended;
                   });
                 },
-                icon: const Icon(FluentSystemIcons.ic_fluent_library_filled),
+                icon: const Icon(Icons.filter_list),
               ),
               minExtendedWidth: 200,
               destinations: <NavigationRailDestination>[
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(FluentSystemIcons.ic_fluent_home_filled,
+                  icon: Icon(Icons.filter_list,
                       size: MediaQuery.of(context).size.width / 70),
-                  label: context.locale.languageCode == "en"
-                      ? const Text("Home")
-                      : const Text("الرئيسية"),
+                  label: Text(word?.home ?? ""),
                 ),
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(FluentSystemIcons.ic_fluent_food_filled,
+                  icon: Icon(Icons.filter_list,
                       size: MediaQuery.of(context).size.width / 70),
-                  label: context.locale.languageCode == "en"
-                      ? const Text("Meals")
-                      : const Text("الوجبات"),
+                  label: Text(word?.meals ?? ""),
                 ),
-                // NavigationRailDestination(
-                //     padding: EdgeInsets.symmetric(vertical: 20.0),
-                //     icon: Icon(Icons.star_rate_rounded, size: 30),
-                //     label: context.locale.languageCode == "en"
-                //         ? Text("Pristine")
-                //         : Text("الاصلي")),
                 NavigationRailDestination(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(FluentSystemIcons.ic_fluent_person_regular,
-                        size: MediaQuery.of(context).size.width / 70),
-                    label: context.locale.languageCode == "en"
-                        ? const Text("Profile")
-                        : const Text("الحساب الشخصي")),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  icon: Icon(Icons.filter_list,
+                      size: MediaQuery.of(context).size.width / 70),
+                  label: Text(word?.profile ?? ""),
+                ),
                 NavigationRailDestination(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    icon: Icon(FluentSystemIcons.ic_fluent_settings_filled,
-                        size: MediaQuery.of(context).size.width / 70),
-                    label: context.locale.languageCode == "en"
-                        ? const Text("Settings")
-                        : const Text("الاعدادات")),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  icon: Icon(Icons.filter_list,
+                      size: MediaQuery.of(context).size.width / 70),
+                  label: Text(word?.settings ?? ""),
+                ),
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),

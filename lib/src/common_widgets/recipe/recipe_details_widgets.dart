@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class IconCard extends StatelessWidget {
@@ -7,6 +8,7 @@ class IconCard extends StatelessWidget {
       required this.color,
       required this.name,
       this.takeColor = false,
+      this.isNetworkImage = false,
       this.calAmount})
       : super(key: key);
 
@@ -14,6 +16,7 @@ class IconCard extends StatelessWidget {
   final Color color;
   final bool takeColor;
   final String name;
+  final bool isNetworkImage;
 
   final String? calAmount;
 
@@ -33,10 +36,15 @@ class IconCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.asset(
-            image,
-            width: 60,
-          ),
+          isNetworkImage
+              ? CachedNetworkImage(
+                  imageUrl: image,
+                  width: 60,
+                )
+              : Image.asset(
+                  image,
+                  width: 60,
+                ),
           if (calAmount != null) Text(calAmount.toString()),
           FittedBox(
             child: Text(

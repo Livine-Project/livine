@@ -1,14 +1,12 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../constants/constants.dart';
-import '../../../../common_widgets/auth/auth_widget.dart';
-import '../../../../translations/locale_keys.g.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -31,9 +29,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     if (response.statusCode == 200) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(context.locale.languageCode == "en"
-            ? "Please check your email"
-            : "من فضلك تفقد بريدك الالكتروني"),
+        content: Text("Please check your email"),
       ));
       setState(() {
         isLoading = false;
@@ -60,9 +56,10 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(LocaleKeys.Reset_pass.tr()),
+        title: Text(word?.reset_pass ?? "Reset Password"),
       ),
       body: Column(
         children: [
@@ -76,9 +73,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       textInputAction: TextInputAction.next,
                       validator: (e) {
                         if (e!.isEmpty) {
-                          return context.locale.languageCode == "en"
-                              ? "Please enter your email"
-                              : "من فضلك ادخل البريد الاكتروني";
+                          return "Please enter your email";
                         }
 
                         return null;
@@ -88,18 +83,50 @@ class _ResetPasswordState extends State<ResetPassword> {
                         border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
-                        labelText: context.locale.languageCode == "en"
-                            ? 'Email'
-                            : "البريد الاكتروني",
+                        labelText: word?.email_address,
                         labelStyle: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    authButton(
+                    ({
+                      required void Function() onPressed,
+                      required bool isLoading,
+                      required String text,
+                      Color? color,
+                      Color? textColor,
+                      double width = 350,
+                      required BuildContext context,
+                    }) {
+                      final theme = Theme.of(context).colorScheme;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: MaterialButton(
+                          onPressed: onPressed,
+                          color: color ?? theme.primaryContainer,
+                          elevation: 0,
+                          minWidth: width,
+                          height: 60,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  text,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textColor ??
+                                          theme.onPrimaryContainer),
+                                ),
+                        ),
+                      );
+                    }(
                         onPressed: validateRPForm,
                         isLoading: isLoading,
-                        text: LocaleKeys.Reset_pass.tr(),
+                        text: word?.reset_pass ?? "Reset Password",
                         context: context)
                   ],
                 ),

@@ -1,25 +1,24 @@
 // ignore_for_file: type_annotate_public_apis
 
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:livine/src/common_widgets/auth/auth_widget.dart';
 import 'package:livine/src/shared/cache/cache_helper.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../../translations/domain/translation_provider.dart';
 import '../../auth/favorites/data/favorites.dart';
 import '../../loading/loading.dart';
 import '../../../constants/constants.dart';
-import '../../../common_widgets/recipe/recipe_details_widgets.dart';
 import '../data/recipes.dart';
-import '../domain/recipe/recipe.dart';
+import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
-class RecipeDetails extends StatefulWidget {
+class RecipeDetails extends StatefulHookWidget {
   const RecipeDetails({Key? key, required this.id}) : super(key: key);
 
   final dynamic id;
@@ -28,240 +27,185 @@ class RecipeDetails extends StatefulWidget {
   State<RecipeDetails> createState() => _RecipeDetailsState();
 }
 
-class _RecipeDetailsState extends State<RecipeDetails>
-    with SliverHelpers<RecipeDetails> {
+class _RecipeDetailsState extends State<RecipeDetails> {
   int index = 0;
   bool isFavorited = CacheHelper.getBool("isFavorited") ?? false;
+  bool backDrop = false;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      final recipesData = ref.watch(recipesProviderID(widget.id));
+      final recipesData =
+          ref.watch(recipesDetailsProvider(id: widget.id, context: context));
+      final word = TranslationRepo.translate(context);
 
       return recipesData.when(
         data: (data) {
-          return Stack(
-            children: [
-              Positioned.fill(
-                child: AnimatedBuilder(
-                  animation: scrollController,
-                  builder: (_, child) =>
-                      Opacity(opacity: opacity, child: child),
-                  child: SizedBox(
-                      height: 250,
-                      child: CachedNetworkImage(
-                        imageUrl: "$restAPIMedia/${data.imageURL}",
-                        fit: BoxFit.cover,
-                      )),
-                ),
-              ),
-              Scaffold(
-                backgroundColor: Colors.transparent,
-                appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(kToolbarHeight),
-                  child: AnimatedBuilder(
-                    animation: scrollController,
-                    builder: (_, __) {
-                      return AppBar(
-                        actions: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isFavorited = !isFavorited;
-                              });
-                              CacheHelper.setBool("isFavorited", isFavorited);
-                              addFavorite(
-                                recipeID: data.id,
-                                ref: ref,
-                                context: context,
-                                mounted: mounted,
-                              );
-                            },
-                            icon: isFavorited
-                                ? const Icon(Iconsax.heart5)
-                                : const Icon(Iconsax.heart),
-                            iconSize: 30,
-                            color: isFavorited
-                                ? Colors.red
-                                : getColorScheme(context).onBackground,
-                          )
-                        ],
-                        centerTitle: true,
-                        elevation: opacity >= 1 ? 0 : null,
-                        backgroundColor: MaterialStateColor.resolveWith(
-                          (states) {
-                            return states.contains(MaterialState.scrolledUnder)
-                                ? (theme.useMaterial3
-                                    ? theme.colorScheme.surface
-                                    : theme.colorScheme.primary)
-                                : Colors.transparent;
-                          },
-                        ),
-                      );
-                    },
+          return Scaffold(
+              body: SlidingUpPanel(
+            backdropEnabled: true,
+            minHeight: MediaQuery.of(context).size.height * 0.6,
+            color: Theme.of(context).colorScheme.surface,
+            boxShadow: [],
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            body: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: CachedNetworkImageProvider(
+                        restAPIMedia + data.imageURL,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                body: SingleChildScrollView(
-                  controller: scrollController,
-                  padding: EdgeInsets.only(top: top),
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            context.locale.languageCode == "en"
-                                ? data.name
-                                : data.name_in_arabic,
-                            style: const TextStyle(
-                                fontFamily: 'Kine', fontSize: 25),
-                          ),
+                        CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surface,
+                          radius: 25,
+                          child: IconButton(
+                              onPressed: () => context.pop(),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              )),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconCard(
-                              color: theme.colorScheme.primaryContainer,
-                              image: 'assets/images/recipes/time.png',
-                              name: context.locale.languageCode == "en"
-                                  ? "${data.time_taken} min"
-                                  : "${data.time_taken} دقيقة",
-                            ),
-                            const SizedBox(
-                              width: 30.0,
-                            ),
-                            IconCard(
-                              color: theme.colorScheme.secondaryContainer,
-                              image: changeDiffImage(difficulty: data.diff),
-                              name: changeDiffName(
-                                  data.diff.toUpperCase(), context),
-                            ),
-                            const SizedBox(
-                              width: 30.0,
-                            ),
-                            IconCard(
-                              color: theme.colorScheme.tertiaryContainer,
-                              image: 'assets/images/recipes/calories.jpg',
-                              calAmount: data.calories.toString(),
-                              name: context.locale.languageCode == "en"
-                                  ? "cal/Serving"
-                                  : "سعرات حراريه",
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.locale.languageCode == "en"
-                                    ? "Ingridents :"
-                                    : "المكونات",
-                                style: const TextStyle(
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: data.ingridents.length,
-                                itemBuilder: ((context, index) {
-                                  return IngridentsW(
-                                    text: context.locale.languageCode == "en"
-                                        ? data.ingridents[index]
-                                        : data.ingridents_in_arabic[index],
-                                  );
-                                }),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                context.locale.languageCode == "en"
-                                    ? "Directions :"
-                                    : "الاتجاهات",
-                                style: const TextStyle(
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              ListView.separated(
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(
-                                  height: 20.0,
-                                ),
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: data.directions.length,
-                                itemBuilder: ((context, index) {
-                                  return Directions(
-                                    text: context.locale.languageCode == "en"
-                                        ? data.directions[index]
-                                        : data.directions_in_arabic[index],
-                                    num: index + 1,
-                                  );
-                                }),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(22.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  width: 200.0,
-                                  height: 60.0,
-                                  child: OutlinedButton(
-                                      onPressed: () async {
-                                        if (Platform.isAndroid ||
-                                            Platform.isIOS) {
-                                          context.go("/recipe_video",
-                                              extra:
-                                                  context.locale.languageCode ==
-                                                          "en"
-                                                      ? data.video
-                                                      : data.video_in_arabic);
-                                        } else {
-                                          if (!await launchUrl(Uri.parse(
-                                              context.locale.languageCode ==
-                                                      "en"
-                                                  ? data.video
-                                                  : data.video_in_arabic))) {
-                                            throw 'Could not launch at recipe page';
-                                          }
-                                        }
-                                      },
-                                      child: Text(
-                                          context.locale.languageCode == "en"
-                                              ? "Video"
-                                              : "الفيديو")),
-                                ),
-                              )
-                            ],
-                          ),
+                        CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surface,
+                          radius: 25,
+                          child: IconButton(
+                              onPressed: () => addFavorite(
+                                  ref: ref,
+                                  recipeID: data.id,
+                                  mounted: mounted,
+                                  context: context),
+                              icon: Icon(
+                                Icons.favorite_border,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              )),
                         ),
                       ],
                     ),
                   ),
                 ),
+              ],
+            ),
+            isDraggable: true,
+            panelBuilder: () => Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 4,
+                        width: 35,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30.0),
+                    RichText(
+                        text: TextSpan(children: <InlineSpan>[
+                      TextSpan(
+                        text: data.name,
+                        style: TextStyle(fontFamily: 'Kine', fontSize: 22.0),
+                      ),
+                      WidgetSpan(child: const SizedBox(width: 10.0)),
+                      // TextSpan(
+                      //   text: "made by",
+                      //   style: TextStyle(fontSize: 13.0),
+                      // ),
+                      // WidgetSpan(child: const SizedBox(width: 3.0)),
+                      // TextSpan(
+                      //   text: "Mazen Omar",
+                      //   style: TextStyle(
+                      //       fontSize: 13.0, fontWeight: FontWeight.bold),
+                      // ),
+                    ])),
+                    const SizedBox(height: 10.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Text(
+                        //   "Ingridents:",
+                        //   style: TextStyle(fontSize: 22.0),
+                        // ),
+                        // Container(
+                        //   height: 100,
+                        //   child: ListView.separated(
+                        //       separatorBuilder: (context, index) => SizedBox(
+                        //             width: 10.0,
+                        //           ),
+                        //       scrollDirection: Axis.horizontal,
+                        //       itemCount: 10,
+                        //       itemBuilder: (context, index) {
+                        //         return CircleAvatar(
+                        //           radius: 30,
+                        //           backgroundImage: CachedNetworkImageProvider(
+                        //               restAPIMedia + data.imageURL),
+                        //         );
+                        //       }),
+                        // ),
+                      ],
+                    ),
+                    Text(
+                      word!.ingridents + ' :',
+                      style: TextStyle(fontSize: 22.0),
+                    ),
+                    Container(
+                      child: ListView.separated(
+                          itemCount: data.ingridents.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: 10.0,
+                              ),
+                          itemBuilder: (context, index) {
+                            return Directions(
+                                count: index + 1, text: data.ingridents[index]);
+                          }),
+                    ),
+                    const SizedBox(height: 10.0),
+                    CustomButton(
+                        icon: SvgPicture.asset(
+                            "assets/images/icons/chief_hat.svg",
+                            width: 24,
+                            colorFilter: ColorFilter.mode(
+                                Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                                BlendMode.srcIn)),
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        textColor:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                        onPressed: () => context.push('/cooking', extra: {
+                              "directions": data.directions,
+                              "video": data.video
+                            }),
+                        isLoading: false,
+                        text: word.start_cooking,
+                        context: context),
+                    SizedBox(height: 20.0),
+                  ],
+                ),
               ),
-            ],
-          );
+            ),
+          ));
         },
         error: (Object error, StackTrace? stackTrace) {
           log("$error \t $stackTrace");
@@ -276,20 +220,19 @@ class _RecipeDetailsState extends State<RecipeDetails>
 class Directions extends StatelessWidget {
   const Directions({
     Key? key,
-    required this.num,
+    required this.count,
     required this.text,
   }) : super(key: key);
-  final int num;
+  final int count;
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          num.toString(),
+          count.toString(),
           style: const TextStyle(fontSize: 20.0),
         ),
         const SizedBox(
@@ -299,7 +242,7 @@ class Directions extends StatelessWidget {
           height: 30.0,
           width: 3.0,
           decoration: BoxDecoration(
-              color: theme.colorScheme.tertiary,
+              color: Theme.of(context).colorScheme.tertiary,
               borderRadius: BorderRadius.circular(20.0)),
         ),
         const SizedBox(
@@ -313,94 +256,5 @@ class Directions extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-mixin SliverHelpers<T extends StatefulWidget> on State<T> {
-  final scrollController = ScrollController();
-  double top = 250;
-  double opacity = 1;
-  double scrollPosition = 0;
-  double _getPositionFromTop() {
-    final paddingTop = MediaQuery.of(context).padding.top;
-    var position = 250 + paddingTop;
-    const finalPosition = 0.0;
-
-    if (scrollController.hasClients) {
-      final offset = scrollController.offset;
-      final isFinalPos = offset > position - finalPosition;
-      if (isFinalPos) {
-        position = finalPosition;
-      } else {
-        position = position - offset;
-      }
-    }
-    return position;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(() {
-      top = _getPositionFromTop();
-      opacity = _opacity(top);
-      scrollPosition = scrollController.offset;
-    });
-  }
-
-  double _opacity(double top) => (top / 250).clamp(0.0, 1.0);
-}
-
-class MathUtils {
-  /// normalizes the value.
-  static double norm(double value, double min, double max) =>
-      (value - min) / (max - min);
-
-  /// Linear interpolation, same as `lerpDouble`
-  /// no restrictions on `t` for range 0-1.
-  static double lerp(
-    double min,
-    double max,
-    double t,
-  ) =>
-      min + (max - min) * t;
-
-  /// Like dart num::clamp() but adjusts min/max.
-  static double clamp(double value, double min, double max) {
-    double localMax = max;
-    double localMin = min;
-    if (localMin > localMax) {
-      var tmp = localMax;
-      localMax = localMin;
-      localMin = tmp;
-    }
-    if (value < localMin) {
-      return localMin;
-    } else if (value > localMax) {
-      return localMax;
-    } else {
-      return value;
-    }
-  }
-
-  /// maps `srcValue` from `srcMin` and `srcMax` range ... to `dstMin` / `dstMax`
-  /// range... optionally clamping the the output value when `clampDst` is true.
-  static double map(
-    double srcValue,
-    double srcMin,
-    double srcMax,
-    double dstMin,
-    double dstMax, [
-    bool clampDst = false,
-  ]) {
-    final result = lerp(
-      dstMin,
-      dstMax,
-      norm(srcValue, srcMin, srcMax),
-    );
-    if (clampDst) {
-      return clamp(result, dstMin, dstMax);
-    }
-    return result;
   }
 }

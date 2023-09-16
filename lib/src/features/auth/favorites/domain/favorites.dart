@@ -8,7 +8,7 @@ part 'favorites.g.dart';
 @freezed
 class FavoritesData with _$FavoritesData {
   const factory FavoritesData(
-      List id, List name, List name_in_arabic, List imageURL) = _FavoritesData;
+      List id, List name, List imageURL) = _FavoritesData;
   factory FavoritesData.fromJson(Map<String, dynamic> json) =>
       _$FavoritesDataFromJson(json);
 }

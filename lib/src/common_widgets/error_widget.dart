@@ -24,7 +24,7 @@ class ErrorCustomWidget extends StatelessWidget {
         ),
         SizedBox(height: rh.deviceHeight(context) * 0.05),
         Text("Something went wrong",
-            style: Theme.of(context).textTheme.headline6),
+            style: Theme.of(context).textTheme.titleLarge),
         SizedBox(height: rh.deviceHeight(context) * 0.05),
         ElevatedButton(
             style: ButtonStyle(

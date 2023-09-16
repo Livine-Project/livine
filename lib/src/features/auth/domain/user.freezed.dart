@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user.dart';
 
@@ -25,6 +25,7 @@ mixin _$UserData {
   String? get email => throw _privateConstructorUsedError;
   int? get patient => throw _privateConstructorUsedError;
   bool? get isVegan => throw _privateConstructorUsedError;
+  int? get points => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,19 +36,28 @@ mixin _$UserData {
 /// @nodoc
 abstract class $UserDataCopyWith<$Res> {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
-      _$UserDataCopyWithImpl<$Res>;
+      _$UserDataCopyWithImpl<$Res, UserData>;
+  @useResult
   $Res call(
-      {int? id, String? username, String? email, int? patient, bool? isVegan});
+      {int? id,
+      String? username,
+      String? email,
+      int? patient,
+      bool? isVegan,
+      int? points});
 }
 
 /// @nodoc
-class _$UserDataCopyWithImpl<$Res> implements $UserDataCopyWith<$Res> {
+class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
+    implements $UserDataCopyWith<$Res> {
   _$UserDataCopyWithImpl(this._value, this._then);
 
-  final UserData _value;
   // ignore: unused_field
-  final $Res Function(UserData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -55,29 +65,34 @@ class _$UserDataCopyWithImpl<$Res> implements $UserDataCopyWith<$Res> {
     Object? email = freezed,
     Object? patient = freezed,
     Object? isVegan = freezed,
+    Object? points = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      username: username == freezed
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      patient: patient == freezed
+      patient: freezed == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
               as int?,
-      isVegan: isVegan == freezed
+      isVegan: freezed == isVegan
           ? _value.isVegan
           : isVegan // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+      points: freezed == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
   }
 }
 
@@ -87,20 +102,25 @@ abstract class _$$_UserDataCopyWith<$Res> implements $UserDataCopyWith<$Res> {
           _$_UserData value, $Res Function(_$_UserData) then) =
       __$$_UserDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
-      {int? id, String? username, String? email, int? patient, bool? isVegan});
+      {int? id,
+      String? username,
+      String? email,
+      int? patient,
+      bool? isVegan,
+      int? points});
 }
 
 /// @nodoc
-class __$$_UserDataCopyWithImpl<$Res> extends _$UserDataCopyWithImpl<$Res>
+class __$$_UserDataCopyWithImpl<$Res>
+    extends _$UserDataCopyWithImpl<$Res, _$_UserData>
     implements _$$_UserDataCopyWith<$Res> {
   __$$_UserDataCopyWithImpl(
       _$_UserData _value, $Res Function(_$_UserData) _then)
-      : super(_value, (v) => _then(v as _$_UserData));
+      : super(_value, _then);
 
-  @override
-  _$_UserData get _value => super._value as _$_UserData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -108,28 +128,33 @@ class __$$_UserDataCopyWithImpl<$Res> extends _$UserDataCopyWithImpl<$Res>
     Object? email = freezed,
     Object? patient = freezed,
     Object? isVegan = freezed,
+    Object? points = freezed,
   }) {
     return _then(_$_UserData(
-      id == freezed
+      freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      username == freezed
+      freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
-      email == freezed
+      freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      patient == freezed
+      freezed == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
               as int?,
-      isVegan == freezed
+      freezed == isVegan
           ? _value.isVegan
           : isVegan // ignore: cast_nullable_to_non_nullable
               as bool?,
+      freezed == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -137,8 +162,8 @@ class __$$_UserDataCopyWithImpl<$Res> extends _$UserDataCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserData implements _UserData {
-  const _$_UserData(
-      this.id, this.username, this.email, this.patient, this.isVegan);
+  const _$_UserData(this.id, this.username, this.email, this.patient,
+      this.isVegan, this.points);
 
   factory _$_UserData.fromJson(Map<String, dynamic> json) =>
       _$$_UserDataFromJson(json);
@@ -153,10 +178,12 @@ class _$_UserData implements _UserData {
   final int? patient;
   @override
   final bool? isVegan;
+  @override
+  final int? points;
 
   @override
   String toString() {
-    return 'UserData(id: $id, username: $username, email: $email, patient: $patient, isVegan: $isVegan)';
+    return 'UserData(id: $id, username: $username, email: $email, patient: $patient, isVegan: $isVegan, points: $points)';
   }
 
   @override
@@ -164,25 +191,23 @@ class _$_UserData implements _UserData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserData &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.username, username) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.patient, patient) &&
-            const DeepCollectionEquality().equals(other.isVegan, isVegan));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.patient, patient) || other.patient == patient) &&
+            (identical(other.isVegan, isVegan) || other.isVegan == isVegan) &&
+            (identical(other.points, points) || other.points == points));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(username),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(patient),
-      const DeepCollectionEquality().hash(isVegan));
+  int get hashCode =>
+      Object.hash(runtimeType, id, username, email, patient, isVegan, points);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UserDataCopyWith<_$_UserData> get copyWith =>
       __$$_UserDataCopyWithImpl<_$_UserData>(this, _$identity);
 
@@ -200,7 +225,8 @@ abstract class _UserData implements UserData {
       final String? username,
       final String? email,
       final int? patient,
-      final bool? isVegan) = _$_UserData;
+      final bool? isVegan,
+      final int? points) = _$_UserData;
 
   factory _UserData.fromJson(Map<String, dynamic> json) = _$_UserData.fromJson;
 
@@ -214,6 +240,8 @@ abstract class _UserData implements UserData {
   int? get patient;
   @override
   bool? get isVegan;
+  @override
+  int? get points;
   @override
   @JsonKey(ignore: true)
   _$$_UserDataCopyWith<_$_UserData> get copyWith =>

@@ -1,14 +1,13 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:livine/src/constants/constants.dart';
 
+import '../../../../translations/domain/translation_provider.dart';
 import '../data/favorites.dart';
 import '../../../loading/loading.dart';
-import '../../../../translations/locale_keys.g.dart';
 
 class Favorites extends ConsumerStatefulWidget {
   const Favorites({Key? key}) : super(key: key);
@@ -20,21 +19,21 @@ class Favorites extends ConsumerStatefulWidget {
 class _FavoritesState extends ConsumerState<Favorites> {
   @override
   Widget build(BuildContext context) {
-    final favorites = ref.watch(getFavoritesProvider);
-
+    final favorites = ref.watch(getFavoritesProvider(context: context));
+    final word = TranslationRepo.translate(context);
     return RefreshIndicator(
       onRefresh: () async {
         return Future.delayed(const Duration(seconds: 2))
-            .then((_) => ref.refresh(getFavoritesProvider));
+            .then((_) => ref.refresh(getFavoritesProvider(context: context)));
       },
-      backgroundColor: getColorScheme(context).surface,
+      backgroundColor: colorScheme(context).surface,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(LocaleKeys.Favorites.tr()),
+          title: Text(word?.favorites ?? ""),
         ),
         body: favorites.when(
             data: (data) => RawScrollbar(
-                  thumbColor: getColorScheme(context).tertiary,
+                  thumbColor: colorScheme(context).tertiary,
                   thickness: 5,
                   radius: const Radius.circular(10),
                   child: ListView.builder(
@@ -51,8 +50,8 @@ class _FavoritesState extends ConsumerState<Favorites> {
                                     recipeID: data.id[index],
                                     mounted: mounted,
                                     context: context)
-                                .then((value) =>
-                                    ref.refresh(getFavoritesProvider));
+                                .then((value) => ref.refresh(
+                                    getFavoritesProvider(context: context)));
                           },
                           background: Container(
                             color: Colors.red,
@@ -75,9 +74,7 @@ class _FavoritesState extends ConsumerState<Favorites> {
                                   fit: BoxFit.cover,
                                 ),
                                 Text(
-                                  context.locale.languageCode == "en"
-                                      ? data.name[index]
-                                      : data.name_in_arabic[index],
+                                  data.name[index],
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(

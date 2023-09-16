@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/common_widgets/auth/auth_widget.dart';
 import 'package:livine/src/constants/constants.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -53,11 +51,29 @@ class NoConnection extends ConsumerWidget {
               ResponsiveRowColumnItem(
                 child: Consumer(
                   builder: (context, watch, child) {
-                    return authButton(
-                        context: context,
-                        isLoading: false,
-                        text: "Try again",
-                        onPressed: () => ref.refresh(checkNetworkProvider));
+                    final theme = Theme.of(context).colorScheme;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: MaterialButton(
+                        onPressed: () => ref.refresh(checkNetworkProvider),
+                        color: (null) ?? theme.primaryContainer,
+                        elevation: 0,
+                        minWidth: 350,
+                        height: 60,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Text(
+                          "Try again",
+                          style: TextStyle(
+                              fontSize: 15,
+                              // fontFamily: context.locale.languageCode == "en"
+                              //     ? 'Kine'
+                              //     : GoogleFonts.notoKufiArabic().fontFamily,
+                              color: (null) ?? theme.onPrimaryContainer),
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),

@@ -9,7 +9,6 @@ final List<Widget> children = [
   const Home(),
   const Patient(),
   const Profile(),
-  const SettingsWidget()
 ];
 
 final List<Widget> tabletChildren = [

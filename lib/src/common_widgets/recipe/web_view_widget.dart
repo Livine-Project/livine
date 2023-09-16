@@ -1,33 +1,33 @@
-import 'dart:io';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class RecipeVideoWidget extends StatefulWidget {
-  const RecipeVideoWidget({Key? key, required this.url}) : super(key: key);
+class RecipeVideoWidget extends StatelessWidget {
   final String url;
-
-  @override
-  State<RecipeVideoWidget> createState() => _RecipeVideoWidgetState();
-}
-
-class _RecipeVideoWidgetState extends State<RecipeVideoWidget> {
-  @override
-  void initState() {
-    super.initState();
-    // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
-  }
-
-  final _key = UniqueKey();
+  RecipeVideoWidget({Key? key, required this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(url);
+    final controller = WebViewController()
+      // ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {
+            print(error.description);
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse("https://www.youtube.com/watch?v=-B-usxlRJj"));
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.locale.languageCode == "en" ? "Video" : "فيديو"),
+        title: Text("Video"),
         leading: IconButton(
             onPressed: () => context.go('/navigate'),
             icon: const Icon(Icons.arrow_back)),
@@ -35,10 +35,8 @@ class _RecipeVideoWidgetState extends State<RecipeVideoWidget> {
       body: Column(
         children: [
           Expanded(
-            child: WebView(
-              key: _key,
-              initialUrl: widget.url,
-              javascriptMode: JavascriptMode.unrestricted,
+            child: WebViewWidget(
+              controller: controller,
             ),
           ),
         ],

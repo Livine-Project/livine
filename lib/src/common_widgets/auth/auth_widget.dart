@@ -1,14 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-Widget authButton({
+Widget CustomButton({
   required void Function() onPressed,
   required bool isLoading,
   required String text,
   Color? color,
   Color? textColor,
+  double width = 350,
+  Widget? icon,
   required BuildContext context,
 }) {
   final theme = Theme.of(context).colorScheme;
@@ -18,7 +18,7 @@ Widget authButton({
       onPressed: onPressed,
       color: color ?? theme.primaryContainer,
       elevation: 0,
-      minWidth: 350,
+      minWidth: width,
       height: 60,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -27,14 +27,17 @@ Widget authButton({
           ? const CircularProgressIndicator(
               color: Colors.white,
             )
-          : Text(
-              text,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: context.locale.languageCode == "en"
-                      ? 'Kine'
-                      : GoogleFonts.notoKufiArabic().fontFamily,
-                  color: textColor ?? theme.onPrimaryContainer),
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: textColor ?? theme.onPrimaryContainer),
+                ),
+                icon ?? const SizedBox(),
+              ],
             ),
     ),
   );

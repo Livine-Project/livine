@@ -1,5 +1,7 @@
+
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -7,13 +9,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/features/auth/profiles/data/get_user_data.dart';
 import 'package:livine/src/shared/cache/cache_helper.dart';
 
 import '../data/user.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/shared_constants.dart';
 import '../../get_recipes/domain/recipe/recipe.dart';
-import '../profiles/data/get_user_data.dart';
 
 final authHelperProvider = Provider(AuthService.new);
 
@@ -55,7 +57,7 @@ class AuthService {
           GoRouter.of(context).go('/navigate');
         }
       } else {
-          GoRouter.of(context).go('/navigate');
+        GoRouter.of(context).go('/navigate');
       }
     } else {
       if (!mounted) return null;
@@ -117,10 +119,7 @@ class AuthService {
 
       context.go('/login');
     } else {
-      log(error: "Error in logout", response.body);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Error logging out"),
-      ));
+      logOutAsGuest(context);
     }
   }
 
@@ -186,10 +185,9 @@ class AuthService {
     }
   }
 
-  Future<String> getUserUsername() async {
+  Future<String> getUserUsername() async{
     final userData = await ref.watch(userDataProvider.future);
-    log(error: "Username", userData.toString());
-
+    // log(error: "Username", userData.toString());
     return userData.username ?? "";
   }
 }

@@ -1,17 +1,12 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:livine/src/shared/styles/lib_color_schemes.g.dart';
 
+ColorScheme lightHarmonizedColorScheme = lightColorScheme.harmonized();
+ColorScheme darkHarmonizedColorScheme = darkColorScheme.harmonized();
 
-  const primaryColor = Color(0xfff80ed99);
-
-  const secondaryColor = Color(0xfff38a3a5);
-
-  const thirdColor = Color(0xfff22577a);
-
-  const fourthColor = Color(0xFF57CC99);
-
-  const fifthColor = Color(0xfffc7f9cc);
 
 
 
