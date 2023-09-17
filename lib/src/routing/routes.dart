@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:livine/src/features/auth/welcome/presentation/welcome.dart';
 import 'package:livine/src/features/cooking/presentation/cooking.dart';
+import 'package:livine/src/features/get_recipes/presentation/share_screenshot.dart';
 import 'package:livine/src/features/settings/presentation/accessibility/accessibility.dart';
 
 import '../common_widgets/recipe/web_view_widget.dart';
@@ -13,6 +14,7 @@ import '../features/auth/register/presentation/register.dart';
 import '../features/auth/reset_password/presentation/reset_password.dart';
 import '../features/auth/reset_password/presentation/reset_password_confirm.dart';
 import '../features/auth/reset_password/presentation/token_validate.dart';
+import '../features/check_update/presentation/check_update.dart';
 import '../features/content/presentation/content.dart';
 import '../features/content/presentation/content_patients.dart';
 import '../features/get_recipes/presentation/ingridents.dart';
@@ -179,6 +181,20 @@ final baseRoutes = GoRouter(routes: [
     path: '/accessibility',
     builder: (context, state) {
       return const Accessibility();
+    },
+  ),
+  GoRoute(
+    path: '/check_update',
+    builder: (context, state) {
+      return const CheckUpdate();
+    },
+  ),
+  GoRoute(
+    path: '/share_recipe',
+    builder: (context, state) {
+      return ShareRecipe(
+        data: state.extra!,
+      );
     },
   ),
 ]);

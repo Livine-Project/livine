@@ -119,8 +119,9 @@
   "vegetarian":"Vegetarian",
   "accessibility":"Accessibility",
   "change_use":"Change how you use Livine",
-  "swipe_screen":"Swipe Screen"
-
+  "swipe_screen":"Swipe Screen",
+  "minute":"min",
+  "calories":"Cal"
 
 
 }

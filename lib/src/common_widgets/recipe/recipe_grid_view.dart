@@ -14,6 +14,7 @@ import '../../features/get_recipes/data/recipes.dart';
 import '../../features/get_recipes/domain/recipe/recipe.dart';
 import '../../features/get_recipes/presentation/recipe_details.dart';
 import '../../features/loading/loading.dart';
+import '../../translations/domain/translation_provider.dart';
 import 'recipe_card_widget.dart';
 
 import '../../common_widgets/error_widget.dart';
@@ -85,6 +86,7 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
 
   @override
   Widget build(BuildContext context) {
+    final word = TranslationRepo.translate(context);
     return PagedGridView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -115,7 +117,7 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
               foodImage: '${item.imageURL}',
               type: recipe.patient,
               difficulty: recipe.difficulty,
-              time: "${recipe.time_taken} min",
+              time: "${recipe.time_taken} ${word!.minute.toUpperCase()}",
               dImage: "$restAPIMedia/${recipe.difficulty_image}",
             ),
           );

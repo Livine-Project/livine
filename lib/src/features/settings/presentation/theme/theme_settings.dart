@@ -56,7 +56,9 @@ class ThemeSettings extends HookWidget {
         body: CustomScrollView(
       slivers: [
         SliverAppBar.large(
-          title: Text(word?.theme ?? "Theme"),
+          title: Text(
+            word?.theme ?? "Theme",
+          ),
         ),
         SliverToBoxAdapter(
           child: Consumer(
@@ -78,15 +80,12 @@ class ThemeSettings extends HookWidget {
                   curve: Curves.easeInOut,
                   initialValue: getInitialSegment(theme),
                   children: {
-                    0: Text(
-                      word?.light ?? "Light",
-                    ),
-                    1: Text(
-                      word?.dark ?? "Dark",
-                    ),
-                    2: Text(
-                      word?.system ?? "System",
-                    ),
+                    0: Text(word?.light ?? "Light",
+                        style: TextStyle(fontFamily: '')),
+                    1: Text(word?.dark ?? "Dark",
+                        style: TextStyle(fontFamily: '')),
+                    2: Text(word?.system ?? "System",
+                        style: TextStyle(fontFamily: '')),
                   },
                   onValueChanged: (value) {
                     if (value == 0) {
@@ -116,7 +115,8 @@ class ThemeSettings extends HookWidget {
                     : (v) => ref
                         .watch(dynamicThemeProvider.notifier)
                         .toggleDynamic(v),
-                subtitle: Text(word?.dynamic_theme_hint ?? ""),
+                subtitle: Text(word?.dynamic_theme_hint ?? "",
+                    style: TextStyle(fontFamily: '')),
                 isThreeLine: true,
               );
             },
@@ -145,8 +145,11 @@ class ThemeSettings extends HookWidget {
           (context, index) => Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: ListTile(
-              title: Text(colorTypes[index].type),
-              subtitle: Text(colorTypes[index].subtitle),
+              title: Text(
+                colorTypes[index].type,
+              ),
+              subtitle: Text(colorTypes[index].subtitle,
+                  style: TextStyle(fontFamily: '')),
               trailing: Container(
                 width: 50,
                 height: 50,
