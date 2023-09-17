@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:livine/src/translations/domain/translation_provider.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'settings_model.dart';
@@ -106,8 +107,14 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
               },
               child: ListTile(
                 leading: Icon(menus[index].icon),
-                title: Text(menus[index].title),
-                subtitle: Text(menus[index].subtitle),
+                title: Text(
+                  menus[index].title,
+                  style: TextStyle(fontFamily: ''),
+                ),
+                subtitle: menus[index].subtitle != ''
+                    ? Text(menus[index].subtitle,
+                        style: TextStyle(fontFamily: ''))
+                    : null,
               ),
             );
           },
@@ -165,5 +172,3 @@ class SettingsTile extends StatelessWidget {
     );
   }
 }
-
-

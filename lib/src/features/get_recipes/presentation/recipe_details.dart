@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:livine/src/common_widgets/auth/auth_widget.dart';
+import 'package:livine/src/features/get_recipes/presentation/share_screenshot.dart';
 import 'package:livine/src/shared/cache/cache_helper.dart';
 
 import '../../../translations/domain/translation_provider.dart';
@@ -31,6 +32,17 @@ class _RecipeDetailsState extends State<RecipeDetails> {
   int index = 0;
   bool isFavorited = CacheHelper.getBool("isFavorited") ?? false;
   bool backDrop = false;
+
+  // shareRecipe(String imageURL) async {
+  //   final url = Uri.parse(imageURL);
+  //   final response = await client.get(url);
+  //   final temp = await getTemporaryDirectory();
+  //   final path = '${temp.path}/image.jpg';
+
+  //   File(path).writeAsBytesSync(response.bodyBytes);
+
+  //   await Share.shareFiles([path], text: 'Great picture');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,20 +91,45 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                                 color: Theme.of(context).colorScheme.onSurface,
                               )),
                         ),
-                        CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          radius: 25,
-                          child: IconButton(
-                              onPressed: () => addFavorite(
-                                  ref: ref,
-                                  recipeID: data.id,
-                                  mounted: mounted,
-                                  context: context),
-                              icon: Icon(
-                                Icons.favorite_border,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              )),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              radius: 25,
+                              child: IconButton(
+                                  onPressed: () =>
+                                      context.push('/share_recipe', extra: {
+                                        "image": restAPIMedia + data.imageURL,
+                                        "name": data.name,
+                                        "calories": data.calories,
+                                        "time": data.time_taken,
+                                        "difficulty": data.difficulty
+                                      }),
+                                  icon: Icon(
+                                    Icons.share_outlined,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                  )),
+                            ),
+                            const SizedBox(width: 10.0),
+                            CircleAvatar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              radius: 25,
+                              child: IconButton(
+                                  onPressed: () => addFavorite(
+                                      ref: ref,
+                                      recipeID: data.id,
+                                      mounted: mounted,
+                                      context: context),
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                  )),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -118,26 +155,24 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30.0),
-                    RichText(
-                        text: TextSpan(children: <InlineSpan>[
-                      TextSpan(
-                        text: data.name,
-                        style: TextStyle(fontFamily: 'Kine', fontSize: 22.0),
-                      ),
-                      WidgetSpan(child: const SizedBox(width: 10.0)),
-                      // TextSpan(
-                      //   text: "made by",
-                      //   style: TextStyle(fontSize: 13.0),
-                      // ),
-                      // WidgetSpan(child: const SizedBox(width: 3.0)),
-                      // TextSpan(
-                      //   text: "Mazen Omar",
-                      //   style: TextStyle(
-                      //       fontSize: 13.0, fontWeight: FontWeight.bold),
-                      // ),
-                    ])),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 20.0),
+                    Text(data.name,
+                        style: TextStyle(
+                            fontSize: 23.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Kine')),
+                    const SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RecipeTag(text: "${data.calories} ${word!.calories}"),
+                        const SizedBox(width: 10.0),
+                        RecipeTag(text: "${data.difficulty}"),
+                        const SizedBox(width: 10.0),
+                        RecipeTag(text: "${data.time_taken} ${word.minute}"),
+                      ],
+                    ),
+                    const SizedBox(height: 20.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -164,7 +199,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                       ],
                     ),
                     Text(
-                      word!.ingridents + ' :',
+                      word.ingridents + ' :',
                       style: TextStyle(fontSize: 22.0),
                     ),
                     Container(

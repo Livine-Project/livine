@@ -14,7 +14,7 @@ class Cooking extends HookConsumerWidget {
     required this.data,
   });
 
-  final int endTimerinSeconds = 5;
+  final int endTimerinSeconds = 120;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -136,7 +136,8 @@ class DirectionsWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: ElevatedButton.icon(
-                  onPressed: () => context.pushNamed('recipeVideo',extra: video),
+                  onPressed: () =>
+                      context.pushNamed('recipeVideo', extra: video),
                   label: Text(word!.watch_video),
                   icon: Icon(Icons.play_arrow_outlined),
                 ),
