@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../constants/constants.dart';
+import '../../../translations/domain/translation_provider.dart';
 import '../domain/recipe/recipe.dart';
 import '../domain/recipe/patients.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

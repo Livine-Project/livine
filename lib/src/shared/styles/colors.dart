@@ -2,7 +2,8 @@
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:livine/src/shared/styles/lib_color_schemes.g.dart';
+
+import 'lib_color_schemes.g.dart';
 
 ColorScheme lightHarmonizedColorScheme = lightColorScheme.harmonized();
 ColorScheme darkHarmonizedColorScheme = darkColorScheme.harmonized();

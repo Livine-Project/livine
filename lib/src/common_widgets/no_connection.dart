@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/constants/constants.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../constants/constants.dart';
 import '../shared/connectivity/check_network.dart';
 
 class NoConnection extends ConsumerWidget {

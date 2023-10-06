@@ -2,16 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:livine/src/constants/constants.dart';
-import 'package:livine/src/features/loading/loading.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../../constants/constants.dart';
+import '../../../shared/cache/cache_helper.dart';
 import '../../../translations/domain/translation_provider.dart';
 import '../../auth/data/user.dart';
 
 import '../../auth/application/auth_service.dart';
 import '../../auth/profiles/data/get_user_data.dart';
+import '../../loading/loading.dart';
 
 class ChooseContent extends StatefulWidget {
   const ChooseContent({Key? key}) : super(key: key);

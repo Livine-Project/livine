@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
+
+import '../../../shared/cache/cache_helper.dart';
 
 final navigationNotifierProvider =
     StateNotifierProvider((ref) => NavigationNotifier());

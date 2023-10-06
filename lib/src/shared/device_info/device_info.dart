@@ -37,6 +37,13 @@ class GetDeviceInfo {
     return null;
   }
 
+  static List<String>? deviceABI() {
+    if (Platform.isAndroid) {
+      return androidInfo?.supportedAbis;
+    }
+    return null;
+  }
+
   static String? deviceBrand() {
     if (Platform.isAndroid) {
       return androidInfo?.brand;

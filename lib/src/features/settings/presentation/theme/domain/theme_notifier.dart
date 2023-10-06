@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
-import 'package:livine/src/shared/device_info/device_info.dart';
+
+import '../../../../../shared/cache/cache_helper.dart';
+import '../../../../../shared/device_info/device_info.dart';
 
 final themeSeedProvider = StateNotifierProvider((ref) => ThemeSeedNotifier());
 

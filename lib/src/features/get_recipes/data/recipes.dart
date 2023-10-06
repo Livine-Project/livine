@@ -24,34 +24,36 @@ Future<Recipe> recipesDetails(Ref ref,
 }
 
 @riverpod
-Future getRecipes(Ref ref,
+Future<List<Recipe>> getRecipes(Ref ref,
     {required int id,
     required int pageKey,
     required BuildContext context}) async {
-  final url = '$restAPIURL/patient/$id?format=json&page=$pageKey';
+  final url = '$restAPIURL/patient/$id?format=json&&limit=6&offset=$pageKey';
   final response = await client.get(Uri.parse(url), headers: {
     'Accept-Language': ref.watch(localeNotifierProvider).languageCode
   });
 
   final responseDe = utf8.decode(response.bodyBytes);
   var responseJson = json.decode(responseDe);
-  var recipesList =
-      responseJson["results"].map((job) => Recipe.fromJson(job)).toList();
+  List<Recipe> recipesList = responseJson["results"]
+      .map<Recipe>((job) => Recipe.fromJson(job))
+      .toList();
   return recipesList;
 }
 
 @riverpod
-Future getVegRecipes(Ref ref,
+Future<List<Recipe>> getVegRecipes(Ref ref,
     {required int id,
     required int pageKey,
     required BuildContext context}) async {
-  final url = '$restAPIURL/recipe/veg/$id?format=json&page=$pageKey';
+  final url = '$restAPIURL/recipe/veg/$id?format=json&limit=6&offset=$pageKey';
   final response = await client.get(Uri.parse(url), headers: {
     'Accept-Language': ref.watch(localeNotifierProvider).languageCode
   });
   final responseDe = utf8.decode(response.bodyBytes);
   var responseJson = json.decode(responseDe);
-  var recipesList =
-      responseJson["results"].map((job) => Recipe.fromJson(job)).toList();
+  var recipesList = responseJson["results"]
+      .map<Recipe>((job) => Recipe.fromJson(job))
+      .toList();
   return recipesList;
 }

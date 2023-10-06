@@ -9,10 +9,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:livine/src/constants/constants.dart';
-import 'package:livine/src/features/auth/application/auth_service.dart';
 
+import '../../../../constants/constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
+import '../../application/auth_service.dart';
 
 class Register extends ConsumerStatefulWidget {
   const Register({Key? key}) : super(key: key);

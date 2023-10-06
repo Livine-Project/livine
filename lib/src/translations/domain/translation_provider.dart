@@ -2,7 +2,8 @@ import 'dart:ui';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
+
+import '../../shared/cache/cache_helper.dart';
 
 class TranslationRepo {
   static List<Locale> supportedLocales = [

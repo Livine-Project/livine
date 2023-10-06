@@ -5,10 +5,8 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   dynamic_color
-  screen_retriever
   share_plus
   url_launcher_windows
-  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

@@ -1,12 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:livine/src/features/get_recipes/domain/recipe/recipe.dart';
-import 'package:livine/src/shared/device_info/device_info.dart';
-
 import '../../constants/constants.dart';
+import '../../features/get_recipes/domain/recipe/recipe.dart';
+import '../device_info/device_info.dart';
 
-void errorToDjango(dynamic error) async {
+Future<void> errorToDjango(dynamic error) async {
   await GetDeviceInfo.init();
   Uri url = Uri.parse("$restAPIURL/errors/");
 

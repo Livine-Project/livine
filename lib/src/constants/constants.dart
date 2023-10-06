@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:livine/src/shared/notification_control/notifications_control.dart';
 
+import '../shared/notification_control/notifications_control.dart';
 import '../shared/responsive/responsive_controller.dart';
 
 ResponsiveHelper rh = ResponsiveHelper();

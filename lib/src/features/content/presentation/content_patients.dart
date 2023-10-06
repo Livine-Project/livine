@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/constants/constants.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
 
+import '../../../constants/constants.dart';
+import '../../../translations/domain/translation_provider.dart';
 import '../../auth/data/user.dart';
 import '../../loading/loading.dart';
 import '../../auth/application/auth_service.dart';

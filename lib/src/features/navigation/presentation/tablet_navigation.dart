@@ -34,31 +34,31 @@ class _TabletNavigationState extends State<TabletNavigation> {
                     isExtended = !isExtended;
                   });
                 },
-                icon: const Icon(Icons.filter_list),
+                icon: const Icon(Icons.menu),
               ),
               minExtendedWidth: 200,
               destinations: <NavigationRailDestination>[
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.filter_list,
+                  icon: Icon(Icons.home,
                       size: MediaQuery.of(context).size.width / 70),
                   label: Text(word?.home ?? ""),
                 ),
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.filter_list,
+                  icon: Icon(Icons.local_dining,
                       size: MediaQuery.of(context).size.width / 70),
                   label: Text(word?.meals ?? ""),
                 ),
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.filter_list,
+                  icon: Icon(Icons.person_rounded,
                       size: MediaQuery.of(context).size.width / 70),
                   label: Text(word?.profile ?? ""),
                 ),
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  icon: Icon(Icons.filter_list,
+                  icon: Icon(Icons.settings,
                       size: MediaQuery.of(context).size.width / 70),
                   label: Text(word?.settings ?? ""),
                 ),

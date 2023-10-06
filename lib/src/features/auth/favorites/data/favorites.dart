@@ -13,9 +13,18 @@ import '../domain/favorites.dart';
 
 part 'favorites.g.dart';
 
+final getFavoritesStreamProvider =
+    StreamProvider.family((ref, BuildContext context) async* {
+  while (true) {
+    await Future<void>.delayed(const Duration(seconds: 2));
+    yield await getFavorites(ref, context: context);
+  }
+});
+
 @riverpod
-Future<FavoritesData> getFavorites(Ref ref,{required BuildContext context}) async{
-    final url = '$restAPIURL/user/favorite/';
+Future<FavoritesData> getFavorites(Ref ref,
+    {required BuildContext context}) async {
+  final url = '$restAPIURL/user/favorite/';
   final response = await client.get(
     Uri.parse(url),
     headers: {
@@ -26,9 +35,7 @@ Future<FavoritesData> getFavorites(Ref ref,{required BuildContext context}) asyn
   final responseDe = utf8.decode(response.bodyBytes);
   final responseJson = json.decode(responseDe);
   return FavoritesData.fromJson(responseJson["favorites"]);
-
 }
-
 
 Future<void> addFavorite({
   required WidgetRef ref,
@@ -84,12 +91,26 @@ Future<void> deleteFavorite({
     if (!mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Successfully deleted favorite $recipeID "),
+      content: Text("Successfully deleted recipe"),
     ));
   } else {
-    log(error: "Error adding to favorites", response.body);
+    log(error: "Error deleting favorites", response.body);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Error occurs while deleting favorite")));
   }
 }
+
+final isFavoritedProvider = StreamProvider.family((ref, id) async* {
+  while (true) {
+    await Future<void>.delayed(const Duration(seconds: 1));
+    final url = Uri.parse('$restAPIURL/recipe/$id/favorite/');
+    final request = await client.get(
+      url,
+      headers: {
+        'Authorization': 'Token ${ref.read(authHelperProvider).getToken()}',
+      },
+    );
+    yield request.body;
+  }
+});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/common_widgets/no_connection.dart';
 
+import '../../../common_widgets/no_connection.dart';
 import '../../../common_widgets/recipe/food_category_widget.dart';
 import '../../../constants/constants.dart';
 import '../../../shared/connectivity/check_network.dart';
