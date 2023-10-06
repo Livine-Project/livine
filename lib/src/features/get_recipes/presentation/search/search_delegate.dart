@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../common_widgets/recipe/recipe_card_widget.dart';
 import '../../../../constants/constants.dart';
 import '../../../../constants/shared_constants.dart';
+import '../../../../translations/domain/translation_provider.dart';
 import '../../../auth/data/user.dart';
 import '../../../loading/loading.dart';
 import '../../domain/recipe/recipe.dart';

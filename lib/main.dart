@@ -1,11 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:livine/src/shared/device_info/device_info.dart';
-
-import 'package:livine/src/shared/error_django/error_django.dart';
-import 'package:window_manager/window_manager.dart';
-
 import 'src/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,35 +10,11 @@ import 'src/shared/cache/cache_helper.dart';
 import 'src/features/get_recipes/application/vegan_service.dart';
 import 'package:device_preview/device_preview.dart';
 
-Future<void> main() async {
-  FlutterError.onError = (details) {
-    if (kReleaseMode) {
-      errorToDjango(details);
-    } else {
-      FlutterError.dumpErrorToConsole(details);
-    }
-  };
+import 'src/shared/device_info/device_info.dart';
 
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Platform.isWindows) {
-    await windowManager.ensureInitialized();
-
-    WindowOptions windowOptions = const WindowOptions(
-      size: Size(1300, 750),
-      minimumSize: Size(1100, 750),
-      center: true,
-      backgroundColor: Colors.transparent,
-      skipTaskbar: false,
-      title: "Livine",
-      titleBarStyle: TitleBarStyle.hidden,
-    );
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
-
-      await windowManager.focus();
-    });
-  }
   final container = ProviderContainer(
     overrides: [
       sharedPrefProvider.overrideWithValue(
@@ -65,6 +35,7 @@ Future<void> main() async {
       ),
     ),
   );
+
   await CacheHelper.init();
   await GetDeviceInfo.init();
   final isVegan = await container.read(veganServiceProvider).getIsVegan();

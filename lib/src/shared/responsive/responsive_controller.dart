@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:livine/src/constants/constants.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
+
+import '../../constants/constants.dart';
 
 class ResponsiveHelper {
   double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
@@ -30,7 +31,7 @@ class ResponsiveHelper {
       return 4;
     } else if (ResponsiveBreakpoints.of(context).orientation ==
             Orientation.landscape &&
-        ResponsiveBreakpoints.of(context).isTablet) {
+        ResponsiveBreakpoints.of(context).isMobile) {
       return 6;
     } else if (ResponsiveBreakpoints.of(context).isMobile &&
         ResponsiveBreakpoints.of(context).orientation == Orientation.portrait) {

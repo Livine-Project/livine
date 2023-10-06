@@ -85,7 +85,7 @@
   "update_available":"يوجد تحديث",
   "do_install_update":"هل تريد تثبيت التحديث?",
   "livine": "ليفين",
-  "about_Livine": "عن ليفين",
+  "about_livine": "عن ليفين",
   "sure_to_logout": "هل أنت تريد تسجيل الخروج ؟",
   "cancel" : "إلغاء",
   "delete" : "حذف",
@@ -118,7 +118,7 @@
   "edit_profile":"تعديل الحساب",
   "vegetarian":"نباتي",
   "accessibility":"إمكانية الوصول",
-  "change_use":"غير طريقة استخدامك لليفين",
+  "change_use":"غير طريقة استخدامك لكالازا",
   "swipe_screen":"اسحب الشاشة",
   "minute":"دقيقة",
   "calories":"سعرات "

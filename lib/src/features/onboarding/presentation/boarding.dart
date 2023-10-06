@@ -2,74 +2,66 @@
 
 import 'package:go_router/go_router.dart';
 
-import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
 import '../../../constants/constants.dart';
+import '../../../shared/cache/cache_helper.dart';
 
 class OnBoarding extends StatelessWidget {
-  const OnBoarding({Key? key}) : super(key: key);
-
+  OnBoarding({Key? key}) : super(key: key);
+  final List<String> images = [
+    'livine',
+    'healthyoptions',
+    'stability',
+    'content'
+  ];
+  final List<String> heading = [
+    'Welcome to Livine',
+    "We've plenty of healthy options",
+    "We assure that you gonna have a Flexible Lifestyle",
+    "You can change your content for your health situation "
+  ];
+  final List<String> headingInArabic = [
+    'مرحبا بكم في كالازا',
+    "لدينا الكثير من الخيارات الصحية",
+    "نؤكد أنه سيكون لديك أسلوب حياة مرن",
+    "يمكنك تغيير المحتوى الخاص بك لوضعك الصحي "
+  ];
   @override
   Widget build(BuildContext context) {
-    final List images = ['livine', 'healthyoptions', 'stability', 'content'];
-    final List heading = [
-      'Welcome to Livine',
-      "We've plenty of healthy options",
-      "We assure that you gonna have a Flexible Lifestyle",
-      "You can change your content for your health situation "
-    ];
-    final List headingInArabic = [
-      'مرحبا بكم في ليفين',
-      "لدينا الكثير من الخيارات الصحية",
-      "نؤكد أنه سيكون لديك أسلوب حياة مرن",
-      "يمكنك تغيير المحتوى الخاص بك لوضعك الصحي "
-    ];
-
-    final List<Color> textColors = [
-      Theme.of(context).colorScheme.onSurface,
-      Colors.black,
-      Colors.white,
-      Colors.black
-    ];
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: ConcentricPageView(
-        duration: const Duration(milliseconds: 1200),
-        colors: <Color>[
-          Theme.of(context).colorScheme.surface,
-          Theme.of(context).colorScheme.primary,
-          Theme.of(context).colorScheme.tertiary,
-          Theme.of(context).colorScheme.primary,
-        ],
-        radius: screenWidth * 0.1,
-        onFinish: () {
+    return IntroductionScreen(
+        globalBackgroundColor: Theme.of(context).colorScheme.background,
+        done: Text("Done"),
+        dotsDecorator: DotsDecorator(
+          color: Theme.of(context).colorScheme.onSurface,
+          activeColor: Theme.of(context).colorScheme.primary,
+        ),
+        animationDuration: 350,
+        onDone: () {
           context.go('/choose_content');
           CacheHelper.setBool("isBoarded", true);
         },
-        nextButtonBuilder: (context) => Padding(
-          padding: const EdgeInsets.only(left: 3), // visual center
-          child: Icon(
-            Icons.navigate_next,
-            size: screenWidth * 0.08,
-          ),
-        ),
-        itemBuilder: (int index) {
-          return Consumer(
-            builder: (context, ref, child) => IntroScreens(
-                text: ref.watch(localeNotifierProvider).languageCode == "en"
-                    ? heading[index]
-                    : headingInArabic[index],
-                url: 'assets/images/onboarding/${images[index]}.svg',
-                textColor: textColors[index]),
-          );
+        skip: Text("Skip"),
+        next: Text("Next"),
+        onSkip: () {
+          context.go('/choose_content');
+          CacheHelper.setBool("isBoarded", true);
         },
-      ),
-    );
+        showSkipButton: true,
+        
+        pages: [
+          for (int i = 0; i < images.length; i++)
+            PageViewModel(
+              decoration: PageDecoration(),
+              title: images[i].toUpperCase(),
+              body: heading[i],
+              image: Center(
+                  child: SvgPicture.asset(
+                      'assets/images/onboarding/${images[i]}.svg')),
+            ),
+        ]);
   }
 }
 

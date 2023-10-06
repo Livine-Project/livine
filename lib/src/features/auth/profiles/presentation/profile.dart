@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:livine/src/common_widgets/no_connection.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
+import '../../../../common_widgets/no_connection.dart';
 import '../../../../constants/shared_constants.dart';
 import '../../../../shared/connectivity/check_network.dart';
+import '../../../../translations/domain/translation_provider.dart';
 import '../../../get_recipes/application/vegan_service.dart';
 import '../../application/auth_service.dart';
 import '../data/get_user_data.dart';

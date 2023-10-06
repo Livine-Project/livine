@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:livine/src/features/auth/welcome/presentation/welcome.dart';
-import 'package:livine/src/features/cooking/presentation/cooking.dart';
-import 'package:livine/src/features/get_recipes/presentation/share_screenshot.dart';
-import 'package:livine/src/features/settings/presentation/accessibility/accessibility.dart';
-
 import '../common_widgets/recipe/web_view_widget.dart';
 import '../constants/shared_constants.dart';
 import '../features/auth/favorites/presentation/favorites.dart';
@@ -14,22 +9,25 @@ import '../features/auth/register/presentation/register.dart';
 import '../features/auth/reset_password/presentation/reset_password.dart';
 import '../features/auth/reset_password/presentation/reset_password_confirm.dart';
 import '../features/auth/reset_password/presentation/token_validate.dart';
-import '../features/check_update/presentation/check_update.dart';
+import '../features/auth/welcome/presentation/welcome.dart';
 import '../features/content/presentation/content.dart';
 import '../features/content/presentation/content_patients.dart';
+import '../features/cooking/presentation/cooking.dart';
 import '../features/get_recipes/presentation/ingridents.dart';
+import '../features/get_recipes/presentation/share_screenshot.dart';
 import '../features/meals/presentation/categories.dart';
 import '../features/navigation/presentation/base.dart';
 import '../features/onboarding/presentation/boarding.dart';
 import '../features/premium_pristine/presentation/confirm_payment.dart';
 import '../features/settings/presentation/Misc/privacy.dart';
 import '../features/settings/presentation/Misc/terms.dart';
+import '../features/settings/presentation/accessibility/accessibility.dart';
 import '../features/settings/presentation/languages/languages.dart';
 import '../features/settings/presentation/notifications/notifications_settings_view.dart';
 import '../features/settings/presentation/settings.dart';
 import '../features/settings/presentation/theme/theme_settings.dart';
 
-final baseRoutes = GoRouter(routes: [
+final baseRoutes = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/',
     builder: (context, state) =>
@@ -38,7 +36,7 @@ final baseRoutes = GoRouter(routes: [
   GoRoute(
     name: "OnBoarding",
     path: '/onboarding',
-    builder: (context, state) => const OnBoarding(),
+    builder: (context, state) => OnBoarding(),
   ),
   GoRoute(
     path: '/register',
@@ -183,12 +181,7 @@ final baseRoutes = GoRouter(routes: [
       return const Accessibility();
     },
   ),
-  GoRoute(
-    path: '/check_update',
-    builder: (context, state) {
-      return const CheckUpdate();
-    },
-  ),
+
   GoRoute(
     path: '/share_recipe',
     builder: (context, state) {

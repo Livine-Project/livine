@@ -4,17 +4,17 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:livine/src/common_widgets/loading_grid_view.dart';
-import 'package:livine/src/features/auth/data/user.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/shared_constants.dart';
+import '../../features/auth/data/user.dart';
 import '../../features/get_recipes/application/vegan_service.dart';
 import '../../features/get_recipes/data/recipes.dart';
 import '../../features/get_recipes/domain/recipe/recipe.dart';
 import '../../features/get_recipes/presentation/recipe_details.dart';
 import '../../features/loading/loading.dart';
 import '../../translations/domain/translation_provider.dart';
+import '../loading_grid_view.dart';
 import 'recipe_card_widget.dart';
 
 import '../../common_widgets/error_widget.dart';
@@ -22,20 +22,22 @@ import '../../common_widgets/error_widget.dart';
 class RecipesGridView extends ConsumerStatefulWidget {
   const RecipesGridView({
     Key? key,
+    required this.pagingController,
   }) : super(key: key);
+
+  final pagingController;
 
   @override
   ConsumerState<RecipesGridView> createState() => _RecipesGridViewState();
 }
 
 class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
-  static const _pageSize = 10;
-  final PagingController _pagingController = PagingController(firstPageKey: 1);
+  static const _pageSize = 6;
 
   @override
   void initState() {
     super.initState();
-    _pagingController.addPageRequestListener((pageKey) {
+    widget.pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
   }
@@ -65,32 +67,34 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
                       pageKey: pageKey)
                   .future)
           : guestRecipes;
-      print(newItems.length);
+
       final isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = pageKey + newItems.length;
-        _pagingController.appendPage(newItems, nextPageKey);
+      if (mounted) {
+        if (isLastPage) {
+          widget.pagingController.appendLastPage(newItems);
+        } else {
+          final nextPageKey = pageKey + newItems.length;
+          widget.pagingController.appendPage(newItems, nextPageKey.toInt());
+        }
       }
     } catch (error) {
-      _pagingController.error = error;
+      widget.pagingController.error = error;
       log(error: "RECIPES", error.toString());
     }
   }
 
   void dispose() {
-    _pagingController.dispose();
+    widget.pagingController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final word = TranslationRepo.translate(context);
-    return PagedGridView(
+    return PagedGridView<int, Recipe>(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      pagingController: _pagingController,
+      pagingController: widget.pagingController,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: rh.responsiveRecipes(context),
         mainAxisSpacing: 20,
@@ -99,10 +103,10 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       builderDelegate: PagedChildBuilderDelegate(
         newPageErrorIndicatorBuilder: (context) => Loading(),
         firstPageErrorIndicatorBuilder: (context) =>
-            ErrorCustomWidget(pagingController: _pagingController),
+            ErrorCustomWidget(pagingController: widget.pagingController),
         firstPageProgressIndicatorBuilder: (context) => LoadingGridView(),
-        itemBuilder: (context, item, index) {
-          final recipe = item as Recipe;
+        newPageProgressIndicatorBuilder: (context) => LoadingGridView(),
+        itemBuilder: (context, recipe, index) {
           return OpenContainer(
             openElevation: 0,
             closedElevation: 0,
@@ -114,7 +118,7 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
             closedBuilder: (context, action) => RecipeCardNormal(
               id: recipe.id,
               name: recipe.name,
-              foodImage: '${item.imageURL}',
+              foodImage: '${recipe.imageURL}',
               type: recipe.patient,
               difficulty: recipe.difficulty,
               time: "${recipe.time_taken} ${word!.minute.toUpperCase()}",

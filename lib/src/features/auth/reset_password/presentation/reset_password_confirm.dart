@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../constants/constants.dart';
+import '../../../../translations/domain/translation_provider.dart';
 
 class PasswordConfirmation extends StatefulWidget {
   const PasswordConfirmation({Key? key, required this.token}) : super(key: key);

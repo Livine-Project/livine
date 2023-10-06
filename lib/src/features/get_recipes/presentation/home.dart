@@ -3,16 +3,18 @@
 import 'dart:io';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/shared/connectivity/check_network.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../common_widgets/no_connection.dart';
 import '../../../common_widgets/recipe/recipe_grid_view.dart';
 
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
+import '../../../shared/connectivity/check_network.dart';
 import '../../../shared/notifications/health_notification.dart';
 import '../../../translations/domain/translation_provider.dart';
 import '../data/get_user_name.dart';
+import '../domain/recipe/recipe.dart';
 import 'search/search_delegate.dart';
 
 class Home extends ConsumerStatefulWidget {
@@ -35,6 +37,9 @@ class _HomeState extends ConsumerState<Home> {
     }
   }
 
+  final PagingController<int, Recipe> pagingController =
+      PagingController(firstPageKey: 0);
+
   @override
   Widget build(BuildContext context) {
     ConnectivityStatus network = ref.watch(checkNetworkProvider);
@@ -44,10 +49,10 @@ class _HomeState extends ConsumerState<Home> {
     return network == ConnectivityStatus.On
         ? Scaffold(
             body: SafeArea(
-              child: RawScrollbar(
-                thumbColor: colorScheme(context).tertiary,
-                thickness: 5,
-                radius: const Radius.circular(10),
+              child: RefreshIndicator(
+                onRefresh: () => Future.sync(
+                  () => pagingController.refresh(),
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +69,6 @@ class _HomeState extends ConsumerState<Home> {
                                       text: "${word?.welcome}\n",
                                       style: TextStyle(
                                           fontSize: 35.0,
-                                        
                                           color:
                                               colorScheme(context).onSurface)),
                                   TextSpan(
@@ -86,7 +90,9 @@ class _HomeState extends ConsumerState<Home> {
                               ],
                             )),
                         const SizedBox(height: 20.0),
-                        RecipesGridView(),
+                        RecipesGridView(
+                          pagingController: pagingController,
+                        ),
                       ]),
                 ),
               ),

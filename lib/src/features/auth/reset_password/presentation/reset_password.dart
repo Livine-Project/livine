@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:livine/src/translations/domain/translation_provider.dart';
 
 import '../../../../constants/constants.dart';
+import '../../../../translations/domain/translation_provider.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);

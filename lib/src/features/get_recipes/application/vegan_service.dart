@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:livine/src/features/auth/application/auth_service.dart';
 
 import '../../../constants/constants.dart';
+import '../../auth/application/auth_service.dart';
 import '../../auth/profiles/data/get_user_data.dart';
 import '../domain/recipe/recipe.dart';
 

@@ -1,4 +1,3 @@
-
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
@@ -9,13 +8,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:livine/src/features/auth/profiles/data/get_user_data.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
 
+import '../../../shared/cache/cache_helper.dart';
 import '../data/user.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/shared_constants.dart';
 import '../../get_recipes/domain/recipe/recipe.dart';
+import '../profiles/data/get_user_data.dart';
 
 final authHelperProvider = Provider(AuthService.new);
 
@@ -31,45 +30,54 @@ class AuthService {
       bool mounted,
       bool isLoading,
       void Function(void Function()) setState) async {
-    const url = '$restAPIURL/login/';
-    final response = await client.post(
-      Uri.parse(url),
-      body: {
-        'username': username.text,
-        'password': password.text,
-      },
-    );
-    final responseJson = await json.decode(response.body);
-    log("Response Json" + responseJson.toString());
-    final errorinLogin = responseJson['non_field_errors'];
-    if (response.statusCode == 200) {
-      CacheHelper.setBool("username", true);
+    try {
+      const url = '$restAPIURL/login/';
+      final response = await client.post(
+        Uri.parse(url),
+        body: {
+          'username': username.text,
+          'password': password.text,
+        },
+      );
+      final responseJson = await json.decode(response.body);
+      log("Response Json" + responseJson.toString());
 
-      String userToken = responseJson['data']['token'];
-      await CacheHelper.setString("token", userToken);
-      ref.read(userTokenProvider.notifier).update((state) => userToken);
-      if (!mounted) return null;
+      if (response.statusCode == 200) {
+        CacheHelper.setBool("username", true);
 
-      if (Platform.isAndroid || Platform.isIOS) {
-        if (isBoarded == false) {
-          GoRouter.of(context).go('/onboarding');
+        String userToken = responseJson['data']['token'];
+        await CacheHelper.setString("token", userToken);
+        ref.read(userTokenProvider.notifier).update((state) => userToken);
+        if (!mounted) return null;
+        if (Platform.isAndroid || Platform.isIOS) {
+          if (isBoarded == false) {
+            GoRouter.of(context).go('/onboarding');
+          } else {
+            GoRouter.of(context).go('/navigate');
+          }
         } else {
           GoRouter.of(context).go('/navigate');
         }
       } else {
-        GoRouter.of(context).go('/navigate');
-      }
-    } else {
-      if (!mounted) return null;
+        final errorinLogin = responseJson['non_field_errors'];
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(errorinLogin is List ? errorinLogin.first : errorinLogin),
+        if (!mounted) return null;
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text(errorinLogin is List ? errorinLogin.first : errorinLogin),
+        ));
+        setState(() {
+          isLoading = false;
+        });
+      }
+      return null;
+    } catch (e) {
+      log(error: "Error in Login", e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Error occurred while logging in"),
       ));
-      setState(() {
-        isLoading = false;
-      });
     }
-    return null;
   }
 
   Future<String?> registertoDjango(
@@ -185,7 +193,7 @@ class AuthService {
     }
   }
 
-  Future<String> getUserUsername() async{
+  Future<String> getUserUsername() async {
     final userData = await ref.watch(userDataProvider.future);
     // log(error: "Username", userData.toString());
     return userData.username ?? "";

@@ -85,7 +85,7 @@
   "update_available":"Update Available",
   "do_install_update":"Do you want to install the update?",
   "livine": "Livine",
-  "about_Livine": "About Livine",
+  "about_livine": "About Livine",
   "sure_to_logout": "Are you sure you want to logout ?",
   "cancel" : "Cancel",
   "delete" : "Delete",

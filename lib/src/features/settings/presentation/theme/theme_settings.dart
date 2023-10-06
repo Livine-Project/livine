@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/features/settings/presentation/theme/data/colors_type.dart';
-import 'package:livine/src/shared/device_info/device_info.dart';
 
+import '../../../../shared/device_info/device_info.dart';
 import '../../../../translations/domain/translation_provider.dart';
 import '../../data/theme.dart';
+import 'data/colors_type.dart';
 import 'domain/theme_notifier.dart';
 
 class ThemeSettings extends HookWidget {

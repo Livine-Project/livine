@@ -20,7 +20,7 @@ Future<void> showNotification() async {
   tz.initializeTimeZones();
 
   const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'channelId', 'Livine ',
+      'channelId', 'Livine',
       channelDescription: 'Description of the notification ',
       importance: Importance.high);
   const NotificationDetails generalNotDetails =

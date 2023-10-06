@@ -5,25 +5,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
-import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../translations/domain/translation_provider.dart';
 import 'settings_model.dart';
 
-class SettingsWidget extends ConsumerStatefulWidget {
+class SettingsWidget extends ConsumerWidget {
   const SettingsWidget({Key? key}) : super(key: key);
 
-  @override
-  ConsumerState<SettingsWidget> createState() => _SettingsWidgetState();
-}
-
-class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
-  late BuildContext context;
   Future<void> sendReport() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'wildlifemain1@gmail.com',
+      path: 'onlybailemos123@gmail.com',
       query:
           'subject=Bug Report|Livine&body=write your issues here', //add subject and body here
     );
@@ -35,56 +28,51 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final word = TranslationRepo.translate(context);
     List<Settings> menus = [
       Settings(
         title: word?.languages ?? '',
         icon: Icons.language_outlined,
-        route: "/languages",
         subtitle: word?.change_language ?? '',
+        onTap: () => context.push("/languages"),
       ),
       Settings(
+        onTap: () => context.push("/accessibility"),
         title: word!.accessibility,
         icon: Icons.accessibility_outlined,
-        route: "/accessibility",
         subtitle: word.change_use,
       ),
       Settings(
+        onTap: () => context.push("/notifications_settings"),
         title: word.notfications,
         icon: Icons.notifications_outlined,
-        route: "/notifications_settings",
         subtitle: word.change_notification,
       ),
       Settings(
+        onTap: () => context.push("/themeSettings"),
         title: word.theme,
         icon: Icons.palette_outlined,
-        route: "/themeSettings",
         subtitle: word.change_theme,
       ),
       Settings(
+        onTap: () async => sendReport(),
         title: word.report_a_bug,
         icon: Icons.bug_report_outlined,
-        route: "/bug_report",
         subtitle: word.help_us,
       ),
       Settings(
+        onTap: () => context.push('/terms'),
         title: word.terms_and_conditions,
         icon: Icons.sticky_note_2_outlined,
-        route: "/terms",
         subtitle: "",
       ),
       Settings(
+        onTap: () => context.push('/privacy'),
         title: word.privacy_Policy,
         icon: Icons.policy_outlined,
-        route: "/privacy",
         subtitle: "",
       ),
-      Settings(
-          title: word.version,
-          icon: Icons.info_outline,
-          route: "",
-          subtitle: "9.0.0"),
     ];
 
     return Scaffold(
@@ -97,25 +85,17 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
         SliverList(
             delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return InkWell(
-              onTap: () {
-                if (menus[index].route != '/bug_report') {
-                  context.push(menus[index].route);
-                } else {
-                  sendReport();
-                }
-              },
-              child: ListTile(
-                leading: Icon(menus[index].icon),
-                title: Text(
-                  menus[index].title,
-                  style: TextStyle(fontFamily: ''),
-                ),
-                subtitle: menus[index].subtitle != ''
-                    ? Text(menus[index].subtitle,
-                        style: TextStyle(fontFamily: ''))
-                    : null,
+            return ListTile(
+              onTap: menus[index].onTap,
+              leading: Icon(menus[index].icon),
+              title: Text(
+                menus[index].title,
+                style: TextStyle(fontFamily: ''),
               ),
+              subtitle: menus[index].subtitle != ''
+                  ? Text(menus[index].subtitle,
+                      style: TextStyle(fontFamily: ''))
+                  : null,
             );
           },
           childCount: menus.length,

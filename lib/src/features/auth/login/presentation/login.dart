@@ -8,11 +8,11 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:livine/src/constants/constants.dart';
-import 'package:livine/src/features/auth/application/auth_service.dart';
-import 'package:livine/src/shared/cache/cache_helper.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
 
+import '../../../../constants/constants.dart';
+import '../../../../shared/cache/cache_helper.dart';
+import '../../../../translations/domain/translation_provider.dart';
+import '../../application/auth_service.dart';
 import '../../data/user.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -234,47 +234,6 @@ class _LoginState extends ConsumerState<Login> {
                       SizedBox(
                         height: 10,
                       ),
-                      // ({
-                      //   required void Function() onPressed,
-                      //   required bool isLoading,
-                      //   required String text,
-                      //   Color? color,
-                      //   Color? textColor,
-                      //   double width = 350,
-                      //   required BuildContext context,
-                      // }) {
-                      //   final theme = Theme.of(context).colorScheme;
-                      //   return Padding(
-                      //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      //     child: MaterialButton(
-                      //       onPressed: onPressed,
-                      //       color: color ?? theme.primaryContainer,
-                      //       elevation: 0,
-                      //       minWidth: width,
-                      //       height: 60,
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(15),
-                      //       ),
-                      //       child: isLoading
-                      //           ? const CircularProgressIndicator(
-                      //               color: Colors.white,
-                      //             )
-                      //           : Text(
-                      //               text,
-                      //               style: TextStyle(
-                      //                   fontSize: 15,
-                      //                   color: textColor ??
-                      //                       theme.onPrimaryContainer),
-                      //             ),
-                      //     ),
-                      //   );
-                      // }(
-                      //     isLoading: false,
-                      //     text: word?.continue_as_guest ?? "Continue as Guest",
-                      //     textColor: theme.onSecondaryContainer,
-                      //     onPressed: validateGuest,
-                      //     context: context,
-                      //     color: theme.secondaryContainer),
                     ],
                   ),
                 ),

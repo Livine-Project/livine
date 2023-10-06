@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:livine/src/features/auth/profiles/presentation/profile.dart';
-import 'package:livine/src/common_widgets/auth/auth_widget.dart';
 
+import '../../../../common_widgets/auth/auth_widget.dart';
 import '../../../../translations/domain/translation_provider.dart';
 import '../../application/auth_service.dart';
 import '../../../get_recipes/application/vegan_service.dart';
 import '../data/get_user_data.dart';
+import 'profile.dart';
 
 class UpdateProfile extends ConsumerStatefulWidget {
   const UpdateProfile({

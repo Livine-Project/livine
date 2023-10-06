@@ -4,12 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:livine/src/translations/domain/translation_provider.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../../shared/children/children.dart';
+import '../../../translations/domain/translation_provider.dart';
 import '../data/navigation_notifier.dart';
-import 'tablet_navigation.dart';
 
 class Navigation extends HookConsumerWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -22,10 +20,7 @@ class Navigation extends HookConsumerWidget {
     const duration = Duration(milliseconds: 300);
     const curve = Curves.easeInOut;
     final word = TranslationRepo.translate(context);
-    return ResponsiveBreakpoints.of(context).isTablet ||
-            ResponsiveBreakpoints.of(context).isDesktop
-        ? const TabletNavigation()
-        : Scaffold(
+    return  Scaffold(
             body: PageView(
               controller: pageController,
               onPageChanged: (page) => index.value = page,
