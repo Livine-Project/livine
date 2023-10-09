@@ -43,9 +43,14 @@ jobs:
         - name: List Directory Contents
           run: ls -R ${{ env.RELEASE_PATH }}
 
+        - name: Install hub
+          uses: geertvdc/setup-hub@master
+
         - name: Upload APKs to release
           env:
             GITHUB_TOKEN: ${{ github.token }}
+            GITHUB_USER: ${{ secrets.GITHUB_USER }}
+
           run: |
             tag_name="${GITHUB_REF##*/}"
             hub release edit $(find ./${{ env.RELEASE_PATH }} -type f -name "*.apk" -printf "-a %p ") -m "" "$tag_name"
