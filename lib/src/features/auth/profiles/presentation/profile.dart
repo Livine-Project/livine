@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/features/auth/domain/user.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 import '../../../../common_widgets/no_connection.dart';
@@ -24,7 +26,7 @@ class Profile extends ConsumerWidget {
     ConnectivityStatus network = ref.watch(checkNetworkProvider);
     bool isVeg = ref.watch(isVeganProvider);
 
-    final userData = ref.watch(userDataStreamProvider);
+    AsyncValue<UserData> userData = ref.watch(userDataStreamProvider);
     final word = TranslationRepo.translate(context);
     userData.whenOrNull(
       error: (error, stack) {
@@ -33,8 +35,8 @@ class Profile extends ConsumerWidget {
       },
     );
 
-    int? userPoints =
-        userData.maybeWhen(data: (data) => data.points, orElse: () => 0);
+    // int? userPoints =
+    //     userData.maybeWhen(data: (data) => data.points, orElse: () => 0);
     return network == ConnectivityStatus.On
         ? Scaffold(
             appBar: AppBar(
@@ -50,63 +52,87 @@ class Profile extends ConsumerWidget {
             ),
             body: SlidingUpPanel(
               body: Container(
-                color: Theme.of(context).colorScheme.primary,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    CircularPercentIndicator(
-                      percent: userPoints! / 100 > 1 ? 1 : userPoints / 100,
-                      radius: 60,
-                      curve: Curves.easeInCirc,
-                      lineWidth: 5,
-                      animation: true,
-                      center: CircleAvatar(
-                        backgroundImage: AssetImage(
-                          'assets/images/profile/default.png',
-                        ),
-                        radius: 50,
-                      ),
-                      circularStrokeCap: CircularStrokeCap.round,
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      progressColor: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          child: Icon(
-                            Icons.emoji_events_rounded,
-                            color: Theme.of(context).colorScheme.onSecondary,
-                            size: 35.0,
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "$userPoints",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.surface),
-                            ),
-                            Text(
-                              word!.points,
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.surface),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                  color: Theme.of(context).colorScheme.primary,
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      return userData.when(
+                        data: (data) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 15,
+                              ),
+                              CircularPercentIndicator(
+                                percent: data.points! / 100 > 1
+                                    ? 1
+                                    : data.points! / 100,
+                                radius: 60,
+                                curve: Curves.easeInCirc,
+                                lineWidth: 5,
+                                animation: true,
+                                center: CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                    'assets/images/profile/default.png',
+                                  ),
+                                  radius: 50,
+                                ),
+                                circularStrokeCap: CircularStrokeCap.round,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                progressColor:
+                                    Theme.of(context).colorScheme.onPrimary,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.secondary,
+                                    child: Icon(
+                                      Icons.emoji_events_rounded,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                      size: 35.0,
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${data.points}",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .surface),
+                                      ),
+                                      Text(
+                                        word!.points,
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .surface),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                        error: (e, s) {
+                          log("Couldn't get user's profile data",
+                              error: e, stackTrace: s);
+                          return Text("Error Happened");
+                        },
+                        loading: () => ProfileLoading(),
+                      );
+                    },
+                  )),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
               minHeight: MediaQuery.of(context).size.height * 0.5,
@@ -135,19 +161,36 @@ class Profile extends ConsumerWidget {
                               SizedBox(
                                 width: 10,
                               ),
-                              Text(word.vegetarian),
+                              Text(word!.vegetarian),
+                              Visibility(
+                                visible: Platform.isWindows,
+                                child: Switch.adaptive(
+                                  value: isVeg,
+                                  onChanged: (v) async {
+                                    ref
+                                        .read(isVeganProvider.notifier)
+                                        .update((state) => v);
+                                    await ref
+                                        .read(veganServiceProvider)
+                                        .updateIsVegan(v);
+                                  },
+                                ),
+                              ),
                             ],
                           ),
-                          Switch.adaptive(
-                            value: isVeg,
-                            onChanged: (v) async {
-                              ref
-                                  .read(isVeganProvider.notifier)
-                                  .update((state) => v);
-                              await ref
-                                  .read(veganServiceProvider)
-                                  .updateIsVegan(v);
-                            },
+                          Visibility(
+                            visible: !Platform.isWindows,
+                            child: Switch.adaptive(
+                              value: isVeg,
+                              onChanged: (v) async {
+                                ref
+                                    .read(isVeganProvider.notifier)
+                                    .update((state) => v);
+                                await ref
+                                    .read(veganServiceProvider)
+                                    .updateIsVegan(v);
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -173,13 +216,20 @@ class Profile extends ConsumerWidget {
                         onTap: () => context.push('/favorites'),
                         icon: Icons.favorite,
                         name: word.favorites),
-                    SizedBox(
-                      height: 20,
+                    Visibility(
+                      visible: !Platform.isWindows,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ProfileListTile(
+                              onTap: () => context.push('/settings'),
+                              icon: Icons.settings,
+                              name: word.settings),
+                        ],
+                      ),
                     ),
-                    ProfileListTile(
-                        onTap: () => context.push('/settings'),
-                        icon: Icons.settings,
-                        name: word.settings),
                     SizedBox(
                       height: 20,
                     ),
@@ -210,149 +260,29 @@ class Profile extends ConsumerWidget {
                   ],
                 ),
               ),
-            )
-            // SingleChildScrollView(
-            //   child: Column(children: [
-            //     userData.when(
-            //       data: (data) {
-            //         String guestChange() {
-            //           // if (data.username ==
-            //           //     "GUEST") if (.languageCode == "en")
-            //           //   return "Guest";
-            //           // else
-            //           //   return "ضيف";
-            //           return data.username ?? "";
-            //         }
-
-            //         final isVeg = ref.watch(isVeganProvider);
-
-            //         return Column(
-            //           crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             UserInfo(
-            //               name: guestChange(),
-            //               image: 'assets/images/profile/default.png',
-            //             ),
-            //             Visibility(
-            //               visible: isGuest == false && guest == false,
-            //               child: FlutterSwitch(
-            //                 value: isVeg,
-            //                 onToggle: (v) async {
-            //                   ref
-            //                       .read(isVeganProvider.notifier)
-            //                       .update((state) => v);
-            //                   await ref
-            //                       .read(veganServiceProvider)
-            //                       .updateIsVegan(v);
-            //                 },
-            //                 inactiveColor: Colors.brown[300]!,
-            //                 inactiveIcon: Image.asset(
-            //                   'assets/images/icons/meat.png',
-            //                   color: Colors.brown,
-            //                 ),
-            //                 activeColor: colorScheme(context).secondary,
-            //                 activeToggleColor: colorScheme(context).onSecondary,
-            //                 activeIcon: Image.asset(
-            //                   "assets/images/icons/vegan.png",
-            //                   color: colorScheme(context).secondary,
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         );
-            //       },
-            //       error: (e, s) {
-            //         log('$e\n$s');
-
-            //         return kDebugMode ? Text(e.toString()) : const Loading();
-            //       },
-            //       loading: () => const Loading(),
-            //     ),
-            //     GridView.count(
-            //       shrinkWrap: true,
-            //       physics: NeverScrollableScrollPhysics(),
-            //       crossAxisCount: rh.deviceWidth(context) * 0.4 > 300 ? 4 : 3,
-            //       childAspectRatio: 1,
-            //       children: [
-            //         if (isGuest == false && guest == false)
-            //           ProfileMenu(
-            //             bgColor: colorScheme(context).primaryContainer,
-            //             icon: Icons.favorite_rounded,
-            //             color: colorScheme(context).onPrimaryContainer,
-            //             press: () => context.push('/favorites'),
-            //           ),
-            //         ProfileMenu(
-            //           bgColor: colorScheme(context).tertiaryContainer,
-            //           color: colorScheme(context).onTertiaryContainer,
-            //           icon: Icons.grass_rounded,
-            //           press: () => context.push('/choose_content'),
-            //         ),
-            //         ProfileMenu(
-            //           bgColor: colorScheme(context).inverseSurface,
-            //           color: colorScheme(context).onInverseSurface,
-            //           icon: Icons.logout,
-            //           press: () => guest == false && isGuest == false
-            //               ? showDialog(
-            //                   context: context,
-            //                   builder: (context) => AlertDialog(
-            //                         title: Text(word?.logout ?? ""),
-            //                         content: Text(word?.sure_to_logout ?? ""),
-            //                         actions: [
-            //                           TextButton(
-            //                               onPressed: () =>
-            //                                   Navigator.pop(context),
-            //                               child: Text(word?.cancel ?? "")),
-            //                           TextButton(
-            //                               onPressed: () => ref
-            //                                   .read(authHelperProvider)
-            //                                   .logOutfromDjango(context),
-            //                               child: Text(word?.logout ?? "")),
-            //                         ],
-            //                       ))
-            //               : ref.read(authHelperProvider).logOutAsGuest(context),
-            //         ),
-            //         if (isGuest == false && guest == false)
-            //           ProfileMenu(
-            //             bgColor: colorScheme(context).errorContainer,
-            //             color: colorScheme(context).onErrorContainer,
-            //             icon: Icons.delete_forever,
-            //             press: () => showDialog(
-            //                 context: context,
-            //                 builder: (context) => AlertDialog(
-            //                       title: Text(word?.delete_account ?? ""),
-            //                       content: Text(word?.sure_to_delete ?? ""),
-            //                       actions: [
-            //                         TextButton(
-            //                             onPressed: () => Navigator.pop(context),
-            //                             child: Text(word?.cancel ?? "")),
-            //                         TextButton(
-            //                             onPressed: () => ref
-            //                                 .read(authHelperProvider)
-            //                                 .deleteUser(context),
-            //                             child: Text(
-            //                               word?.delete ?? "",
-            //                               style: TextStyle(
-            //                                   color:
-            //                                       colorScheme(context).error),
-            //                             )),
-            //                       ],
-            //                     )),
-            //           ),
-            //       ],
-            //     )
-            //   ]),
-            // ),
-            // floatingActionButton: Visibility(
-            //   visible: isGuest == false && guest == false,
-            //   child: FloatingActionButton(
-            //     onPressed: () => context.push(
-            //       "/update_profile",
-            //     ),
-            //     child: const Icon(Icons.edit),
-            //   ),
-            // ),
-            )
+            ))
         : NoConnection();
+  }
+}
+
+class ProfileLoading extends StatelessWidget {
+  const ProfileLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 60),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+      ),
+    );
   }
 }
 

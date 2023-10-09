@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:livine/src/constants/constants.dart';
+import 'package:livine/src/features/navigation/presentation/tablet_navigation.dart';
 
 import '../../../shared/children/children.dart';
 import '../../../translations/domain/translation_provider.dart';
@@ -20,7 +22,9 @@ class Navigation extends HookConsumerWidget {
     const duration = Duration(milliseconds: 300);
     const curve = Curves.easeInOut;
     final word = TranslationRepo.translate(context);
-    return  Scaffold(
+    return rh.isDesktop(context)
+        ? TabletNavigation()
+        : Scaffold(
             body: PageView(
               controller: pageController,
               onPageChanged: (page) => index.value = page,
