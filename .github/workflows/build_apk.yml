@@ -1,0 +1,78 @@
+name: Build APK
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+        default: "0.0.0"
+        type: string
+      release-upload-url:
+        description: "Release upload URL"
+        required: true
+        type: string
+      app-name:
+        description: "Application name"
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_PATH: build/windows/runner/Release
+      APPNAME: ${{ inputs.app-name }}
+      VERSION: ${{ inputs.version }}
+    steps:
+        - name: Checkout the code
+          uses: actions/checkout@v2
+
+        - name: Build Apk
+          uses: subosito/flutter-action@v2
+          with:
+            channel: 'stable'
+        - run: flutter pub get
+        - run: flutter build apk --split-per-abi
+
+        - name: Upload APKs to release
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
+          with:
+            upload_url: ${{ inputs.release-upload-url }}
+            asset_path: |
+              build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+              build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+              build/app/outputs/flutter-apk/app-x86_64-release.apk
+            
+            asset_name: |
+              ${{ env.APPNAME }}-armeabi-v7a-release.apk
+              ${{ env.APPNAME }}-arm64-v8a-release.apk
+              ${{ env.APPNAME }}-x86_64-release.apk
+            asset_content_type: application/apk
+
+          - name: Archive Release
+            uses: thedoctor0/zip-release@master
+            with:
+              type: "zip"
+              filename: ${{ env.APPNAME }}-android.zip
+              directory: ${{ env.RELEASE_PATH }}
+
+          - name: upload zip to release
+            uses: actions/upload-release-asset@v1
+            env:
+              GITHUB_TOKEN: ${{ github.token }}
+            with:
+              upload_url: ${{ inputs.release-upload-url }}
+              asset_path: ${{env.RELEASE_PATH}}/${{env.APPNAME}}-android.zip
+              asset_name: ${{env.APPNAME}}-android.zip
+              asset_content_type: application/zip
+  
+
+
+
+
+    
+
+
