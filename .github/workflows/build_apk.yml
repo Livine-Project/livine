@@ -60,6 +60,7 @@ jobs:
               ${{ env.APPNAME }}-x86_64-release.apk
 
             asset_content_type: application/apk
+            uses: actions/checkout@v2
 
 
         - name: Archive Release
