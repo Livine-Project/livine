@@ -41,7 +41,7 @@ jobs:
           run: flutter build apk --split-per-abi
 
         - name: List Directory Contents
-          run: ls
+          run: ls -R ${{ env.RELEASE_PATH }}
 
         - name: Upload APKs to release
           uses: actions/upload-release-asset@v1
