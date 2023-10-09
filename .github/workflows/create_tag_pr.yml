@@ -22,6 +22,10 @@ jobs:
         with:
           path: ./version.txt
 
+      - name: Fix version
+        id: fixed-version
+        run: bash ./fix-version.sh "${{steps.version.outputs.content}}"
+
       - name: Create Tag
         if: ${{ steps.version.outputs.content }} != ''
         uses: actions/github-script@v3
