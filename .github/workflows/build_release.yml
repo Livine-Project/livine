@@ -36,12 +36,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
       
-    build-apk:
-      needs: [create-release]
-      uses: ./.github/workflows/build_apk.yml
-      secrets: inherit
-      with:
-        release-upload-url: ${{ needs.create-release.outputs.release }}
-        app-name: "livine"
-        version: ${{ github.ref }}
-    
+  build-apk:
+    needs: [create-release]
+    uses: ./.github/workflows/build_apk.yml
+    secrets: inherit
+    with:
+      release-upload-url: ${{ needs.create-release.outputs.release }}
+      app-name: "livine"
+      version: ${{ github.ref }}
+  
