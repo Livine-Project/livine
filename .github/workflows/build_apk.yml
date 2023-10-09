@@ -32,11 +32,12 @@ jobs:
             distribution: 'zulu'
             java-version: '11'
 
-
-        - name: Build Apk
+        - name: Setup Flutter
           uses: subosito/flutter-action@v2
           with:
             channel: 'stable'
+    
+        - name: Building APKs
           run: flutter build apk --split-per-abi
 
         - name: Upload APKs to release
@@ -54,25 +55,28 @@ jobs:
               ${{ env.APPNAME }}-armeabi-v7a-release.apk
               ${{ env.APPNAME }}-arm64-v8a-release.apk
               ${{ env.APPNAME }}-x86_64-release.apk
+
             asset_content_type: application/apk
 
-          - name: Archive Release
-            uses: thedoctor0/zip-release@master
-            with:
-              type: "zip"
-              filename: ${{ env.APPNAME }}-android.zip
-              directory: ${{ env.RELEASE_PATH }}
 
-          - name: upload zip to release
-            uses: actions/upload-release-asset@v1
-            env:
-              GITHUB_TOKEN: ${{ github.token }}
-            with:
-              upload_url: ${{ inputs.release-upload-url }}
-              asset_path: ${{env.RELEASE_PATH}}/${{env.APPNAME}}-android.zip
-              asset_name: ${{env.APPNAME}}-android.zip
-              asset_content_type: application/zip
-  
+        - name: Archive Release
+          uses: thedoctor0/zip-release@master
+          with:
+            type: "zip"
+            filename: ${{ env.APPNAME }}-android.zip
+            directory: ${{ env.RELEASE_PATH }}
+
+
+        - name: upload zip to release
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
+          with:
+            upload_url: ${{ inputs.release-upload-url }}
+            asset_path: ${{env.RELEASE_PATH}}/${{env.APPNAME}}-android.zip
+            asset_name: ${{env.APPNAME}}-android.zip
+            asset_content_type: application/zip
+
 
 
 
