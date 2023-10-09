@@ -244,7 +244,7 @@ class _RegisterState extends ConsumerState<Register> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                word?.have_an_account ?? 'Have an account ?',
+                                word?.have_an_account ?? 'Have an account?',
                                 style: const TextStyle(fontFamily: 'Kine'),
                               ),
                               const SizedBox(
