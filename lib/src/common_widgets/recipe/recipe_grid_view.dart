@@ -22,10 +22,7 @@ import '../../common_widgets/error_widget.dart';
 class RecipesGridView extends ConsumerStatefulWidget {
   const RecipesGridView({
     Key? key,
-    required this.pagingController,
   }) : super(key: key);
-
-  final pagingController;
 
   @override
   ConsumerState<RecipesGridView> createState() => _RecipesGridViewState();
@@ -33,11 +30,12 @@ class RecipesGridView extends ConsumerStatefulWidget {
 
 class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
   static const _pageSize = 6;
-
+  final PagingController<int, Recipe> _pagingController =
+      PagingController(firstPageKey: 0);
   @override
   void initState() {
     super.initState();
-    widget.pagingController.addPageRequestListener((pageKey) {
+    _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
   }
@@ -71,20 +69,20 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       final isLastPage = newItems.length < _pageSize;
       if (mounted) {
         if (isLastPage) {
-          widget.pagingController.appendLastPage(newItems);
+          _pagingController.appendLastPage(newItems);
         } else {
           final nextPageKey = pageKey + newItems.length;
-          widget.pagingController.appendPage(newItems, nextPageKey.toInt());
+          _pagingController.appendPage(newItems, nextPageKey.toInt());
         }
       }
     } catch (error) {
-      widget.pagingController.error = error;
+      _pagingController.error = error;
       log(error: "RECIPES", error.toString());
     }
   }
 
   void dispose() {
-    widget.pagingController.dispose();
+    _pagingController.dispose();
     super.dispose();
   }
 
@@ -94,7 +92,7 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
     return PagedGridView<int, Recipe>(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      pagingController: widget.pagingController,
+      pagingController: _pagingController,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: rh.responsiveRecipes(context),
         mainAxisSpacing: 20,
@@ -103,7 +101,7 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       builderDelegate: PagedChildBuilderDelegate(
         newPageErrorIndicatorBuilder: (context) => Loading(),
         firstPageErrorIndicatorBuilder: (context) =>
-            ErrorCustomWidget(pagingController: widget.pagingController),
+            ErrorCustomWidget(pagingController: _pagingController),
         firstPageProgressIndicatorBuilder: (context) => LoadingGridView(),
         newPageProgressIndicatorBuilder: (context) => LoadingGridView(),
         itemBuilder: (context, recipe, index) {

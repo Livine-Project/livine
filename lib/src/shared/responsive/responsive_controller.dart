@@ -18,6 +18,9 @@ class ResponsiveHelper {
   // is not mobile
   bool isTablet(BuildContext context) =>
       ResponsiveBreakpoints.of(context).isTablet;
+  
+  bool isDesktop(BuildContext context) =>
+      ResponsiveBreakpoints.of(context).isDesktop;
 
   bool deviceLandScape(BuildContext context) =>
       ResponsiveBreakpoints.of(context).orientation == Orientation.landscape;

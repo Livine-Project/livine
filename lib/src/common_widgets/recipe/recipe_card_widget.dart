@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -32,117 +33,122 @@ class RecipeCardNormal extends StatefulWidget {
 class _RecipeCardNormalState extends State<RecipeCardNormal> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(10.0),
-                                bottom: Radius.circular(10.0)),
-                            child: CachedNetworkImage(
-                              imageUrl: widget.foodImage,
-                              height: 140,
-                              width: rh.deviceWidth(context) / 2,
-                              fit: BoxFit.cover,
+    return MouseRegion(
+      cursor: Platform.isWindows
+          ? SystemMouseCursors.click
+          : MouseCursor.defer,
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(10.0),
+                                  bottom: Radius.circular(10.0)),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.foodImage,
+                                height: 140,
+                                width: rh.deviceWidth(context) / 2,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: Container(
-                          width: 140.0,
-                          height: 60.0,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer
-                                  .withOpacity(0.3)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Center(
-                                  child: Text(
-                                    widget.name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.0,
-                                        fontFamily: 'Kine',
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimaryContainer),
+                        ]),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Container(
+                            width: 140.0,
+                            height: 60.0,
+                            decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer
+                                    .withOpacity(0.3)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Center(
+                                    child: Text(
+                                      widget.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.0,
+                                          fontFamily: 'Kine',
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimaryContainer),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 5.0,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      widget.time.toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontFamily: 'Kine',
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimaryContainer),
-                                    ),
-                                    const SizedBox(
-                                      width: 5.0,
-                                    ),
-                                    Text(
-                                      "|",
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .tertiary),
-                                    ),
-                                    const SizedBox(
-                                      width: 5.0,
-                                    ),
-                                    Text(
-                                      widget.difficulty.toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontFamily: 'Kine',
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimaryContainer),
-                                    )
-                                  ],
+                                const SizedBox(
+                                  height: 5.0,
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        widget.time.toUpperCase(),
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontFamily: 'Kine',
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer),
+                                      ),
+                                      const SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Text(
+                                        "|",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                      ),
+                                      const SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Text(
+                                        widget.difficulty.toUpperCase(),
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontFamily: 'Kine',
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )),
-        ),
-      ],
+                  ],
+                )),
+          ),
+        ],
+      ),
     );
   }
 }

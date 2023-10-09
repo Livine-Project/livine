@@ -195,7 +195,8 @@ class AuthService {
 
   Future<String> getUserUsername() async {
     final userData = await ref.watch(userDataProvider.future);
-    // log(error: "Username", userData.toString());
+
+    log(error: "Username", userData.toString());
     return userData.username ?? "";
   }
 }

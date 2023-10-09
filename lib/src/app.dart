@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../src/features/settings/presentation/theme/domain/theme_notifier.dart';
 import 'features/settings/data/theme.dart';
+import 'features/windows/titlebar/titlebar.dart';
 import 'routing/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'shared/styles/lib_color_schemes.g.dart';
 import 'translations/domain/translation_provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -30,10 +34,13 @@ class MaterialAppWithTheme extends ConsumerWidget {
     bool isDynamic = ref.watch(dynamicThemeProvider) as bool;
     final localeNotifier = ref.watch(localeNotifierProvider);
     return DynamicColorBuilder(
-        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-          print(lightDynamic.toString());
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        print(lightDynamic.toString());
 
-          return MaterialApp.router(
+        return _App(
+          theme: theme,
+          enableCustomTitleBar: Platform.isWindows,
+          builder: (context) => MaterialApp.router(
             showPerformanceOverlay: kProfileMode == true,
             routeInformationProvider: router.routeInformationProvider,
             routeInformationParser: router.routeInformationParser,
@@ -64,10 +71,55 @@ class MaterialAppWithTheme extends ConsumerWidget {
                   isDynamic ? darkDynamic?.primary ?? themeSeed : themeSeed,
               brightness: Brightness.dark,
             ),
-          );
-        },
-      
+          ),
+        );
+      },
     );
   }
 }
 
+class _App extends StatelessWidget {
+  const _App({
+    required this.builder,
+    required this.theme,
+    this.enableCustomTitleBar = false,
+  });
+  final WidgetBuilder builder;
+  final bool enableCustomTitleBar;
+  final ThemeNotifer theme;
+  @override
+  Widget build(BuildContext context) {
+    if (!enableCustomTitleBar) {
+      return builder(context);
+    }
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: AppThemeBuilder(
+        themeMode: theme.themeMode,
+        darkDynamic: darkColorScheme,
+        lightDynamic: lightColorScheme,
+        child: Stack(
+          children: [
+            MediaQuery.fromView(
+              view: View.of(context),
+              child: Builder(builder: (context) {
+                final mediaQueryData = MediaQuery.of(context);
+                return MediaQuery(
+                  data: mediaQueryData.copyWith(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 30),
+                  ),
+                  child: builder(context),
+                );
+              }),
+            ),
+            const Align(
+              alignment: Alignment.topRight,
+              child: TitleBar(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

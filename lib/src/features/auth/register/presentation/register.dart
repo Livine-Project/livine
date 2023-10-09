@@ -59,6 +59,10 @@ class _RegisterState extends ConsumerState<Register> {
   }
 
   bool _obscureText = true;
+  bool containsWhiteSpace(String username) {
+    RegExp regex = RegExp(r'\s');
+    return regex.hasMatch(username);
+  }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -69,7 +73,9 @@ class _RegisterState extends ConsumerState<Register> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(top: rh.deviceHeight(context) * 0.1),
+          padding: rh.isDesktop(context)
+              ? EdgeInsets.zero
+              : EdgeInsets.only(top: rh.deviceHeight(context) * 0.1),
           child: Row(
             children: [
               Visibility(
@@ -81,7 +87,7 @@ class _RegisterState extends ConsumerState<Register> {
                           topRight: Radius.circular(20),
                           bottomRight: Radius.circular(20)),
                       child: Image.asset(
-                        'assets/images/windows/register.webp',
+                        'assets/images/windows/register.jpg',
                         fit: BoxFit.cover,
                       ),
                     )),
@@ -103,6 +109,8 @@ class _RegisterState extends ConsumerState<Register> {
                                 return "Please enter your username";
                               } else if (u.length >= 20) {
                                 return "Username shouldn't be more than 20 characters";
+                              } else if (containsWhiteSpace(u)) {
+                                return "Username shouldn't contain spaces, use underscore instead";
                               }
                               return null;
                             },
