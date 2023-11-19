@@ -23,7 +23,6 @@ class Planner extends StatelessWidget {
                 maxDate: DateTime.now().add(Duration(days: 2)),
                 dataSource: MealDataSource(_getDataSource(meals)),
                 appointmentBuilder: appointmentBuilder,
-                minDate: DateTime.now(),
                 blackoutDates: [
                   DateTime.now().add(Duration(days: 1)),
                   DateTime.now().add(Duration(days: 2)),

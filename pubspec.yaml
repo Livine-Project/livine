@@ -21,7 +21,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  introduction_screen: ^3.1.12
   http: ^1.1.0
   shared_preferences: ^2.2.1
   url_launcher: ^6.1.14

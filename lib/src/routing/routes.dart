@@ -41,10 +41,7 @@ final baseRoutes = GoRouter(initialLocation: '/onboarding', routes: [
   ),
   GoRouteTransition(path: '/login', screen: Login()),
   GoRouteTransition(path: '/register', screen: Register()),
-  GoRoute(
-    path: '/navigate',
-    builder: (context, state) => const Navigation(),
-  ),
+  GoRouteTransition(path: '/navigate', screen: Navigation()),
   GoRouteTransition(path: '/languages', screen: Languages()),
   GoRouteTransition(path: '/settings', screen: SettingsWidget()),
   GoRoute(
