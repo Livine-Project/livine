@@ -49,7 +49,7 @@ jobs:
           with:
             files: |
               ${{ env.RELEASE_PATH }}/*.apk
-              
+
           # env:
           #   GITHUB_TOKEN: ${{ github.token }}
           # with:
@@ -61,14 +61,6 @@ jobs:
           #     ${{ env.APPNAME }}-x86_64-release.apk
 
           #   asset_content_type: application/apk
-
-
-        - name: Archive Release
-          uses: thedoctor0/zip-release@master
-          with:
-            type: "zip"
-            filename: ${{ env.APPNAME }}-android.zip
-            directory: ${{ env.RELEASE_PATH }}
 
 
         - name: upload zip to release

@@ -27,6 +27,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
+    
     onlyAndroid();
   }
 
@@ -43,7 +44,7 @@ class _HomeState extends ConsumerState<Home> {
     final name = ref.watch(userNameProvider);
 
     final word = TranslationRepo.translate(context);
-
+    
     return network == ConnectivityStatus.On
         ? Scaffold(
             body: SafeArea(

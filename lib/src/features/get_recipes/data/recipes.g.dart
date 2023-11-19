@@ -6,7 +6,7 @@ part of 'recipes.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$recipesDetailsHash() => r'0f959832e5dee7b167de4ccab7904e32ba923079';
+String _$recipesDetailsHash() => r'd896fd89c1bbf5f64463fe84a0a2fc098525cb9a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -41,11 +41,9 @@ class RecipesDetailsFamily extends Family<AsyncValue<Recipe>> {
   /// See also [recipesDetails].
   RecipesDetailsProvider call({
     required int id,
-    required BuildContext context,
   }) {
     return RecipesDetailsProvider(
       id: id,
-      context: context,
     );
   }
 
@@ -55,7 +53,6 @@ class RecipesDetailsFamily extends Family<AsyncValue<Recipe>> {
   ) {
     return call(
       id: provider.id,
-      context: provider.context,
     );
   }
 
@@ -79,12 +76,10 @@ class RecipesDetailsProvider extends AutoDisposeFutureProvider<Recipe> {
   /// See also [recipesDetails].
   RecipesDetailsProvider({
     required int id,
-    required BuildContext context,
   }) : this._internal(
           (ref) => recipesDetails(
             ref as RecipesDetailsRef,
             id: id,
-            context: context,
           ),
           from: recipesDetailsProvider,
           name: r'recipesDetailsProvider',
@@ -96,7 +91,6 @@ class RecipesDetailsProvider extends AutoDisposeFutureProvider<Recipe> {
           allTransitiveDependencies:
               RecipesDetailsFamily._allTransitiveDependencies,
           id: id,
-          context: context,
         );
 
   RecipesDetailsProvider._internal(
@@ -107,11 +101,9 @@ class RecipesDetailsProvider extends AutoDisposeFutureProvider<Recipe> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.id,
-    required this.context,
   }) : super.internal();
 
   final int id;
-  final BuildContext context;
 
   @override
   Override overrideWith(
@@ -127,7 +119,6 @@ class RecipesDetailsProvider extends AutoDisposeFutureProvider<Recipe> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         id: id,
-        context: context,
       ),
     );
   }
@@ -139,16 +130,13 @@ class RecipesDetailsProvider extends AutoDisposeFutureProvider<Recipe> {
 
   @override
   bool operator ==(Object other) {
-    return other is RecipesDetailsProvider &&
-        other.id == id &&
-        other.context == context;
+    return other is RecipesDetailsProvider && other.id == id;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, id.hashCode);
-    hash = _SystemHash.combine(hash, context.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -157,9 +145,6 @@ class RecipesDetailsProvider extends AutoDisposeFutureProvider<Recipe> {
 mixin RecipesDetailsRef on AutoDisposeFutureProviderRef<Recipe> {
   /// The parameter `id` of this provider.
   int get id;
-
-  /// The parameter `context` of this provider.
-  BuildContext get context;
 }
 
 class _RecipesDetailsProviderElement
@@ -168,18 +153,16 @@ class _RecipesDetailsProviderElement
 
   @override
   int get id => (origin as RecipesDetailsProvider).id;
-  @override
-  BuildContext get context => (origin as RecipesDetailsProvider).context;
 }
 
-String _$getRecipesHash() => r'844c07cc8dc308590cc248d2bc4f5b041a8b9b95';
+String _$getRecipesHash() => r'1e759da42949de290788426e22f382e8b7c19b4a';
 
 /// See also [getRecipes].
 @ProviderFor(getRecipes)
 const getRecipesProvider = GetRecipesFamily();
 
 /// See also [getRecipes].
-class GetRecipesFamily extends Family<AsyncValue<dynamic>> {
+class GetRecipesFamily extends Family<AsyncValue<List<Recipe>>> {
   /// See also [getRecipes].
   const GetRecipesFamily();
 
@@ -187,12 +170,10 @@ class GetRecipesFamily extends Family<AsyncValue<dynamic>> {
   GetRecipesProvider call({
     required int id,
     required int pageKey,
-    required BuildContext context,
   }) {
     return GetRecipesProvider(
       id: id,
       pageKey: pageKey,
-      context: context,
     );
   }
 
@@ -203,7 +184,6 @@ class GetRecipesFamily extends Family<AsyncValue<dynamic>> {
     return call(
       id: provider.id,
       pageKey: provider.pageKey,
-      context: provider.context,
     );
   }
 
@@ -223,18 +203,16 @@ class GetRecipesFamily extends Family<AsyncValue<dynamic>> {
 }
 
 /// See also [getRecipes].
-class GetRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
+class GetRecipesProvider extends AutoDisposeFutureProvider<List<Recipe>> {
   /// See also [getRecipes].
   GetRecipesProvider({
     required int id,
     required int pageKey,
-    required BuildContext context,
   }) : this._internal(
           (ref) => getRecipes(
             ref as GetRecipesRef,
             id: id,
             pageKey: pageKey,
-            context: context,
           ),
           from: getRecipesProvider,
           name: r'getRecipesProvider',
@@ -247,7 +225,6 @@ class GetRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
               GetRecipesFamily._allTransitiveDependencies,
           id: id,
           pageKey: pageKey,
-          context: context,
         );
 
   GetRecipesProvider._internal(
@@ -259,16 +236,14 @@ class GetRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
     required super.from,
     required this.id,
     required this.pageKey,
-    required this.context,
   }) : super.internal();
 
   final int id;
   final int pageKey;
-  final BuildContext context;
 
   @override
   Override overrideWith(
-    FutureOr<dynamic> Function(GetRecipesRef provider) create,
+    FutureOr<List<Recipe>> Function(GetRecipesRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -281,13 +256,12 @@ class GetRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
         debugGetCreateSourceHash: null,
         id: id,
         pageKey: pageKey,
-        context: context,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<dynamic> createElement() {
+  AutoDisposeFutureProviderElement<List<Recipe>> createElement() {
     return _GetRecipesProviderElement(this);
   }
 
@@ -295,8 +269,7 @@ class GetRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
   bool operator ==(Object other) {
     return other is GetRecipesProvider &&
         other.id == id &&
-        other.pageKey == pageKey &&
-        other.context == context;
+        other.pageKey == pageKey;
   }
 
   @override
@@ -304,43 +277,37 @@ class GetRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, id.hashCode);
     hash = _SystemHash.combine(hash, pageKey.hashCode);
-    hash = _SystemHash.combine(hash, context.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin GetRecipesRef on AutoDisposeFutureProviderRef<dynamic> {
+mixin GetRecipesRef on AutoDisposeFutureProviderRef<List<Recipe>> {
   /// The parameter `id` of this provider.
   int get id;
 
   /// The parameter `pageKey` of this provider.
   int get pageKey;
-
-  /// The parameter `context` of this provider.
-  BuildContext get context;
 }
 
 class _GetRecipesProviderElement
-    extends AutoDisposeFutureProviderElement<dynamic> with GetRecipesRef {
+    extends AutoDisposeFutureProviderElement<List<Recipe>> with GetRecipesRef {
   _GetRecipesProviderElement(super.provider);
 
   @override
   int get id => (origin as GetRecipesProvider).id;
   @override
   int get pageKey => (origin as GetRecipesProvider).pageKey;
-  @override
-  BuildContext get context => (origin as GetRecipesProvider).context;
 }
 
-String _$getVegRecipesHash() => r'262d6ac30dc0a18c52405ffd35a85a9137228eb0';
+String _$getVegRecipesHash() => r'8f703afa76c8843783b6a68ee7adc07b2c9f43e2';
 
 /// See also [getVegRecipes].
 @ProviderFor(getVegRecipes)
 const getVegRecipesProvider = GetVegRecipesFamily();
 
 /// See also [getVegRecipes].
-class GetVegRecipesFamily extends Family<AsyncValue<dynamic>> {
+class GetVegRecipesFamily extends Family<AsyncValue<List<Recipe>>> {
   /// See also [getVegRecipes].
   const GetVegRecipesFamily();
 
@@ -348,12 +315,10 @@ class GetVegRecipesFamily extends Family<AsyncValue<dynamic>> {
   GetVegRecipesProvider call({
     required int id,
     required int pageKey,
-    required BuildContext context,
   }) {
     return GetVegRecipesProvider(
       id: id,
       pageKey: pageKey,
-      context: context,
     );
   }
 
@@ -364,7 +329,6 @@ class GetVegRecipesFamily extends Family<AsyncValue<dynamic>> {
     return call(
       id: provider.id,
       pageKey: provider.pageKey,
-      context: provider.context,
     );
   }
 
@@ -384,18 +348,16 @@ class GetVegRecipesFamily extends Family<AsyncValue<dynamic>> {
 }
 
 /// See also [getVegRecipes].
-class GetVegRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
+class GetVegRecipesProvider extends AutoDisposeFutureProvider<List<Recipe>> {
   /// See also [getVegRecipes].
   GetVegRecipesProvider({
     required int id,
     required int pageKey,
-    required BuildContext context,
   }) : this._internal(
           (ref) => getVegRecipes(
             ref as GetVegRecipesRef,
             id: id,
             pageKey: pageKey,
-            context: context,
           ),
           from: getVegRecipesProvider,
           name: r'getVegRecipesProvider',
@@ -408,7 +370,6 @@ class GetVegRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
               GetVegRecipesFamily._allTransitiveDependencies,
           id: id,
           pageKey: pageKey,
-          context: context,
         );
 
   GetVegRecipesProvider._internal(
@@ -420,16 +381,14 @@ class GetVegRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
     required super.from,
     required this.id,
     required this.pageKey,
-    required this.context,
   }) : super.internal();
 
   final int id;
   final int pageKey;
-  final BuildContext context;
 
   @override
   Override overrideWith(
-    FutureOr<dynamic> Function(GetVegRecipesRef provider) create,
+    FutureOr<List<Recipe>> Function(GetVegRecipesRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -442,13 +401,12 @@ class GetVegRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
         debugGetCreateSourceHash: null,
         id: id,
         pageKey: pageKey,
-        context: context,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<dynamic> createElement() {
+  AutoDisposeFutureProviderElement<List<Recipe>> createElement() {
     return _GetVegRecipesProviderElement(this);
   }
 
@@ -456,8 +414,7 @@ class GetVegRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
   bool operator ==(Object other) {
     return other is GetVegRecipesProvider &&
         other.id == id &&
-        other.pageKey == pageKey &&
-        other.context == context;
+        other.pageKey == pageKey;
   }
 
   @override
@@ -465,33 +422,28 @@ class GetVegRecipesProvider extends AutoDisposeFutureProvider<dynamic> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, id.hashCode);
     hash = _SystemHash.combine(hash, pageKey.hashCode);
-    hash = _SystemHash.combine(hash, context.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin GetVegRecipesRef on AutoDisposeFutureProviderRef<dynamic> {
+mixin GetVegRecipesRef on AutoDisposeFutureProviderRef<List<Recipe>> {
   /// The parameter `id` of this provider.
   int get id;
 
   /// The parameter `pageKey` of this provider.
   int get pageKey;
-
-  /// The parameter `context` of this provider.
-  BuildContext get context;
 }
 
 class _GetVegRecipesProviderElement
-    extends AutoDisposeFutureProviderElement<dynamic> with GetVegRecipesRef {
+    extends AutoDisposeFutureProviderElement<List<Recipe>>
+    with GetVegRecipesRef {
   _GetVegRecipesProviderElement(super.provider);
 
   @override
   int get id => (origin as GetVegRecipesProvider).id;
   @override
   int get pageKey => (origin as GetVegRecipesProvider).pageKey;
-  @override
-  BuildContext get context => (origin as GetVegRecipesProvider).context;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -47,7 +47,6 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       bool guest = ref.watch(guestProvider);
 
       final guestRecipes = await ref.watch(getRecipesProvider(
-              context: context,
               id: recipesTypeData == 0 ? patientID : recipesTypeData,
               pageKey: pageKey)
           .future);
@@ -55,12 +54,10 @@ class _RecipesGridViewState extends ConsumerState<RecipesGridView> {
       final newItems = isGuest == false && guest == false
           ? await ref.watch(isUserVegan == true
               ? getVegRecipesProvider(
-                      context: context,
                       id: recipesTypeData == 0 ? patientID : recipesTypeData,
                       pageKey: pageKey)
                   .future
               : getRecipesProvider(
-                      context: context,
                       id: recipesTypeData == 0 ? patientID : recipesTypeData,
                       pageKey: pageKey)
                   .future)

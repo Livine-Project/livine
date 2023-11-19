@@ -43,8 +43,8 @@ class Navigation extends HookConsumerWidget {
                   label: word?.home ?? '',
                 ),
                 NavigationDestination(
-                    icon: const Icon(Icons.local_dining),
-                    label: word?.meals ?? ''),
+                    icon: const Icon(Icons.calendar_month),
+                    label: 'Planner'),
                 NavigationDestination(
                     icon: const Icon(Icons.person_rounded),
                     label: word?.profile ?? ''),

@@ -62,7 +62,7 @@ class _LoginState extends ConsumerState<Login> {
     if (Platform.isAndroid || Platform.isIOS) {
       GoRouter.of(context).goNamed('OnBoarding');
     } else {
-      GoRouter.of(context).go('/navigate');
+      GoRouter.of(context).go('/choose_content');
     }
   }
 

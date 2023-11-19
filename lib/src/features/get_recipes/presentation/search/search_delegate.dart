@@ -45,7 +45,6 @@ class CustomSearchDelegate extends SearchDelegate {
         int recipesTypeData = ref.watch(userTypeProvider);
         final results = ref.watch(searchResultsProvider(
             query: query,
-            context: context,
             pk: recipesTypeData == 0 ? patientID : recipesTypeData));
         return results.when(
           data: (data) {

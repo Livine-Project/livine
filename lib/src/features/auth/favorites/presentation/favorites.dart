@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
-import '../data/favorites.dart';
 import '../../../loading/loading.dart';
+import '../data/favorites.dart';
 
 class Favorites extends ConsumerStatefulWidget {
   const Favorites({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class Favorites extends ConsumerStatefulWidget {
 class _FavoritesState extends ConsumerState<Favorites> {
   @override
   Widget build(BuildContext context) {
-    final favorites = ref.watch(getFavoritesStreamProvider(context));
+    final favorites = ref.watch(getFavoritesProvider);
     final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
@@ -27,19 +27,18 @@ class _FavoritesState extends ConsumerState<Favorites> {
       ),
       body: favorites.when(
           data: (data) => ListView.builder(
-                itemCount: data.id.length,
+                itemCount: data.length,
                 itemBuilder: (context, index) {
                   return SizedBox(
                     width: 200,
                     height: 150,
                     child: Dismissible(
                       key: UniqueKey(),
-                      onDismissed: (_) async {
-                        await deleteFavorite(
-                            ref: ref,
-                            recipeID: data.id[index],
-                            mounted: mounted,
-                            context: context);
+                      onDismissed: (_) {
+                        ref.read(
+                            deleteFavoriteProvider(recipeID: data[index].id));
+                        data.removeAt(index);
+                        setState(() {});
                       },
                       background: Container(
                         color: Colors.red,
@@ -55,13 +54,13 @@ class _FavoritesState extends ConsumerState<Favorites> {
                         child: Column(
                           children: [
                             CachedNetworkImage(
-                              imageUrl: restAPIMedia + data.imageURL[index],
+                              imageUrl: restAPIMedia + data[index].imageURL,
                               height: 100,
                               width: MediaQuery.of(context).size.width,
                               fit: BoxFit.cover,
                             ),
                             Text(
-                              data.name[index],
+                              data[index].name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

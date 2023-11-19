@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/features/get_recipes/presentation/recipe_details.dart';
 import '../common_widgets/recipe/web_view_widget.dart';
 import '../constants/shared_constants.dart';
 import '../features/auth/favorites/presentation/favorites.dart';
@@ -27,7 +28,7 @@ import '../features/settings/presentation/notifications/notifications_settings_v
 import '../features/settings/presentation/settings.dart';
 import '../features/settings/presentation/theme/theme_settings.dart';
 
-final baseRoutes = GoRouter(initialLocation: '/', routes: [
+final baseRoutes = GoRouter(initialLocation: '/onboarding', routes: [
   GoRoute(
     path: '/',
     builder: (context, state) =>
@@ -38,31 +39,14 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
     path: '/onboarding',
     builder: (context, state) => OnBoarding(),
   ),
-  GoRoute(
-    path: '/register',
-    builder: (context, state) => const Register(),
-  ),
-  GoRoute(
-    path: '/login',
-    name: "Login",
-    builder: (context, state) => const Login(),
-  ),
-  // GoRoute(
-  //   path: '/scan',
-  //   builder: (context, state) => const Scan(),
-  // ),
+  GoRouteTransition(path: '/login', screen: Login()),
+  GoRouteTransition(path: '/register', screen: Register()),
   GoRoute(
     path: '/navigate',
     builder: (context, state) => const Navigation(),
   ),
-  GoRoute(
-    path: '/languages',
-    builder: (context, state) => const Languages(),
-  ),
-  GoRoute(
-    path: '/settings',
-    builder: (context, state) => const SettingsWidget(),
-  ),
+  GoRouteTransition(path: '/languages', screen: Languages()),
+  GoRouteTransition(path: '/settings', screen: SettingsWidget()),
   GoRoute(
     path: '/breakfast',
     builder: (context, state) => const BreakFast(),
@@ -79,27 +63,15 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
     path: '/snacks',
     builder: (context, state) => const Snacks(),
   ),
-  GoRoute(
-    path: '/terms',
-    builder: (context, state) => const Terms(),
-  ),
-  GoRoute(
-    path: '/privacy',
-    builder: (context, state) => const Privacy(),
-  ),
+  GoRouteTransition(path: '/terms', screen: Terms()),
+  GoRouteTransition(path: '/privacy', screen: Privacy()),
   GoRoute(
     path: '/confirm',
     builder: (context, state) => const ConfirmPayment(),
   ),
-  GoRoute(
-    path: '/themeSettings',
-    builder: (context, state) => ThemeSettings(),
-  ),
-  GoRoute(
-    path: '/notifications_settings',
-    name: "Notifications Settings",
-    builder: (context, state) => const NotificationsSettings(),
-  ),
+  GoRouteTransition(path: '/themeSettings', screen: ThemeSettings()),
+  GoRouteTransition(
+      path: '/notifications_settings', screen: NotificationsSettings()),
   GoRoute(
     path: '/ingridents',
     builder: (context, state) {
@@ -109,30 +81,16 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
     },
   ),
   GoRoute(
-    name: "Content",
-    path: '/choose_content',
-    builder: (context, state) => const ChooseContent(),
-  ),
-  GoRoute(
-    name: "Content_Patient",
-    path: '/content_patient',
-    builder: (context, state) => const ContentPatient(),
-  ),
-  GoRoute(
-    name: "Update Profile",
-    path: '/update_profile',
-    pageBuilder: (context, state) {
-      return CustomTransitionPage(
-          child: UpdateProfile(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity:
-                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-              child: child,
-            );
-          });
+    path: '/recipe/details',
+    builder: (context, state) {
+      return RecipeDetails(
+        id: state.extra,
+      );
     },
   ),
+  GoRouteTransition(path: '/content_patient', screen: ContentPatient()),
+  GoRouteTransition(path: '/choose_content', screen: ChooseContent()),
+  GoRouteTransition(path: '/update_profile', screen: UpdateProfile()),
   GoRoute(
     name: "recipeVideo",
     path: '/recipe_video',
@@ -161,12 +119,7 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
       );
     },
   ),
-  GoRoute(
-    path: '/favorites',
-    builder: (context, state) {
-      return const Favorites();
-    },
-  ),
+  GoRouteTransition(path: '/favorites', screen: Favorites()),
   GoRoute(
     path: '/cooking',
     builder: (context, state) {
@@ -175,13 +128,7 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
       );
     },
   ),
-  GoRoute(
-    path: '/accessibility',
-    builder: (context, state) {
-      return const Accessibility();
-    },
-  ),
-
+  GoRouteTransition(path: '/accessibility', screen: Accessibility()),
   GoRoute(
     path: '/share_recipe',
     builder: (context, state) {
@@ -191,3 +138,24 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
     },
   ),
 ]);
+
+GoRoute GoRouteTransition({required String path, required Widget screen}) {
+  return GoRoute(
+    path: path,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: screen,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1, 0);
+        const end = Offset.zero;
+        const curve = Curves.easeIn;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(child: child, position: offsetAnimation);
+      },
+    ),
+  );
+}

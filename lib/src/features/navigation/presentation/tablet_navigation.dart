@@ -56,6 +56,12 @@ class _TabletNavigationState extends State<TabletNavigation> {
                       size: MediaQuery.of(context).size.width / 70),
                   label: Text(word?.profile ?? ""),
                 ),
+                //   NavigationRailDestination(
+                //   padding: const EdgeInsets.symmetric(vertical: 20.0),
+                //   icon: Icon(Icons.document_scanner,
+                //       size: MediaQuery.of(context).size.width / 70),
+                //   label: Text("Nourish"),
+                // ),
                 NavigationRailDestination(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   icon: Icon(Icons.settings,

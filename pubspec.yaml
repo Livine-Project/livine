@@ -53,7 +53,12 @@ dependencies:
   window_manager: ^0.3.6
   fluentui_system_icons: ^1.1.216
   github: ^9.19.0
+  sentry_flutter: ^7.10.1
   discord_rpc: ^0.0.2
+  file_picker: ^5.5.0
+  syncfusion_flutter_calendar: ^23.1.44
+  auto_size_text: ^3.0.0
+
 
 
 dev_dependencies:
@@ -66,6 +71,8 @@ dev_dependencies:
   riverpod_generator: ^2.3.2
   device_preview: ^1.1.0
   msix: ^3.16.2
+  win32_registry: ^1.1.2
+  flutter_dotenv: ^5.1.0
 
   flutter_test:
     sdk: flutter
@@ -78,7 +85,7 @@ msix_config:
   identity_name: 4882MazenOmar.Livine
   msix_version: 2.0.0.0
   publisher: CN=02970061-64BA-42D9-9C4F-DFB9B063C27D
-  logo_path: C:\Users\Mazen\Desktop\logo.png
+  logo_path: E:\Projects\Livine\livine\assets\images\icon\windows.png
   capabilities: internetClient
   store: true
 
@@ -105,6 +112,7 @@ flutter:
     - assets/images/profile/
     - assets/images/windows/
     - shorebird.yaml
+    - .env
 
 
 

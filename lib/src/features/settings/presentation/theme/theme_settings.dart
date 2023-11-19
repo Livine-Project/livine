@@ -109,6 +109,7 @@ class ThemeSettings extends HookWidget {
               final isDynamic = ref.watch(dynamicThemeProvider);
               return SwitchListTile(
                 title: Text(word?.dynamic_theme ?? ""),
+                
                 value: isDynamic == true,
                 onChanged: !GetDeviceInfo.isAndroid12Above()
                     ? null

@@ -29,20 +29,20 @@ class RecipeDetails extends StatefulWidget {
 class _RecipeDetailsState extends State<RecipeDetails> {
   int index = 0;
   bool backDrop = false;
+  bool isRecipeFavorited = false;
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      final recipesData =
-          ref.watch(recipesDetailsProvider(id: widget.id, context: context));
+      final recipesData = ref.watch(recipesDetailsProvider(id: widget.id));
       final word = TranslationRepo.translate(context);
+      final isFavorited =
+          ref.watch(isFavoritedProvider(id: widget.id)).value ?? false;
+      print(isFavorited);
 
       return recipesData.when(
         data: (data) {
-          print(widget.id);
-          final isFavorited =
-              ref.watch(isFavoritedProvider(widget.id)).value ?? false;
           return Scaffold(
               body: SlidingUpPanel(
             backdropEnabled: true,
@@ -107,13 +107,26 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                                   Theme.of(context).colorScheme.surface,
                               radius: 25,
                               child: IconButton(
-                                  onPressed: () => addFavorite(
-                                      ref: ref,
-                                      recipeID: data.id,
-                                      mounted: mounted,
-                                      context: context),
+                                  onPressed: () {
+                                    if (isFavorited == 'true' ||
+                                        isRecipeFavorited) {
+                                      setState(() {
+                                        isRecipeFavorited = false;
+                                      });
+                                      ref.read(deleteFavoriteProvider(
+                                          recipeID: data.id));
+                                    } else {
+                                      setState(() {
+                                        isRecipeFavorited = true;
+                                      });
+                                      ref.read(addFavoriteProvider(
+                                          recipeID: data.id));
+                                    }
+                                    ref.invalidate(isFavoritedProvider(
+                                        id: widget.id));
+                                  },
                                   icon: Icon(
-                                    isFavorited == 'true'
+                                    isRecipeFavorited || isFavorited == 'true'
                                         ? Icons.favorite
                                         : Icons.favorite_border,
                                     color:

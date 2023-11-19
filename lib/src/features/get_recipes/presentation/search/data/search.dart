@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../../constants/constants.dart';
@@ -14,7 +13,7 @@ part 'search.g.dart';
 Future searchResults(Ref ref,
     {required int pk,
     required String query,
-    required BuildContext context}) async {
+    }) async {
   bool isUserVegan = ref.watch(isVeganProvider);
   final url = isUserVegan == true
       ? "$restAPIURL/recipe/veg/$pk?format=json&search=$query"

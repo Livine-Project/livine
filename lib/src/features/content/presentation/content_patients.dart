@@ -39,7 +39,7 @@ class _ContentPatientState extends State<ContentPatient> {
       ),
       body: HookConsumer(
         builder: ((context, ref, child) {
-          final recipesData = ref.watch(getPatientsProvider(context: context));
+          final recipesData = ref.watch(getPatientsProvider);
           final guest = ref.watch(guestProvider);
 
           final userData = ref.watch(userDataProvider).asData?.value;

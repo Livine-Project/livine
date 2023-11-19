@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../translations/domain/translation_provider.dart';
+import 'check_update/check_update.dart';
 import 'settings_model.dart';
 
 class SettingsWidget extends ConsumerWidget {
@@ -73,8 +74,53 @@ class SettingsWidget extends ConsumerWidget {
         icon: Icons.policy_outlined,
         subtitle: "",
       ),
+      Settings(
+        onTap: () async {
+          final status =
+              await ref.watch(checkUpdateProvider).checkIfUpdateAvailable();
+          if (status == UpdateAvailableState.updateNotAvailable) {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text('No update available'),
+                      content:
+                          Text('You are using the latest version of Livine'),
+                      actions: [
+                        TextButton(
+                            onPressed: () => context.pop(), child: Text('OK'))
+                      ],
+                    ));
+          } else {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text('Update available'),
+                      content: Text('An update is available for Livine'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              context.pop();
+                              ref.watch(checkUpdateProvider).downloadUpdates();
+                            },
+                            child: Text('Download')),
+                        TextButton(
+                            onPressed: () => context.pop(),
+                            child: Text('cancel'))
+                      ],
+                    ));
+          }
+        },
+        title: word.check_for_update,
+        icon: Icons.update_outlined,
+        subtitle: "",
+      ),
     ];
-
+    if (const bool.fromEnvironment("update_feature") == false) {
+      menus.removeLast();
+    }
+    // if (Platform.isWindows) {
+    //   menus.removeWhere((element) => element.title == word.accessibility);
+    // }
     return Scaffold(
         body: CustomScrollView(
       slivers: [

@@ -6,7 +6,7 @@ part of 'search.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchResultsHash() => r'c625bf8dee346d487121ff61ee24ab73447b288f';
+String _$searchResultsHash() => r'5d4c52c1796bf83cfa08a879f534ebf3ab18f34b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,12 +42,10 @@ class SearchResultsFamily extends Family<AsyncValue<dynamic>> {
   SearchResultsProvider call({
     required int pk,
     required String query,
-    required BuildContext context,
   }) {
     return SearchResultsProvider(
       pk: pk,
       query: query,
-      context: context,
     );
   }
 
@@ -58,7 +56,6 @@ class SearchResultsFamily extends Family<AsyncValue<dynamic>> {
     return call(
       pk: provider.pk,
       query: provider.query,
-      context: provider.context,
     );
   }
 
@@ -83,13 +80,11 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
   SearchResultsProvider({
     required int pk,
     required String query,
-    required BuildContext context,
   }) : this._internal(
           (ref) => searchResults(
             ref as SearchResultsRef,
             pk: pk,
             query: query,
-            context: context,
           ),
           from: searchResultsProvider,
           name: r'searchResultsProvider',
@@ -102,7 +97,6 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
               SearchResultsFamily._allTransitiveDependencies,
           pk: pk,
           query: query,
-          context: context,
         );
 
   SearchResultsProvider._internal(
@@ -114,12 +108,10 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
     required super.from,
     required this.pk,
     required this.query,
-    required this.context,
   }) : super.internal();
 
   final int pk;
   final String query;
-  final BuildContext context;
 
   @override
   Override overrideWith(
@@ -136,7 +128,6 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
         debugGetCreateSourceHash: null,
         pk: pk,
         query: query,
-        context: context,
       ),
     );
   }
@@ -150,8 +141,7 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
   bool operator ==(Object other) {
     return other is SearchResultsProvider &&
         other.pk == pk &&
-        other.query == query &&
-        other.context == context;
+        other.query == query;
   }
 
   @override
@@ -159,7 +149,6 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, pk.hashCode);
     hash = _SystemHash.combine(hash, query.hashCode);
-    hash = _SystemHash.combine(hash, context.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -171,9 +160,6 @@ mixin SearchResultsRef on AutoDisposeFutureProviderRef<dynamic> {
 
   /// The parameter `query` of this provider.
   String get query;
-
-  /// The parameter `context` of this provider.
-  BuildContext get context;
 }
 
 class _SearchResultsProviderElement
@@ -184,8 +170,6 @@ class _SearchResultsProviderElement
   int get pk => (origin as SearchResultsProvider).pk;
   @override
   String get query => (origin as SearchResultsProvider).query;
-  @override
-  BuildContext get context => (origin as SearchResultsProvider).context;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

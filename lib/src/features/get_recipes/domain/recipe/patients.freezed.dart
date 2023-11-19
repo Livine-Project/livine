@@ -73,21 +73,22 @@ class _$PatientsCopyWithImpl<$Res, $Val extends Patients>
 }
 
 /// @nodoc
-abstract class _$$_PatientsCopyWith<$Res> implements $PatientsCopyWith<$Res> {
-  factory _$$_PatientsCopyWith(
-          _$_Patients value, $Res Function(_$_Patients) then) =
-      __$$_PatientsCopyWithImpl<$Res>;
+abstract class _$$PatientsImplCopyWith<$Res>
+    implements $PatientsCopyWith<$Res> {
+  factory _$$PatientsImplCopyWith(
+          _$PatientsImpl value, $Res Function(_$PatientsImpl) then) =
+      __$$PatientsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, String image});
 }
 
 /// @nodoc
-class __$$_PatientsCopyWithImpl<$Res>
-    extends _$PatientsCopyWithImpl<$Res, _$_Patients>
-    implements _$$_PatientsCopyWith<$Res> {
-  __$$_PatientsCopyWithImpl(
-      _$_Patients _value, $Res Function(_$_Patients) _then)
+class __$$PatientsImplCopyWithImpl<$Res>
+    extends _$PatientsCopyWithImpl<$Res, _$PatientsImpl>
+    implements _$$PatientsImplCopyWith<$Res> {
+  __$$PatientsImplCopyWithImpl(
+      _$PatientsImpl _value, $Res Function(_$PatientsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -97,7 +98,7 @@ class __$$_PatientsCopyWithImpl<$Res>
     Object? name = null,
     Object? image = null,
   }) {
-    return _then(_$_Patients(
+    return _then(_$PatientsImpl(
       null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -116,11 +117,11 @@ class __$$_PatientsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Patients implements _Patients {
-  const _$_Patients(this.id, this.name, this.image);
+class _$PatientsImpl implements _Patients {
+  const _$PatientsImpl(this.id, this.name, this.image);
 
-  factory _$_Patients.fromJson(Map<String, dynamic> json) =>
-      _$$_PatientsFromJson(json);
+  factory _$PatientsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PatientsImplFromJson(json);
 
   @override
   final int id;
@@ -138,7 +139,7 @@ class _$_Patients implements _Patients {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Patients &&
+            other is _$PatientsImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.image, image) || other.image == image));
@@ -151,12 +152,12 @@ class _$_Patients implements _Patients {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PatientsCopyWith<_$_Patients> get copyWith =>
-      __$$_PatientsCopyWithImpl<_$_Patients>(this, _$identity);
+  _$$PatientsImplCopyWith<_$PatientsImpl> get copyWith =>
+      __$$PatientsImplCopyWithImpl<_$PatientsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PatientsToJson(
+    return _$$PatientsImplToJson(
       this,
     );
   }
@@ -164,9 +165,10 @@ class _$_Patients implements _Patients {
 
 abstract class _Patients implements Patients {
   const factory _Patients(final int id, final String name, final String image) =
-      _$_Patients;
+      _$PatientsImpl;
 
-  factory _Patients.fromJson(Map<String, dynamic> json) = _$_Patients.fromJson;
+  factory _Patients.fromJson(Map<String, dynamic> json) =
+      _$PatientsImpl.fromJson;
 
   @override
   int get id;
@@ -176,6 +178,6 @@ abstract class _Patients implements Patients {
   String get image;
   @override
   @JsonKey(ignore: true)
-  _$$_PatientsCopyWith<_$_Patients> get copyWith =>
+  _$$PatientsImplCopyWith<_$PatientsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

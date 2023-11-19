@@ -21,18 +21,37 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Recipe {
   int get id => throw _privateConstructorUsedError;
-  List<dynamic> get ingridents => throw _privateConstructorUsedError;
-  List<dynamic> get directions => throw _privateConstructorUsedError;
+  set id(int value) => throw _privateConstructorUsedError;
+  List<String> get ingridents => throw _privateConstructorUsedError;
+  set ingridents(List<String> value) => throw _privateConstructorUsedError;
+  List<String> get directions => throw _privateConstructorUsedError;
+  set directions(List<String> value) => throw _privateConstructorUsedError;
   String get patient => throw _privateConstructorUsedError;
+  set patient(String value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  set name(String value) => throw _privateConstructorUsedError;
   String get imageURL => throw _privateConstructorUsedError;
+  set imageURL(String value) => throw _privateConstructorUsedError;
   String get difficulty => throw _privateConstructorUsedError;
-  bool get isVegetarian => throw _privateConstructorUsedError;
+  set difficulty(String value) => throw _privateConstructorUsedError;
+  bool? get isVegetarian => throw _privateConstructorUsedError;
+  set isVegetarian(bool? value) => throw _privateConstructorUsedError;
+  List<dynamic> get tag => throw _privateConstructorUsedError;
+  set tag(List<dynamic> value) => throw _privateConstructorUsedError;
   String get difficulty_image => throw _privateConstructorUsedError;
+  set difficulty_image(String value) => throw _privateConstructorUsedError;
   int get time_taken => throw _privateConstructorUsedError;
+  set time_taken(int value) => throw _privateConstructorUsedError;
   int get calories => throw _privateConstructorUsedError;
+  set calories(int value) => throw _privateConstructorUsedError;
   String get video => throw _privateConstructorUsedError;
+  set video(String value) => throw _privateConstructorUsedError;
+  DateTime? get from_date => throw _privateConstructorUsedError;
+  set from_date(DateTime? value) => throw _privateConstructorUsedError;
+  DateTime? get to_date => throw _privateConstructorUsedError;
+  set to_date(DateTime? value) => throw _privateConstructorUsedError;
   String get created_at => throw _privateConstructorUsedError;
+  set created_at(String value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,17 +65,20 @@ abstract class $RecipeCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      List<dynamic> ingridents,
-      List<dynamic> directions,
+      List<String> ingridents,
+      List<String> directions,
       String patient,
       String name,
       String imageURL,
       String difficulty,
-      bool isVegetarian,
+      bool? isVegetarian,
+      List<dynamic> tag,
       String difficulty_image,
       int time_taken,
       int calories,
       String video,
+      DateTime? from_date,
+      DateTime? to_date,
       String created_at});
 }
 
@@ -80,11 +102,14 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
     Object? name = null,
     Object? imageURL = null,
     Object? difficulty = null,
-    Object? isVegetarian = null,
+    Object? isVegetarian = freezed,
+    Object? tag = null,
     Object? difficulty_image = null,
     Object? time_taken = null,
     Object? calories = null,
     Object? video = null,
+    Object? from_date = freezed,
+    Object? to_date = freezed,
     Object? created_at = null,
   }) {
     return _then(_value.copyWith(
@@ -95,11 +120,11 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
       ingridents: null == ingridents
           ? _value.ingridents
           : ingridents // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<String>,
       directions: null == directions
           ? _value.directions
           : directions // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<String>,
       patient: null == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
@@ -116,10 +141,14 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
               as String,
-      isVegetarian: null == isVegetarian
+      isVegetarian: freezed == isVegetarian
           ? _value.isVegetarian
           : isVegetarian // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
+      tag: null == tag
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
       difficulty_image: null == difficulty_image
           ? _value.difficulty_image
           : difficulty_image // ignore: cast_nullable_to_non_nullable
@@ -136,6 +165,14 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as String,
+      from_date: freezed == from_date
+          ? _value.from_date
+          : from_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      to_date: freezed == to_date
+          ? _value.to_date
+          : to_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -145,32 +182,37 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
 }
 
 /// @nodoc
-abstract class _$$_RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
-  factory _$$_RecipeCopyWith(_$_Recipe value, $Res Function(_$_Recipe) then) =
-      __$$_RecipeCopyWithImpl<$Res>;
+abstract class _$$RecipeImplCopyWith<$Res> implements $RecipeCopyWith<$Res> {
+  factory _$$RecipeImplCopyWith(
+          _$RecipeImpl value, $Res Function(_$RecipeImpl) then) =
+      __$$RecipeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {int id,
-      List<dynamic> ingridents,
-      List<dynamic> directions,
+      List<String> ingridents,
+      List<String> directions,
       String patient,
       String name,
       String imageURL,
       String difficulty,
-      bool isVegetarian,
+      bool? isVegetarian,
+      List<dynamic> tag,
       String difficulty_image,
       int time_taken,
       int calories,
       String video,
+      DateTime? from_date,
+      DateTime? to_date,
       String created_at});
 }
 
 /// @nodoc
-class __$$_RecipeCopyWithImpl<$Res>
-    extends _$RecipeCopyWithImpl<$Res, _$_Recipe>
-    implements _$$_RecipeCopyWith<$Res> {
-  __$$_RecipeCopyWithImpl(_$_Recipe _value, $Res Function(_$_Recipe) _then)
+class __$$RecipeImplCopyWithImpl<$Res>
+    extends _$RecipeCopyWithImpl<$Res, _$RecipeImpl>
+    implements _$$RecipeImplCopyWith<$Res> {
+  __$$RecipeImplCopyWithImpl(
+      _$RecipeImpl _value, $Res Function(_$RecipeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -183,26 +225,29 @@ class __$$_RecipeCopyWithImpl<$Res>
     Object? name = null,
     Object? imageURL = null,
     Object? difficulty = null,
-    Object? isVegetarian = null,
+    Object? isVegetarian = freezed,
+    Object? tag = null,
     Object? difficulty_image = null,
     Object? time_taken = null,
     Object? calories = null,
     Object? video = null,
+    Object? from_date = freezed,
+    Object? to_date = freezed,
     Object? created_at = null,
   }) {
-    return _then(_$_Recipe(
+    return _then(_$RecipeImpl(
       null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       null == ingridents
-          ? _value._ingridents
+          ? _value.ingridents
           : ingridents // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<String>,
       null == directions
-          ? _value._directions
+          ? _value.directions
           : directions // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<String>,
       null == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
@@ -219,10 +264,14 @@ class __$$_RecipeCopyWithImpl<$Res>
           ? _value.difficulty
           : difficulty // ignore: cast_nullable_to_non_nullable
               as String,
-      null == isVegetarian
+      freezed == isVegetarian
           ? _value.isVegetarian
           : isVegetarian // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
+      null == tag
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
       null == difficulty_image
           ? _value.difficulty_image
           : difficulty_image // ignore: cast_nullable_to_non_nullable
@@ -239,6 +288,14 @@ class __$$_RecipeCopyWithImpl<$Res>
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as String,
+      freezed == from_date
+          ? _value.from_date
+          : from_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      freezed == to_date
+          ? _value.to_date
+          : to_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -249,178 +306,151 @@ class __$$_RecipeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Recipe implements _Recipe {
-  const _$_Recipe(
+class _$RecipeImpl implements _Recipe {
+  _$RecipeImpl(
       this.id,
-      final List<dynamic> ingridents,
-      final List<dynamic> directions,
+      this.ingridents,
+      this.directions,
       this.patient,
       this.name,
       this.imageURL,
       this.difficulty,
       this.isVegetarian,
+      this.tag,
       this.difficulty_image,
       this.time_taken,
       this.calories,
       this.video,
-      this.created_at)
-      : _ingridents = ingridents,
-        _directions = directions;
+      this.from_date,
+      this.to_date,
+      this.created_at);
 
-  factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
-      _$$_RecipeFromJson(json);
-
-  @override
-  final int id;
-  final List<dynamic> _ingridents;
-  @override
-  List<dynamic> get ingridents {
-    if (_ingridents is EqualUnmodifiableListView) return _ingridents;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ingridents);
-  }
-
-  final List<dynamic> _directions;
-  @override
-  List<dynamic> get directions {
-    if (_directions is EqualUnmodifiableListView) return _directions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_directions);
-  }
+  factory _$RecipeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RecipeImplFromJson(json);
 
   @override
-  final String patient;
+  int id;
   @override
-  final String name;
+  List<String> ingridents;
   @override
-  final String imageURL;
+  List<String> directions;
   @override
-  final String difficulty;
+  String patient;
   @override
-  final bool isVegetarian;
+  String name;
   @override
-  final String difficulty_image;
+  String imageURL;
   @override
-  final int time_taken;
+  String difficulty;
   @override
-  final int calories;
+  bool? isVegetarian;
   @override
-  final String video;
+  List<dynamic> tag;
   @override
-  final String created_at;
+  String difficulty_image;
+  @override
+  int time_taken;
+  @override
+  int calories;
+  @override
+  String video;
+  @override
+  DateTime? from_date;
+  @override
+  DateTime? to_date;
+  @override
+  String created_at;
 
   @override
   String toString() {
-    return 'Recipe(id: $id, ingridents: $ingridents, directions: $directions, patient: $patient, name: $name, imageURL: $imageURL, difficulty: $difficulty, isVegetarian: $isVegetarian, difficulty_image: $difficulty_image, time_taken: $time_taken, calories: $calories, video: $video, created_at: $created_at)';
+    return 'Recipe(id: $id, ingridents: $ingridents, directions: $directions, patient: $patient, name: $name, imageURL: $imageURL, difficulty: $difficulty, isVegetarian: $isVegetarian, tag: $tag, difficulty_image: $difficulty_image, time_taken: $time_taken, calories: $calories, video: $video, from_date: $from_date, to_date: $to_date, created_at: $created_at)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Recipe &&
-            (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality()
-                .equals(other._ingridents, _ingridents) &&
-            const DeepCollectionEquality()
-                .equals(other._directions, _directions) &&
-            (identical(other.patient, patient) || other.patient == patient) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.imageURL, imageURL) ||
-                other.imageURL == imageURL) &&
-            (identical(other.difficulty, difficulty) ||
-                other.difficulty == difficulty) &&
-            (identical(other.isVegetarian, isVegetarian) ||
-                other.isVegetarian == isVegetarian) &&
-            (identical(other.difficulty_image, difficulty_image) ||
-                other.difficulty_image == difficulty_image) &&
-            (identical(other.time_taken, time_taken) ||
-                other.time_taken == time_taken) &&
-            (identical(other.calories, calories) ||
-                other.calories == calories) &&
-            (identical(other.video, video) || other.video == video) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      const DeepCollectionEquality().hash(_ingridents),
-      const DeepCollectionEquality().hash(_directions),
-      patient,
-      name,
-      imageURL,
-      difficulty,
-      isVegetarian,
-      difficulty_image,
-      time_taken,
-      calories,
-      video,
-      created_at);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RecipeCopyWith<_$_Recipe> get copyWith =>
-      __$$_RecipeCopyWithImpl<_$_Recipe>(this, _$identity);
+  _$$RecipeImplCopyWith<_$RecipeImpl> get copyWith =>
+      __$$RecipeImplCopyWithImpl<_$RecipeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecipeToJson(
+    return _$$RecipeImplToJson(
       this,
     );
   }
 }
 
 abstract class _Recipe implements Recipe {
-  const factory _Recipe(
-      final int id,
-      final List<dynamic> ingridents,
-      final List<dynamic> directions,
-      final String patient,
-      final String name,
-      final String imageURL,
-      final String difficulty,
-      final bool isVegetarian,
-      final String difficulty_image,
-      final int time_taken,
-      final int calories,
-      final String video,
-      final String created_at) = _$_Recipe;
+  factory _Recipe(
+      int id,
+      List<String> ingridents,
+      List<String> directions,
+      String patient,
+      String name,
+      String imageURL,
+      String difficulty,
+      bool? isVegetarian,
+      List<dynamic> tag,
+      String difficulty_image,
+      int time_taken,
+      int calories,
+      String video,
+      DateTime? from_date,
+      DateTime? to_date,
+      String created_at) = _$RecipeImpl;
 
-  factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
+  factory _Recipe.fromJson(Map<String, dynamic> json) = _$RecipeImpl.fromJson;
 
   @override
   int get id;
+  set id(int value);
   @override
-  List<dynamic> get ingridents;
+  List<String> get ingridents;
+  set ingridents(List<String> value);
   @override
-  List<dynamic> get directions;
+  List<String> get directions;
+  set directions(List<String> value);
   @override
   String get patient;
+  set patient(String value);
   @override
   String get name;
+  set name(String value);
   @override
   String get imageURL;
+  set imageURL(String value);
   @override
   String get difficulty;
+  set difficulty(String value);
   @override
-  bool get isVegetarian;
+  bool? get isVegetarian;
+  set isVegetarian(bool? value);
+  @override
+  List<dynamic> get tag;
+  set tag(List<dynamic> value);
   @override
   String get difficulty_image;
+  set difficulty_image(String value);
   @override
   int get time_taken;
+  set time_taken(int value);
   @override
   int get calories;
+  set calories(int value);
   @override
   String get video;
+  set video(String value);
+  @override
+  DateTime? get from_date;
+  set from_date(DateTime? value);
+  @override
+  DateTime? get to_date;
+  set to_date(DateTime? value);
   @override
   String get created_at;
+  set created_at(String value);
   @override
   @JsonKey(ignore: true)
-  _$$_RecipeCopyWith<_$_Recipe> get copyWith =>
+  _$$RecipeImplCopyWith<_$RecipeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

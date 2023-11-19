@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constants/constants.dart';
@@ -11,8 +10,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'recipes.g.dart';
 
 @riverpod
-Future<Recipe> recipesDetails(Ref ref,
-    {required int id, required BuildContext context}) async {
+Future<Recipe> recipesDetails(Ref ref, {required int id}) async {
   final url = '$restAPIURL/recipe/$id?format=json';
   final response = await client.get(Uri.parse(url), headers: {
     'Accept-Language': ref.watch(localeNotifierProvider).languageCode,
@@ -24,10 +22,11 @@ Future<Recipe> recipesDetails(Ref ref,
 }
 
 @riverpod
-Future<List<Recipe>> getRecipes(Ref ref,
-    {required int id,
-    required int pageKey,
-    required BuildContext context}) async {
+Future<List<Recipe>> getRecipes(
+  Ref ref, {
+  required int id,
+  required int pageKey,
+}) async {
   final url = '$restAPIURL/patient/$id?format=json&&limit=6&offset=$pageKey';
   final response = await client.get(Uri.parse(url), headers: {
     'Accept-Language': ref.watch(localeNotifierProvider).languageCode
@@ -42,10 +41,11 @@ Future<List<Recipe>> getRecipes(Ref ref,
 }
 
 @riverpod
-Future<List<Recipe>> getVegRecipes(Ref ref,
-    {required int id,
-    required int pageKey,
-    required BuildContext context}) async {
+Future<List<Recipe>> getVegRecipes(
+  Ref ref, {
+  required int id,
+  required int pageKey,
+}) async {
   final url = '$restAPIURL/recipe/veg/$id?format=json&limit=6&offset=$pageKey';
   final response = await client.get(Uri.parse(url), headers: {
     'Accept-Language': ref.watch(localeNotifierProvider).languageCode

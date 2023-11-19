@@ -251,7 +251,7 @@ class _RegisterState extends ConsumerState<Register> {
                                 width: 10,
                               ),
                               GestureDetector(
-                                onTap: () => context.go('/login'),
+                                onTap: () => context.push('/login'),
                                 child: Text(
                                   word?.sign_in ?? 'Sign In',
                                   style: TextStyle(

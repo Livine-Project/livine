@@ -7,7 +7,6 @@ class TitleBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(Theme.of(context).brightness);
     return SizedBox(
       height: 30,
       child: WindowCaption(

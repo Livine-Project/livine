@@ -9,21 +9,24 @@ part 'recipe.g.dart';
 
 Client client = http.Client();
 
-@freezed
+@unfreezed
 class Recipe with _$Recipe {
-  const factory Recipe(
+   factory Recipe(
       int id,
-      List ingridents,
-      List directions,
+      List<String> ingridents,
+      List<String> directions,
       String patient,
       String name,
       String imageURL,
       String difficulty,
-      bool isVegetarian,
+      bool? isVegetarian,
+      List tag,
       String difficulty_image,
       int time_taken,
       int calories,
       String video,
+      DateTime? from_date,
+      DateTime? to_date,
       String created_at) = _Recipe;
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 }

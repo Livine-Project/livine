@@ -6,13 +6,14 @@ part of 'patients.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Patients _$$_PatientsFromJson(Map<String, dynamic> json) => _$_Patients(
+_$PatientsImpl _$$PatientsImplFromJson(Map<String, dynamic> json) =>
+    _$PatientsImpl(
       json['id'] as int,
       json['name'] as String,
       json['image'] as String,
     );
 
-Map<String, dynamic> _$$_PatientsToJson(_$_Patients instance) =>
+Map<String, dynamic> _$$PatientsImplToJson(_$PatientsImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

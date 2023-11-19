@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../src/features/settings/presentation/theme/domain/theme_notifier.dart';
+import 'features/contextmenu/domain/contextmenu.dart';
 import 'features/settings/data/theme.dart';
 import 'features/windows/titlebar/titlebar.dart';
 import 'routing/routes.dart';
@@ -35,12 +36,11 @@ class MaterialAppWithTheme extends ConsumerWidget {
     final localeNotifier = ref.watch(localeNotifierProvider);
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        print(lightDynamic.toString());
-
         return _App(
           theme: theme,
           enableCustomTitleBar: Platform.isWindows,
           builder: (context) => MaterialApp.router(
+            scaffoldMessengerKey: ref.read(scaffoldMessengerKeyPod),
             showPerformanceOverlay: kProfileMode == true,
             routeInformationProvider: router.routeInformationProvider,
             routeInformationParser: router.routeInformationParser,

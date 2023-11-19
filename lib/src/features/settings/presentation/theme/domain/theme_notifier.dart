@@ -27,8 +27,8 @@ class DynamicThemeNotifier extends StateNotifier<bool> {
   DynamicThemeNotifier() : super(_initialCheckDynamic());
 
   static bool _initialCheckDynamic() {
-    if (!GetDeviceInfo.isAndroid12Above()) {
-      return false;
+    if (GetDeviceInfo.isAndroid12Above()) {
+      return true;
     }
     bool isDynamic = CacheHelper.getBool('isDynamic') ?? true;
     return isDynamic;
