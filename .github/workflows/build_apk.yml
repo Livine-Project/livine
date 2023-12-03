@@ -42,10 +42,11 @@ jobs:
             cat > .env <<EOF
             DISCORDAPPID=${{ secrets.DISCORDAPPID }}
             SENTRYDSN=${{ secrets.SENTRYDSN }}
+            UPDATE=true
             EOF
               
         - name: Building APKs
-          run: flutter build apk --split-per-abi
+          run: flutter build apk --split-per-abi --dart-define update_feature=true
 
         - name: List Directory Contents
           run: ls -R ${{ env.RELEASE_PATH }}
@@ -68,17 +69,6 @@ jobs:
           #     ${{ env.APPNAME }}-x86_64-release.apk
 
           #   asset_content_type: application/apk
-
-
-        - name: upload zip to release
-          uses: actions/upload-release-asset@v1
-          env:
-            GITHUB_TOKEN: ${{ github.token }}
-          with:
-            upload_url: ${{ inputs.release-upload-url }}
-            asset_path: ${{env.RELEASE_PATH}}/${{env.APPNAME}}-android.zip
-            asset_name: ${{env.APPNAME}}-android.zip
-            asset_content_type: application/zip
 
 
 

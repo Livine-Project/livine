@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../translations/domain/translation_provider.dart';
 import 'check_update/check_update.dart';
 import 'settings_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SettingsWidget extends ConsumerWidget {
   const SettingsWidget({Key? key}) : super(key: key);
@@ -115,7 +116,7 @@ class SettingsWidget extends ConsumerWidget {
         subtitle: "",
       ),
     ];
-    if (const bool.fromEnvironment("update_feature") == false) {
+    if (dotenv.env["UPDATE"] == "false") {
       menus.removeLast();
     }
     // if (Platform.isWindows) {
