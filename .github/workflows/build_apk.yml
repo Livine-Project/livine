@@ -36,7 +36,14 @@ jobs:
           uses: subosito/flutter-action@v2
           with:
             channel: 'stable'
-    
+
+        - name: Create .env file
+          run: |
+            cat > .env <<EOF
+            DISCORDAPPID=${{ secrets.DISCORDAPPID }}
+            SENTRYDSN=${{ secrets.SENTRYDSN }}
+            EOF
+              
         - name: Building APKs
           run: flutter build apk --split-per-abi
 
