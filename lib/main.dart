@@ -91,6 +91,7 @@ Future<void> main(List<String> args) async {
       ),
     );
   }
+  
 
   await CacheHelper.init();
   await GetDeviceInfo.init();
