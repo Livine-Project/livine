@@ -28,7 +28,7 @@ import '../features/settings/presentation/notifications/notifications_settings_v
 import '../features/settings/presentation/settings.dart';
 import '../features/settings/presentation/theme/theme_settings.dart';
 
-final baseRoutes = GoRouter(initialLocation: '/onboarding', routes: [
+final baseRoutes = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/',
     builder: (context, state) =>

@@ -11,7 +11,7 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  color: "#97F7B7"
+  color: "#ffffff"
   #background_image: "assets/background.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
@@ -50,16 +50,16 @@ flutter_native_splash:
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
     # 768 pixels in diameter.
-    image: assets/images/icon/logo.png
+    image: assets/images/icon/logo_12.png
 
     # App icon background color.
-    icon_background_color: "#97F7B7"
+    icon_background_color: "#ffffff"
 
     # The image_dark parameter and icon_background_color_dark set the image and icon background
     # color when the device is in dark mode. If they are not specified, the app will use the
     # parameters from above.
     #image_dark: assets/android12splash-invert.png
-    #icon_background_color_dark: "#eeeeee"
+    icon_background_color_dark: "#0a0a0a"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
   # platform.

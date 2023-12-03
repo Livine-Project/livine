@@ -22,7 +22,6 @@ import 'src/utils/country_code_provider.dart';
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   print("ARGS" + args.toString());
-  await dotenv.load(fileName: ".env");
 
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
@@ -69,12 +68,14 @@ Future<void> main(List<String> args) async {
   if (isIsrael == true) {
     runApp(BannedIsraelWIdget());
   } else {
+    await dotenv.load(fileName: ".env");
+
     await SentryFlutter.init(
       (options) {
         options.dsn = dotenv.env["SENTRYDSN"];
         // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
         // We recommend adjusting this value in production.
-        options.tracesSampleRate = 1.0;
+        options.tracesSampleRate = 0.3;
       },
       appRunner: () => runApp(
         riverpod.UncontrolledProviderScope(
