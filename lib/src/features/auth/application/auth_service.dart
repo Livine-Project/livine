@@ -111,7 +111,7 @@ class AuthService {
   }
 
   Future<void> logOutfromDjango(BuildContext context) async {
-    const url = '$restAPIURL/logout/';
+    final url = '$restAPIURL/logout/';
 
     final response = await client.post(Uri.parse(url), headers: {
       'Authorization': 'Token ${getToken()}',

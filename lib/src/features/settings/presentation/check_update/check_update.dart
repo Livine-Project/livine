@@ -71,18 +71,19 @@ class PackageInfoServiceImpl implements PackageInfoService {
 
       case "android":
         List<String>? supportedAbis = GetDeviceInfo.deviceABI();
-        if (supportedAbis!.contains("arm64-v8a")) {
+        if (supportedAbis!.contains("armeabi-v7a")) {
           installUrl = latestRelease.assets!
-              .firstWhere((element) => element.name!.contains('arm64-v8a.apk'))
+              .firstWhere((element) => element.name!.contains('armeabi-v7a'))
               .browserDownloadUrl;
-        } else if (supportedAbis.contains("armeabi-v7a")) {
+
+        } else if (supportedAbis.contains("arm64-v8a")) {
           installUrl = latestRelease.assets!
               .firstWhere(
-                  (element) => element.name!.contains('armeabi-v7a.apk'))
+                  (element) => element.name!.contains('arm64-v8a'))
               .browserDownloadUrl;
         } else if (supportedAbis.contains("x86_64")) {
           installUrl = latestRelease.assets!
-              .firstWhere((element) => element.name!.contains('x86_64.apk'))
+              .firstWhere((element) => element.name!.contains('x86_64'))
               .browserDownloadUrl;
         }
         if (installUrl == null) return;

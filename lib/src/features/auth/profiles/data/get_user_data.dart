@@ -9,6 +9,7 @@ import '../../../get_recipes/domain/recipe/recipe.dart';
 
 final userDataProvider = FutureProvider<UserData>((ref) async {
   final url = Uri.parse('$restAPIURL/user/?format=json');
+
   final token = await ref.watch(authHelperProvider).getToken();
   Map<String, String> headers = {};
   if (token != '') {

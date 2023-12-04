@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../shared/notification_control/notifications_control.dart';
 import '../shared/responsive/responsive_controller.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 ResponsiveHelper rh = ResponsiveHelper();
 
@@ -9,6 +10,7 @@ ResponsiveHelper rh = ResponsiveHelper();
 // final imageController = ImageController();
 
 final notificationControl = NotificationControl();
+
 
 const restAPIURL = "https://livine2.pythonanywhere.com/api";
 

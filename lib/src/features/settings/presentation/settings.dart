@@ -85,7 +85,12 @@ class SettingsWidget extends ConsumerWidget {
                 builder: (context) => AlertDialog(
                       title: Text('No update available'),
                       content:
-                          Text('You are using the latest version of Livine'),
+                          Row(
+                            children: [
+                              Expanded(child: Text('You are using the latest version of Livine')),
+                              Icon(Icons.check_circle_outline)
+                            ],
+                          ),
                       actions: [
                         TextButton(
                             onPressed: () => context.pop(), child: Text('OK'))
