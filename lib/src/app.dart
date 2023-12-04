@@ -1,22 +1,18 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../src/features/settings/presentation/theme/domain/theme_notifier.dart';
 import 'features/contextmenu/domain/contextmenu.dart';
 import 'features/settings/data/theme.dart';
-import 'features/settings/presentation/check_update/check_update.dart';
 import 'features/windows/titlebar/titlebar.dart';
 import 'routing/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'shared/styles/lib_color_schemes.g.dart';
 import 'translations/domain/translation_provider.dart';
-import 'utils/after_layout_mixin.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -31,7 +27,7 @@ class MaterialAppWithTheme extends ConsumerWidget {
   const MaterialAppWithTheme({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final router = baseRoutes;
     Color themeSeed = ref.watch(themeSeedProvider) as Color;

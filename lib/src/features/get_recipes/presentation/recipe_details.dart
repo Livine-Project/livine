@@ -57,7 +57,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: CachedNetworkImageProvider(
-                        restAPIMedia! + data.imageURL,
+                        restAPIMedia + data.imageURL,
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -89,7 +89,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                               child: IconButton(
                                   onPressed: () =>
                                       context.push('/share_recipe', extra: {
-                                        "image": restAPIMedia! + data.imageURL,
+                                        "image": restAPIMedia + data.imageURL,
                                         "name": data.name,
                                         "calories": data.calories,
                                         "time": data.time_taken,
