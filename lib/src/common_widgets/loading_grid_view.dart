@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
-import '../features/loading/loading.dart';
+import 'loading/loading.dart';
 
 class LoadingGridView extends StatelessWidget {
   const LoadingGridView({

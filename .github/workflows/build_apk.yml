@@ -32,10 +32,19 @@ jobs:
             distribution: 'zulu'
             java-version: '11'
 
+        - name: Remove Windows Assets
+          run: / 
+            cd ./assets/ && rm -r windows
+
+        - name: Remove Windows Packages
+          run: /
+            sed -i '/fluentui_system_icons/d' pubspec.yaml
+
         - name: Setup Flutter
           uses: subosito/flutter-action@v2
           with:
             channel: 'stable'
+            
 
         - name: Create .env file
           run: |
@@ -46,7 +55,7 @@ jobs:
             EOF
               
         - name: Building APKs
-          run: flutter build apk --split-per-abi --dart-define update_feature=true
+          run: flutter build apk --split-per-abi --obfuscate --split-debug-info=./debug
 
         - name: List Directory Contents
           run: ls -R ${{ env.RELEASE_PATH }}

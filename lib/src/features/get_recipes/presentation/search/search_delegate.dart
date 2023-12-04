@@ -9,7 +9,7 @@ import '../../../../constants/constants.dart';
 import '../../../../constants/shared_constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
 import '../../../auth/data/user.dart';
-import '../../../loading/loading.dart';
+import '../../../../common_widgets/loading/loading.dart';
 import '../../domain/recipe/recipe.dart';
 import '../recipe_details.dart';
 import 'data/search.dart';

@@ -10,7 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../constants/constants.dart';
 import '../../../translations/domain/translation_provider.dart';
 import '../../auth/data/user.dart';
-import '../../loading/loading.dart';
+import '../../../common_widgets/loading/loading.dart';
 import '../../auth/application/auth_service.dart';
 import '../../../shared/cache/cache_helper.dart';
 import '../../auth/profiles/data/get_user_data.dart';

@@ -11,7 +11,7 @@ description: A Healthcare and Food planner App
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 9.3.3+28
+version: 9.3.4+28
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -50,13 +50,13 @@ dependencies:
   path_provider: ^2.1.1
   screenshot: ^2.1.0
   window_manager: ^0.3.7
-  fluentui_system_icons: ^1.1.222
   github: ^9.20.0
   sentry_flutter: ^7.13.2
   discord_rpc: ^0.0.2
   file_picker: ^6.1.1
   syncfusion_flutter_calendar: ^23.2.6
   auto_size_text: ^3.0.0
+  fluentui_system_icons: ^1.1.222
 
 
 

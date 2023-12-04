@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 import '../../../common_widgets/auth/auth_widget.dart';
 import '../../../translations/domain/translation_provider.dart';
 import '../../auth/favorites/data/favorites.dart';
-import '../../loading/loading.dart';
+import '../../../common_widgets/loading/loading.dart';
 import '../../../constants/constants.dart';
 import '../data/recipes.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';

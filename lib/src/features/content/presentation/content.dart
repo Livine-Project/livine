@@ -11,7 +11,7 @@ import '../../auth/data/user.dart';
 
 import '../../auth/application/auth_service.dart';
 import '../../auth/profiles/data/get_user_data.dart';
-import '../../loading/loading.dart';
+import '../../../common_widgets/loading/loading.dart';
 
 class ChooseContent extends StatefulWidget {
   const ChooseContent({Key? key}) : super(key: key);

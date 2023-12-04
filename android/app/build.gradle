@@ -37,9 +37,11 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-      packagingOptions {
-    exclude 'META-INF/services/javax.annotation.processing.Processor'
-  }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/services/javax.annotation.processing.Processor']
+        }
+    }
 
 
     defaultConfig {
@@ -52,13 +54,7 @@ android {
         multiDexEnabled true
     }
 
-    lintOptions {
-            disable 'InvalidPackage'
-            disable "Instantiatable"
-            checkReleaseBuilds false
-            abortOnError false
-        }
-   signingConfigs {
+    signingConfigs {
        release {
            keyAlias keystoreProperties['keyAlias']
            keyPassword keystoreProperties['keyPassword']
@@ -74,6 +70,12 @@ android {
 
        }
    }
+    namespace 'com.mazen.livine'
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'InvalidPackage', 'Instantiatable'
+    }
 
 }
 

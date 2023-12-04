@@ -5,13 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 part 'recipe.freezed.dart';
+
 part 'recipe.g.dart';
 
 Client client = http.Client();
 
 @unfreezed
 class Recipe with _$Recipe {
-   factory Recipe(
+  factory Recipe(
       int id,
       List<String> ingridents,
       List<String> directions,
@@ -28,6 +29,6 @@ class Recipe with _$Recipe {
       DateTime? from_date,
       DateTime? to_date,
       String created_at) = _Recipe;
+
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 }
-

@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
-import '../../../loading/loading.dart';
+import '../../../../common_widgets/loading/loading.dart';
 import '../data/favorites.dart';
 
 class Favorites extends ConsumerStatefulWidget {

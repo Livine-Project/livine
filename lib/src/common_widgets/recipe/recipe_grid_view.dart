@@ -12,7 +12,7 @@ import '../../features/get_recipes/application/vegan_service.dart';
 import '../../features/get_recipes/data/recipes.dart';
 import '../../features/get_recipes/domain/recipe/recipe.dart';
 import '../../features/get_recipes/presentation/recipe_details.dart';
-import '../../features/loading/loading.dart';
+import '../loading/loading.dart';
 import '../../translations/domain/translation_provider.dart';
 import '../loading_grid_view.dart';
 import 'recipe_card_widget.dart';

@@ -19,7 +19,6 @@ import '../features/get_recipes/presentation/share_screenshot.dart';
 import '../features/meals/presentation/categories.dart';
 import '../features/navigation/presentation/base.dart';
 import '../features/onboarding/presentation/boarding.dart';
-import '../features/premium_pristine/presentation/confirm_payment.dart';
 import '../features/settings/presentation/Misc/privacy.dart';
 import '../features/settings/presentation/Misc/terms.dart';
 import '../features/settings/presentation/accessibility/accessibility.dart';
@@ -62,10 +61,6 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
   ),
   GoRouteTransition(path: '/terms', screen: Terms()),
   GoRouteTransition(path: '/privacy', screen: Privacy()),
-  GoRoute(
-    path: '/confirm',
-    builder: (context, state) => const ConfirmPayment(),
-  ),
   GoRouteTransition(path: '/themeSettings', screen: ThemeSettings()),
   GoRouteTransition(
       path: '/notifications_settings', screen: NotificationsSettings()),
