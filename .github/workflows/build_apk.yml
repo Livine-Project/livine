@@ -33,11 +33,11 @@ jobs:
             java-version: '11'
 
         - name: Remove Windows Assets
-          run: / 
+          run: |
             cd ./assets/ && rm -r windows
 
         - name: Remove Windows Packages
-          run: /
+          run: |
             sed -i '/fluentui_system_icons/d' pubspec.yaml
 
         - name: Setup Flutter
