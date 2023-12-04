@@ -34,7 +34,7 @@ jobs:
 
         - name: Remove Windows Assets
           run: |
-            cd ./assets/ && rm -r windows
+            cd ./assets/images/ && rm -r windows
 
         - name: Remove Windows Packages
           run: |
