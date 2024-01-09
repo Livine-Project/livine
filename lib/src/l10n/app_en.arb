@@ -121,7 +121,7 @@
   "change_use":"Change how you use Livine",
   "swipe_screen":"Swipe Screen",
   "minute":"min",
-  "calories":"Cal"
-
-
+  "calories":"Cal",
+  "please_select_situation": "Please select your situation",
+  "planner":"Planner"
 }

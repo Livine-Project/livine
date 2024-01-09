@@ -1,5 +1,4 @@
 import '../../../../main.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,13 +9,13 @@ class ThemeNotifer extends ChangeNotifier {
   final Ref ref;
   ThemeNotifer(this.ref) {
     final theme = ref.read(sharedPrefProvider).getString('theme');
-    if (theme == describeEnum(ThemeMode.dark)) {
+    if (theme == ThemeMode.dark.name) {
       _themeMode = ThemeMode.dark;
     }
-    if (theme == describeEnum(ThemeMode.light)) {
+    if (theme == ThemeMode.light.name) {
       _themeMode = ThemeMode.light;
     }
-    if (theme == describeEnum(ThemeMode.system)) {
+    if (theme == ThemeMode.system.name) {
       _themeMode = ThemeMode.system;
     }
   }
@@ -25,7 +24,7 @@ class ThemeNotifer extends ChangeNotifier {
     if (themeMode != _themeMode) {
       _themeMode = themeMode;
       notifyListeners();
-      ref.read(sharedPrefProvider).setString('theme', describeEnum(themeMode));
+      ref.read(sharedPrefProvider).setString('theme', themeMode.name);
     }
   }
 

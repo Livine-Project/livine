@@ -10,10 +10,11 @@ import '../../../domain/recipe/recipe.dart';
 part 'search.g.dart';
 
 @riverpod
-Future searchResults(Ref ref,
-    {required int pk,
-    required String query,
-    }) async {
+Future<List<Recipe>> searchResults(
+  Ref ref, {
+  required int pk,
+  required String query,
+}) async {
   bool isUserVegan = ref.watch(isVeganProvider);
   final url = isUserVegan == true
       ? "$restAPIURL/recipe/veg/$pk?format=json&search=$query"
@@ -23,5 +24,7 @@ Future searchResults(Ref ref,
   });
   final responseDe = utf8.decode(response.bodyBytes);
   final responseJson = json.decode(responseDe);
-  return responseJson["results"].map((job) => Recipe.fromJson(job)).toList();
+  return responseJson["results"]
+      .map<Recipe>((job) => Recipe.fromJson(job))
+      .toList();
 }

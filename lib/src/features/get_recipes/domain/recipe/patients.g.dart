@@ -11,6 +11,7 @@ _$PatientsImpl _$$PatientsImplFromJson(Map<String, dynamic> json) =>
       json['id'] as int,
       json['name'] as String,
       json['image'] as String,
+      json['json'] as String?,
     );
 
 Map<String, dynamic> _$$PatientsImplToJson(_$PatientsImpl instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$PatientsImplToJson(_$PatientsImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'image': instance.image,
+      'json': instance.json,
     };

@@ -10,7 +10,6 @@ import '../../../../constants/shared_constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
 import '../../../auth/data/user.dart';
 import '../../../../common_widgets/loading/loading.dart';
-import '../../domain/recipe/recipe.dart';
 import '../recipe_details.dart';
 import 'data/search.dart';
 
@@ -47,7 +46,7 @@ class CustomSearchDelegate extends SearchDelegate {
             query: query,
             pk: recipesTypeData == 0 ? patientID : recipesTypeData));
         return results.when(
-          data: (data) {
+          data: (recipes) {
             return GridView.builder(
               physics: const BouncingScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,28 +54,26 @@ class CustomSearchDelegate extends SearchDelegate {
                 mainAxisSpacing: 20,
                 childAspectRatio: 5 / 7,
               ),
-              itemCount: data.length,
+              itemCount: recipes.length,
               itemBuilder: (context, index) {
-                final recipe = data[index] as Recipe;
                 return OpenContainer(
                   openElevation: 0,
                   closedElevation: 0,
                   closedColor: Colors.transparent,
                   openBuilder: (context, _) => RecipeDetails(
-                    id: recipe.id,
+                    id: recipes[index].id,
                   ),
                   transitionDuration: const Duration(milliseconds: 500),
                   closedBuilder: (context, action) => RecipeCardNormal(
-                    key: Key("K"),
-                    id: recipe.id,
-                    name: recipe.name,
-                    foodImage: '${recipe.imageURL}',
-                    type: recipe.patient,
-                    difficulty: recipe.difficulty,
+                    id: recipes[index].id,
+                    name: recipes[index].name,
+                    foodImage: '${recipes[index].imageURL}',
+                    type: recipes[index].patient,
+                    difficulty: recipes[index].difficulty,
                     time: ref.watch(localeNotifierProvider).languageCode == "en"
-                        ? "${recipe.time_taken} min"
-                        : "${recipe.time_taken} دقيقة",
-                    dImage: recipe.difficulty_image,
+                        ? "${recipes[index].time_taken} min"
+                        : "${recipes[index].time_taken} دقيقة",
+                    dImage: recipes[index].difficulty_image,
                   ),
                 );
               },

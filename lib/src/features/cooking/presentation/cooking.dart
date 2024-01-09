@@ -133,23 +133,22 @@ class DirectionsWidget extends StatelessWidget {
                         context.pop();
                       },
                       child: Icon(Icons.arrow_back_outlined))),
-                      //TODO:FIX THIS
-              // Align(
-              //   alignment: Alignment.topRight,
-              //   child: ElevatedButton.icon(
-              //     onPressed: () =>
-              //         context.pushNamed('recipeVideo', extra: video),
-              //     label: Text(word!.watch_video),
-              //     icon: Icon(Icons.play_arrow_outlined),
-              //   ),
-              // ),
+              Align(
+                alignment: Alignment.topRight,
+                child: ElevatedButton.icon(
+                  onPressed: () =>
+                      context.pushNamed('recipeVideo', extra: video),
+                  label: Text(word!.watch_video),
+                  icon: Icon(Icons.play_arrow_outlined),
+                ),
+              ),
               const SizedBox(
                 height: 40.0,
               ),
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                      text: "${word!.step} ${index.value + 1} ",
+                      text: "${word.step} ${index.value + 1} ",
                       style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,

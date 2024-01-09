@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/constants/constants.dart';
 import 'package:livine/src/features/auth/domain/user.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
@@ -135,10 +136,11 @@ class Profile extends ConsumerWidget {
                   )),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              minHeight: MediaQuery.of(context).size.height * 0.5,
+              minHeight: rh.deviceLandScape(context)
+                  ? MediaQuery.of(context).size.height * 0.2
+                  : MediaQuery.of(context).size.height * 0.4,
               isDraggable: true,
               color: Theme.of(context).colorScheme.surface,
-              boxShadow: [],
               panelBuilder: () => Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Column(

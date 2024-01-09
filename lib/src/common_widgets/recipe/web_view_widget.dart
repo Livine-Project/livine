@@ -8,9 +8,8 @@ class RecipeVideoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(url);
     final controller = WebViewController()
-      // ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -24,7 +23,8 @@ class RecipeVideoWidget extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse("https://www.youtube.com/watch?v=-B-usxlRJj"));
+      ..loadRequest(Uri.parse(url));
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Video"),

@@ -75,7 +75,7 @@ class Planner extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 15.0, top: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

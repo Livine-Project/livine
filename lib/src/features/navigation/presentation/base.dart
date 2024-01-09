@@ -23,37 +23,33 @@ class Navigation extends StatefulHookConsumerWidget {
 }
 
 class _NavigationState extends ConsumerState<Navigation> {
-  Future<void> checkUpdate()async {
+  Future<void> checkUpdate() async {
     if (dotenv.env["UPDATE"] == "false") return;
-    final status =
-    await ref.read(checkUpdateProvider).checkIfUpdateAvailable();
+    final status = await ref.read(checkUpdateProvider).checkIfUpdateAvailable();
     if (status == UpdateAvailableState.updateAvailable) {
       showDialog(
           context: context,
-          builder: (context) =>
-          new AlertDialog(
-            title: Text('Update available'),
-            content: Text('An update is available for Livine'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    context.pop();
-                    ref.watch(checkUpdateProvider).downloadUpdates();
-                  },
-                  child: Text('Download')),
-              TextButton(
-                  onPressed: () => context.pop(),
-                  child: Text('cancel'))
-            ],
-          ));
+          builder: (context) => new AlertDialog(
+                title: Text('Update available'),
+                content: Text('An update is available for Livine'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        context.pop();
+                        ref.watch(checkUpdateProvider).downloadUpdates();
+                      },
+                      child: Text('Download')),
+                  TextButton(
+                      onPressed: () => context.pop(), child: Text('cancel'))
+                ],
+              ));
     }
   }
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_)=>checkUpdate());
-
+    SchedulerBinding.instance.addPostFrameCallback((_) => checkUpdate());
   }
 
   @override
@@ -86,10 +82,10 @@ class _NavigationState extends ConsumerState<Navigation> {
                 ),
                 NavigationDestination(
                     icon: const Icon(Icons.calendar_month),
-                    label: 'Planner'),
+                    label: word!.planner),
                 NavigationDestination(
                     icon: const Icon(Icons.person_rounded),
-                    label: word?.profile ?? ''),
+                    label: word.profile),
               ],
               labelBehavior:
                   NavigationDestinationLabelBehavior.onlyShowSelected,

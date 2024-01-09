@@ -56,6 +56,8 @@ class _RecipeCardNormalState extends State<RecipeCardNormal> {
                               child: CachedNetworkImage(
                                 imageUrl: widget.foodImage,
                                 height: 140,
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.broken_image_outlined),
                                 width: rh.deviceWidth(context) / 2,
                                 fit: BoxFit.cover,
                               ),

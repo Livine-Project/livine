@@ -74,6 +74,7 @@ class Welcome extends StatelessWidget {
                           ],
                         ),
                       ),
+                      SizedBox(height: 20.0),
                       Center(
                         child: ({
                           required void Function() onPressed,
@@ -123,9 +124,7 @@ class Welcome extends StatelessWidget {
                       ),
                       SizedBox(height: 20.0),
                       GestureDetector(
-                        onTap: () {
-                          context.push("/login");
-                        },
+                        onTap: () => context.push("/login"),
                         child: Center(
                           child: Text(
                             word?.have_an_account ?? "Have an account?",

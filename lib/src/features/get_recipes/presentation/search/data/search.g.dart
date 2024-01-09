@@ -6,7 +6,7 @@ part of 'search.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchResultsHash() => r'5d4c52c1796bf83cfa08a879f534ebf3ab18f34b';
+String _$searchResultsHash() => r'b850bf2d824694832df567af60b55f1a71b72bc2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const searchResultsProvider = SearchResultsFamily();
 
 /// See also [searchResults].
-class SearchResultsFamily extends Family<AsyncValue<dynamic>> {
+class SearchResultsFamily extends Family<AsyncValue<List<Recipe>>> {
   /// See also [searchResults].
   const SearchResultsFamily();
 
@@ -75,7 +75,7 @@ class SearchResultsFamily extends Family<AsyncValue<dynamic>> {
 }
 
 /// See also [searchResults].
-class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
+class SearchResultsProvider extends AutoDisposeFutureProvider<List<Recipe>> {
   /// See also [searchResults].
   SearchResultsProvider({
     required int pk,
@@ -115,7 +115,7 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
 
   @override
   Override overrideWith(
-    FutureOr<dynamic> Function(SearchResultsRef provider) create,
+    FutureOr<List<Recipe>> Function(SearchResultsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -133,7 +133,7 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<dynamic> createElement() {
+  AutoDisposeFutureProviderElement<List<Recipe>> createElement() {
     return _SearchResultsProviderElement(this);
   }
 
@@ -154,7 +154,7 @@ class SearchResultsProvider extends AutoDisposeFutureProvider<dynamic> {
   }
 }
 
-mixin SearchResultsRef on AutoDisposeFutureProviderRef<dynamic> {
+mixin SearchResultsRef on AutoDisposeFutureProviderRef<List<Recipe>> {
   /// The parameter `pk` of this provider.
   int get pk;
 
@@ -163,7 +163,8 @@ mixin SearchResultsRef on AutoDisposeFutureProviderRef<dynamic> {
 }
 
 class _SearchResultsProviderElement
-    extends AutoDisposeFutureProviderElement<dynamic> with SearchResultsRef {
+    extends AutoDisposeFutureProviderElement<List<Recipe>>
+    with SearchResultsRef {
   _SearchResultsProviderElement(super.provider);
 
   @override

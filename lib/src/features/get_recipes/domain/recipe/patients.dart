@@ -11,6 +11,7 @@ class Patients with _$Patients {
     int id,
     String name,
     String image,
+    String? json
   ) = _Patients;
   factory Patients.fromJson(Map<String, dynamic> json) =>
       _$PatientsFromJson(json);

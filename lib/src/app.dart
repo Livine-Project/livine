@@ -13,6 +13,7 @@ import 'routing/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'shared/styles/lib_color_schemes.g.dart';
 import 'translations/domain/translation_provider.dart';
+import 'package:device_preview/device_preview.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

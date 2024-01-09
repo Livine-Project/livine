@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../translations/domain/translation_provider.dart';
@@ -40,14 +41,8 @@ class SettingsWidget extends ConsumerWidget {
         onTap: () => context.push("/languages"),
       ),
       Settings(
-        onTap: () => context.push("/accessibility"),
-        title: word!.accessibility,
-        icon: Icons.accessibility_outlined,
-        subtitle: word.change_use,
-      ),
-      Settings(
         onTap: () => context.push("/notifications_settings"),
-        title: word.notfications,
+        title: word!.notfications,
         icon: Icons.notifications_outlined,
         subtitle: word.change_notification,
       ),
@@ -77,6 +72,27 @@ class SettingsWidget extends ConsumerWidget {
       ),
       Settings(
         onTap: () async {
+          final app = await PackageInfo.fromPlatform();
+
+          showAdaptiveDialog(
+              context: context,
+              builder: (context) => AboutDialog(
+                    applicationName: "Livine",
+                    applicationVersion: app.version,
+                    applicationLegalese: "© 2023 Livine",
+                    applicationIcon: Image.asset(
+                      'assets/images/icon/logo_12.png',
+                      width: 70,
+                      height: 70,
+                    ),
+                  ));
+        },
+        title: word.about_livine,
+        icon: Icons.info_outline,
+        subtitle: "",
+      ),
+      Settings(
+        onTap: () async {
           final status =
               await ref.watch(checkUpdateProvider).checkIfUpdateAvailable();
           if (status == UpdateAvailableState.updateNotAvailable) {
@@ -84,13 +100,14 @@ class SettingsWidget extends ConsumerWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                       title: Text('No update available'),
-                      content:
-                          Row(
-                            children: [
-                              Expanded(child: Text('You are using the latest version of Livine')),
-                              Icon(Icons.check_circle_outline)
-                            ],
-                          ),
+                      content: Row(
+                        children: [
+                          Expanded(
+                              child: Text(
+                                  'You are using the latest version of Livine')),
+                          Icon(Icons.check_circle_outline)
+                        ],
+                      ),
                       actions: [
                         TextButton(
                             onPressed: () => context.pop(), child: Text('OK'))
@@ -172,6 +189,7 @@ class SettingsTile extends StatelessWidget {
   final Color? backgroundColor;
   final Color? iconColor;
   final subtitle;
+
   @override
   Widget build(BuildContext context) {
     return Row(

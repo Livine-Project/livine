@@ -23,6 +23,7 @@ mixin _$Patients {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
+  String? get json => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $PatientsCopyWith<$Res> {
   factory $PatientsCopyWith(Patients value, $Res Function(Patients) then) =
       _$PatientsCopyWithImpl<$Res, Patients>;
   @useResult
-  $Res call({int id, String name, String image});
+  $Res call({int id, String name, String image, String? json});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$PatientsCopyWithImpl<$Res, $Val extends Patients>
     Object? id = null,
     Object? name = null,
     Object? image = null,
+    Object? json = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -68,6 +70,10 @@ class _$PatientsCopyWithImpl<$Res, $Val extends Patients>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      json: freezed == json
+          ? _value.json
+          : json // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -80,7 +86,7 @@ abstract class _$$PatientsImplCopyWith<$Res>
       __$$PatientsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String image});
+  $Res call({int id, String name, String image, String? json});
 }
 
 /// @nodoc
@@ -97,6 +103,7 @@ class __$$PatientsImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? image = null,
+    Object? json = freezed,
   }) {
     return _then(_$PatientsImpl(
       null == id
@@ -111,6 +118,10 @@ class __$$PatientsImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      freezed == json
+          ? _value.json
+          : json // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -118,7 +129,7 @@ class __$$PatientsImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PatientsImpl implements _Patients {
-  const _$PatientsImpl(this.id, this.name, this.image);
+  const _$PatientsImpl(this.id, this.name, this.image, this.json);
 
   factory _$PatientsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PatientsImplFromJson(json);
@@ -129,25 +140,28 @@ class _$PatientsImpl implements _Patients {
   final String name;
   @override
   final String image;
+  @override
+  final String? json;
 
   @override
   String toString() {
-    return 'Patients(id: $id, name: $name, image: $image)';
+    return 'Patients(id: $id, name: $name, image: $image, json: $json)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PatientsImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.json, json) || other.json == json));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, image);
+  int get hashCode => Object.hash(runtimeType, id, name, image, json);
 
   @JsonKey(ignore: true)
   @override
@@ -164,8 +178,8 @@ class _$PatientsImpl implements _Patients {
 }
 
 abstract class _Patients implements Patients {
-  const factory _Patients(final int id, final String name, final String image) =
-      _$PatientsImpl;
+  const factory _Patients(final int id, final String name, final String image,
+      final String? json) = _$PatientsImpl;
 
   factory _Patients.fromJson(Map<String, dynamic> json) =
       _$PatientsImpl.fromJson;
@@ -176,6 +190,8 @@ abstract class _Patients implements Patients {
   String get name;
   @override
   String get image;
+  @override
+  String? get json;
   @override
   @JsonKey(ignore: true)
   _$$PatientsImplCopyWith<_$PatientsImpl> get copyWith =>

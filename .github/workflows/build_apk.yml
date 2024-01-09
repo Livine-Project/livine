@@ -67,18 +67,6 @@ jobs:
             files: |
               ${{ env.RELEASE_PATH }}/*.apk
 
-          # env:
-          #   GITHUB_TOKEN: ${{ github.token }}
-          # with:
-          #   upload_url: ${{ inputs.release-upload-url }}
-          #   asset_path: ${{ env.RELEASE_PATH }}/*.apk
-          #   asset_name: |
-          #     ${{ env.APPNAME }}-armeabi-v7a-release.apk
-          #     ${{ env.APPNAME }}-arm64-v8a-release.apk
-          #     ${{ env.APPNAME }}-x86_64-release.apk
-
-          #   asset_content_type: application/apk
-
 
 
 

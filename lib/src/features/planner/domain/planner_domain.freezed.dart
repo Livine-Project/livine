@@ -146,7 +146,7 @@ class _$MealImpl implements _Meal {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MealImpl &&

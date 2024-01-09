@@ -22,6 +22,7 @@ import 'src/utils/country_code_provider.dart';
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   print("ARGS" + args.toString());
+  await dotenv.load(fileName: ".env");
 
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
@@ -66,10 +67,8 @@ Future<void> main(List<String> args) async {
   );
   final isIsrael = await container.read(isIsraelProvider.future);
   if (isIsrael == true) {
-    runApp(BannedIsraelWIdget());
+    runApp(BannedIsraelWidget());
   } else {
-    await dotenv.load(fileName: ".env");
-
     await SentryFlutter.init(
       (options) {
         options.dsn = dotenv.env["SENTRYDSN"];
@@ -91,7 +90,6 @@ Future<void> main(List<String> args) async {
       ),
     );
   }
-  
 
   await CacheHelper.init();
   await GetDeviceInfo.init();

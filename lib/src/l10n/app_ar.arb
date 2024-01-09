@@ -121,5 +121,8 @@
   "change_use":"غير طريقة استخدامك لكالازا",
   "swipe_screen":"اسحب الشاشة",
   "minute":"دقيقة",
-  "calories":"سعرات "
+  "calories":"سعرات",
+  "please_select_situation": "الرجاء تحديد حالتك",
+  "planner":"مخطط"
+
 }

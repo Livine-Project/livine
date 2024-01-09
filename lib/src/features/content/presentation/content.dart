@@ -46,7 +46,7 @@ class _ChooseContentState extends State<ChooseContent> {
                     title: word?.general ?? "",
                     description: word?.healthy ?? "",
                     networkImage:
-                        'https://media.istockphoto.com/photos/healthy-lifestyle-concept-clean-food-good-health-dietary-in-heart-picture-id953674568?k=20&m=953674568&s=612x612&w=0&h=x_gq29MRpRyhdDIgwF5PVhdXAbINmaBUKMgs27w7i6s=',
+                        'https://img.freepik.com/free-vector/man-doing-plank-exercises-with-dumbbells_23-2148508008.jpg',
                     onpressed: () async {
                       await CacheHelper.setInt("patientID", 5);
                       ref.watch(userTypeProvider.notifier).state = 5;
@@ -76,7 +76,7 @@ class _ChooseContentState extends State<ChooseContent> {
                     title: word?.per_situation ?? "",
                     description: word?.patient ?? "",
                     networkImage:
-                        'https://media.istockphoto.com/photos/its-the-season-of-sneezes-picture-id1085020818?b=1&k=20&m=1085020818&s=170667a&w=0&h=d4AbNzh6ztl2XV-oUo36FitS45O1AUraO2wJhOP5Roo=',
+                        'https://cdn.pixabay.com/photo/2020/09/06/09/59/hospital-5548564_1280.png',
                     onpressed: () => context.push('/content_patient'),
                   ),
                 ),
@@ -105,8 +105,6 @@ class Options extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final word = TranslationRepo.translate(context);
-
     return Column(
       children: [
         ClipRRect(
@@ -125,7 +123,7 @@ class Options extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           title,
-          style: TextStyle(fontSize: 20.0),
+          style: TextStyle(fontSize: 20.0, color: colorScheme(context).primary),
         ),
         const SizedBox(
           height: 10,
@@ -133,49 +131,19 @@ class Options extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Text(description,
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 15.0)),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 13.0,
+              )),
         ),
         const SizedBox(
-          height: 10,
+          height: 30,
         ),
-        ({
-          required void Function() onPressed,
-          required bool isLoading,
-          required String text,
-          Color? color,
-          Color? textColor,
-          double width = 350,
-          required BuildContext context,
-        }) {
-          final theme = Theme.of(context).colorScheme;
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: MaterialButton(
-              onPressed: onPressed,
-              color: color ?? theme.primaryContainer,
-              elevation: 0,
-              minWidth: width,
-              height: 60,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: isLoading
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                    )
-                  : Text(
-                      text,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: textColor ?? theme.onPrimaryContainer),
-                    ),
-            ),
-          );
-        }(
-            onPressed: onpressed,
-            isLoading: false,
-            text: word?.choose ?? "Choose",
-            context: context)
+        IconButton.filled(
+          onPressed: onpressed,
+          icon: Icon(Icons.arrow_forward_outlined),
+          iconSize: 25,
+        )
       ],
     );
   }
