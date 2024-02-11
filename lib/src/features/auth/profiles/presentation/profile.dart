@@ -50,220 +50,430 @@ class Profile extends ConsumerWidget {
               centerTitle: true,
               backgroundColor: Theme.of(context).colorScheme.primary,
               elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () => context.push("/update_profile"),
+                    icon: Icon(
+                      Icons.edit_outlined,
+                      color: colorScheme(context).onPrimary,
+                    ))
+              ],
             ),
-            body: SlidingUpPanel(
-              body: Container(
-                  color: Theme.of(context).colorScheme.primary,
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return userData.when(
-                        data: (data) {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 15,
-                              ),
-                              CircularPercentIndicator(
-                                percent: data.points! / 100 > 1
-                                    ? 1
-                                    : data.points! / 100,
-                                radius: 60,
-                                curve: Curves.easeInCirc,
-                                lineWidth: 5,
-                                animation: true,
-                                center: CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                    'assets/images/profile/default.png',
-                                  ),
-                                  radius: 50,
-                                ),
-                                circularStrokeCap: CircularStrokeCap.round,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                progressColor:
-                                    Theme.of(context).colorScheme.onPrimary,
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      height: 225,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20))),
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          return userData.when(
+                            data: (data) {
+                              return Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor:
-                                        Theme.of(context).colorScheme.secondary,
-                                    child: Icon(
-                                      Icons.emoji_events_rounded,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                      size: 35.0,
-                                    ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "${data.points}",
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .surface),
+                                  CircularPercentIndicator(
+                                    percent: data.points! / 100 > 1
+                                        ? 1
+                                        : data.points! / 100,
+                                    radius: 60,
+                                    curve: Curves.easeInCirc,
+                                    lineWidth: 5,
+                                    animation: true,
+                                    center: CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                        'assets/images/profile/default.png',
                                       ),
-                                      Text(
-                                        word!.points,
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .surface),
-                                      )
-                                    ],
+                                      radius: 50,
+                                    ),
+                                    circularStrokeCap: CircularStrokeCap.round,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    progressColor:
+                                        Theme.of(context).colorScheme.onPrimary,
                                   ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        child: Icon(
+                                          Icons.emoji_events_rounded,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                          size: 35.0,
+                                        ),
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "${data.points}",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .surface),
+                                          ),
+                                          Text(
+                                            word!.points,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .surface),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
+                              );
+                            },
+                            error: (e, s) {
+                              log("Couldn't get user's profile data",
+                                  error: e, stackTrace: s);
+                              return Text("Error Happened");
+                            },
+                            loading: () => ProfileLoading(),
                           );
                         },
-                        error: (e, s) {
-                          log("Couldn't get user's profile data",
-                              error: e, stackTrace: s);
-                          return Text("Error Happened");
-                        },
-                        loading: () => ProfileLoading(),
-                      );
-                    },
-                  )),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              minHeight: rh.deviceLandScape(context)
-                  ? MediaQuery.of(context).size.height * 0.2
-                  : MediaQuery.of(context).size.height * 0.4,
-              isDraggable: true,
-              color: Theme.of(context).colorScheme.surface,
-              panelBuilder: () => Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                child: Icon(Icons.eco,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(word!.vegetarian),
-                              Visibility(
-                                visible: Platform.isWindows,
-                                child: Switch.adaptive(
-                                  value: isVeg,
-                                  onChanged: (v) async {
-                                    ref
-                                        .read(isVeganProvider.notifier)
-                                        .update((state) => v);
-                                    await ref
-                                        .read(veganServiceProvider)
-                                        .updateIsVegan(v);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          Visibility(
-                            visible: !Platform.isWindows,
-                            child: Switch.adaptive(
-                              value: isVeg,
-                              onChanged: (v) async {
-                                ref
-                                    .read(isVeganProvider.notifier)
-                                    .update((state) => v);
-                                await ref
-                                    .read(veganServiceProvider)
-                                    .updateIsVegan(v);
-                              },
+                      )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              child: Icon(Icons.eco,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
                             ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(word!.vegetarian),
+                            Visibility(
+                              visible: Platform.isWindows,
+                              child: Switch.adaptive(
+                                value: isVeg,
+                                onChanged: (v) async {
+                                  ref
+                                      .read(isVeganProvider.notifier)
+                                      .update((state) => v);
+                                  await ref
+                                      .read(veganServiceProvider)
+                                      .updateIsVegan(v);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Visibility(
+                          visible: !Platform.isWindows,
+                          child: Switch.adaptive(
+                            value: isVeg,
+                            onChanged: (v) async {
+                              ref
+                                  .read(isVeganProvider.notifier)
+                                  .update((state) => v);
+                              await ref
+                                  .read(veganServiceProvider)
+                                  .updateIsVegan(v);
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ProfileListTile(
+                      onTap: () => context.push("/cooking_list"),
+                      icon: Icons.soup_kitchen,
+                      name: word.cooking_history),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ProfileListTile(
+                      onTap: () => context.push('/choose_content'),
+                      icon: Icons.change_circle,
+                      name: word.choose_content),
+                  Visibility(
+                    visible: !Platform.isWindows,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ProfileListTile(
+                            onTap: () => context.push('/settings'),
+                            icon: Icons.settings,
+                            name: word.settings),
+                      ],
                     ),
-                    ProfileListTile(
-                        onTap: () => context.push("/update_profile"),
-                        icon: Icons.edit,
-                        name: word.edit_profile),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileListTile(
-                        onTap: () => context.push('/choose_content'),
-                        icon: Icons.change_circle,
-                        name: word.choose_content),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileListTile(
-                        onTap: () => context.push('/favorites'),
-                        icon: Icons.favorite,
-                        name: word.favorites),
-                    Visibility(
-                      visible: !Platform.isWindows,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          ProfileListTile(
-                              onTap: () => context.push('/settings'),
-                              icon: Icons.settings,
-                              name: word.settings),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ProfileListTile(
-                        onTap: () => isGuest == false
-                            ? showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: Text(word.logout),
-                                      content: Text(word.sure_to_logout),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: Text(word.cancel)),
-                                        TextButton(
-                                            onPressed: () => ref
-                                                .read(authHelperProvider)
-                                                .logOutfromDjango(context),
-                                            child: Text(word.logout)),
-                                      ],
-                                    ))
-                            : ref
-                                .read(authHelperProvider)
-                                .logOutAsGuest(context),
-                        icon: Icons.logout,
-                        name: word.logout),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ProfileListTile(
+                      onTap: () => isGuest == false
+                          ? showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text(word.logout),
+                                    content: Text(word.sure_to_logout),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text(word.cancel)),
+                                      TextButton(
+                                          onPressed: () => ref
+                                              .read(authHelperProvider)
+                                              .logOutfromDjango(context),
+                                          child: Text(word.logout)),
+                                    ],
+                                  ))
+                          : ref.read(authHelperProvider).logOutAsGuest(context),
+                      icon: Icons.logout,
+                      name: word.logout),
+                ],
               ),
-            ))
+            ),
+          )
         : NoConnection();
+
+    // SlidingUpPanel(
+    //   body:
+    // Container(
+    //       color: Theme.of(context).colorScheme.primary,
+    //       child: Consumer(
+    //         builder: (context, ref, child) {
+    //           return userData.when(
+    //             data: (data) {
+    //               return Column(
+    //                 children: [
+    //                   SizedBox(
+    //                     height: 15,
+    //                   ),
+    //                   CircularPercentIndicator(
+    //                     percent: data.points! / 100 > 1
+    //                         ? 1
+    //                         : data.points! / 100,
+    //                     radius: 60,
+    //                     curve: Curves.easeInCirc,
+    //                     lineWidth: 5,
+    //                     animation: true,
+    //                     center: CircleAvatar(
+    //                       backgroundImage: AssetImage(
+    //                         'assets/images/profile/default.png',
+    //                       ),
+    //                       radius: 50,
+    //                     ),
+    //                     circularStrokeCap: CircularStrokeCap.round,
+    //                     backgroundColor:
+    //                         Theme.of(context).colorScheme.primary,
+    //                     progressColor:
+    //                         Theme.of(context).colorScheme.onPrimary,
+    //                   ),
+    //                   SizedBox(
+    //                     height: 15,
+    //                   ),
+    //                   Row(
+    //                     mainAxisAlignment:
+    //                         MainAxisAlignment.spaceEvenly,
+    //                     children: [
+    //                       CircleAvatar(
+    //                         radius: 30,
+    //                         backgroundColor:
+    //                             Theme.of(context).colorScheme.secondary,
+    //                         child: Icon(
+    //                           Icons.emoji_events_rounded,
+    //                           color: Theme.of(context)
+    //                               .colorScheme
+    //                               .onSecondary,
+    //                           size: 35.0,
+    //                         ),
+    //                       ),
+    //                       Column(
+    //                         children: [
+    //                           Text(
+    //                             "${data.points}",
+    //                             style: TextStyle(
+    //                                 color: Theme.of(context)
+    //                                     .colorScheme
+    //                                     .surface),
+    //                           ),
+    //                           Text(
+    //                             word!.points,
+    //                             style: TextStyle(
+    //                                 color: Theme.of(context)
+    //                                     .colorScheme
+    //                                     .surface),
+    //                           )
+    //                         ],
+    //                       ),
+    //                     ],
+    //                   )
+    //                 ],
+    //               );
+    //             },
+    //             error: (e, s) {
+    //               log("Couldn't get user's profile data",
+    //                   error: e, stackTrace: s);
+    //               return Text("Error Happened");
+    //             },
+    //             loading: () => ProfileLoading(),
+    //           );
+    //         },
+    //       )),
+    //   borderRadius: BorderRadius.only(
+    //       topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+    //   minHeight: rh.deviceLandScape(context)
+    //       ? MediaQuery.of(context).size.height * 0.2
+    //       : MediaQuery.of(context).size.height * 0.4,
+    //   isDraggable: true,
+    //   color: Theme.of(context).colorScheme.surface,
+    //   panelBuilder: () => Padding(
+    //     padding: const EdgeInsets.only(top: 15.0),
+    //     child: Column(
+    //       children: [
+    //         Padding(
+    //           padding: const EdgeInsets.symmetric(horizontal: 20),
+    //           child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //             children: [
+    //               Row(
+    //                 children: [
+    //                   CircleAvatar(
+    //                     backgroundColor:
+    //                         Theme.of(context).colorScheme.secondary,
+    //                     child: Icon(Icons.eco,
+    //                         color: Theme.of(context)
+    //                             .colorScheme
+    //                             .onSecondary),
+    //                   ),
+    //                   SizedBox(
+    //                     width: 10,
+    //                   ),
+    //                   Text(word!.vegetarian),
+    //                   Visibility(
+    //                     visible: Platform.isWindows,
+    //                     child: Switch.adaptive(
+    //                       value: isVeg,
+    //                       onChanged: (v) async {
+    //                         ref
+    //                             .read(isVeganProvider.notifier)
+    //                             .update((state) => v);
+    //                         await ref
+    //                             .read(veganServiceProvider)
+    //                             .updateIsVegan(v);
+    //                       },
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //               Visibility(
+    //                 visible: !Platform.isWindows,
+    //                 child: Switch.adaptive(
+    //                   value: isVeg,
+    //                   onChanged: (v) async {
+    //                     ref
+    //                         .read(isVeganProvider.notifier)
+    //                         .update((state) => v);
+    //                     await ref
+    //                         .read(veganServiceProvider)
+    //                         .updateIsVegan(v);
+    //                   },
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //         SizedBox(
+    //           height: 20,
+    //         ),
+    //         ProfileListTile(
+    //             onTap: () => context.push("/update_profile"),
+    //             icon: Icons.edit,
+    //             name: word.edit_profile),
+    //         SizedBox(
+    //           height: 20,
+    //         ),
+    //         ProfileListTile(
+    //             onTap: () => context.push('/choose_content'),
+    //             icon: Icons.change_circle,
+    //             name: word.choose_content),
+    //         SizedBox(
+    //           height: 20,
+    //         ),
+    //         ProfileListTile(
+    //             onTap: () => context.push('/favorites'),
+    //             icon: Icons.favorite,
+    //             name: word.favorites),
+    //         Visibility(
+    //           visible: !Platform.isWindows,
+    //           child: Column(
+    //             children: [
+    //               SizedBox(
+    //                 height: 20,
+    //               ),
+    //               ProfileListTile(
+    //                   onTap: () => context.push('/settings'),
+    //                   icon: Icons.settings,
+    //                   name: word.settings),
+    //             ],
+    //           ),
+    //         ),
+    //         SizedBox(
+    //           height: 20,
+    //         ),
+    //         ProfileListTile(
+    //             onTap: () => isGuest == false
+    //                 ? showDialog(
+    //                     context: context,
+    //                     builder: (context) => AlertDialog(
+    //                           title: Text(word.logout),
+    //                           content: Text(word.sure_to_logout),
+    //                           actions: [
+    //                             TextButton(
+    //                                 onPressed: () =>
+    //                                     Navigator.pop(context),
+    //                                 child: Text(word.cancel)),
+    //                             TextButton(
+    //                                 onPressed: () => ref
+    //                                     .read(authHelperProvider)
+    //                                     .logOutfromDjango(context),
+    //                                 child: Text(word.logout)),
+    //                           ],
+    //                         ))
+    //                 : ref
+    //                     .read(authHelperProvider)
+    //                     .logOutAsGuest(context),
+    //             icon: Icons.logout,
+    //             name: word.logout),
+    //       ],
+    //     ),
+    //   ),
+    // )
   }
 }
 

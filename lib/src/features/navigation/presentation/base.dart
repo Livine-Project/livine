@@ -84,6 +84,9 @@ class _NavigationState extends ConsumerState<Navigation> {
                     icon: const Icon(Icons.calendar_month),
                     label: word!.planner),
                 NavigationDestination(
+                    icon: const Icon(Icons.favorite),
+                    label: word.favorites),
+                NavigationDestination(
                     icon: const Icon(Icons.person_rounded),
                     label: word.profile),
               ],

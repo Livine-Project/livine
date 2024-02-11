@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/common_widgets/auth/auth_widget.dart';
 import 'package:responsive_framework/responsive_row_column.dart';
 
 import '../../../../constants/constants.dart';
@@ -61,10 +62,8 @@ class Welcome extends StatelessWidget {
                                   ? rh.deviceWidth(context) * 0.4
                                   : null,
                               child: Text(
-                                word?.live_naturally ??
-                                    "Live naturally, eat healthy, and be happy",
+                                word!.live_naturally,
                                 style: TextStyle(
-                                    fontFamily: 'Kine',
                                     fontSize: 20.0,
                                     color: colorScheme(context)
                                         .onBackground
@@ -75,62 +74,15 @@ class Welcome extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 20.0),
-                      Center(
-                        child: ({
-                          required void Function() onPressed,
-                          required bool isLoading,
-                          required String text,
-                          Color? color,
-                          Color? textColor,
-                          double width = 350,
-                          required BuildContext context,
-                        }) {
-                          final theme = Theme.of(context).colorScheme;
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: MaterialButton(
-                              onPressed: onPressed,
-                              color: color ?? theme.primaryContainer,
-                              elevation: 0,
-                              minWidth: width,
-                              height: 60,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : Text(
-                                      text,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: textColor ??
-                                              theme.onPrimaryContainer),
-                                    ),
-                            ),
-                          );
-                        }(
-                            onPressed: () {
-                              context.push("/register");
-                            },
-                            isLoading: isLoading,
-                            width: rh.deviceLandScape(context)
-                                ? rh.deviceWidth(context) / 2.4
-                                : 360,
-                            text: word?.get_started ?? "Get Started",
-                            context: context),
-                      ),
+                      CustomButton(
+                          onPressed: () => context.push("/register"),
+                          text: word!.get_started,
+                          context: context),
                       SizedBox(height: 20.0),
                       GestureDetector(
                         onTap: () => context.push("/login"),
-                        child: Center(
-                          child: Text(
-                            word?.have_an_account ?? "Have an account?",
-                            style:
-                                TextStyle(fontFamily: 'Kine', fontSize: 18.0),
-                          ),
+                        child: Text(
+                          word.have_an_account,
                         ),
                       ),
                     ],

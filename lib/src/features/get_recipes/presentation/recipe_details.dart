@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../../common_widgets/auth/auth_widget.dart';
-import '../../../translations/domain/translation_provider.dart';
-import '../../auth/favorites/data/favorites.dart';
-import '../../../common_widgets/loading/loading.dart';
-import '../../../constants/constants.dart';
-import '../data/recipes.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
+import '../../../common_widgets/auth/auth_widget.dart';
+import '../../../common_widgets/loading/loading.dart';
+import '../../../constants/constants.dart';
+import '../../../translations/domain/translation_provider.dart';
+import '../../auth/favorites/data/favorites.dart';
+import '../data/recipes.dart';
 import 'share_screenshot.dart';
 
 class RecipeDetails extends StatefulWidget {
@@ -122,8 +122,8 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                                       ref.read(addFavoriteProvider(
                                           recipeID: data.id));
                                     }
-                                    ref.invalidate(isFavoritedProvider(
-                                        id: widget.id));
+                                    ref.invalidate(
+                                        isFavoritedProvider(id: widget.id));
                                   },
                                   icon: Icon(
                                     isRecipeFavorited || isFavorited == 'true'
@@ -207,10 +207,10 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         textColor:
                             Theme.of(context).colorScheme.onSecondaryContainer,
                         onPressed: () => context.push('/cooking', extra: {
+                              "id": data.id,
                               "directions": data.directions,
                               "video": data.video
                             }),
-                        isLoading: false,
                         text: word.start_cooking,
                         context: context),
                     SizedBox(height: 20.0),

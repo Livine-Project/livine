@@ -2,7 +2,9 @@
 
 import 'dart:developer';
 
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -11,7 +13,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../translations/domain/translation_provider.dart';
 import 'check_update/check_update.dart';
 import 'settings_model.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SettingsWidget extends ConsumerWidget {
   const SettingsWidget({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class SettingsWidget extends ConsumerWidget {
   Future<void> sendReport() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'onlybailemos123@gmail.com',
+      path: 'wildlifemain1@gmail.com',
       query:
           'subject=Bug Report|Livine&body=write your issues here', //add subject and body here
     );
@@ -53,7 +54,9 @@ class SettingsWidget extends ConsumerWidget {
         subtitle: word.change_theme,
       ),
       Settings(
-        onTap: () async => sendReport(),
+        onTap: () {
+          BetterFeedback.of(context).showAndUploadToSentry();
+        },
         title: word.report_a_bug,
         icon: Icons.bug_report_outlined,
         subtitle: word.help_us,
@@ -76,15 +79,9 @@ class SettingsWidget extends ConsumerWidget {
 
           showAdaptiveDialog(
               context: context,
-              builder: (context) => AboutDialog(
-                    applicationName: "Livine",
-                    applicationVersion: app.version,
-                    applicationLegalese: "© 2023 Livine",
-                    applicationIcon: Image.asset(
-                      'assets/images/icon/logo_12.png',
-                      width: 70,
-                      height: 70,
-                    ),
+              builder: (context) => AlertDialog(
+                title: Text("Livine ${app.version}"),
+                content: Text("Livine © 2024"),
                   ));
         },
         title: word.about_livine,

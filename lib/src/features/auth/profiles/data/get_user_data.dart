@@ -20,17 +20,6 @@ final userDataProvider = FutureProvider<UserData>((ref) async {
   return UserData.fromJson(json.decode(response.body));
 });
 
-// getUserData({required WidgetRef ref}) async{
-//    final url = Uri.parse('$restAPIURL/user/?format=json');
-//   final token = await ref.watch(authHelperProvider).getToken();
-//   Map<String, String> headers = {};
-//   if (token != '') {
-//     headers["Authorization"] = 'Token ${token}';
-//   }
-//   final response = await client.get(url, headers: headers);
-
-//   return UserData.fromJson(json.decode(response.body));
-// }
 
 final userDataStreamProvider = StreamProvider<UserData>((ref) async* {
   while (true) {

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
-
+import 'package:feedback/feedback.dart';
 import 'src/constants/constants.dart';
 import 'src/features/contextmenu/domain/get_args.dart';
 import 'src/shared/cache/cache_helper.dart';
@@ -84,7 +84,7 @@ Future<void> main(List<String> args) async {
             tools: [
               ...DevicePreview.defaultTools,
             ],
-            builder: (context) => const MyApp(),
+            builder: (context) => BetterFeedback(child: const MyApp()),
           ),
         ),
       ),

@@ -7,8 +7,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:livine/src/common_widgets/auth/auth_widget.dart';
+import 'package:livine/src/common_widgets/text_with_font.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
@@ -30,9 +32,8 @@ class _RegisterState extends ConsumerState<Register> {
   var emailError;
   var usernameError;
 
-  getErrors() {}
-
   bool isLoading = false;
+
   validateForm() async {
     final form = _formKey.currentState!;
     if (form.validate()) {
@@ -59,6 +60,7 @@ class _RegisterState extends ConsumerState<Register> {
   }
 
   bool _obscureText = true;
+
   bool containsWhiteSpace(String username) {
     RegExp regex = RegExp(r'\s');
     return regex.hasMatch(username);
@@ -71,234 +73,215 @@ class _RegisterState extends ConsumerState<Register> {
     final theme = Theme.of(context).colorScheme;
     final word = TranslationRepo.translate(context);
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: rh.isDesktop(context)
-              ? EdgeInsets.zero
-              : EdgeInsets.only(top: rh.deviceHeight(context) * 0.1),
-          child: Row(
-            children: [
-              Visibility(
-                visible: Platform.isWindows,
-                child: Expanded(
-                    flex: 2,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      child: Image.asset(
-                        'assets/images/windows/register.jpg',
-                        fit: BoxFit.cover,
+      appBar: AppBar(),
+      body: Padding(
+        padding: rh.isDesktop(context)
+            ? EdgeInsets.zero
+            : EdgeInsets.only(top: rh.deviceHeight(context) * 0.005),
+        child: Row(
+          children: [
+            Visibility(
+              visible: Platform.isWindows,
+              child: Expanded(
+                  flex: 2,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        bottomRight: Radius.circular(20)),
+                    child: Image.asset(
+                      'assets/images/windows/register.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            ),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      TextWithFont(
+                        text: "Tell us a bit about you",
+                        fontSize: 24.0,
                       ),
-                    )),
-              ),
-              Expanded(
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: TextFormField(
-                            textInputAction: TextInputAction.next,
-                            maxLength: 20,
-                            validator: (u) {
-                              if (u!.isEmpty) {
-                                return "Please enter your username";
-                              } else if (u.length >= 20) {
-                                return "Username shouldn't be more than 20 characters";
-                              } else if (containsWhiteSpace(u)) {
-                                return "Username shouldn't contain spaces, use underscore instead";
-                              }
-                              return null;
-                            },
-                            controller: _username,
-                            decoration: InputDecoration(
-                              errorText: usernameError is List
-                                  ? usernameError.first
-                                  : usernameError,
-                              errorMaxLines: 2,
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              labelText: word?.username,
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                              ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 30),
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          maxLength: 20,
+                          validator: (u) {
+                            if (u!.isEmpty) {
+                              return "Please enter your username";
+                            } else if (u.length >= 20) {
+                              return "Username shouldn't be more than 20 characters";
+                            } else if (containsWhiteSpace(u)) {
+                              return "Username shouldn't contain spaces, use underscore instead";
+                            }
+                            return null;
+                          },
+                          controller: _username,
+                          decoration: InputDecoration(
+                            errorText: usernameError is List
+                                ? usernameError.first
+                                : usernameError,
+                            errorMaxLines: 2,
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            labelText: word?.username,
+                            labelStyle: const TextStyle(
+                              fontSize: 15,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: TextFormField(
-                            textInputAction: TextInputAction.next,
-                            validator: (e) {
-                              if (e!.isEmpty) {
-                                return "Please enter your email";
-                              }
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          validator: (e) {
+                            if (e!.isEmpty) {
+                              return "Please enter your email";
+                            }
 
-                              return null;
-                            },
-                            controller: _email,
-                            decoration: InputDecoration(
-                              errorText: emailError,
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              labelText: word?.email_address,
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                              ),
+                            return null;
+                          },
+                          controller: _email,
+                          decoration: InputDecoration(
+                            errorText: emailError,
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            labelText: word?.email_address,
+                            labelStyle: const TextStyle(
+                              fontSize: 15,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: TextFormField(
-                            validator: (passwordValue) {
-                              if (passwordValue!.length < 9 &&
-                                  passwordValue.isNotEmpty) {
-                                return "Password needs to be atleast 9 characters ";
-                              } else if (passwordValue.isEmpty) {
-                                return "Please enter your password ";
-                              }
-                              return null;
-                            },
-                            controller: _password,
-                            obscureText: _obscureText,
-                            onFieldSubmitted: (_) => validateForm(),
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: TextFormField(
+                          validator: (passwordValue) {
+                            if (passwordValue!.length < 9 &&
+                                passwordValue.isNotEmpty) {
+                              return "Password needs to be atleast 9 characters ";
+                            } else if (passwordValue.isEmpty) {
+                              return "Please enter your password ";
+                            }
+                            return null;
+                          },
+                          controller: _password,
+                          obscureText: _obscureText,
+                          onFieldSubmitted: (_) => validateForm(),
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                               ),
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              labelText: word?.password,
-                              labelStyle: const TextStyle(fontSize: 15),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
                             ),
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            labelText: word?.password,
+                            labelStyle: const TextStyle(fontSize: 15),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ({
-                          required void Function() onPressed,
-                          required bool isLoading,
-                          required String text,
-                          Color? color,
-                          Color? textColor,
-                          double width = 350,
-                          required BuildContext context,
-                        }) {
-                          final theme = Theme.of(context).colorScheme;
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: MaterialButton(
-                              onPressed: onPressed,
-                              color: color ?? theme.primaryContainer,
-                              elevation: 0,
-                              minWidth: width,
-                              height: 60,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : Text(
-                                      text,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: textColor ??
-                                              theme.onPrimaryContainer),
-                                    ),
-                            ),
-                          );
-                        }(
-                            onPressed: validateForm,
-                            isLoading: isLoading,
-                            text: word?.sign_up ?? 'Sign Up',
-                            context: context),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                word?.have_an_account ?? 'Have an account?',
-                                style: const TextStyle(fontFamily: 'Kine'),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              GestureDetector(
-                                onTap: () => context.push('/login'),
-                                child: Text(
-                                  word?.sign_in ?? 'Sign In',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: theme.tertiary,
-                                      fontFamily: 'Kine'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomButton(
+                          onPressed: validateForm,
+                          text: word!.continue_text,
+                          context: context),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: RichText(
                           text: TextSpan(
                             children: <InlineSpan>[
                               TextSpan(
-                                  text: word?.terms1,
+                                  text: word!.terms1,
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       color: theme.inverseSurface)),
                               const WidgetSpan(
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 10.0),
+                                  padding: EdgeInsets.only(left: 5.0),
                                 ),
                               ),
                               TextSpan(
-                                  text: word?.terms2,
+                                  text: "${word.terms2} ",
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () => context.push('/terms'),
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'Kine',
-                                      color: theme.tertiary)),
+                                      color: theme.secondary)),
+                              TextSpan(
+                                  text: "and ",
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                  )),
+                              TextSpan(
+                                  text: word.privacy_Policy,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => context.push('/privacy'),
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.secondary)),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 13,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              word!.have_an_account,
+                              style: const TextStyle(fontFamily: 'Kine'),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () => context.push('/login'),
+                              child: Text(
+                                word!.sign_in,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: theme.tertiary,
+                                    fontFamily: 'Kine'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

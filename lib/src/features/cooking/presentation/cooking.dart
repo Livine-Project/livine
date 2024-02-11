@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:livine/src/common_widgets/confetti_dialog/confetti_dialog.dart';
+import 'package:livine/src/features/cooking_list/data/cooking_list.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../translations/domain/translation_provider.dart';
@@ -9,12 +11,13 @@ import '../data/cooking_data.dart';
 
 class Cooking extends HookConsumerWidget {
   final dynamic data;
+
   const Cooking({
     super.key,
     required this.data,
   });
 
-  final int endTimerinSeconds = 120;
+  final int endTimerinSeconds = 300;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,6 +50,13 @@ class Cooking extends HookConsumerWidget {
                 isPaused.value = true;
                 startTimer.value = 0.0;
               });
+              ref.read(addCookingListProvider(recipeID: data["id"]));
+
+              showConfettiDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        title: Text("Congratulations!"),
+                      ));
             }
             if (startTimer.value < endTimerinSeconds) {
               startTimer.value += 1;

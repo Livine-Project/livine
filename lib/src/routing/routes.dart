@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:livine/src/features/cooking_list/presentation/cooking_list.dart';
 import 'package:livine/src/features/get_recipes/presentation/recipe_details.dart';
+
 import '../common_widgets/recipe/web_view_widget.dart';
 import '../constants/shared_constants.dart';
 import '../features/auth/favorites/presentation/favorites.dart';
@@ -120,6 +122,7 @@ final baseRoutes = GoRouter(initialLocation: '/', routes: [
       );
     },
   ),
+  GoRouteTransition(path: '/cooking_list', screen: CookingList()),
   GoRouteTransition(path: '/accessibility', screen: Accessibility()),
   GoRoute(
     path: '/share_recipe',

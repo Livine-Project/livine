@@ -2,18 +2,17 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:livine/src/common_widgets/auth/auth_widget.dart';
+import 'package:livine/src/common_widgets/text_with_font.dart';
 
 import '../../../../constants/constants.dart';
-import '../../../../shared/cache/cache_helper.dart';
 import '../../../../translations/domain/translation_provider.dart';
 import '../../application/auth_service.dart';
-import '../../data/user.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -52,40 +51,30 @@ class _LoginState extends ConsumerState<Login> {
     }
   }
 
-  Future<void> validateGuest() async {
-    CacheHelper.setBool('isGuest', true);
-    CacheHelper.setBool('username', true);
-    CacheHelper.remove("userID");
-    ref.read(guestProvider.notifier).update((state) => true);
-    if (!mounted) return;
-
-    if (Platform.isAndroid || Platform.isIOS) {
-      GoRouter.of(context).goNamed('OnBoarding');
-    } else {
-      GoRouter.of(context).go('/choose_content');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final word = TranslationRepo.translate(context);
     return Scaffold(
         body: SafeArea(
-          child: Padding(
-            padding: rh.isDesktop(context)
-                ? EdgeInsets.zero
-                : EdgeInsets.only(top: rh.deviceHeight(context) * 0.1),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Form(
-                    key: _formKey,
+      child: Padding(
+        padding: rh.isDesktop(context)
+            ? EdgeInsets.zero
+            : EdgeInsets.only(top: rh.deviceHeight(context) * 0.005),
+        child: Row(
+          children: [
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 50),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        TextWithFont(
+                          text: "Login",
+                          fontSize: 40.0,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: TextFormField(
@@ -153,7 +142,6 @@ class _LoginState extends ConsumerState<Login> {
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 fontSize: 15,
-                                fontFamily: 'Kine',
                                 color: theme.tertiary,
                               ),
                             ),
@@ -162,45 +150,11 @@ class _LoginState extends ConsumerState<Login> {
                         SizedBox(
                           height: 10,
                         ),
-                        ({
-                          required void Function() onPressed,
-                          required bool isLoading,
-                          required String text,
-                          Color? color,
-                          Color? textColor,
-                          double width = 350,
-                          required BuildContext context,
-                        }) {
-                          final theme = Theme.of(context).colorScheme;
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: MaterialButton(
-                              onPressed: onPressed,
-                              color: color ?? theme.primaryContainer,
-                              elevation: 0,
-                              minWidth: width,
-                              height: 60,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : Text(
-                                      text,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: textColor ??
-                                              theme.onPrimaryContainer),
-                                    ),
-                            ),
-                          );
-                        }(
-                            isLoading: isLoading,
-                            text: word?.sign_in ?? "Sign In",
+                        CustomButton(
                             onPressed: validateLoginForm,
-                            context: context),
+                            text: word!.sign_in,
+                            context: context,
+                            isLoading: isLoading),
                         Padding(
                           padding: const EdgeInsets.only(top: 30),
                           child: Center(
@@ -209,9 +163,8 @@ class _LoginState extends ConsumerState<Login> {
                               children: [
                                 Text(
                                   word?.no_account ?? "No account yet?",
-                                  style: const TextStyle(
-                                      fontFamily: 'Kine',
-                                      fontWeight: FontWeight.w100),
+                                  style:
+                                      const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -219,7 +172,7 @@ class _LoginState extends ConsumerState<Login> {
                                 GestureDetector(
                                   onTap: () => context.push('/register'),
                                   child: Text(
-                                    word?.sign_up ?? "Sign Up",
+                                    word.sign_up,
                                     style: TextStyle(
                                       fontSize: 15.0,
                                       color: theme.tertiary,
@@ -239,23 +192,25 @@ class _LoginState extends ConsumerState<Login> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: Platform.isWindows,
-                  child: Expanded(
-                      flex: 2,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomLeft: Radius.circular(20)),
-                        child: Image.asset(
-                          'assets/images/windows/login.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                ),
-              ],
+              ),
             ),
-          ),
-        ));
+            Visibility(
+              visible: Platform.isWindows,
+              child: Expanded(
+                  flex: 2,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20)),
+                    child: Image.asset(
+                      'assets/images/windows/login.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }

@@ -65,7 +65,7 @@
   "no_account": "Don't Have an account ?",
   "sign_up": "Sign Up",
   "have_an_account": "Already have an account ?",
-  "terms1": "By creating an account , you already agree on",
+  "terms1": "By submitting my information, I agree to the ",
   "terms2": "Terms and Conditions",
   "notfications": "Notfications",
   "ask_me_how_i_feel": "Ask me how I feel everyday",
@@ -123,5 +123,7 @@
   "minute":"min",
   "calories":"Cal",
   "please_select_situation": "Please select your situation",
-  "planner":"Planner"
+  "planner":"Planner",
+  "cooking_history": "Cooking history",
+  "continue_text":"Continue"
 }

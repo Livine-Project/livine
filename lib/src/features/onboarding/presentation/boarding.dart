@@ -10,26 +10,6 @@ import '../data/boarding.dart';
 
 class OnBoarding extends HookWidget {
   OnBoarding({Key? key}) : super(key: key);
-  // final List<String> images = [
-  //   'livine',
-  //   'healthyoptions',
-  //   'stability',
-  //   'content'
-  // ];
-  // final List<String> heading = [
-  //   'Welcome to Livine',
-  //   "We've plenty of healthy options",
-  //   "We assure that you gonna have a Flexible Lifestyle",
-  //   "You can change your content for your health situation "
-  // ];
-  // final List<String> headingInArabic = [
-  //   'مرحبا بكم في كالازا',
-  //   "لدينا الكثير من الخيارات الصحية",
-  //   "نؤكد أنه سيكون لديك أسلوب حياة مرن",
-  //   "يمكنك تغيير المحتوى الخاص بك لوضعك الصحي "
-  // ];
-
-  // final List<Color
   @override
   Widget build(BuildContext context) {
     final _pageController = usePageController();
@@ -154,7 +134,7 @@ class OnBoarding extends HookWidget {
                       const SizedBox(height: 10),
                       CupertinoButton(
                         onPressed: () {
-                          context.push('/choose_content');
+                          context.push('/navigate');
                         },
                         child: Text(
                           "Skip",
@@ -169,7 +149,7 @@ class OnBoarding extends HookWidget {
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       if (_currentIndex.value == items.length - 1) {
-                        context.push('/choose_content');
+                        context.go('/navigate');
                       }
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 500),

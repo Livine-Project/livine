@@ -65,7 +65,7 @@
   "no_account": "ليس لديك حساب ؟",
   "sign_up": "سجل الآن",
   "have_an_account": "هل لديك حساب ؟",
-  "terms1": "من خلال إنشاء حساب ، فإنك توافق بالفعل على",
+  "terms1": " من خلال تقديم بياناتي, فإني اوافق علي",
   "terms2": "الأحكام والشروط",
   "notfications": "إشعارات",
   "ask_me_how_i_feel": "اسالني كيف اشعر كل يوم",
@@ -123,6 +123,8 @@
   "minute":"دقيقة",
   "calories":"سعرات",
   "please_select_situation": "الرجاء تحديد حالتك",
-  "planner":"مخطط"
+  "planner":"مخطط",
+  "cooking_history": "مطبوخات",
+  "continue_text":"التالي"
 
 }

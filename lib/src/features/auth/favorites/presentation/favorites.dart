@@ -23,12 +23,16 @@ class _FavoritesState extends ConsumerState<Favorites> {
     final word = TranslationRepo.translate(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(word?.favorites ?? ""),
+        title: Text(
+          word?.favorites ?? "",
+        ),
+        centerTitle: true,
       ),
       body: favorites.when(
-          data: (data) => ListView.builder(
+          data: (data) => data.isNotEmpty? ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
+
                   return SizedBox(
                     width: 200,
                     height: 150,
@@ -72,7 +76,7 @@ class _FavoritesState extends ConsumerState<Favorites> {
                     ),
                   );
                 },
-              ),
+              ) : Center(child: Text("You don't have any favorites yet")),
           error: (Object error, StackTrace? stackTrace) {
             log("$error \t $stackTrace");
             return const Text("An Error Occured");

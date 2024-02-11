@@ -3,17 +3,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../shared/cache/cache_helper.dart';
-import '../data/user.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/shared_constants.dart';
+import '../../../shared/cache/cache_helper.dart';
 import '../../get_recipes/domain/recipe/recipe.dart';
+import '../data/user.dart';
 import '../profiles/data/get_user_data.dart';
 
 final authHelperProvider = Provider(AuthService.new);
@@ -49,15 +48,7 @@ class AuthService {
         await CacheHelper.setString("token", userToken);
         ref.read(userTokenProvider.notifier).update((state) => userToken);
         if (!mounted) return null;
-        if (Platform.isAndroid || Platform.isIOS) {
-          if (isBoarded == false) {
-            GoRouter.of(context).go('/onboarding');
-          } else {
-            GoRouter.of(context).go('/navigate');
-          }
-        } else {
-          GoRouter.of(context).go('/navigate');
-        }
+        context.go('/navigate');
       } else {
         final errorinLogin = responseJson['non_field_errors'];
 
@@ -97,10 +88,15 @@ class AuthService {
         'password': password?.text,
       },
     );
+    final responseJson = await json.decode(response.body);
 
     if (response.statusCode == 200) {
       if (!mounted!) return null;
-      GoRouter.of(context).go('/Login');
+      String userToken = responseJson['token'];
+      await CacheHelper.setString("token", userToken);
+      ref.read(userTokenProvider.notifier).update((state) => userToken);
+      context.go('/choose_content');
+      CacheHelper.setBool("username", true);
     } else {
       setState(() {
         isLoading = false;

@@ -31,7 +31,7 @@ class Terms extends StatelessWidget {
                 to translate the app into other languages or make derivative
                 versions. The app itself, and all the trademarks, copyright,
                 database rights, and other intellectual property rights related
-                to it, still belong to .
+                to it, still belong to.
               </p> <p>
                  is committed to ensuring that the app is
                 as useful and efficient as possible. For that reason, we
@@ -54,18 +54,6 @@ class Terms extends StatelessWidget {
                   The app does use third-party services that declare their
                   Terms and Conditions.
                 </p> <p>
-                  Link to Terms and Conditions of third-party service
-                  providers used by the app
-                </p> <ul><li><a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Google Play Services</a></li><li><a href="https://developers.google.com/admob/terms" target="_blank" rel="noopener noreferrer">AdMob</a></li><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></div> <p>
-                You should be aware that there are certain things that
-                 will not take responsibility for. Certain
-                functions of the app will require the app to have an active
-                internet connection. The connection can be Wi-Fi or provided
-                by your mobile network provider, but 
-                cannot take responsibility for the app not working at full
-                functionality if you don’t have access to Wi-Fi, and you don’t
-                have any of your data allowance left.
-              </p> <p></p> <p>
                 If you’re using the app outside of an area with Wi-Fi, you
                 should remember that the terms of the agreement with your
                 mobile network provider will still apply. As a result, you may
@@ -156,7 +144,6 @@ class Terms extends StatelessWidget {
               </p> <div><p>
                   
                 </p> <p>
-                </p> <ul><li><a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Google Play Services</a></li><li><a href="https://developers.google.com/admob/terms" target="_blank" rel="noopener noreferrer">AdMob</a></li><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></div> <p>
           يجب أن تدرك أن هناك أشياء معينة
                 مازن عمر لن يتحمل المسؤولية. المؤكد
                 وظائف التطبيق ستتطلب أن يكون التطبيق نشطًا

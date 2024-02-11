@@ -10,7 +10,6 @@ ResponsiveHelper rh = ResponsiveHelper();
 
 final notificationControl = NotificationControl();
 
-
 const restAPIURL = "https://livine2.pythonanywhere.com/api";
 
 const restAPIMedia = "https://livine2.pythonanywhere.com";

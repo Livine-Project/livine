@@ -225,6 +225,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.18.0"
+  confetti:
+    dependency: "direct main"
+    description:
+      name: confetti
+      sha256: "979aafde2428c53947892c95eb244466c109c129b7eee9011f0a66caaca52267"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.7.0"
   connectivity_plus:
     dependency: "direct main"
     description:
@@ -377,6 +385,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.3.1"
+  feedback:
+    dependency: transitive
+    description:
+      name: feedback
+      sha256: "3cb138a56a3f3914dd38471479c351ce6df377abb29c5ebe4042be5481fee271"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
+  feedback_sentry:
+    dependency: "direct main"
+    description:
+      name: feedback_sentry
+      sha256: "22a901f05ed773b04b604edcdbf67b36f0a9ac12747f3d68f33aea159465f841"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
   ffi:
     dependency: transitive
     description:

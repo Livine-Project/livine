@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:livine/src/common_widgets/auth/auth_widget.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../translations/domain/translation_provider.dart';
@@ -135,45 +136,13 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
                         ),
                       ),
                     ),
-                    ({
-                      required void Function() onPressed,
-                      required bool isLoading,
-                      required String text,
-                      Color? color,
-                      Color? textColor,
-                      double width = 350,
-                      required BuildContext context,
-                    }) {
-                      final theme = Theme.of(context).colorScheme;
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: MaterialButton(
-                          onPressed: onPressed,
-                          color: color ?? theme.primaryContainer,
-                          elevation: 0,
-                          minWidth: width,
-                          height: 60,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.white,
-                                )
-                              : Text(
-                                  text,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: textColor ??
-                                          theme.onPrimaryContainer),
-                                ),
-                        ),
-                      );
-                    }(
-                        onPressed: validatePasswordForm,
-                        isLoading: isLoading,
-                        text: word?.change_password ?? "",
-                        context: context)
+                    SizedBox(height: 20,),
+                    CustomButton(
+                      onPressed: validatePasswordForm,
+                      text: word!.change_password,
+                      context: context,
+                      isLoading: isLoading,
+                    )
                   ],
                 ),
               )),
